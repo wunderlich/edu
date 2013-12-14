@@ -1,0 +1,3243 @@
+\documentclass{edu}
+\end{macrocode}
+
+%\localeDEVerb$
+%\documentclass{edu}
+%$
+
+
+
+\newpage
+\localeDE{\part{Dokumentation}}
+
+\localeDE{\subsection{Allgemeines}}
+
+\localeDE{\subsubsection{Farben}}
+
+\localeDE{
+\subsection{Optionen}
+
+Die Optionen von \thepackage\ werden thematisch gruppiert beschrieben. Der Standardwert ist rechtsbündig in Klammern angegeben.
+}
+
+\localeDE{\subsubsection{Medienarten}\label{sec:medienarten}}
+
+\thepackage\ verfügt über Modi für spezielle Medienarten. Diese Modi führen zu einer Anpassung insbesondere der Schriftgrö\T1\ss e und der Seitenränder. In manchen fällen kann au\T1\ss erdem die Schriftfamilie geändert werden.
+
+\LongWarning{Diese Optionen werden mit hoher Priorität verarbeitet. D.\,h. andere Optionen (z.\,B. \opt{fontsize}) werden gegebenenfalls überschrieben und habe keine Wirkung mehr.}
+
+\localeDE{
+\Option{twoup}\WithValues{true, false}\AndDefault{false}
+Diese Option dient zum Ausdruck einer DIN-A4-Seite, die nach oder vor dem Druck auf DIN-A5 herunter skaliert wird. Dies dient insbesondere dem Druck von zwei DIN-A5-Seiten auf ein DIN-A4-Blatt. Hierzu wird die Schrift vergrö\T1\ss ert und die Seitenränder angepasst.
+
+Im Folgenden wird dieser Zustand als \opt*{twoup}-Modus bezeichnet.
+}
+
+\localeDE{
+\Option{transparency}\WithValues{true, false}\AndDefault{false}
+Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenschaften des Dokuments angepasst werden: Die Schrift muss (drastisch) vergrö\T1\ss ert werden, Seitenränder können hingegen minimiert werden. Au\T1\ss erdem sollte serifenlose Schrift als Standardschrift verwendet werden, da sie die Lesbarkeit auf grö\T1\ss erer Entfernung verbessert. Diese Anpassungen werden durch die Option \opt*{transparency} vorgenommen.
+
+Im Folgenden wird dieser Zustand als \opt*{transparency}-Modus bezeichnet.
+}
+
+
+\localeDE{\subsubsection{Schriftarten}}
+
+\localeDE{
+\Option{rmfont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmr}
+\Option{sffont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmss}
+\Option{ttfont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmtt}
+Mithilfe dieser Optionen können Schriftarten der verschiedenen Schriftfamilien des Dokuments verändert werden. Die Bedeutung der Schriftfamilien kann Tabelle~\ref{tab:fontfamilies} entnommen werden.
+
+ \begin{table}[h!tb]
+  \centering
+  \caption{Schriftfamilien und zugehörige Optionen.}
+  \label{tab:fontfamilies}
+  \medskip
+   \begin{tabular}{llll}\toprule
+     \sffamily Familie & \sffamily Option & \sffamily Beispiel \\\midrule
+     Serifenschrift & \opt{rmfont} & \textrm{Beispieltext} \\
+     Serifenlose Schrift & \opt{sffont} & \textsf{Beispieltext} \\
+     Nichtproportionale Schrift & \opt{ttfont} & \texttt{Beispieltext} \\ \bottomrule
+   \end{tabular}
+ \end{table}
+
+\meta{PSNFSS} bezieht sich aus die Abkürzungen der Schriftarten des Packages \pkg*{psnfss} (\emph{PostScript standard Symbol and Dingbats fonts}). Die Dokumentation des Packages liefert einen Überblick über die Verwendung und die Namen der Schriftarten \footcite{fonts}.
+
+Diese Optionen arbeiten auf einer sehr rudimentären Ebene. Komfortabler ist die Verwendung geeigneter Packages für Schriften. Einige dieser Packages können direkt über \thepackage\ geladen werden. Die hierzu nötigen Optionen werden im Folgenden beschrieben. \textbf{Diese Optionen sind der Verwendung von \opt{rmfont}, \opt{sffont} und \opt{ttfont} vorzuziehen!} Eine umfangreiche Übersicht zu weiteren Schriftarten bietet au\T1\ss erdem \emph{The \LaTeX\ Font Catalogue} \footcite{fontcatalogue}.
+}
+
+\medskip
+
+\localeDE{
+\Option{sfdefault}\WithValues{true, false}\AndDefault{false}
+Mit dieser Option kann als Standardschriftart serifenlose Schrift gewählt werden.
+}
+
+\medskip
+
+\localeDE{
+\Option{beramono}\WithValues{true, false}\AndDefault{true}
+Mit dieser Option wird \emph{Bera Mono} mithilfe des Packages \pkg*{bera} als Standardschriftart für nichtproportionale Schrift gewählt.
+}
+
+\medskip
+
+\localeDE{
+\Option{lato}\WithValues{true, false}\AndDefault{false}
+Mit dieser Option wird \emph{Lato} mithilfe des Packages \pkg*{lato} als Standardschriftart für serifenlose Schrift gewählt.
+}
+
+\medskip
+
+\localeDE{
+\Option{palatino}\WithValues{true, false}\AndDefault{true}
+Mit dieser Option wird \emph{Palatino} mithilfe des Packages \pkg*{mathpazo} als Standardschriftart für serifenlose Schrift gewählt. Dies umfasst auch die Mathemik-Schriftarten.
+}
+
+\medskip
+
+\localeDE{
+\Option{sourcecodepro}\WithValues{true, false}\AndDefault{false}
+Mit dieser Option wird \emph{Source Code Pro} mithilfe des Packages \pkg*{sourcecodepro} als Standardschriftart für serifenlose Schrift gewählt.
+}
+
+\medskip
+
+\localeDE{
+\Option{sourcesanspro}\WithValues{true, false}\AndDefault{true}
+Mit dieser Option wird \emph{Source Sans Pro} mithilfe des Packages \pkg*{sourcesanspro} als Standardschriftart für serifenlose Schrift gewählt.
+}
+
+
+\localeDE{\subsubsection{Schriftgrö\T1\ss en}}
+
+\localeDE{
+\Option{fontsize}\WithValues{\meta{Schriftgrö\T1\ss e}}\AndDefault{11pt}
+Gibt die Schriftgrö\T1\ss e des Flie\T1\ss textes im Dokument an.
+}
+
+\medskip
+
+\localeDE{
+\Option{twoupfontsize}\WithValues{\meta{Schriftgrö\T1\ss e}}\AndDefault{14}
+Gibt die Schriftgrö\T1\ss e des Flie\T1\ss textes im Dokument an, falls der \opt{twoup}-Modus gewählt wurde.
+}
+
+\medskip
+
+\localeDE{
+\Option{transparencyfontsize}\WithValues{\meta{Schriftgrö\T1\ss e}}\AndDefault{20pt}
+Gibt die Schriftgrö\T1\ss e des Flie\T1\ss textes im Dokument an, falls der \opt{transparency}-Modus gewählt wurde.
+}
+
+
+\localeDE{\subsubsection{Absatzauszeichnung}}
+
+\localeDE{
+\Option{parindent}\WithValues{true, false}\AndDefault{false}
+Absatzeinzug kann (de-)aktiviert werden.
+}
+
+\medskip
+
+\localeDE{
+\Option{parskip}\WithValues{true, false}\AndDefault{true}
+Absatzabstand kann (de-)aktiviert werden.
+}
+
+
+\localeDE{\subsubsection{Seitenränder}}
+
+\localeDE{
+\Option{top}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{15mm}
+\Option{right}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{15mm}
+\Option{bottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{15mm}
+\Option{left}\WithValues{\meta{Linker Seitenrand}}\AndDefault{15mm}
+Diese Optionen dienen der Anpassung der Seitenränder. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fu\T1\ss zeile.
+}
+
+\medskip
+
+\localeDE{
+\Option{twouptop}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{20mm}
+\Option{twoupright}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{20mm}
+\Option{twoupbottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{20mm}
+\Option{twoupleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{20mm}
+Diese Optionen dienen der Anpassung der Seitenränder im \opt{twoup}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fu\T1\ss zeile.
+}
+
+\medskip
+
+\localeDE{
+\Option{transparencytop}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{10mm}
+\Option{transparencyright}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{10mm}
+\Option{transparencybottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{10mm}
+\Option{transparencyleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{15mm}
+Diese Optionen dienen der Anpassung der Seitenränder im \opt{transparency}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fu\T1\ss zeile.
+}
+
+\localeDE{\subsubsection{Teile (Parts)}}
+
+\localeDE{
+\Option{parts}\WithValues{true, false}\AndDefault{false}
+Werden im Dokument Teile als Gliederungsebene verwendet (\cs*{part}), sollte diese Option gewählt werden. Es wird dann die Schriftgrö\T1\ss e anderer Textelemente angemessen vergrö\T1\ss ert.
+}
+
+\localeDE{\subsubsection{Listen}}
+
+\localeDE{
+\Option{listarraysep}\WithValues{\meta{Länge}}\AndDefault{0.5em}
+Bestimmt in Aufgaben den Abstand zwischen Aufgabennummerierung und dem folgenden Text (s.\,Abb.\,\ref{fig:lists}).
+}
+
+\begin{figure}[h!tp]
+  \centering
+  \localeDE{\caption{\opt*{listarraymargin} und \opt*{listarraysep}.}}
+  \label{fig:lists}
+  \medskip
+  \setlength{\fboxsep}{0cm}
+
+ \noindent \tikz{\draw (0,0cm) -- (0, 1.3cm) node[right, yshift=-5pt]{\localeDE{Textrand}}; \draw[<->] (0,2.5pt) -- node[above]{\opt*{listarraymargin}} +(3cm,0);}\fbox{\textsf{m)}}\tikz{\draw (0,0); \draw[<->] (0,2.5pt) -- node[above]{\opt*{listarraysep}} +(2.5cm,0);}\fbox{Lorem ipsum \dots}
+\end{figure}
+
+
+
+
+\localeDE{
+\Option{listarraymargin}\WithValues{\meta{Länge}}\AndDefault{0.5em}
+Bestimmt in Aufgaben den Abstand zwischen Textrand und Aufgabennummerierung (s.\,Abb.\,\ref{fig:lists}).
+}
+
+\LongWarning{Um ein einheitliches Bild zu gewährleisten, wirken sich die Optionen \opt*{listarraysep} und \opt*{listarraymargin} analog auch auf \env*{itemize} und \env*{enumerate} aus.}
+
+
+\localeDE{\subsubsection{Metadaten}}
+
+\localeDE{
+\Option{authorstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}\cs*{scshape}}
+\Option{classstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
+\Option{datestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{small}\cs*{sffamily}}
+\Option{emailstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{footnotesize}\cs*{sffamily}}
+\Option{fieldstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
+\Option{groupstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{Large}\cs*{sffamily}\cs*{bfseries}}
+\Option{licensestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{small}\cs*{sffamily}}
+\Option{subjectstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
+\Option{subtitlestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{Large}\cs*{sffamily}\cs*{bfseries}}
+\Option{titlestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{LARGE}\cs*{sffamily}\cs*{bfseries}}
+\Option{versionstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{small}\cs*{sffamily}}
+Mit diesen Optionen kann das Erscheinungsbild des Titels angepasst werden.
+
+\WarningStylethemeDE
+}
+
+
+\localeDE{\subsubsection{Titel}}
+
+\localeDE{
+\Option{titleskip}\WithValues{\meta{Abstand}}\AndDefault{1.75cm}
+Definiert den Abstand zwischen dem gesamten Titel und dem folgenden Inhalt des Dokuments. Dies betrifft jedoch nur den ausführlichen Titel, erzeugt durch \cs{maketitle}, nicht den kurzen Titel (\cs{maketitle*}).
+}
+\medskip
+
+\localeDE{
+\Option{titlefg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{titlebg}\WithValues{\meta{Farbe}}\AndDefault{white}
+Bestimmen die Vorder- und Hintergrundfarbe des Titels.
+}
+\medskip
+
+\localeDE{
+\Option{groupfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{groupbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Bestimmen die Vorder- und Hintergrundfarbe der Gruppe.
+
+\WarningColorthemeDE*
+}
+
+
+
+\localeDE{\subsubsection{Kopf- und Fu\T1\ss zeile}}
+
+\localeDE{
+\Option{headerrulewidth}\WithValues{\meta{Breite}}\AndDefault{0.5pt}
+Bestimmt die Breite der Trennlinie der Kopfzeile an.
+}
+\medskip
+
+\localeDE{
+\Option{footer}\WithValues{true, false}\AndDefault{true}
+Schaltet die Fu\T1\ss zeile ein oder aus.
+}
+\medskip
+
+\localeDE{
+\Option{pagecount}\WithValues{true, false}\AndDefault{true}
+Bestimmt, ob die Gesamtzahl der Seiten des Dokuments in der Fu\T1\ss zeile angezeigt werden soll.
+}
+\medskip
+
+\localeDE{
+\Option{footskip}\WithValues{\meta{Abstand}}\AndDefault{1cm}
+\Option{twoupfootskip}\WithValues{\meta{Abstand}}\AndDefault{0.75cm}
+Bestimmt, den Abstand zwischen der Grundlinie der Fu\T1\ss zeile und der Grundlinie der letzten Zeile des Seiteninhalts. \opt*{twoupfootskip} bezieht sich hierbei auf den \opt{twoup}-Modus.
+}
+
+
+\localeDE{\subsubsection{Inhaltsverzeichnis}}
+
+\localeDE{
+\Option{exetoc}\WithValues{true, false}\AndDefault{false}
+Mit dieser Option kann bestimmt werden, ob Aufgaben, Unteraufgaben, Lösungen und Unterlösungen im Inhaltsverzeichnis aufgeführt werden.
+}
+
+
+\localeDE{\subsubsection{Aufzählungen, Nummerierungen und Beschreibungen}}
+
+\localeDE{
+\Option{itemizefg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{enumeratefg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{descriptionfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Diese Optionen bestimmen die Farbe der Beschriftung von Aufzählungen, Nummerierungen und Beschreibungen.
+
+\WarningColorthemeDE*
+}
+
+
+\localeDE{\subsubsection{Überschriften}}
+
+\localeDE{Zum einen können die Schriftgrö\T1\ss en der Überschriften angegeben werden:}
+
+\localeDE{
+\Option{partnumbersize}\WithValues{\meta{Grö\T1\ss e}}\AndDefault{\cs*{Large}}
+\Option{sectionnumbersize}\WithValues{\meta{Grö\T1\ss e}}\AndDefault{\cs*{normalsize}}
+\Option{subsectionnumbersize}\WithValues{\meta{Grö\T1\ss e}}\AndDefault{\cs*{footnotesize}}
+Diese Optionen bestimmen die Schriftgrö\T1\ss en von Überschriften (\cs*{part}, \cs*{section} und \cs*{subsection}).
+}
+
+\localeDE{Zum anderen können die Farben der Überschriften angegeben werden:}
+
+\localeDE{
+\Option{partnumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{partnumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{sectionnumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{sectionnumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subsectionnumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subsectionnumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Farben der Nummerierung von Überschriften (\cs*{part}), \cs*{section} und \cs*{subsection}).
+}
+\medskip
+
+\localeDE{
+\Option{partfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{sectionfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subsectionfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Farben von Überschriften (\cs*{part}), \cs*{section} und \cs*{subsection}).
+}
+
+\localeDE{\subsubsection{Verweise}}
+
+\localeDE{\thepackage\ definiert die Makros \cs{seeexercise}, \cs{seefigurelabel}, \cs{seelistinglabel}, \cs{seesectionlabel} und \cs{seesolutionlabel} für Verweise auf die entsprechenden Textelemente (Aufgaben, Lösungen, Abbildungen, Abschnitte), standardmä\T1\ss ig in der Form (s.\,Abb.\,X). Abbildung~\ref{fig:see} veranschaulicht die hierbei verwendeten Optionen am Beispiel eines Verweises auf eine Abbildung (deshalb \opt*{seefigurelabel}).}
+
+
+
+\begin{figure}[h!tp]
+  \centering
+  \localeDE{\caption{Aufbau von Verweisen}}
+  \label{fig:see}
+  \medskip
+  \setlength{\fboxsep}{0cm}
+\begin{tikzpicture}[font=\huge]
+\node[draw, inner sep=2pt] (seeleft) at (-0.55,0) {(};
+\node[draw, inner sep=2pt] (seelabel) at (0,0) {s.};
+\node[draw, inner sep=2pt] (seefigurelabel) at (3.25,0) {Abb.};
+\node[draw, inner sep=2pt] (seeref) at (6,0) {5};
+\node[draw, inner sep=2pt] (seeright) at (6.49,0) {)};
+\draw[<->] (seelabel) -- node[above, font=\small] {seelabelsep} (seefigurelabel);
+\draw[<->] (seefigurelabel) -- node[above, font=\small] {seerefsep} (seeref);
+\begin{scope}[font=\small, inner sep=2pt]
+\node[below = 0.5 of seeleft] (seeleftl) {seeleft};
+\node[below right = 0.3 of seelabel] (seelabell) {seelabel};
+\node[below = 0.5 of seefigurelabel] (seefigurelabell) {seefigurelabel};
+\node[below left = 0.3 of seeref] (seerefl) {seeref};
+\node[below = 0.5 of seeright] (seerightl) {seeright};
+\end{scope}
+\draw[->] (seeleftl) -- (seeleft);
+\draw[->] (seelabell) -- (seelabel);
+\draw[->] (seefigurelabell) -- (seefigurelabel);
+\draw[->] (seerefl) -- (seeref);
+\draw[->] (seerightl) -- (seeright);
+\end{tikzpicture}
+\end{figure}
+
+\localeDE{
+\Option{seelabel}\WithValues{\meta{Text}}\AndDefault{s.}
+Abkürzung für \emph{siehe} (\emph{see}).
+}
+\medskip
+
+\localeDE{
+\Option{seeexerciselabel}\WithValues{\meta{Text}}\AndDefault{Aufg.}
+\Option{seefigurelabel}\WithValues{\meta{Text}}\AndDefault{Abb.}
+\Option{seelistinglabel}\WithValues{\meta{Text}}\AndDefault{List.}
+\Option{seesectionlabel}\WithValues{\meta{Text}}\AndDefault{Abschn.}
+\Option{seesolutionlabel}\WithValues{\meta{Text}}\AndDefault{L\"os.}
+Abkürzungen für \emph{Aufgabe} (\emph{Exercise}), \emph{Abbildung} (\emph{Figure}), \emph{Listing} (\emph{Listing}), \emph{Abschnitt} (\emph{Section}) und \emph{Lösung} (\emph{Solution}) (s.\,Abb.\,\ref{fig:see}).
+}
+\medskip
+
+\localeDE{
+\Option{seelabelsep}\WithValues{\meta{Trenner}}\AndDefault{\cs*{,}}
+\Option{seerefsep}\WithValues{\meta{Trenner}}\AndDefault{\cs*{,}}
+Trenner/Abstände nach \opt*{seelabel} (\emph{siehe}) und \opt*{seeXlabel} (\emph{Aufg.}, \emph{Abb.}, \dots) (s.\,Abb.\,\ref{fig:see}).
+}
+\medskip
+
+\localeDE{
+\Option{seeleft}\WithValues{\meta{Begrenzer}}\AndDefault{(}
+\Option{seeright}\WithValues{\meta{Begrenzer}}\AndDefault{)}
+Begrenzer für Verweise (s.\,Abb.\,\ref{fig:see}).
+}
+
+\localeDE{\subsubsection{Schulbuch-Aufgaben angeben}}
+
+\localeDE{
+\Option{pglabel}\WithValues{\meta{Text}}\AndDefault{S.}
+\Option{nolabel}\WithValues{\meta{Begrenzer}}\AndDefault{Nr.}
+Abkürzungen für \emph{Seite} (\emph{page} -- \emph{pg}) und \emph{Nummer} (\emph{Number} -- \emph{no}) im Makro \cs{pgno}.
+}
+
+\localeDE{\subsubsection{Formatierungen}}
+
+\localeDE{
+\Option{cemphfg}\WithValues{\meta{Farbe}}\AndDefault{wuSemiDarkRed}
+Das Makro \cs{cemph} zeichnet Text durch farbigen Satz in \cs*{emph} aus. Die verwendete Farbe kann durch diese Option bestimmt werden.
+
+\WarningColorthemeDE
+}
+
+\localeDE{\subsubsection{Symbole}}
+
+\localeDE{
+\Option{ccscale}\WithValues{\meta{Skalierungsfaktor}}\AndDefault{1.5}
+\thepackage\ definiert skalierte Versionen der Icons der Creative-Commons-Lizenzen. Der Faktor der Skalierung kann durch diese Option bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{actionfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{speechfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\thepackage\ definiert Symbole für Handlungen und Sprache, die in Ablauflisten verwendet werden können (\cs{action}, \cs{speech}, \cs{itemta}, \cs{itemts}, \cs{itemsa} und \cs{itemss}). Die Farbe dieser Symbole kann durch diese Optionen bestimmt werden.
+
+\WarningColorthemeDE*
+}
+
+\localeDE{\subsubsection{Themes}}
+
+\localeDE{
+\Option{colorthemes}\WithValues{\meta{Themename}}\AndDefault{}
+Mithilfe dieser Option kann ein Colortheme geladen werden.
+}
+\medskip
+
+\localeDE{
+\Option{styletheme}\WithValues{\meta{Themename}}\AndDefault{}
+Mithilfe dieser Option kann ein Styletheme geladen werden.
+}
+
+\localeDE{\subsubsection{Grafik}}
+
+\localeDE{
+\Option{graphicspath}\WithValues{\meta{Pfad}}\AndDefault{img/}
+Durch \cs*{includegraphics} eingebundene Grafiken sollten sich -- um Ordnung zu wahren -- in einem Unterverzeichnis befinden. Der Pfad dieses Verzeichnisses kann durch diese Option angegeben werden. Dies geschieht relativ zum Verzeichnis, in dem sich die entsprechende \texttt{tex}-Datei befindet. Standardmä\T1\ss ig muss ein Ordner \texttt{img} verwendet werden. Die Angabe muss durch einen Schrägstrich beendet werden.
+}
+\medskip
+
+\localeDE{
+\Option{tikzpath}\WithValues{\meta{Pfad}}\AndDefault{tikz/}
+Durch \cs*{tikzinput} bzw. \cs*{tikzinput*} eingebundene TikZ-Dateien sollten sich -- um Ordnung zu wahren -- in einem Unterverzeichnis befinden. Der Pfad dieses Verzeichnisses kann durch diese Option angegeben werden. Dies geschieht relativ zum Verzeichnis, in dem sich die entsprechende \texttt{tex}-Datei befindet. Standardmä\T1\ss ig muss ein Ordner \texttt{tikz} verwendet werden. Die Angabe muss durch einen Schrägstrich beendet werden.
+}
+
+\localeDE{\subsubsection{Aufgaben}}
+
+\localeDE{
+\Option{exelabel}\WithValues{\meta{Beschriftung}}\AndDefault{Aufgabe}
+\Option{subexelabel}\WithValues{\meta{Beschriftung}}\AndDefault{}
+Mithilfe dieser Option kann die Beschriftung von Aufgaben und Unteraufgaben angegeben werden.
+}
+\medskip
+
+\localeDE{
+\Option{exenumberstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{footnotesize}}
+\Option{exenumberseparator}\WithValues{\meta{Trenner}}\AndDefault{.}
+Mithilfe dieser Optionen kann die Formatierung der Aufgabennummerierung und ein auf die Nummerierung folgender Trenner bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{exelabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{bfseries}\cs*{sffamily}}
+\Option{exestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
+\Option{exepointsstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{small}\cs*{bfseries}\cs*{sffamily}}
+Mithilfe dieser Optionen kann die Formatierung von Aufgabenbeschriftung, Aufgabenname und Punktzahl bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{exenumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{exenumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{exelabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{exelabelbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{exefg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{exebg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{exepointsfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Mithilfe dieser Optionen können die Farben von Aufgabennummer, Aufgabenbeschriftung, Aufgabenname und Punktzahl bestimmt werden.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subexenumberstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{scriptsize}}
+\Option{subexenumberseparator}\WithValues{\meta{Trenner}}\AndDefault{}
+Mithilfe dieser Optionen kann die Formatierung der Unteraufgabennummerierung und ein auf die Nummerierung folgender Trenner bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subexelabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{bfseries}\cs*{sffamily}}
+\Option{subexestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}}
+\Option{subexepointsstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{scriptsize}\cs*{bfseries}\cs*{sffamily}}
+Mithilfe dieser Optionen kann die Formatierung von Unteraufgaben bestimmt werden: Beschriftung, Name und Punktzahl.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subexenumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subexenumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subexelabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subexelabelbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subexefg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subexebg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subexepointsfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Mithilfe dieser Optionen können die Farben von Unteraufgaben bestimmt werden: Nummerierung, Beschriftung, Name und Punktzahl.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{multiexenumberstyle}\WithValues{\meta{Format}}\AndDefault{}
+\Option{multiexepointsstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{footnotesize}\cs*{bfseries}}
+Mithilfe dieser Optionen kann die Formatierung von Teilaufgaben bestimmt werden: Beschriftung und Punktzahl.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{multiexenumberfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{multiexepointsfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Mithilfe dieser Optionen können die Farben von Unteraufgaben bestimmt werden: Nummerierung und Punktzahl.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{multiexenumberleft}\WithValues{\meta{Abstand}}\AndDefault{}
+\Option{multiexenumberright}\WithValues{\meta{Abstand}}\AndDefault{)}
+Bestimmt Begrenzer der Teilaufgabennummerierung.
+}
+\medskip
+
+\localeDE{
+\Option{exepointslabel}\WithValues{\meta{Text}}\AndDefault{\cs*{,}P}
+\Option{subexepointslabel}\WithValues{\meta{Text}}\AndDefault{\cs*{,}P}
+\Option{multiexepointslabel}\WithValues{\meta{Text}}\AndDefault{}
+Bestimmt die Beschriftung von Punkten in Aufgaben, Unteraufgaben und Teilaufgaben.
+}
+\medskip
+
+\localeDE{
+\Option{exepointsleft}\WithValues{\meta{Begrenzer}}\AndDefault{[}
+\Option{exepointsright}\WithValues{\meta{Begrenzer}}\AndDefault{]}
+\Option{subexepointsleft}\WithValues{\meta{Begrenzer}}\AndDefault{[}
+\Option{subexepointsright}\WithValues{\meta{Begrenzer}}\AndDefault{]}
+\Option{multiexepointsleft}\WithValues{\meta{Begrenzer}}\AndDefault{[}
+\Option{multiexepointsright}\WithValues{\meta{Begrenzer}}\AndDefault{]}
+Bestimmt Begrenzer von Punkten in Aufgaben, Unteraufgaben und Teilaufgaben.
+}
+\medskip
+
+\localeDE{
+\Option{exebeforeskip}\WithValues{\meta{Abstand}}\AndDefault{2.25ex}
+\Option{exeafterskip}\WithValues{\meta{Abstand}}\AndDefault{0.5ex}
+Mithilfe dieser Optionen können die Abstände vor und nach Aufgaben(-überschriften) bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{subexebeforeskip}\WithValues{\meta{Abstand}}\AndDefault{1.5ex}
+\Option{subexeafterskip}\WithValues{\meta{Abstand}}\AndDefault{0.5ex}
+Mithilfe dieser Optionen können die Abstände vor und nach Unteraufgaben(-überschriften) bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{arraybeforeskip}\WithValues{\meta{Abstand}}\AndDefault{0.5\cs*{baselineskip}}
+\Option{arrayafterskip}\WithValues{\meta{Abstand}}\AndDefault{0.5\cs*{baselineskip}}
+Mithilfe dieser Optionen können die Abstände vor und nach Teilaufgaben-Aufzählungen bestimmt werden.
+}
+\medskip
+
+
+\localeDE{\subsubsection{Lösungen}}
+
+\localeDE{
+\Option{sollabel}\WithValues{\meta{Text}}\AndDefault{L\"osung}
+\Option{subsollabel}\WithValues{\meta{Text}}\AndDefault{}
+Mithilfe dieser Option kann die Beschriftung von Lösungen und UnterLösungen angegeben werden.
+}
+\medskip
+
+\localeDE{
+\Option{solnumberstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{footnotesize}}
+\Option{solnumberseparator}\WithValues{\meta{Trenner}}\AndDefault{.}
+Mithilfe dieser Optionen kann die Formatierung der Lösungsnummerierung und ein auf die Nummerierung folgender Trenner bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{sollabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{bfseries}\cs*{sffamily}}
+\Option{solstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
+Mithilfe dieser Optionen kann die Formatierung von Lösungsbeschriftung und Lösungsnamen bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{solnumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{solnumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{sollabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{sollabelbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{solfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{solbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+Mithilfe dieser Optionen können die Farben von Lösungen bestimmt werden: Nummerierung, Beschriftung und Name.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subsolnumberstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{scriptsize}}
+\Option{subsolnumberseparator}\WithValues{\meta{Trenner}}\AndDefault{}
+Mithilfe dieser Optionen kann die Formatierung der Nummerierung von Unterlösungen und ein auf die Nummerierung folgender Trenner bestimmt werden.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subsollabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{bfseries}\cs*{sffamily}}
+\Option{subsolstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}}
+Mithilfe dieser Optionen kann die Formatierung von Unterlösungen bestimmt werden: Beschriftung, Name und Punktzahl.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{subsolnumberfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subsolnumberbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subsollabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subsollabelbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{subsolfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{subsolbg}\WithValues{\meta{Farbe}}\AndDefault{white}
+Mithilfe dieser Optionen können die Farben von Unterlösungen bestimmt werden: Nummerierung, Beschriftung und Name.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{solbeforeskip}\WithValues{\meta{Abstand}}\AndDefault{2.25ex}
+\Option{solafterskip}\WithValues{\meta{Abstand}}\AndDefault{0.5ex}
+Mithilfe dieser Optionen können die Abstände vor und nach Lösungen (bzw. Lösungsüberschriften) bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{subsolbeforeskip}\WithValues{\meta{Abstand}}\AndDefault{1.5ex}
+\Option{subsolafterskip}\WithValues{\meta{Abstand}}\AndDefault{0.5ex}
+Mithilfe dieser Optionen können die Abstände vor und nach Unterlösungen (bzw. den Überschriften von Unterlösungen) bestimmt werden.
+}
+
+\localeDE{\subsubsection{Lösungen in Aufgaben}}
+
+\localeDE{
+\Option{showresults}\WithValues{true, false}\AndDefault{false}
+Mithilfe dieser Optionen können Lösungen (erstellt durch \cs{res} oder \cs{resr}) in Aufgaben angezeigt werden.
+}
+\medskip
+
+\localeDE{
+\Option{resultsfg}\WithValues{\meta{Farbe}}\AndDefault{gray}
+Mithilfe dieser Optionen kann die Farbe der Lösung bestimmt werden.
+
+\WarningColorthemeDE
+}
+\medskip
+
+\localeDE{
+\Option{resultrule}\WithValues{\meta{Breite}}\AndDefault{0.4pt}
+\Option{resultrulelength}\WithValues{\meta{Länge}}\AndDefault{5cm}
+Mithilfe dieser Optionen können Breite und Länge der Linie von \cs{resr} bestimmt werden.
+}
+
+\localeDE{\subsubsection{Fragen}}
+
+\localeDE{
+\Option{questlabel}\WithValues{\meta{Text}}\AndDefault{Frage}
+Die Option bestimmt die Beschriftung von Fragen.
+}
+\medskip
+
+\localeDE{
+\Option{questpointslabel}\WithValues{\meta{Text}}\AndDefault{\cs*{,}P}
+Die Option bestimmt die Beschriftung der Punkte von Fragen.
+}
+\medskip
+
+\localeDE{
+\Option{questlabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}\cs*{small}}
+\Option{queststyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{small}}
+\Option{questpointsstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{small}}
+Bestimmen die Formatierung von Fragen: Beschriftung, Frage und Punkte.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{questlabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{questmclabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Bestimmen die Farbe von Fragen: Beschriftung und Multiple-Choice-Antwortmöglichkeiten.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{questpointsleft}\WithValues{\meta{Begrenzer}}\AndDefault{[}
+\Option{questpointsright}\WithValues{\meta{Begrenzer}}\AndDefault{]}
+Mit dieser Option können die Begrenzer von Punktzahlen in Fragen bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{questpointssep}\WithValues{\meta{Abstand}}\AndDefault{0.25em}
+\Option{questsep}\WithValues{\meta{Abstand}}\AndDefault{0.5em}
+Mit dieser Option können horizontale Abstände von Fragen angegeben werden: Der Abstand vor der Punktzahl und der Abstand vor der Frage.
+}
+\medskip
+
+\localeDE{
+\Option{questbeforeskip}\WithValues{\meta{Abstand}}\AndDefault{1ex}
+\Option{questafterskip}\WithValues{\meta{Abstand}}\AndDefault{0ex}
+Mit dieser Option können vertikale Abstände vor und nach Fragen angegeben werden.
+}
+\medskip
+
+
+\localeDE{\subsubsection{Notizen}}
+
+\localeDE{
+\Option{shownotes}\WithValues{true, false}\AndDefault{true}
+Mit dieser Option können Notizen (\cs*{notet}, \cs*{notehr}) eingeblendet werden.
+}
+\medskip
+
+\localeDE{
+\Option{notetstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}}
+Diese Option bestimmt die Formatierung von Notizen (\cs*{notet}).
+
+\WarningStylethemeDE
+}
+\medskip
+
+\localeDE{
+\Option{notehrule}\WithValues{\meta{Breite}}\AndDefault{0.4pt}
+Diese Option bestimmt Breite der Linie, die durch \cs*{notehr} erzeugt wird.
+}
+\medskip
+
+\localeDE{
+\Option{notetfg}\WithValues{\meta{Farbe}}\AndDefault{wuRed}
+\Option{notehrfg}\WithValues{\meta{Farbe}}\AndDefault{wuRed}
+Diese Option bestimmt die Farbe von Notizen (\cs*{notet} und \cs*{notehr}).
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{\subsubsection{Unterrichtsablauf}}
+
+\localeDE{
+\Option{ttendtime}\WithValues{true, false}\AndDefault{true}
+Diese Option gibt an, ob die Uhrzeit am Ende der Ablauftabelle in einer zusätzlichen Zeile angezeigt werden soll.
+}
+\medskip
+
+\localeDE{
+\Option{tttimelabel}\WithValues{\meta{Text}}\AndDefault{Zeit}
+\Option{ttstagelabel}\WithValues{\meta{Text}}\AndDefault{Phase}
+\Option{ttactivitylabel}\WithValues{\meta{Text}}\AndDefault{Ablauf}
+\Option{ttmethodlabel}\WithValues{\meta{Text}}\AndDefault{Methoden}
+\Option{ttmedialabel}\WithValues{\meta{Text}}\AndDefault{Medien/Material}
+Die Beschriftung der Spalten der Ablauftabelle kann durch diese Optionen bestimmt werden.
+}
+\medskip
+
+\localeDE{
+\Option{tttimewidth}\WithValues{\meta{Breite}}\AndDefault{1cm}
+\Option{ttstagewidth}\WithValues{\meta{Breite}}\AndDefault{2.25cm}
+\Option{ttmethodwidth}\WithValues{\meta{Breite}}\AndDefault{2cm}
+\Option{ttmediawidth}\WithValues{\meta{Breite}}\AndDefault{2.75cm}
+Die Breite der Spalten der Ablauftabelle im Hochformat (\cs{ttable}) kann durch diese Optionen bestimmt werden. Die Breite der Spalte mit dem Ablauf der jeweiligen Phase erstreckt sich automatisch über die restliche Zeilenbreite.
+}
+\medskip
+
+\localeDE{
+\Option{tttimewidthlscape}\WithValues{\meta{Breite}}\AndDefault{1cm}
+\Option{ttstagewidthlscape}\WithValues{\meta{Breite}}\AndDefault{3.5cm}
+\Option{ttmethodwidthlscape}\WithValues{\meta{Breite}}\AndDefault{3.5cm}
+\Option{ttmediawidthlscape}\WithValues{\meta{Breite}}\AndDefault{3.5cm}
+Die Breite der Spalten der Ablauftabelle im Querformat (\cs{ttable*}) kann durch diese Optionen bestimmt werden. Die Breite der Spalte mit dem Ablauf der jeweiligen Phase erstreckt sich automatisch über die restliche Zeilenbreite.
+}
+\medskip
+
+\localeDE{
+\Option{ttshowtime}\WithValues{true, false}\AndDefault{true}
+Diese Option gibt an, ob die aktuelle Uhrzeit in der Zeitspalte jeder Zeile der Ablauftabelle angezeigt werden soll.
+}
+\medskip
+
+\localeDE{
+\Option{ttentrytimelabel}\WithValues{\meta{Text}}\AndDefault{}
+Mithilfe dieser Option kann die Uhrzeit in der Zeitspalte jeder Zeile der Ablauftabelle mit einer Beschriftung (z.\,B. Uhr) versehen werden.
+}
+\medskip
+
+\localeDE{
+\Option{seqteacherlabel}\WithValues{\meta{Text}}\AndDefault{L}
+\Option{seqstudentlabel}\WithValues{\meta{Text}}\AndDefault{S}
+Diese Option bestimmt die Beschriftung von Lehrern und Schülern in Ablauflisten.
+}
+\medskip
+
+\localeDE{
+\Option{seqteacherstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}}
+\Option{seqetudentstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}}
+Bestimmen die Formatierung von Einträgen für Lehrer und Schüler in Ablauflisten.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{seqteacherfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{seqstudentfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Bestimmen die Farbe von Einträgen für Lehrer und Schüler in Ablauflisten.
+
+\WarningColorthemeDE*
+}
+
+\localeDE{\subsubsection{Tafelbild}}
+
+\localeDE{
+\Option{bbstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}}
+Gibt die Formatierung von Tafelbildern an.
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{bbfontsize}\WithValues{\meta{Schriftgrö\T1\ss e}}\AndDefault{8pt}
+Gibt die Schriftgrö\T1\ss e in Tafelbildern an.
+}
+\medskip
+
+\localeDE{
+\Option{bbbaselineoffset}\WithValues{\meta{Abstand}}\AndDefault{1pt}
+Gibt den Baselineoffset in Tafelbildern an.
+}
+\medskip
+
+\localeDE{
+\Option{bbheight}\WithValues{\meta{Höhe}}\AndDefault{0.25\cs*{linewidth} - 2\cs*{fboxsep}}
+Bestimmt die Höhe von Tafelbildern. Der Standardwert entspricht einem Viertel der Zei"-len"-brei"-te (abzüglich der inneren Abstände vom Tafelinhalt zur Umrandung).
+}
+\medskip
+
+
+
+
+
+\localeDE{\subsubsection{Mathematik}}
+
+\localeDE{
+\Option{commasep}\WithValues{true, false}\AndDefault{true}
+Mithilfe dieser Option kann bestimmt werden, ob das Komma als Dezimaltrenner verwendet werden soll. Andernfalls geschieht dies durch einen Punkt.
+}
+\medskip
+
+\localeDE{
+\Option{amsoptions}\WithValues{\meta{Optionen}}\AndDefault{intlimits}
+Möchte man gezielt Optionen an das Package \pkg{amsmath} übergeben, sollte dies durch diese Option geschehen.
+}
+\medskip
+
+\localeDE{
+\Option{amsthm}\WithValues{true, false}\AndDefault{true}
+\Option{framedthm}\WithValues{true, false}\AndDefault{true}
+\Option{thmbox}\WithValues{true, false}\AndDefault{false}
+Durch diese Optionen kann angegeben werden, ob gängige deutsche \env{theorem}-Umgebungen (\emph{Satz}, \emph{Definition}, \emph{Beispiel}, \dots) erstellt werden sollen. \opt*{amsthm} erzeugt Theoreme im Stile von \pkg{amsthm}, \opt*{framedthm} Theoreme die umrahmt und farbig hinterlegt sein können und \opt*{thmbox} Theoreme im Stile von \pkg{thmbox}.
+
+\LongWarning{\opt*{thmbox} erfordert zwingend nummerierte Theoreme. Deshalb muss in diesem Fall zusätzlich \opt{thmimpnumbered} und \opt{thmunimpnumbered} gewählt werden.}
+}
+\medskip
+
+\localeDE{
+\Option{thmimpnumbered}\WithValues{true, false}\AndDefault{true}
+\Option{thmunimpnumbered}\WithValues{true, false}\AndDefault{true}
+Durch diese Optionen kann angegeben werden, ob wichtige Theoreme (\opt*{thmimpnumbered}) oder unwichtige Theoreme (\opt*{thmunimpnumbered}) nummeriert werden sollen.
+}
+\medskip
+
+\localeDE{
+\Option{thmlabelfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+Durch diese Option kann die Farbe für die Theorembeschriftung (\emph{Satz}, \emph{Definition}, \dots) angegeben werden.
+
+\WarningColorthemeDE
+}
+\medskip
+
+\localeDE{
+\Option{thmframefg}\WithValues{\meta{Farbe}}\AndDefault{wuDarkerGray}
+\Option{thmframebg}\WithValues{\meta{Farbe}}\AndDefault{wuLightGray}
+Durch diese Optionen können Rahmenfarbe (\opt*{thmframefg}) und die Hintergrundfarbe (\opt*{thmfragebg}) von umrahmten Theoremen angegeben werden.
+
+\WarningColorthemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{thmimplabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}}
+\Option{thmimpnotestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}}
+\Option{thmimpbodystyle}\WithValues{\meta{Format}}\AndDefault{}
+Durch diese Optionen kann die Formatierung wichtiger Theoreme bestimmt werden: Beschriftung (\opt*{thmimplabelstyle}), Name (\opt*{thmimpnotestyle}) und Inhalt (\opt*{thmimpbodystyle}).
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{thmunimplabelstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}\cs*{bfseries}}
+\Option{thmunimpnotestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{sffamily}}
+\Option{thmunimpbodystyle}\WithValues{\meta{Format}}\AndDefault{}
+Durch diese Optionen kann die Formatierung unwichtiger Theoreme bestimmt werden: Beschriftung (\opt*{thmunimplabelstyle}), Name (\opt*{thmunimpnotestyle}) und Inhalt (\opt*{thmunimpbodystyle}).
+
+\WarningStylethemeDE*
+}
+\medskip
+
+\localeDE{
+\Option{thmdefinitionlabel}\WithValues{\meta{Name}}\AndDefault{Definition}
+\Option{thmdefitheolabel}\WithValues{\meta{Name}}\AndDefault{Definition/Satz}
+\Option{thmexamplelabel}\WithValues{\meta{Name}}\AndDefault{Beispiel}
+\Option{thmexampleexelabel}\WithValues{\meta{Name}}\AndDefault{Beispielaufgabe}
+\Option{thmhintlabel}\WithValues{\meta{Name}}\AndDefault{Hinweis}
+\Option{thmremarklabel}\WithValues{\meta{Name}}\AndDefault{Bemerkung}
+\Option{thmsolutionlabel}\WithValues{\meta{Name}}\AndDefault{L\"osung}
+\Option{thmtheoremlabel}\WithValues{\meta{Name}}\AndDefault{Satz}
+Durch diese Optionen können die Beschriftungen der vordefinierten Theoreme angegeben werden.
+}
+
+
+\localeDE{\subsection{Informatik}}
+
+\localeDE{
+\Option{lstnumberfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{lstkeywordfg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{lstrulefg}\WithValues{\meta{Farbe}}\AndDefault{gray}
+Durch diese Optionen kann die Farbgestaltung von Listings bestimmt werden: Zeilennummerierung (\opt*{lstnumberfg}), Schlüsselwörter der Programmiersprache (\opt*{lstkeywordfg}) und Umrandung des Codes (\opt*{lstrulefg}).
+
+\WarningColorthemeDE*
+}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\localeDE{\subsection{Aufgaben}}
+
+\DescribeMacro\exe[<Punke>]{<Name>}
+
+
+\Implementation\ExplHack
+
+\section{Implementation}
+
+\subsection{Basic Packages}
+
+Die folgenden Packages werden zur Erstellung und Bearbeitung der Optionen verwendet:
+
+\begin{MacroCode}{class}
+\RequirePackage{expl3, l3keys2e}
+\RequirePackage{xparse}
+
+\ExplSyntaxOn
+
+\end{MacroCode}
+
+\subsection{Messages}
+
+Messages for future use:
+
+\begin{MacroCode}{class}
+\msg_new:nnn {edu} {option-dep-enable} {If\ you\ enable\ the\ option\ #1,\ you\ have\ to\ enable\ the\ following\ option(s):\ #2.}
+\end{MacroCode}
+
+
+\subsection{Optionen}
+
+\subsubsection{Patches}
+
+\begin{macro}{\__edu_keys_initial:n}[1]{<key = value list>}
+Da die Zuweisung initialer Werte in relativen Einheiten (em, ex etc.) bei \cs*{key}-Option durch \cs*{.initial} nicht funktioniert, werden diese mithilfe dieses Hilsmakros am Dokumentenanfang zugewiesen.
+\begin{MacroCode}{class}
+\cs_new:Npn \__edu_keys_initial:n #1 {
+  \AtBeginDocument{
+    \keys_set:nn {edu} {#1}
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\@usetl}[1]{<token list>}
+\pkg{tikz}-Optionen können (noch?) nicht in \LaTeX3 eingebettet, d.\,h. innerhalb von \cs{ExplSyntaxOn} und \cs{ExplSyntaxOff} verwendet werden. Mithilfe dieses Makros können durch \cs{keys_define} definierte Optionen dennoch in \pkg{tikz} verwendet werden.
+\begin{MacroCode}{class}
+\DeclareExpandableDocumentCommand \@usetl { m m } {
+  \tl_use:c {g_edu_#1_#2}
+}
+
+\end{MacroCode}
+\end{macro}
+
+Im Folgenden werden die Optionen nach Kategorie deklariert.
+
+\subsubsection{Media Types}
+
+
+\begin{option}{twoup}
+\begin{option}{transparency}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  twoup .bool_gset:N = \g_edu_twoup_bool,                 % Print at A5-paper
+  twoup .initial:n = false,
+  transparency .bool_gset:N = \g_edu_transparency_bool,   % Print at transparency
+  transparency .initial:n = false
+}
+
+
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\subsubsection{Schriftarten}
+
+\begin{option}{rmfont}
+\begin{option}{sffont}
+\begin{option}{ttfont}
+\begin{option}{sfdefault}
+\begin{option}{beramono}
+\begin{option}{lato}
+\begin{option}{palatino}
+\begin{option}{sourcecodepro}
+\begin{option}{sourcesanspro}
+
+Options for fonts:
+
+\begin{MacroCode}{class}
+\ExplSyntaxOn
+\keys_define:nn {edu} {
+  rmfont .tl_gset:N = \g_edu_rmfont_tl,                  % name of the roman font
+  rmfont .initial:n = cmr,
+  sffont .tl_gset:N = \g_edu_sffont_tl,                  % name of the sans-serif font
+  sffont .initial:n = cmss,
+  ttfont .tl_gset:N = \g_edu_ttfont_tl,                  % name of the sans-serif font
+  ttfont .initial:n = cmtt,
+  sfdefault .bool_gset:N = \g_edu_sfdefault_bool,          % sans-serif als familydefault
+  sfdefault .initial:n = false,
+  beramono .bool_gset:N = \g_edu_beramono_bool,            % use Bera Mono as typewriter
+  beramono .initial:n = true,
+  lato .bool_gset:N = \g_edu_lato_bool,                    % use lato as sans-serif (same as sffont=fla)
+  lato .initial:n = false,
+  palatino .bool_gset:N = \g_edu_palatino_bool,            % use mathpazo
+  palatino .initial:n = true,
+  sourcecodepro .bool_gset:N = \g_edu_sourcecodepro_bool,  % use Source Code Pro
+  sourcecodepro .initial:n = false,
+  sourcesanspro .bool_gset:N = \g_edu_sourcesanspro_bool,  % use Source Sans Pro
+  sourcesanspro .initial:n = true,
+}
+
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Schriftgrö\T1\ss e}
+
+
+\begin{option}{fontsize}
+\begin{option}{transparencyfontsize}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  fontsize .dim_gset:N = \g_edu_fontsize_dim,  % Fontsize
+  fontsize .initial:n = 11pt,
+  twoupfontsize .dim_gset:N = \g_edu_twoupfontsize_dim, % Fontsize for twoup
+  twoupfontsize .initial:n = 14pt,
+  transparencyfontsize .dim_gset:N = \g_edu_transparencyfontsize_dim,                    % Fontsize for transparency
+  transparencyfontsize .initial:n = 20pt,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Paragraph highlighting}
+
+\begin{option}{parindent}
+\begin{option}{parskip}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  parindent .bool_gset:N = \g_edu_parindent_bool,   % Enable/disable parindent
+  parindent .initial:n = false,
+  parskip .bool_gset:N = \g_edu_parskip_bool,       % Enable/disable parskip
+  parskip .initial:n = false
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\subsubsection{Margins -- normal mode}
+
+\begin{option}{top}
+\begin{option}{right}
+\begin{option}{bottom}
+\begin{option}{left}
+\begin{MacroCode}{class}
+
+\keys_define:nn {edu} {
+  top .dim_gset:N = \g_edu_top_dim,
+  top .initial:n = 15mm,
+  right .dim_gset:N = \g_edu_right_dim,
+  right .initial:n = 15mm,
+  bottom .dim_gset:N = \g_edu_bottom_dim,
+  bottom .initial:n = 15mm,
+  left .dim_gset:N = \g_edu_left_dim,
+  left .initial:n = 15mm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Margins -- twoup mode}
+
+\begin{option}{twouptop}
+\begin{option}{twoupright}
+\begin{option}{twoupbottom}
+\begin{option}{twoupleft}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  twouptop .dim_gset:N = \g_edu_twouptop_dim,        % Top margin A5-print
+  twouptop .initial:n = 20mm,
+  twoupright .dim_gset:N = \g_edu_twoupright_dim,    % Right margin A5-print
+  twoupright .initial:n = 20mm,
+  twoupbottom .dim_gset:N = \g_edu_twoupbottom_dim,  % Bottom margin A5-print
+  twoupbottom .initial:n = 20mm,
+  twoupleft .dim_gset:N = \g_edu_twoupleft_dim,      % Left margin A5-print
+  twoupleft .initial:n = 20mm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Margins -- transparency mode}
+
+\begin{option}{transparencytop}
+\begin{option}{transparencyright}
+\begin{option}{transparencybottom}
+\begin{option}{transparencyleft}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  transparencytop .dim_gset:N = \g_edu_transparencytop_dim,        % Top margin at twoup
+  transparencytop .initial:n = 10mm,
+  transparencyright .dim_gset:N = \g_edu_transparencyright_dim,    % Right margin at twoup
+  transparencyright .initial:n = 10mm,
+  transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at twoup
+  transparencybottom .initial:n = 10mm,
+  transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at twoup
+  transparencyleft .initial:n = 15mm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Parts}
+
+\begin{option}{parts}
+Set part as topmost structure.
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
+  parts .initial:n = false
+}
+
+\end{MacroCode}
+\end{option}
+
+
+\subsubsection{Lists}
+
+\begin{option}{listarraysep}
+\begin{option}{listarraymargin}
+These options affect to lists and arrays:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
+  listarraymargin .dim_gset:N = \g_edu_listarraymargin_dim,
+}
+
+\__edu_keys_initial:n {listarraysep = 0.5em}
+\__edu_keys_initial:n {listarraymargin = 0.25em}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Metadata}
+
+
+\begin{option}{authorstyle}
+\begin{option}{classstyle}
+\begin{option}{datestyle}
+\begin{option}{emailstyle}
+\begin{option}{fieldstyle}
+\begin{option}{groupstyle}
+\begin{option}{licensestyle}
+\begin{option}{subjectstyle}
+\begin{option}{topicstyle}
+\begin{option}{versionstyle}
+Styles of metadata:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  authorstyle .tl_gset:N = \g_edu_authorstyle_tl,
+  authorstyle .initial:n = \large\sffamily\scshape,
+  classstyle .tl_gset:N = \g_edu_classstyle_tl,
+  classstyle .initial:n = \large\sffamily,
+  datestyle .tl_gset:N = \g_edu_datestyle_tl,
+  datestyle .initial:n = \small\sffamily,
+  emailstyle .tl_gset:N = \g_edu_emailstyle_tl,
+  emailstyle .initial:n = \footnotesize\sffamily,
+  fieldstyle .tl_gset:N = \g_edu_fieldstyle_tl,
+  fieldstyle .initial:n = \large\sffamily,
+  groupstyle .tl_gset:N = \g_edu_groupstyle_tl,
+  groupstyle .initial:n = \Large\sffamily\bfseries,
+  licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
+  licensestyle .initial:n = \small\sffamily,
+  subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
+  subjectstyle .initial:n = \large\sffamily,
+  subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
+  subtitlestyle .initial:n = \Large\sffamily\bfseries,
+  titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
+  titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
+  versionstyle .initial:n = \small\sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Title}
+
+
+\begin{option}{titleskip}
+\begin{option}{titlefg}
+\begin{option}{titlebg}
+\begin{option}{groupfg}
+\begin{option}{groupbg}
+Options of title:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  titleskip .skip_gset:N = \g_edu_titleskip_skip,
+  titleskip .initial:n = 1.75cm,
+  titlefg .tl_gset:N = \g_edu_titlefg_tl,
+  titlefg .initial:n = black,
+  titlebg .tl_gset:N = \g_edu_titlebg_tl,
+  titlebg .initial:n = white,
+  groupfg .tl_gset:N = \g_edu_groupfg_tl,
+  groupfg .initial:n = white,
+  groupbg .tl_gset:N = \g_edu_groupbg_tl,
+  groupbg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Header and Footer}
+
+\begin{option}{headerrulewidth}
+\begin{option}{footer}
+\begin{option}{pagecount}
+\begin{option}{footskip}
+\begin{option}{twoupfootskip}
+Options of header and footer:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  headerrulewidth .dim_gset:N = \g_edu_headerrulewidth_dim,  % Width of header rule
+  headerrulewidth .initial:n = 0.5pt,
+  footer .bool_gset:N = \g_edu_footer_bool,                   % Enable/disable footer
+  footer .initial:n = true,
+  pagecount .bool_gset:N = \g_edu_pagecount_bool,             % Enable/disable pagecount at footer
+  pagecount .initial:n = true,
+  footskip .dim_gset:N = \g_edu_footskip_dim,                % Skip to first baseline of  footer
+  footskip .initial:n = 1cm,
+  twoupfootskip .dim_gset:N = \g_edu_twoupfootskip_dim,      % Skip to first baseline of  footer in twoup-mode
+  twoupfootskip .initial:n = 0.75cm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Inhaltsverzeichnis}
+
+
+\begin{option}{exetoc}
+Options of toc:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exetoc .bool_gset:N = \g_edu_exetoc_bool,  % Add (sub)exercises and (sub)solutions to toc?
+  exetoc .initial:n = false,
+}
+
+\end{MacroCode}
+\end{option}
+
+
+
+\subsubsection{Aufzählungen, Nummerierungen}
+
+\begin{option}{itemizefg}
+\begin{option}{enumeratefg}
+\begin{option}{descriptionfg}
+Options of lists:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  itemizefg .tl_gset:N = \g_edu_itemizefg_tl,          % Color of itemize-labels
+  itemizefg .initial:n = black,
+  enumeratefg .tl_gset:N = \g_edu_enumeratefg_tl,      % Color of enumerate-labels
+  enumeratefg .initial:n = black,
+  descriptionfg .tl_gset:N = \g_edu_descriptionfg_tl,  % Color of description-labels
+  descriptionfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Parts, Überschriften, Unterüberschriften}
+
+\begin{option}{partnumbersize}
+\begin{option}{sectionnumbersize}
+\begin{option}{subsectionnumbersize}
+Sizes of sections:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  partnumbersize .tl_gset:N = \g_edu_partnumbersize_tl,              % Size of part numbers
+  partnumbersize .initial:n = \Large,
+  sectionnumbersize .tl_gset:N = \g_edu_sectionnumbersize_tl,        % Size of section numbers
+  sectionnumbersize .initial:n = \normalsize,
+  subsectionnumbersize .tl_gset:N = \g_edu_subsectionnumbersize_tl,  % Size of subsection numbers
+  subsectionnumbersize .initial:n = \footnotesize,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{partnumberfg}
+\begin{option}{partnumberbg}
+\begin{option}{partfg}
+\begin{option}{sectionnumberfg}
+\begin{option}{sectionnumberbg}
+\begin{option}{sectionfg}
+\begin{option}{subsectionnumberfg}
+\begin{option}{subsectionnumberbg}
+\begin{option}{subsectionfg}
+Styles of sections:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  partnumberfg .tl_gset:N = \g_edu_partnumberfg_tl,             % Foreground color of part numbers
+  partnumberfg .initial:n = white,
+  partnumberbg .tl_gset:N = \g_edu_partnumberbg_tl,             % Background color of part numbers
+  partnumberbg .initial:n = black,
+  partfg .tl_gset:N = \g_edu_partfg_tl,                         % Foreground color of parts
+  partfg .initial:n = black,
+  sectionnumberfg .tl_gset:N = \g_edu_sectionnumberfg_tl,       % Foreground color of section numbers
+  sectionnumberfg .initial:n = white,
+  sectionnumberbg .tl_gset:N = \g_edu_sectionnumberbg_tl,       % Background color of section numbers
+  sectionnumberbg .initial:n = black,
+  sectionfg .tl_gset:N = \g_edu_sectionfg_tl,                   % Foreground color of sections
+  sectionfg .initial:n = black,
+  subsectionnumberfg .tl_gset:N = \g_edu_subsectionnumberfg_tl, % Foreground color of subsection numbers
+  subsectionnumberfg .initial:n = white,
+  subsectionnumberbg .tl_gset:N = \g_edu_subsectionnumberbg_tl, % Background color of subsection numbers
+  subsectionnumberbg .initial:n = black,
+  subsectionfg .tl_gset:N = \g_edu_subsectionfg_tl,             % Foreground color of subsection
+  subsectionfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Hyperref}
+
+\begin{option}{colorlinks}
+\begin{option}{linkfg}
+\begin{option}{linkborderfg}
+Options of hyperrefs:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  colorlinks .bool_gset:N = \g_edu_colorlinks_bool,
+  colorlinks .initial:n = true,
+  linkfg .tl_gset:N = \g_edu_linkfg_tl,
+  linkfg .initial:n = black,
+  linkborderfg .tl_gset:N = \g_edu_linkborderfg_tl,
+  linkborderfg .initial:n = {1~0~0},
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Siehe Abschnitt, siehe Abbildung, etc.}
+
+\begin{option}{seelabel}
+\begin{option}{seeexerciselabel}
+\begin{option}{seefigurelabel}
+\begin{option}{seelistinglabel}
+\begin{option}{seesectionlabel}
+\begin{option}{seesolutionlabel}
+\begin{option}{seelabelsep}
+\begin{option}{seerefsep}
+\begin{option}{seeleft}
+\begin{option}{seeright}
+Options \cs{see}-commands:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  seelabel .tl_gset:N = \g_edu_seelabel_tl,% Label of 'see'
+  seelabel .initial:n = s.,
+  seeexerciselabel .tl_gset:N = \g_edu_seeexerciselabel_tl,% Label of 'exercise'
+  seeexerciselabel .initial:n = Aufg.,
+  seefigurelabel .tl_gset:N = \g_edu_seefigurelabel_tl,      % Label of 'figure'
+  seefigurelabel .initial:n = Abb.,
+  seelistinglabel .tl_gset:N = \g_edu_seelistinglabel_tl,    % Label of 'listing'
+  seelistinglabel .initial:n = List.,
+  seesectionlabel .tl_gset:N = \g_edu_seesectionlabel_tl,    % Label of 'section'
+  seesectionlabel .initial:n = Abschn.,
+  seesolutionlabel .tl_gset:N = \g_edu_seesolutionlabel_tl,  % Label of 'solution'
+  seesolutionlabel .initial:n = L\"os.,
+  seelabelsep .tl_gset:N = \g_edu_seelabelsep_tl,            % First seperator of 'see'
+  seelabelsep .initial:n = {\,},
+  seerefsep .tl_gset:N = \g_edu_seerefsep_tl,                % Second seperator of 'see'
+  seerefsep .initial:n = {\,},
+  seeleft .tl_gset:N = \g_edu_seeleft_tl,                    % Left delimiter of 'see'
+  seeleft .initial:n = (,
+  seeright .tl_gset:N = \g_edu_seeright_tl,                  % Right delimiter of 'see'
+  seeright .initial:n = ),
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Aufgaben angeben: S.\,X, Nr.\,Y}
+
+\begin{option}{pglabel}
+\begin{option}{nolabel}
+Options exercise references (in books):
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  pglabel .tl_gset:N = \g_edu_pglabel_tl,  % Label of page in 'pgno'
+  pglabel .initial:n = S.,
+  nolabel .tl_gset:N = \g_edu_nolabel_tl,  % Label of number in 'pgno'
+  nolabel .initial:n = Nr.,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Formatierungen}
+
+\begin{option}{cemphfg}
+Formatting options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
+  cemphfg .initial:n = wuSemiDarkRed,
+}
+
+\end{MacroCode}
+\end{option}
+
+
+\subsubsection{Symbole}
+
+\begin{option}{ccscale}
+\begin{option}{actionfg}
+\begin{option}{speechfg}
+Various options of symbols:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  ccscale .fp_gset:N = \g_edu_ccscale_fp,    % Scaling Creative Commons Icons
+  ccscale .initial:n = 1.5,
+  actionfg .tl_gset:N = \g_edu_actionfg_tl,  % Color of action-symbol
+  actionfg .initial:n = black,
+  speechfg .tl_gset:N = \g_edu_speechfg_tl,  % Color of speech-symbol
+  speechfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Themes}
+
+\begin{option}{colortheme}
+\begin{option}{styletheme}
+Option of color- and styletheme:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  colortheme .tl_gset:N = \g_edu_colortheme_tl, % Color zheme
+  colortheme .initial:n =,
+  styletheme .tl_gset:N = \g_edu_styletheme_tl, % Style theme
+  styletheme .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Grafik}
+
+\begin{option}{graphicspath}
+\begin{option}{tikzpath}
+Options of graphics:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  graphicspath .tl_gset:N = \g_edu_graphicspath_tl,  % Path to graphics
+  graphicspath .initial:n = img/,
+  tikzpath .tl_gset:N = \g_edu_tikzpath_tl,          % Path to pgf-files (for tikz)
+  tikzpath .initial:n = tikz/,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+
+\subsubsection{Aufgaben}
+
+\begin{option}{exelabel}
+\begin{option}{subexelabel}
+Labels of (sub-)exercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exelabel .tl_gset:N = \g_edu_exelabel_tl,
+  exelabel .initial:n = Aufgabe,
+  subexelabel .tl_gset:N = \g_edu_subexelabel_tl,
+  subexelabel .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{exenumberstyle}
+\begin{option}{exenumberseparator}
+\begin{option}{exelabelstyle}
+\begin{option}{exestyle}
+\begin{option}{exepointsstyle}
+Style of exercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exenumberstyle .tl_gset:N = \g_edu_exenumberstyle_tl,
+  exenumberstyle .initial:n = \footnotesize,
+  exenumberseparator .tl_gset:N = \g_edu_exenumberseparator_tl,
+  exenumberseparator .initial:n = .,
+  exelabelstyle .tl_gset:N = \g_edu_exelabelstyle_tl,
+  exelabelstyle .initial:n = \large\bfseries\sffamily,
+  exestyle .tl_gset:N = \g_edu_exestyle_tl,
+  exestyle .initial:n = \large\sffamily,
+  exepointsstyle .tl_gset:N = \g_edu_exepointsstyle_tl,
+  exepointsstyle .initial:n = \small\bfseries\sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{exenumberfg}
+\begin{option}{exenumberbg}
+\begin{option}{exelabelfg}
+\begin{option}{exelabelbg}
+\begin{option}{exefg}
+\begin{option}{exebg}
+\begin{option}{exepointsfg}
+Colors of exercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exenumberfg .tl_gset:N = \g_edu_exenumberfg_tl,
+  exenumberfg .initial:n = white,
+  exenumberbg .tl_gset:N = \g_edu_exenumberbg_tl,
+  exenumberbg .initial:n = black,
+  exelabelfg .tl_gset:N = \g_edu_exelabelfg_tl,
+  exelabelfg .initial:n = black,
+  exelabelbg .tl_gset:N = \g_edu_exelabelbg_tl,
+  exelabelbg .initial:n = white,
+  exefg .tl_gset:N = \g_edu_exefg_tl,
+  exefg .initial:n = black,
+  exebg .tl_gset:N = \g_edu_exebg_tl,
+  exebg .initial:n = white,
+  exepointsfg .tl_gset:N = \g_edu_exepointsfg_tl,
+  exepointsfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{subexenumberstyle}
+\begin{option}{subexenumberseparator}
+\begin{option}{subexelabelstyle}
+\begin{option}{subexestyle}
+\begin{option}{subexepointsstyle}
+Style of subexercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  subexenumberstyle .tl_gset:N = \g_edu_subexenumberstyle_tl,
+  subexenumberstyle .initial:n = \scriptsize,
+  subexenumberseparator .tl_gset:N = \g_edu_subexenumberseparator_tl,
+  subexenumberseparator .initial:n =,
+  subexelabelstyle .tl_gset:N = \g_edu_subexelabelstyle_tl,
+  subexelabelstyle .initial:n = \bfseries\sffamily,
+  subexestyle .tl_gset:N = \g_edu_subexestyle_tl,
+  subexestyle .initial:n = \sffamily,
+  subexepointsstyle .tl_gset:N = \g_edu_subexepointsstyle_tl,
+  subexepointsstyle .initial:n = \scriptsize\bfseries\sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{subexenumberfg}
+\begin{option}{subexenumberbg}
+\begin{option}{subexelabelfg}
+\begin{option}{subexelabelbg}
+\begin{option}{subexefg}
+\begin{option}{subexebg}
+\begin{option}{subexepointsfg}
+Colors of subexercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  subexenumberfg .tl_gset:N = \g_edu_subexenumberfg_tl,
+  subexenumberfg .initial:n = white,
+  subexenumberbg .tl_gset:N = \g_edu_subexenumberbg_tl,
+  subexenumberbg .initial:n = black,
+  subexelabelfg .tl_gset:N = \g_edu_subexelabelfg_tl,
+  subexelabelfg .initial:n = black,
+  subexelabelbg .tl_gset:N = \g_edu_subexelabelbg_tl,
+  subexelabelbg .initial:n = white,
+  subexefg .tl_gset:N = \g_edu_subexefg_tl,
+  subexefg .initial:n = black,
+  subexebg .tl_gset:N = \g_edu_subexebg_tl,
+  subexebg .initial:n = white,
+  subexepointsfg .tl_gset:N = \g_edu_subexepointsfg_tl,
+  subexepointsfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{multiexestyle}
+\begin{option}{multiexepointslabel}
+Style of multiexe-environments:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  multiexenumberstyle .tl_gset:N = \g_edu_multiexenumberstyle_tl,
+  multiexenumberstyle .initial:n =,
+  multiexepointsstyle .tl_gset:N = \g_edu_multiexepointsstyle_tl,
+  multiexepointsstyle .initial:n = \sffamily\footnotesize\bfseries,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\begin{option}{multiexenumberfg}
+\begin{option}{multiexepointsfg}
+Colors of multiexe-environments:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  multiexenumberfg .tl_gset:N = \g_edu_multiexenumberfg_tl,
+  multiexenumberfg .initial:n = black,
+  multiexepointsfg .tl_gset:N = \g_edu_multiexepointsfg_tl,
+  multiexepointsfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\begin{option}{multiexenumberleft}
+\begin{option}{multiexenumberright}
+Colors of multiexe-environments:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  multiexenumberleft .tl_gset:N = \g_edu_multiexenumberleft_tl,
+  multiexenumberleft .initial:n =,
+  multiexenumberright .tl_gset:N = \g_edu_multiexenumberright_tl,
+  multiexenumberright .initial:n = ),
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\begin{option}{exepointslabel}
+\begin{option}{subexepointslabel}
+\begin{option}{multiexepointslabel}
+Labels of points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exepointslabel .tl_gset:N = \g_edu_exepointslabel_tl,
+  exepointslabel .initial:n = \,P,
+  subexepointslabel .tl_gset:N = \g_edu_subexepointslabel_tl,
+  subexepointslabel .initial:n = \,P,
+  multiexepointslabel .tl_gset:N = \g_edu_multiexepointslabel_tl,
+  multiexepointslabel .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{exepointsleft}
+\begin{option}{exepointsright}
+\begin{option}{subexepointsleft}
+\begin{option}{subexepointsright}
+\begin{option}{multiexepointsleft}
+\begin{option}{multiexepointsright}
+Delimiter of points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exepointsleft .tl_gset:N = \g_edu_exepointsleft_tl,
+  exepointsleft .initial:n = [,
+  exepointsright .tl_gset:N = \g_edu_exepointsright_tl,
+  exepointsright .initial:n = ],
+  subexepointsleft .tl_gset:N = \g_edu_subexepointsleft_tl,
+  subexepointsleft .initial:n = [,
+  subexepointsright .tl_gset:N = \g_edu_subexepointsright_tl,
+  subexepointsright .initial:n = ],
+  multiexepointsleft .tl_gset:N = \g_edu_multiexepointsleft_tl,
+  multiexepointsleft .initial:n = [,
+  multiexepointsright .tl_gset:N = \g_edu_multiexepointsright_tl,
+  multiexepointsright .initial:n = ],
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{exebeforeskip}
+\begin{option}{exeafterskip}
+\begin{option}{subexebeforeskip}
+\begin{option}{subexeafterskip}
+\begin{option}{arraybeforeskip}
+\begin{option}{arrayafterskip}
+Skips before and after (sub-)exercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exebeforeskip .dim_gset:N = \g_edu_exebeforeskip_dim,
+  exeafterskip .dim_gset:N = \g_edu_exeafterskip_dim,
+  subexebeforeskip .dim_gset:N = \g_edu_subexebeforeskip_dim,
+  subexeafterskip .dim_gset:N = \g_edu_subexeafterskip_dim,
+  arraybeforeskip .dim_gset:N = \g_edu_arraybeforeskip_dim,
+  arrayafterskip .dim_gset:N = \g_edu_arrayafterskip_dim,
+}
+
+\__edu_keys_initial:n {
+  exebeforeskip = 2.25ex,
+  exeafterskip = 0.5ex,
+  subexebeforeskip = 1.5ex,
+  subexeafterskip = 0.5ex,
+  arraybeforeskip = 0.5\baselineskip,
+  arrayafterskip= 0.5\baselineskip
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Lösungen}
+
+\begin{option}{sollabel}
+\begin{option}{subsollabel}
+Labels of (sub-)solutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  sollabel .tl_gset:N = \g_edu_sollabel_tl,
+  sollabel .initial:n = {L\"osung},
+  subsollabel .tl_gset:N = \g_edu_subsollabel_tl,
+  subsollabel .initial:n = ,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{solnumberstyle}
+\begin{option}{solnumberseparator}
+\begin{option}{sollabelstyle}
+\begin{option}{solstyle}
+Style of solutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  solnumberstyle .tl_gset:N = \g_edu_solnumberstyle_tl,
+  solnumberstyle .initial:n = \footnotesize,
+  solnumberseparator .tl_gset:N = \g_edu_solnumberseparator_tl,
+  solnumberseparator .initial:n = .,
+  sollabelstyle .tl_gset:N = \g_edu_sollabelstyle_tl,
+  sollabelstyle .initial:n = \large\bfseries\sffamily,
+  solstyle .tl_gset:N = \g_edu_solstyle_tl,
+  solstyle .initial:n = \large\sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{solnumberfg}
+\begin{option}{solnumberbg}
+\begin{option}{sollabelfg}
+\begin{option}{sollabelbg}
+\begin{option}{solfg}
+\begin{option}{solbg}
+Colors of solutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  solnumberfg .tl_gset:N = \g_edu_solnumberfg_tl,
+  solnumberfg .initial:n = white,
+  solnumberbg .tl_gset:N = \g_edu_solnumberbg_tl,
+  solnumberbg .initial:n = black,
+  sollabelfg .tl_gset:N = \g_edu_sollabelfg_tl,
+  sollabelfg .initial:n = black,
+  sollabelbg .tl_gset:N = \g_edu_sollabelbg_tl,
+  sollabelbg .initial:n = white,
+  solfg .tl_gset:N = \g_edu_solfg_tl,
+  solfg .initial:n = black,
+  solbg .tl_gset:N = \g_edu_solbg_tl,
+  solbg .initial:n = white,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{subsolnumberstyle}
+\begin{option}{subsolnumberseparator}
+\begin{option}{subsollabelstyle}
+\begin{option}{subsolstyle}
+Style of subsolutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  subsolnumberstyle .tl_gset:N = \g_edu_subsolnumberstyle_tl,
+  subsolnumberstyle .initial:n = \scriptsize,
+  subsolnumberseparator .tl_gset:N = \g_edu_subsolnumberseparator_tl,
+  subsolnumberseparator .initial:n = ,
+  subsollabelstyle .tl_gset:N = \g_edu_subsollabelstyle_tl,
+  subsollabelstyle .initial:n = \bfseries\sffamily,
+  subsolstyle .tl_gset:N = \g_edu_subsolstyle_tl,
+  subsolstyle .initial:n = \sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{subsolnumberfg}
+\begin{option}{subsolnumberbg}
+\begin{option}{subsollabelfg}
+\begin{option}{subsollabelbg}
+\begin{option}{subsolfg}
+\begin{option}{subsolbg}
+Colors of subsolutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  subsolnumberfg .tl_gset:N = \g_edu_subsolnumberfg_tl,
+  subsolnumberfg .initial:n = white,
+  subsolnumberbg .tl_gset:N = \g_edu_subsolnumberbg_tl,
+  subsolnumberbg .initial:n = black,
+  subsollabelfg .tl_gset:N = \g_edu_subsollabelfg_tl,
+  subsollabelfg .initial:n = black,
+  subsollabelbg .tl_gset:N = \g_edu_subsollabelbg_tl,
+  subsollabelbg .initial:n = white,
+  subsolfg .tl_gset:N = \g_edu_subsolfg_tl,
+  subsolfg .initial:n = black,
+  subsolbg .tl_gset:N = \g_edu_subsolbg_tl,
+  subsolbg .initial:n = white,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{solbeforeskip}
+\begin{option}{solafterskip}
+\begin{option}{subsolbeforeskip}
+\begin{option}{subsolafterskip}
+Skips before and after (sub-)solutions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  solbeforeskip .dim_gset:N = \g_edu_solbeforeskip_dim,
+  solafterskip .dim_gset:N = \g_edu_solafterskip_dim,
+  subsolbeforeskip .dim_gset:N = \g_edu_subsolbeforeskip_dim,
+  subsolafterskip .dim_gset:N = \g_edu_subsolafterskip_dim,
+}
+
+\__edu_keys_initial:n {
+  solbeforeskip = 2.25ex,
+  solafterskip = 0.5ex,
+  subsolbeforeskip = 1.5ex,
+  subsolafterskip = 0.5ex,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+
+\subsubsection{Lösungen in Aufgaben}
+
+\begin{option}{showresults}
+\begin{option}{resultfg}
+\begin{option}{resultrule}
+\begin{option}{resultrulelength}
+Delimiter of points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  showresults .bool_gset:N = \g_edu_showresults_bool,
+  showresults .initial:n = false,
+  resultfg .tl_gset:N = \g_edu_resultfg_tl,
+  resultfg .initial:n = gray,
+  resultrule .dim_gset:N = \g_edu_resultrule_dim,
+  resultrule .initial:n = 0.4pt,
+  resultrulelength .dim_gset:N = \g_edu_resultrulelength_dim,
+  resultrulelength .initial:n = 5cm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Fragen}
+
+\begin{option}{questlabel}
+\begin{option}{questpointslabel}
+Label of questions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questlabel .tl_gset:N = \g_edu_questlabel_tl,
+  questlabel .initial:n = Frage,
+  questpointslabel .tl_gset:N = \g_edu_questpointslabel_tl,
+  questpointslabel .initial:n = \,P,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{questlabelstyle}
+\begin{option}{queststyle}
+\begin{option}{questpointsstyle}
+Style of questions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questlabelstyle .tl_gset:N = \g_edu_questlabelstyle_tl,
+  questlabelstyle .initial:n = \sffamily\bfseries\small,
+  queststyle .tl_gset:N = \g_edu_queststyle_tl,
+  queststyle .initial:n = \sffamily\small,
+  questpointsstyle .tl_gset:N = \g_edu_questpointsstyle_tl,
+  questpointsstyle .initial:n = \sffamily\small,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{questlabelfg}
+\begin{option}{questmclabelfg}
+Colors of questions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questlabelfg .tl_gset:N = \g_edu_questlabelfg_tl,
+  questlabelfg .initial:n = black,
+  questmclabelfg .tl_gset:N = \g_edu_questmclabelfg_tl,
+  questmclabelfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{questpointsleft}
+\begin{option}{questpointsright}
+Delimiter of question points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questpointsleft .tl_gset:N = \g_edu_questpointsleft_tl,
+  questpointsleft .initial:n = [,
+  questpointsright .tl_gset:N = \g_edu_questpointsright_tl,
+  questpointsright .initial:n = ],
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{questpointssep}
+\begin{option}{questsep}
+Space before and after question points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questpointssep .dim_gset:N = \g_edu_questpointssep_dim,
+  questpointssep .initial:n = 0.25em,
+  questsep .dim_gset:N = \g_edu_questsep_dim,
+  questsep .initial:n = 0.5em,
+}
+
+\__edu_keys_initial:n {questpointssep = 0.25em}
+\__edu_keys_initial:n {questsep = 0.5em}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{questbeforeskip}
+\begin{option}{questafterskip}
+Skips before and after questions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  questbeforeskip .dim_gset:N = \g_edu_questbeforeskip_dim,
+  questbeforeskip .initial:n = 1ex,
+  questafterskip .dim_gset:N = \g_edu_questafterskip_dim,
+  questafterskip .initial:n = 0ex,
+}
+
+\__edu_keys_initial:n {questbeforeskip = 1ex}
+\__edu_keys_initial:n {questafterskip = 0ex}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Notizen}
+
+
+\begin{option}{shownotes}
+\begin{option}{notetstyle}
+\begin{option}{notehrule}
+\begin{option}{notetfg}
+\begin{option}{notehrfg}
+Skips before and after questions:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  shownotes .bool_gset:N = \g_edu_shownotes_bool,
+  shownotes .initial:n = true,
+  notetstyle .tl_gset:N = \g_edu_notetstyle_tl,
+  notetstyle .initial:n = \sffamily,
+  notehrule .dim_gset:N = \g_edu_notehrule_dim,
+  notehrule .initial:n = 0.4pt,
+  notetfg .tl_gset:N = \g_edu_notetfg_tl,
+  notetfg .initial:n = wuRed,
+  notehrfg .tl_gset:N = \g_edu_notehrfg_tl,
+  notehrfg .initial:n = wuRed,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+
+
+\subsubsection{Unterrichtsablauf}
+
+First, options of the timetable:
+
+\begin{option}{ttendtime}
+Display ending time of lesson:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  ttendtime .bool_gset:N = \g_edu_ttendtime_bool,
+  ttendtime .initial:n = true,
+}
+
+\end{MacroCode}
+\end{option}
+
+\begin{option}{tttimelabel}
+\begin{option}{ttstagelabel}
+\begin{option}{ttactivitylabel}
+\begin{option}{ttmethodlabel}
+\begin{option}{ttmedialabel}
+Column labels:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  tttimelabel .tl_gset:N = \g_edu_tttimelabel_tl,
+  tttimelabel .initial:n = Zeit,
+  ttstagelabel .tl_gset:N = \g_edu_ttstagelabel_tl,
+  ttstagelabel .initial:n = Phase,
+  ttactivitylabel .tl_gset:N = \g_edu_ttactivitylabel_tl,
+  ttactivitylabel .initial:n = Ablauf,
+  ttmethodlabel .tl_gset:N = \g_edu_ttmethodlabel_tl,
+  ttmethodlabel .initial:n = Methoden,
+  ttmedialabel .tl_gset:N = \g_edu_ttmedialabel_tl,
+  ttmedialabel .initial:n = Medien/Material,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{tttimewidth}
+\begin{option}{ttstagewidth}
+\begin{option}{ttmethodwidth}
+\begin{option}{ttmediawidth}
+Column widths (normal):
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  tttimewidth .dim_gset:N = \g_edu_tttimewidth_dim,
+  tttimewidth .initial:n = 1cm,
+  ttstagewidth .dim_gset:N = \g_edu_ttstagewidth_dim,
+  ttstagewidth .initial:n = 2.25cm,
+  ttmethodwidth .dim_gset:N = \g_edu_ttmethodwidth_dim,
+  ttmethodwidth .initial:n = 2cm,
+  ttmediawidth .dim_gset:N = \g_edu_ttmediawidth_dim,
+  ttmediawidth .initial:n = 2.75cm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{tttimewidthlscape}
+\begin{option}{ttstagewidthlscape}
+\begin{option}{ttmethodwidthlscape}
+\begin{option}{ttmediawidthlscape}
+Column widths (landscape):
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  tttimewidthlscape .dim_gset:N = \g_edu_tttimewidthlscape_dim,
+  tttimewidthlscape .initial:n = 1cm,
+  ttstagewidthlscape .dim_gset:N = \g_edu_ttstagewidthlscape_dim,
+  ttstagewidthlscape .initial:n = 3.5cm,
+  ttmethodwidthlscape .dim_gset:N = \g_edu_ttmethodwidthlscape_dim,
+  ttmethodwidthlscape .initial:n = 3.5cm,
+  ttmediawidthlscape .dim_gset:N = \g_edu_ttmediawidthlscape_dim,
+  ttmediawidthlscape .initial:n = 3.5cm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{ttshowtime}
+\begin{option}{ttentrytimelabel}
+Various options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  ttshowtime .bool_gset:N = \g_edu_ttshowtime_bool,
+  ttshowtime .initial:n = true,
+  ttentrytimelabel .tl_gset:N = \g_edu_ttentrytimelabel_tl,
+  ttentrytimelabel .initial:n = ,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+Options of sequence-lists:
+
+\begin{option}{ttshowtime}
+\begin{option}{ttentrytimelabel}
+Labels of teachers and students:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  seqteacherlabel .tl_gset:N = \g_edu_seqteacherlabel_tl,
+  seqteacherlabel .initial:n = L,
+  seqstudentlabel .tl_gset:N = \g_edu_seqstudentlabel_tl,
+  seqstudentlabel .initial:n = S,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{seqteacherstyle}
+\begin{option}{seqetudentstyle}
+Style of labels:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  seqteacherstyle .tl_gset:N = \g_edu_seqteacherstyle_tl,
+  seqteacherstyle .initial:n = \sffamily\bfseries,
+  seqetudentstyle .tl_gset:N = \g_edu_seqetudentstyle_tl,
+  seqetudentstyle .initial:n = \sffamily\bfseries,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{seqteacherfg}
+\begin{option}{seqstudentfg}
+Colors of labels:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  seqteacherfg .tl_gset:N = \g_edu_seqteacherfg_tl,
+  seqteacherfg .initial:n = black,
+  seqstudentfg .tl_gset:N = \g_edu_seqstudentfg_tl,
+  seqstudentfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+\subsubsection{Tafelbild}
+
+\begin{option}{bbstyle}
+\begin{option}{bbfontsize}
+\begin{option}{bbbaselineoffset}
+\begin{option}{bbheight}
+Options of blackboard:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  bbstyle .tl_gset:N = \g_edu_bbstyle_tl,
+  bbstyle .initial:n = \sffamily,
+  bbfontsize .dim_gset:N = \g_edu_bbfontsize_dim,
+  bbfontsize .initial:n = 8pt,
+  bbbaselineoffset .dim_gset:N = \g_edu_bbbaselineoffset_dim,
+  bbbaselineoffset .initial:n = 1pt,
+  bbheight .dim_gset:N = \g_edu_bbheight_dim,
+  bbheight .initial:n = 0.25\linewidth - 2\fboxsep,
+}
+
+\__edu_keys_initial:n {bbheight = 0.25\linewidth - 2\fboxsep}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Mathematik}
+
+\begin{option}{commasep}
+\begin{option}{amsoptions}
+Basic math options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  commasep .bool_gset:N = \g_edu_commasep_bool,    % Comma as separator
+  commasep .initial:n = true,
+  amsoptions .tl_gset:N = \g_edu_amsoptions_tl,  % Pass options to amsmath-package
+  amsoptions .initial:n = intlimits,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{amsthm}
+\begin{option}{framedthm}
+\begin{option}{thmbox}
+\begin{option}{thmimpnumbered}
+\begin{option}{thmunimpnumbered}
+Basic math options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  amsthm .bool_gset:N = \g_edu_amsthm_bool,                      % Predefine amsthm theorems
+  amsthm .initial:n = true,
+  framedthm .bool_gset:N = \g_edu_framedthm_bool,                % Predefine thmbox theorems
+  framedthm .initial:n = true,
+  thmbox .bool_gset:N = \g_edu_thmbox_bool,                      % Predefine framed theorems
+  thmbox .initial:n = false,
+  thmimpnumbered .bool_gset:N = \g_edu_thmimpnumbered_bool,      % Number important theorems
+  thmimpnumbered .initial:n = false,
+  thmunimpnumbered .bool_gset:N = \g_edu_thmunimpnumbered_bool,  % Number unimportant theorems
+  thmunimpnumbered .initial:n = false,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+
+
+
+\begin{option}{thmlabelfg}
+\begin{option}{thmframestyle}
+\begin{option}{thmframefg}
+\begin{option}{thmframebg}
+
+Basic style options of theorem-like environments:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  thmlabelfg .tl_gset:N = \g_edu_thmlabelfg_tl,        % Color of theorem labels
+  thmlabelfg .initial:n = black,
+  thmframefg .tl_gset:N = \g_edu_thmframefg_tl,        % Color of framed theorem frame.
+  thmframefg .initial:n = wuDarkerGray,
+  thmframebg .tl_gset:N = \g_edu_thmframebg_tl,        % Color of framed theorem background.
+  thmframebg .initial:n = wuLightGray,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{thmimplabelstyle}
+\begin{option}{thmimpnotestyle}
+\begin{option}{thmimpbodystyle}
+Style of important theorems:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  thmimplabelstyle .tl_gset:N = \g_edu_thmimplabelstyle_tl,  % Style of heads
+  thmimplabelstyle .initial:n = \sffamily\bfseries,
+  thmimpnotestyle .tl_gset:N = \g_edu_thmimpnotestyle_tl,  % Style of notes
+  thmimpnotestyle .initial:n = \sffamily\bfseries,
+  thmimpbodystyle .tl_gset:N = \g_edu_thmimpbodystyle_tl,  % Style of bodies
+  thmimpbodystyle .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{thmunimplabelstyle}
+\begin{option}{thmunimpnotestyle}
+\begin{option}{thmunimpbodystyle}
+Style of unimportant theorems:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  thmunimplabelstyle .tl_gset:N = \g_edu_thmunimplabelstyle_tl,  % Style of heads
+  thmunimplabelstyle .initial:n = \sffamily\bfseries,
+  thmunimpnotestyle .tl_gset:N = \g_edu_thmunimpnotestyle_tl,  % Style of notes
+  thmunimpnotestyle .initial:n = \sffamily,
+  thmunimpbodystyle .tl_gset:N = \g_edu_thmunimpbodystyle_tl,  % Style of bodies
+  thmunimpbodystyle .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{thmdefinitionlabel}
+\begin{option}{thmdefitheolabel}
+\begin{option}{thmexamplelabel}
+\begin{option}{thmexampleexelabel}
+\begin{option}{thmhintlabel}
+\begin{option}{thmremarklabel}
+\begin{option}{thmsolutionlabel}
+\begin{option}{thmtheoremlabel}
+Labels of theorems:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  thmdefinitionlabel .tl_gset:N = \g_edu_thmdefinitionlabel_tl,
+  thmdefinitionlabel .initial:n = Definition,
+  thmdefitheolabel .tl_gset:N = \g_edu_thmdefitheolabel_tl,
+  thmdefitheolabel .initial:n = Definition/Satz,
+  thmexamplelabel .tl_gset:N = \g_edu_thmexamplelabel_tl,
+  thmexamplelabel .initial:n = Beispiel,
+  thmexampleexelabel .tl_gset:N = \g_edu_thmexampleexelabel_tl,
+  thmexampleexelabel .initial:n = Beispielaufgabe,
+  thmhintlabel .tl_gset:N = \g_edu_thmhintlabel_tl,
+  thmhintlabel .initial:n = Hinweis,
+  thmremarklabel .tl_gset:N = \g_edu_thmremarklabel_tl,
+  thmremarklabel .initial:n = Bemerkung,
+  thmsolutionlabel .tl_gset:N = \g_edu_thmsolutionlabel_tl,
+  thmsolutionlabel .initial:n = L\"osung,
+  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
+  thmtheoremlabel .initial:n = Satz,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Informatik}
+
+\begin{option}{lstnumberfg}
+\begin{option}{lstkeywordfg}
+\begin{option}{lstrulefg}
+Options of listings:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  lstnumberfg .tl_gset:N = \g_edu_lstnumberfg_tl,
+  lstnumberfg .initial:n = black,
+  lstkeywordfg .tl_gset:N = \g_edu_lstkeywordfg_tl,
+  lstkeywordfg .initial:n = black,
+  lstrulefg .tl_gset:N = \g_edu_lstrulefg_tl,
+  lstrulefg .initial:n = gray,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\subsubsection{Undefinierte Optionen}
+
+\begin{MacroCode}{class}
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{scrartcl}%
+}
+
+\end{MacroCode}
+
+
+\subsubsection{Optionen verarbeiten}
+
+\begin{MacroCode}{class}
+\ProcessOptions              % LaTeX-Basics (for \PassOptionsToClass)
+\ProcessKeysOptions{edu}  % l3keys2e options
+
+\end{MacroCode}
+
+
+\subsection{Basisklasse und Packages laden}
+
+Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entnehmen.
+
+\subsubsection{Basisklasse}
+
+\begin{MacroCode}{class}
+\LoadClass{scrartcl}
+
+\end{MacroCode}
+
+
+\subsubsection{Grundlegende Packages}
+
+\begin{MacroCode}{class}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[ngerman]{babel}
+
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
+
+\end{MacroCode}
+
+
+\subsubsection{Layout/Typographie}
+
+\begin{MacroCode}{class}
+\RequirePackage{booktabs}
+\RequirePackage{ccicons}
+\RequirePackage{enumitem}
+\RequirePackage{eurosym}                                           % Euro-Sign
+\RequirePackage{expdlist}
+\RequirePackage{geometry}
+\RequirePackage[notcomma, notperiod, notquote, notquery]{hanging}  % Hanging indention of multiexe
+\RequirePackage{lastpage}                                          % Number of pages with
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{pdflscape}
+\RequirePackage{pifont}
+\RequirePackage[newcommands]{ragged2e}
+\RequirePackage{rotating}
+\RequirePackage{scrpage2}
+\RequirePackage{setspace}
+\RequirePackage{siunitx}
+\RequirePackage{tabularx}
+\RequirePackage[nobottomtitles*]{titlesec}
+\RequirePackage{xspace}
+
+\end{MacroCode}
+
+
+\subsubsection{Graphik}
+
+
+\begin{MacroCode}{class}
+\RequirePackage{graphicx}
+\RequirePackage[svgnames]{xcolor}
+\RequirePackage{subfig}
+\RequirePackage{tikz}
+
+\end{MacroCode}
+
+
+\subsubsection{Style- und Color-Themes}
+
+\begin{MacroCode}{class}
+\AtEndPreamble{
+\tl_if_empty:NF \g_edu_colortheme_tl {
+  \RequirePackage{edu-colors-\g_edu_colortheme_tl}
+}
+
+\tl_if_empty:NF \g_edu_styletheme_tl {
+  \RequirePackage{edu-styles-\g_edu_styletheme_tl}
+}
+}
+
+
+
+\end{MacroCode}
+
+
+\subsubsection{Mathematik}
+
+\begin{MacroCode}{class}
+\RequirePackage[\g_edu_amsoptions_tl]{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{cancel}
+\RequirePackage{esvect}
+\RequirePackage{gauss}
+\RequirePackage{polynom}
+\RequirePackage{thmtools}
+\RequirePackage[only, lightning]{stmaryrd}
+
+\end{MacroCode}
+
+
+\subsubsection{Computer Science}
+
+\begin{MacroCode}{class}
+\RequirePackage{listings}
+
+\end{MacroCode}
+
+
+\subsubsection{Sonstige}
+
+\begin{MacroCode}{class}
+\RequirePackage{bibgerm}
+\RequirePackage{hyperref}
+
+\end{MacroCode}
+
+
+\subsection{Schriften}
+
+\subsubsection{Schriftarten}
+
+Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schrift verwendet:
+
+\begin{MacroCode}{class}
+\bool_if:NT \g_edu_transparency_bool {
+  \keys_set:nn {edu} {
+    sfdefault = true
+  }
+}
+
+\end{MacroCode}
+
+Mithilfe von \opt{sfdefault} kann \cs{sfdefault} als Standardschrift verwendet werden. Die Symbole für Formeln werden dann einzeln angegeben, da das Einbinden von  \textsf{cmbright} zu einem Fehler führt, wenn man innerhalb des Dokuments die Schriftgrö\T1\ss e ändert, was bei \opt{transparency} der Fall ist (\Macro\KOMAoption{fontsize}{22pt}). Es sollten alle Mathesymbole (inkl. griechischer Buchstaben) serifenlos gesetzt werden. Nur gro\T1\ss e Operatoren (Summe, Integral) sind nicht serifenlos vorhanden.
+
+\begin{MacroCode}{class}
+\bool_if:NT \g_edu_sfdefault_bool {
+  \renewcommand{\familydefault}{\sfdefault}
+
+  \DeclareSymbolFont      {operators} {OT1}{cmbr}{m}{n}
+  \DeclareSymbolFont        {letters} {OML}{cmbrm}{m}{it}
+  \SetSymbolFont      {letters}{bold} {OML}{cmbrm}{b}{it}
+
+  \DeclareSymbolFont        {symbols} {OMS}{cmbrs}{m}{n}
+  \DeclareMathAlphabet{\mathit} {OT1}{cmbr}{m}{sl}
+  \DeclareMathAlphabet{\mathbf} {OT1}{cmbr}{bx}{n}
+  \DeclareMathAlphabet{\mathtt} {OT1}{cmtl}{m}{n}
+  \DeclareMathAlphabet{\mathbold}{OML}{cmbrm}{b}{it}
+
+  \DeclareMathSymbol{\alpha}{\mathalpha}{letters}{11}
+  \DeclareMathSymbol{\beta}{\mathalpha}{letters}{12}
+  \DeclareMathSymbol{\gamma}{\mathalpha}{letters}{13}
+  \DeclareMathSymbol{\delta}{\mathalpha}{letters}{14}
+  \DeclareMathSymbol{\epsilon}{\mathalpha}{letters}{15}
+  \DeclareMathSymbol{\zeta}{\mathalpha}{letters}{16}
+  \DeclareMathSymbol{\eta}{\mathalpha}{letters}{17}
+  \DeclareMathSymbol{\theta}{\mathalpha}{letters}{18}
+  \DeclareMathSymbol{\iota}{\mathalpha}{letters}{19}
+  \DeclareMathSymbol{\kappa}{\mathalpha}{letters}{20}
+  \DeclareMathSymbol{\lambda}{\mathalpha}{letters}{21}
+  \DeclareMathSymbol{\mu}{\mathalpha}{letters}{22}
+  \DeclareMathSymbol{\nu}{\mathalpha}{letters}{23}
+  \DeclareMathSymbol{\xi}{\mathalpha}{letters}{24}
+  \DeclareMathSymbol{\pi}{\mathalpha}{letters}{25}
+  \DeclareMathSymbol{\rho}{\mathalpha}{letters}{26}
+  \DeclareMathSymbol{\sigma}{\mathalpha}{letters}{27}
+  \DeclareMathSymbol{\tau}{\mathalpha}{letters}{28}
+  \DeclareMathSymbol{\upsilon}{\mathalpha}{letters}{29}
+  \DeclareMathSymbol{\phi}{\mathalpha}{letters}{30}
+  \DeclareMathSymbol{\chi}{\mathalpha}{letters}{31}
+  \DeclareMathSymbol{\psi}{\mathalpha}{letters}{32}
+  \DeclareMathSymbol{\omega}{\mathalpha}{letters}{33}
+  \DeclareMathSymbol{\varepsilon}{\mathalpha}{letters}{34}
+  \DeclareMathSymbol{\vartheta}{\mathalpha}{letters}{35}
+  \DeclareMathSymbol{\varpi}{\mathalpha}{letters}{36}
+  \DeclareMathSymbol{\varrho}{\mathalpha}{letters}{37}
+  \DeclareMathSymbol{\varsigma}{\mathalpha}{letters}{38}
+  \DeclareMathSymbol{\varphi}{\mathalpha}{letters}{39}
+}
+
+\end{MacroCode}
+
+Au\T1\ss erdem können die Standardschriftarten mithilfe der entsprechenden Optionen geändert werden:
+
+\begin{MacroCode}{class}
+\renewcommand{\rmdefault}{\g_edu_rmfont_tl}
+\renewcommand{\sfdefault}{\g_edu_sffont_tl}
+\renewcommand{\ttdefault}{\g_edu_ttfont_tl}
+
+\end{MacroCode}
+
+Über die Optionen \opt{palatino}, \opt{lato} und \opt{beramono} können diese als Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
+
+\begin{MacroCode}{class}
+\bool_if:NT \g_edu_beramono_bool {
+  \RequirePackage[scaled=0.85]{beramono}
+}
+
+\bool_if:nT {\g_edu_lato_bool || \str_if_eq_p:nn {\g_edu_sffont_tl}{fla}}  {
+  \RequirePackage[defaultsans]{lato}
+  \keys_set:nn {edu}{
+    sffont = fla
+  }
+}
+
+\bool_if:nT {\g_edu_palatino_bool && !\g_edu_sfdefault_bool} {
+  \RequirePackage{mathpazo}
+  \keys_set:nn {edu} {
+    rmfont = ppl
+  }
+}
+
+\bool_if:NT \g_edu_sourcecodepro_bool {
+  \RequirePackage{sourcecodepro}
+}
+
+\bool_if:NT \g_edu_sourcesanspro_bool {
+  \RequirePackage[scale=0.96]{sourcesanspro}
+}
+
+\end{MacroCode}
+
+
+\subsubsection{Schriftgrö\T1\ss e}
+
+Bei Verwendung der Option \opt{twuop} wird die Schriftgrö\T1\ss e des gesamten Dokuments angepasst. Die Option \opt{transparency} wird gesondert verarbeitet.
+
+\begin{MacroCode}{class}
+
+\AtBeginDocument{
+  \bool_if:NTF \g_edu_twoup_bool {
+    \KOMAoptions{fontsize=\dim_use:N \g_edu_twoupfontsize_dim}
+  }{
+  \KOMAoptions{fontsize=\dim_use:N \g_edu_fontsize_dim}
+  }
+}
+
+\end{MacroCode}
+
+
+
+\subsection{Metadaten}
+
+\begin{macro*}{\g_edu_author_tl}
+\begin{macro*}{\g_edu_class_tl}
+\begin{macro*}{\g_edu_date_tl}
+\begin{macro*}{\g_edu_email_tl}
+\begin{macro*}{\g_edu_field_tl}
+\begin{macro*}{\g_edu_group_tl}
+\begin{macro*}{\g_edu_license_tl}
+\begin{macro*}{\g_edu_subject_tl}
+\begin{macro*}{\g_edu_subtitle_tl}
+\begin{macro*}{\g_edu_title_tl}
+\begin{macro*}{\g_edu_version_tl}
+\begin{MacroCode}{class}
+
+\tl_new:N \g_edu_author_tl
+\tl_new:N \g_edu_class_tl
+\tl_new:N \g_edu_date_tl
+\tl_new:N \g_edu_email_tl
+\tl_new:N \g_edu_field_tl
+\tl_new:N \g_edu_group_tl
+\tl_new:N \g_edu_license_tl
+\tl_new:N \g_edu_subject_tl
+\tl_new:N \g_edu_subtitle_tl
+\tl_new:N \g_edu_title_tl
+\tl_new:N \g_edu_version_tl
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+
+\begin{macro*}{\g_edu_authorshort_tl}
+\begin{macro*}{\g_edu_classshort_tl}
+\begin{macro*}{\g_edu_dateshort_tl}
+\begin{macro*}{\g_edu_emailshort_tl}
+\begin{macro*}{\g_edu_fieldshort_tl}
+\begin{macro*}{\g_edu_groupshort_tl}
+\begin{macro*}{\g_edu_licenseshort_tl}
+\begin{macro*}{\g_edu_subjectshort_tl}
+\begin{macro*}{\g_edu_subtitleshort_tl}
+\begin{macro*}{\g_edu_titleshort_tl}
+\begin{macro*}{\g_edu_versionshort_tl}
+\begin{MacroCode}{class}
+
+\tl_new:N \g_edu_authorshort_tl
+\tl_new:N \g_edu_classshort_tl
+\tl_new:N \g_edu_dateshort_tl
+\tl_new:N \g_edu_emailshort_tl
+\tl_new:N \g_edu_fieldshort_tl
+\tl_new:N \g_edu_groupshort_tl
+\tl_new:N \g_edu_licenseshort_tl
+\tl_new:N \g_edu_subjectshort_tl
+\tl_new:N \g_edu_subtitleshort_tl
+\tl_new:N \g_edu_titleshort_tl
+\tl_new:N \g_edu_versionshort_tl
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+
+
+\begin{macro}{\author}[2]{[<author short>]}{<author>}
+\begin{macro}{\class}[2]{[<class short>]}{<class>}
+\begin{macro}{\date}[2]{[<date short>]}{<date>}
+\begin{macro}{\email}[2]{[<email short>]}{<email>}
+\begin{macro}{\field}[2]{[<field short>]}{<field>}
+\begin{macro}{\group}[2]{[<group short>]}{<group>}
+\begin{macro}{\license}[2]{[<license short>]}{<license>}
+\begin{macro}{\subject}[2]{[<subject short>]}{<subject>}
+\begin{macro}{\subtitle}[2]{[<subtitle short>]}{<subtitle>}
+\begin{macro}{\title}[2]{[<title short>]}{<title>}
+\begin{macro}{\version}[2]{[<version short>]}{<version>}
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \author {o m} {
+  \tl_gset:Nn \g_edu_author_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_authorshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_authorshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \class {o m} {
+  \tl_gset:Nn \g_edu_class_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_classshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_classshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \date {o m} {
+  \tl_gset:Nn \g_edu_date_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_dateshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_dateshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \email {o m} {
+  \tl_gset:Nn \g_edu_email_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_emailshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_emailshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \field {o m} {
+  \tl_gset:Nn \g_edu_field_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_fieldshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_fieldshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \group {o m} {
+  \tl_gset:Nn \g_edu_group_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_groupshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_groupshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \license {o m} {
+  \tl_gset:Nn \g_edu_license_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_licenseshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_licenseshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \subject {o m} {
+  \tl_gset:Nn \g_edu_subject_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_subjectshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_subjectshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \subtitle {o m} {
+  \tl_gset:Nn \g_edu_subtitle_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_subtitleshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_subtitleshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \title {o m} {
+  \tl_gset:Nn \g_edu_title_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_titleshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_titleshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \version {o m} {
+  \tl_gset:Nn \g_edu_version_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_versionshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_versionshort_tl {#1}
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+
+
+\subsection{Hyperref}
+
+
+\begin{macro*}{\g__edu_pdftitletemp_tl}
+\begin{macro*}{\g__edu_pdfsubjecttemp_tl}
+First, document title and subject are created.
+\begin{MacroCode}{class}
+\tl_new:N \g__edu_pdftitletemp_tl
+\tl_gset:Nn \g__edu_pdftitletemp_tl {\g_edu_title_tl}
+
+\tl_new:N \g__edu_pdfsubjecttemp_tl
+
+\AtEndPreamble{
+
+\tl_if_empty:NF \g_edu_subtitle_tl {
+  \tl_gput_right:Nn \g__edu_pdftitletemp_tl {
+    \ --~\g_edu_subtitle_tl
+  }
+}
+
+\tl_if_empty:NF \g_edu_subject_tl {
+  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+    \g_edu_subject_tl
+  }
+}
+
+\bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
+  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+    :~
+  }
+}
+
+\tl_if_empty:NF \g_edu_field_tl {
+  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+    \g_edu_field_tl
+  }
+}
+
+\tl_if_empty:NF \g_edu_class_tl {
+  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+    \ (\g_edu_class_tl)
+  }
+}
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+
+Then, \pkg{hyperref} is configured:
+
+\begin{MacroCode}{class}
+  \hypersetup{
+    breaklinks=false,
+    linkcolor=\g_edu_linkfg_tl,
+    citecolor=\g_edu_linkfg_tl,
+    filecolor=\g_edu_linkfg_tl,
+    urlcolor=\g_edu_linkfg_tl,
+    linkbordercolor=\tl_use:N \g_edu_linkborderfg_tl,
+    citebordercolor=\tl_use:N \g_edu_linkborderfg_tl,
+    filebordercolor=\tl_use:N \g_edu_linkborderfg_tl,
+    urlbordercolor=\tl_use:N \g_edu_linkborderfg_tl,
+    pdftitle={\g__edu_pdftitletemp_tl},
+    pdfauthor={\g_edu_author_tl},
+    pdfsubject={\g__edu_pdfsubjecttemp_tl},
+    linktocpage=true,
+  }%
+
+  \bool_if:NTF \g_edu_colorlinks_bool {
+    \hypersetup{colorlinks=true}
+  }{
+    \hypersetup{colorlinks=false}
+  }
+} % AtEndPreamble
+
+\end{MacroCode}
+
+
+\subsection{Layout}
+
+\subsubsection{Allgemeine Einstellungen}
+
+\begin{MacroCode}{class}
+\setlength{\columnsep}{0.75cm}
+
+\end{MacroCode}
+
+\subsubsection{Listen}
+
+\begin{macro*}{\g__edu_listsep_dim}
+\begin{macro*}{\g__edu_listmargin_dim}
+\begin{macro*}{\g__edu_listarraysep_dim}
+\begin{macro*}{\g__edu_listarraymargin_dim}
+\begin{macro*}{\g__edu_listlabelwidth_dim}
+\begin{macro*}{\g__edu_hangindention_dim}
+Define new lengths:
+\begin{MacroCode}{class}
+
+\dim_new:N \g__edu_listsep_dim
+\dim_new:N \g__edu_listmargin_dim
+\dim_new:N \g__edu_listarraysep_dim
+\dim_new:N \g__edu_listarraymargin_dim
+
+\dim_new:N \g__edu_listlabelwidth_dim
+
+\dim_new:N \g__edu_hangindention_dim
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+\end{macro*}
+
+
+Configure list-settings:
+\begin{MacroCode}{class}
+\AtBeginDocument{
+  \dim_gset:Nn \g__edu_listsep_dim {\g_edu_listarraysep_dim}
+  \dim_gset:Nn \g__edu_listmargin_dim {\g_edu_listarraymargin_dim}
+  \dim_gset:Nn \g__edu_listlabelwidth_dim {1.2em}
+}
+
+\setlist{%
+  partopsep=0ex,
+  topsep=0.5\baselineskip - \parskip,
+  itemsep=0.5\baselineskip - \parskip,
+  parsep=\parskip,
+  labelsep=\g__edu_listsep_dim,
+  leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
+}
+
+\setlist[2]{topsep=0.5\baselineskip - \parskip}
+\setlist[3]{topsep=0.5\baselineskip - \parskip}
+\setlist[4]{topsep=0.5\baselineskip - \parskip}
+\setlist[5]{topsep=0.5\baselineskip - \parskip}
+
+\setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
+\setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
+\setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
+
+\setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
+\setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
+\setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
+
+\setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
+
+\end{MacroCode}
+
+
+\begin{environment}{edulist}[2]{[<itemsep>]}{<item>}
+Liste, welche in Teilaufgaben, Lösungen, Fragen und Antworten verwendet wird.
+\begin{MacroCode}{class}
+\newenvironment{edulist}[2][0.5\baselineskip]{
+  \dim_gset:Nn \g__edu_listarraysep_dim {\g_edu_listarraysep_dim}
+  \dim_gset:Nn \g__edu_listarraymargin_dim {\g_edu_listarraymargin_dim}
+%
+  \vspace{0.5\baselineskip}
+  \begin{list}{\sffamily #2}{%
+    \setlength{\partopsep}{0ex}%
+    \setlength{\topsep}{0pt}%
+    \setlength{\parsep}{\parskip}%
+    \setlength{\itemsep}{#1 - \parskip}%
+    \setlength{\labelsep}{\g__edu_listarraysep_dim}%
+    \setlength{\leftmargin}{%
+      \g__edu_listlabelwidth_dim + \g__edu_listarraysep_dim + \g__edu_listarraymargin_dim%
+    }%
+  }
+}{
+  \end{list}%
+  \vspace{0.5\baselineskip}
+}
+
+\end{MacroCode}
+\end{environment}
+
+\begin{environment}{itemizet}
+Liste ohne oberen und unteren Abstand. Geeignet für Aufzählungen in Tabellen. \begin{MacroCode}{class}
+\newenvironment{itemizet}{%
+  \@minipagetrue
+%  \compress
+  \begin{itemize}[nosep, leftmargin=1em]
+}{%
+  \vspace{-\baselineskip}
+  \end{itemize}
+}
+
+%  \makeatletter
+%\newcommand{\compress}{\@minipagetrue}
+%  \makeatother
+
