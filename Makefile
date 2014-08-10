@@ -10,6 +10,7 @@ clean:
 	rm -f *.bbl *.bcf *.bib *.blg *.xdy
 	rm -f *.fls *.log *.out *.run.xml *.toc
 	rm -f *.cod *.gnuplot *.table
+	rm -f *.log
 
 distclean: clean
 	rm -f *.cls *.pdf *.clo *.tar.gz *.tds.zip
