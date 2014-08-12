@@ -538,7 +538,9 @@
   resultrule .dim_gset:N = \g_edu_resultrule_dim,
   resultrule .initial:n = 0.4pt,
   resultrulelength .dim_gset:N = \g_edu_resultrulelength_dim,
-  resultrulelength .initial:n = 5cm,
+  resultrulelength .initial:n = 2cm,
+  resultrulevoffset .dim_gset:N = \g_edu_resultrulevoffset_dim,
+  resultrulevoffset .initial:n = -4pt,
 }
 
 \keys_define:nn {edu} {
@@ -2616,10 +2618,12 @@
   }{#1}%
 }
 
-\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m } {%
-  \bool_if:NTF \g_edu_showresults_bool {
+\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
     \textcolor{\g_edu_resultfg_tl}{#2}%
-  }{\raisebox{-\g_edu_resultrule_dim}{\rule{#1}{\g_edu_resultrule_dim}}}%
+  }{%
+    \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
+  }%
 }
 
 \DeclareDocumentEnvironment {multiexelist} { s O{0.5\baselineskip} } {
