@@ -6,7 +6,7 @@ TEXMFMAIN ?= $(shell kpsewhich -var-value TEXMFMAIN)
 all: edu.pdf
 
 clean:
-	rm -f *.gl? *.id? *.aux
+	rm -f *.gl? *.glsdefs *.id? *.aux
 	rm -f *.bbl *.bcf *.bib *.blg *.xdy
 	rm -f *.fls *.log *.out *.run.xml *.toc
 	rm -f *.cod *.gnuplot *.table
