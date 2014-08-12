@@ -3228,6 +3228,7 @@
 
 \DeclareDocumentEnvironment {bbpart} { s O{t} m } {
   \g_edu_setbblengths_tl%
+  \hspace{\fboxrule}%
   \begin{lrbox}{\bbbox}
     \begin{minipage}[c][\g_edu_bbheight_dim][#2]{#3 - 2\fboxsep - 2\fboxrule}%
       \g_edu_bbstyle_tl%
@@ -3237,15 +3238,15 @@
         \begin{center}
       }
 }{
-      \par ~  % Damit Tafel auch ohne Inhalt angezeigt wird.
+      \mbox{}  % Damit Tafel auch ohne Inhalt angezeigt wird.
       \IfBooleanT {#1} {
         \end{center}
       }
     \end{minipage}%
   \end{lrbox}
   \fbox{\usebox{\bbbox}}
-  \hspace{-2\fboxrule}%
-  \hspace{-1.75pt} % Removes strange space between minipages.
+  \hspace{-3\fboxrule}%
+  \hspace{-1.9pt} % Removes strange space between minipages.
 }
 
 % Hack, because xparse doesn't generate starred environments:
