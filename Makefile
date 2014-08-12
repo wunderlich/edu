@@ -15,6 +15,8 @@ clean:
 distclean: clean
 	rm -f *.cls *.pdf *.clo *.tar.gz *.tds.zip
 
+cls: edu.cls
+
 %.cls: %.tex
 	pdflatex -interaction=nonstopmode -halt-on-error $<
 
