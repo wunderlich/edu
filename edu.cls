@@ -28,6 +28,11 @@
 \ExplSyntaxOn
 
 \msg_new:nnn {edu} {option-dep-enable} {If\ you\ enable\ the\ option\ #1,\ you\ have\ to\ enable\ the\ following\ option(s):\ #2.}
+
+\cs_generate_variant:Nn \tl_if_eq:nnT { V }
+\cs_generate_variant:Nn \tl_if_eq:nnF { V }
+\cs_generate_variant:Nn \tl_if_eq:nnTF { V }
+
 \cs_new:Npn \__edu_keys_initial:n #1 {
   \AtBeginDocument{
     \keys_set:nn {edu} {#1}
@@ -48,25 +53,52 @@
 
 
 \ExplSyntaxOn
+\tl_new:N \g_edu_rmfont_tl
+\tl_new:N \g_edu_sffont_tl
+\tl_new:N \g_edu_ttfont_tl
+
 \keys_define:nn {edu} {
-  rmfont .tl_gset:N = \g_edu_rmfont_tl,                  % name of the roman font
-  rmfont .initial:n = cmr,
-  sffont .tl_gset:N = \g_edu_sffont_tl,                  % name of the sans-serif font
-  sffont .initial:n = cmss,
-  ttfont .tl_gset:N = \g_edu_ttfont_tl,                  % name of the sans-serif font
-  ttfont .initial:n = cmtt,
+  rmfont .choice_code:n = {
+    \tl_gset:NV \g_edu_rmfont_tl \l_keys_choice_tl
+  },
+  rmfont .generate_choices:n = {  % option for choosing the roman font
+    computermodern,
+    libertine,
+    palatino
+  },
+  rmfont .initial:n = libertine
+}
+
+\keys_define:nn {edu} {
+  sffont .choice_code:n = {
+    \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
+  },
+  sffont .generate_choices:n = {  % option for choosing the sans serif font
+    computermodern,
+    sourcesanspro,
+    roboto,
+    lato
+  },
+  sffont .initial:n = sourcesanspro
+}
+
+\keys_define:nn {edu} {
+  ttfont .choice_code:n = {
+    \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
+  },
+  ttfont .generate_choices:n = {  % option for choosing the typewriter font
+    beramono,
+    sourcecodepro
+  },
+  ttfont .initial:n = sourcecodepro
+}
+
+\ExplSyntaxOn
+\keys_define:nn {edu} {
   sfdefault .bool_gset:N = \g_edu_sfdefault_bool,          % sans-serif als familydefault
   sfdefault .initial:n = false,
-  beramono .bool_gset:N = \g_edu_beramono_bool,            % use Bera Mono as typewriter
-  beramono .initial:n = true,
-  lato .bool_gset:N = \g_edu_lato_bool,                    % use lato as sans-serif (same as sffont=fla)
-  lato .initial:n = false,
-  palatino .bool_gset:N = \g_edu_palatino_bool,            % use mathpazo
-  palatino .initial:n = true,
-  sourcecodepro .bool_gset:N = \g_edu_sourcecodepro_bool,  % use Source Code Pro
-  sourcecodepro .initial:n = false,
-  sourcesanspro .bool_gset:N = \g_edu_sourcesanspro_bool,  % use Source Sans Pro
-  sourcesanspro .initial:n = true,
+  sfmath .bool_gset:N = \g_edu_sfmath_bool,                % sans-serif als math font
+  sfmath .initial:n = false,
 }
 
 
@@ -798,83 +830,97 @@
 \RequirePackage{hyperref}
 
 \bool_if:NT \g_edu_transparency_bool {
-  \keys_set:nn {edu} {
-    sfdefault = true
-  }
+  \keys_set:nn {edu} {sfdefault = true}
+}
+
+\bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
+\tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
+  \RequirePackage[rm]{libertine}
+  \RequirePackage[libertine, varbb]{newtxmath}
+}
+
+\tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
+  \RequirePackage{mathpazo}
+}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {lato} {
+  \RequirePackage[defaultsans]{lato}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {sourcesanspro} {
+  \RequirePackage[scale=0.96]{sourcesanspro}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {roboto} {
+  \RequirePackage[]{roboto}    % Add scaled option after existing bug in roboto is fixed
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {beramono} {
+  \RequirePackage[scaled=0.85]{beramono}
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {
+  \RequirePackage[scale=0.875]{sourcecodepro}
 }
 
 \bool_if:NT \g_edu_sfdefault_bool {
   \renewcommand{\familydefault}{\sfdefault}
-
-  \DeclareSymbolFont      {operators} {OT1}{cmbr}{m}{n}
-  \DeclareSymbolFont        {letters} {OML}{cmbrm}{m}{it}
-  \SetSymbolFont      {letters}{bold} {OML}{cmbrm}{b}{it}
-
-  \DeclareSymbolFont        {symbols} {OMS}{cmbrs}{m}{n}
-  \DeclareMathAlphabet{\mathit} {OT1}{cmbr}{m}{sl}
-  \DeclareMathAlphabet{\mathbf} {OT1}{cmbr}{bx}{n}
-  \DeclareMathAlphabet{\mathtt} {OT1}{cmtl}{m}{n}
-  \DeclareMathAlphabet{\mathbold}{OML}{cmbrm}{b}{it}
-
-  \DeclareMathSymbol{\alpha}{\mathalpha}{letters}{11}
-  \DeclareMathSymbol{\beta}{\mathalpha}{letters}{12}
-  \DeclareMathSymbol{\gamma}{\mathalpha}{letters}{13}
-  \DeclareMathSymbol{\delta}{\mathalpha}{letters}{14}
-  \DeclareMathSymbol{\epsilon}{\mathalpha}{letters}{15}
-  \DeclareMathSymbol{\zeta}{\mathalpha}{letters}{16}
-  \DeclareMathSymbol{\eta}{\mathalpha}{letters}{17}
-  \DeclareMathSymbol{\theta}{\mathalpha}{letters}{18}
-  \DeclareMathSymbol{\iota}{\mathalpha}{letters}{19}
-  \DeclareMathSymbol{\kappa}{\mathalpha}{letters}{20}
-  \DeclareMathSymbol{\lambda}{\mathalpha}{letters}{21}
-  \DeclareMathSymbol{\mu}{\mathalpha}{letters}{22}
-  \DeclareMathSymbol{\nu}{\mathalpha}{letters}{23}
-  \DeclareMathSymbol{\xi}{\mathalpha}{letters}{24}
-  \DeclareMathSymbol{\pi}{\mathalpha}{letters}{25}
-  \DeclareMathSymbol{\rho}{\mathalpha}{letters}{26}
-  \DeclareMathSymbol{\sigma}{\mathalpha}{letters}{27}
-  \DeclareMathSymbol{\tau}{\mathalpha}{letters}{28}
-  \DeclareMathSymbol{\upsilon}{\mathalpha}{letters}{29}
-  \DeclareMathSymbol{\phi}{\mathalpha}{letters}{30}
-  \DeclareMathSymbol{\chi}{\mathalpha}{letters}{31}
-  \DeclareMathSymbol{\psi}{\mathalpha}{letters}{32}
-  \DeclareMathSymbol{\omega}{\mathalpha}{letters}{33}
-  \DeclareMathSymbol{\varepsilon}{\mathalpha}{letters}{34}
-  \DeclareMathSymbol{\vartheta}{\mathalpha}{letters}{35}
-  \DeclareMathSymbol{\varpi}{\mathalpha}{letters}{36}
-  \DeclareMathSymbol{\varrho}{\mathalpha}{letters}{37}
-  \DeclareMathSymbol{\varsigma}{\mathalpha}{letters}{38}
-  \DeclareMathSymbol{\varphi}{\mathalpha}{letters}{39}
+  \keys_set:nn {edu} {sfmath = true}
 }
 
-\renewcommand{\rmdefault}{\g_edu_rmfont_tl}
-\renewcommand{\sfdefault}{\g_edu_sffont_tl}
-\renewcommand{\ttdefault}{\g_edu_ttfont_tl}
+\bool_if:NT \g_edu_sfmath_bool {
 
-\bool_if:NT \g_edu_beramono_bool {
-  \RequirePackage[scaled=0.85]{beramono}
-}
+  \RequirePackage[]{sansmath}                   % Default sans serif font as math font
+  \sansmath
 
-\bool_if:nT {\g_edu_lato_bool || \str_if_eq_p:nn {\g_edu_sffont_tl}{fla}}  {
-  \RequirePackage[defaultsans]{lato}
-  \keys_set:nn {edu}{
-    sffont = fla
-  }
-}
+  \usepackage[bb=pazo, bbscaled=0.9]{mathalfa}  % Load blackboard font of palation
 
-\bool_if:nT {\g_edu_palatino_bool && !\g_edu_sfdefault_bool} {
-  \RequirePackage{mathpazo}
-  \keys_set:nn {edu} {
-    rmfont = ppl
-  }
-}
+  % Load small and large greek letters of Iwona as there are
+  % not many other sans serif greek letters
+\DeclareSymbolFont{Greekletters}{OT1}{iwona}{m}{n}
+\DeclareSymbolFont{greekletters}{OML}{iwona}{m}{it}
 
-\bool_if:NT \g_edu_sourcecodepro_bool {
-  \RequirePackage{sourcecodepro}
-}
+\DeclareMathSymbol{\Delta}{\mathord}{Greekletters}{"01}
+\DeclareMathSymbol{\Theta}{\mathord}{Greekletters}{"02}
+\DeclareMathSymbol{\Lambda}{\mathord}{Greekletters}{"03}
+\DeclareMathSymbol{\Xi}{\mathord}{Greekletters}{"04}
+\DeclareMathSymbol{\Pi}{\mathord}{Greekletters}{"05}
+\DeclareMathSymbol{\Sigma}{\mathord}{Greekletters}{"06}
+\DeclareMathSymbol{\Upsilon}{\mathord}{Greekletters}{"07}
+\DeclareMathSymbol{\Phi}{\mathord}{Greekletters}{"08}
+\DeclareMathSymbol{\Psi}{\mathord}{Greekletters}{"09}
+\DeclareMathSymbol{\Omega}{\mathord}{Greekletters}{"0A}
 
-\bool_if:NT \g_edu_sourcesanspro_bool {
-  \RequirePackage[scale=0.96]{sourcesanspro}
+\DeclareMathSymbol{\alpha}{\mathord}{greekletters}{"0B}
+\DeclareMathSymbol{\beta}{\mathord}{greekletters}{"0C}
+\DeclareMathSymbol{\gamma}{\mathord}{greekletters}{"0D}
+\DeclareMathSymbol{\delta}{\mathord}{greekletters}{"0E}
+\DeclareMathSymbol{\epsilon}{\mathord}{greekletters}{"0F}
+\DeclareMathSymbol{\zeta}{\mathord}{greekletters}{"10}
+\DeclareMathSymbol{\eta}{\mathord}{greekletters}{"11}
+\DeclareMathSymbol{\theta}{\mathord}{greekletters}{"12}
+\DeclareMathSymbol{\iota}{\mathord}{greekletters}{"13}
+\DeclareMathSymbol{\kappa}{\mathord}{greekletters}{"14}
+\DeclareMathSymbol{\lambda}{\mathord}{greekletters}{"15}
+\DeclareMathSymbol{\mu}{\mathord}{greekletters}{"16}
+\DeclareMathSymbol{\nu}{\mathord}{greekletters}{"17}
+\DeclareMathSymbol{\xi}{\mathord}{greekletters}{"18}
+\DeclareMathSymbol{\pi}{\mathord}{greekletters}{"19}
+\DeclareMathSymbol{\rho}{\mathord}{greekletters}{"1A}
+\DeclareMathSymbol{\sigma}{\mathord}{greekletters}{"1B}
+\DeclareMathSymbol{\tau}{\mathord}{greekletters}{"1C}
+\DeclareMathSymbol{\upsilon}{\mathord}{greekletters}{"1D}
+\DeclareMathSymbol{\phi}{\mathord}{greekletters}{"1E}
+\DeclareMathSymbol{\chi}{\mathord}{greekletters}{"1F}
+\DeclareMathSymbol{\psi}{\mathord}{greekletters}{"20}
+\DeclareMathSymbol{\omega}{\mathord}{greekletters}{"21}
+\DeclareMathSymbol{\varepsilon}{\mathord}{greekletters}{"22}
+\DeclareMathSymbol{\vartheta}{\mathord}{greekletters}{"23}
+\DeclareMathSymbol{\varpi}{\mathord}{greekletters}{"24}
+\DeclareMathSymbol{\varrho}{\mathord}{greekletters}{"25}
+\DeclareMathSymbol{\varsigma}{\mathord}{greekletters}{"26}
+\DeclareMathSymbol{\varphi}{\mathord}{greekletters}{"27}
 }
 
 

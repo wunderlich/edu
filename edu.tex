@@ -155,6 +155,7 @@
   
 }
 
+
 % Used Commands:
 \DeclareDocumentCommand \fpbox { O{\linewidth} m } {
   \noindent\fbox{\parbox{#1}{#2}}
@@ -216,7 +217,7 @@
     }
     @online{tikz,
         author = {Till Tantau},
-        title = {pgf -- Create PostScript and PDF graphics in \tex},
+        title = {pgf -- Create PostScript and PDF graphics in \TeX},
         year = {2008},
         url = {http://www.ctan.org/pkg/pgf}
     }
@@ -926,70 +927,44 @@ Im Folgenden wird dieser Zustand als \opt*{transparency}-Modus bezeichnet.
 \localeDE{\subsubsection{Schriftarten}}
 
 \localeDE{
-\Option{rmfont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmr}
-\Option{sffont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmss}
-\Option{ttfont}\WithValues{\meta{PSNFSS-Abkürzung}}\AndDefault{cmtt}
-Mithilfe dieser Optionen können Schriftarten der verschiedenen Schriftfamilien des Dokuments verändert werden. Die Bedeutung der Schriftfamilien kann Tabelle~\ref{tab:fontfamilies} entnommen werden.
-
- \begin{table}[h!tb]
-  \centering
-  \caption{Schriftfamilien und zugehörige Optionen.}
-  \label{tab:fontfamilies}
-  \medskip
-   \begin{tabular}{llll}\toprule
-     \sffamily Familie & \sffamily Option & \sffamily Beispiel \\\midrule
-     Serifenschrift & \opt{rmfont} & \textrm{Beispieltext} \\
-     Serifenlose Schrift & \opt{sffont} & \textsf{Beispieltext} \\
-     Nichtproportionale Schrift & \opt{ttfont} & \texttt{Beispieltext} \\ \bottomrule
-   \end{tabular}
- \end{table}
-
-\meta{PSNFSS} bezieht sich aus die Abkürzungen der Schriftarten des Packages \pkg*{psnfss} (\emph{PostScript standard Symbol and Dingbats fonts}). Die Dokumentation des Packages liefert einen Überblick über die Verwendung und die Namen der Schriftarten \footcite{fonts}.
-  
-Diese Optionen arbeiten auf einer sehr rudimentären Ebene. Komfortabler ist die Verwendung geeigneter Packages für Schriften. Einige dieser Packages können direkt über \thepackage\ geladen werden. Die hierzu nötigen Optionen werden im Folgenden beschrieben. \textbf{Diese Optionen sind der Verwendung von \opt{rmfont}, \opt{sffont} und \opt{ttfont} vorzuziehen!} Eine umfangreiche Übersicht zu weiteren Schriftarten bietet außerdem \emph{The \LaTeX\ Font Catalogue} \footcite{fontcatalogue}.
-}
-
-\medskip
-
-\localeDE{
 \Option{sfdefault}\WithValues{true, false}\AndDefault{false}
 Mit dieser Option kann als Standardschriftart serifenlose Schrift gewählt werden.
 }
 
-\medskip
-
-\localeDE{
-\Option{beramono}\WithValues{true, false}\AndDefault{true}
-Mit dieser Option wird \emph{Bera Mono} mithilfe des Packages \pkg*{bera} als Standardschriftart für nichtproportionale Schrift gewählt.
-}
-
-\medskip
-
-\localeDE{
-\Option{lato}\WithValues{true, false}\AndDefault{false}
-Mit dieser Option wird \emph{Lato} mithilfe des Packages \pkg*{lato} als Standardschriftart für serifenlose Schrift gewählt.
-}
-
-\medskip
-
-\localeDE{
-\Option{palatino}\WithValues{true, false}\AndDefault{true}
-Mit dieser Option wird \emph{Palatino} mithilfe des Packages \pkg*{mathpazo} als Standardschriftart für serifenlose Schrift gewählt. Dies umfasst auch die Mathemik-Schriftarten.
-}
-
-\medskip
-
-\localeDE{
-\Option{sourcecodepro}\WithValues{true, false}\AndDefault{false}
-Mit dieser Option wird \emph{Source Code Pro} mithilfe des Packages \pkg*{sourcecodepro} als Standardschriftart für serifenlose Schrift gewählt.
-}
-
-\medskip
-
-\localeDE{
-\Option{sourcesanspro}\WithValues{true, false}\AndDefault{true}
-Mit dieser Option wird \emph{Source Sans Pro} mithilfe des Packages \pkg*{sourcesanspro} als Standardschriftart für serifenlose Schrift gewählt.
-}
+%\medskip
+%
+%\localeDE{
+%\Option{beramono}\WithValues{true, false}\AndDefault{true}
+%Mit dieser Option wird \emph{Bera Mono} mithilfe des Packages \pkg*{bera} als Standardschriftart für nichtproportionale Schrift gewählt.
+%}
+%
+%\medskip
+%
+%\localeDE{
+%\Option{lato}\WithValues{true, false}\AndDefault{false}
+%Mit dieser Option wird \emph{Lato} mithilfe des Packages \pkg*{lato} als Standardschriftart für serifenlose Schrift gewählt.
+%}
+%
+%\medskip
+%
+%\localeDE{
+%\Option{palatino}\WithValues{true, false}\AndDefault{true}
+%Mit dieser Option wird \emph{Palatino} mithilfe des Packages \pkg*{mathpazo} als Standardschriftart für serifenlose Schrift gewählt. Dies umfasst auch die Mathemik-Schriftarten.
+%}
+%
+%\medskip
+%
+%\localeDE{
+%\Option{sourcecodepro}\WithValues{true, false}\AndDefault{false}
+%Mit dieser Option wird \emph{Source Code Pro} mithilfe des Packages \pkg*{sourcecodepro} als Standardschriftart für serifenlose Schrift gewählt.
+%}
+%
+%\medskip
+%
+%\localeDE{
+%\Option{sourcesanspro}\WithValues{true, false}\AndDefault{true}
+%Mit dieser Option wird \emph{Source Sans Pro} mithilfe des Packages \pkg*{sourcesanspro} als Standardschriftart für serifenlose Schrift gewählt.
+%}
 
 
 \localeDE{\subsubsection{Schriftgrößen}}
@@ -1910,7 +1885,19 @@ Messages for future use:
 
 \begin{MacroCode}{class}
 \msg_new:nnn {edu} {option-dep-enable} {If\ you\ enable\ the\ option\ #1,\ you\ have\ to\ enable\ the\ following\ option(s):\ #2.}
+
 \end{MacroCode}
+
+\subsection{Variants}
+
+\begin{MacroCode}{class}
+\cs_generate_variant:Nn \tl_if_eq:nnT { V }
+\cs_generate_variant:Nn \tl_if_eq:nnF { V }
+\cs_generate_variant:Nn \tl_if_eq:nnTF { V }
+
+\end{MacroCode}
+
+
 
 
 \subsection{Optionen}
@@ -1960,52 +1947,78 @@ Im Folgenden werden die Optionen nach Kategorie deklariert.
 \end{option}
 \end{option}
 
+
 \subsubsection{Schriftarten}
 
 \begin{option}{rmfont}
 \begin{option}{sffont}
 \begin{option}{ttfont}
+
+Options for fonts:
+
+\begin{MacroCode}{class}
+\ExplSyntaxOn
+\tl_new:N \g_edu_rmfont_tl
+\tl_new:N \g_edu_sffont_tl
+\tl_new:N \g_edu_ttfont_tl
+
+\keys_define:nn {edu} {
+  rmfont .choice_code:n = {
+    \tl_gset:NV \g_edu_rmfont_tl \l_keys_choice_tl
+  },
+  rmfont .generate_choices:n = {  % option for choosing the roman font
+    computermodern,
+    libertine,
+    palatino
+  },
+  rmfont .initial:n = libertine
+}
+
+\keys_define:nn {edu} {
+  sffont .choice_code:n = {
+    \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
+  },
+  sffont .generate_choices:n = {  % option for choosing the sans serif font
+    computermodern,
+    sourcesanspro,
+    roboto,
+    lato
+  },
+  sffont .initial:n = sourcesanspro
+}
+
+\keys_define:nn {edu} {
+  ttfont .choice_code:n = {
+    \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
+  },
+  ttfont .generate_choices:n = {  % option for choosing the typewriter font
+    beramono,
+    sourcecodepro
+  },
+  ttfont .initial:n = sourcecodepro
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
 \begin{option}{sfdefault}
-\begin{option}{beramono}
-\begin{option}{lato}
-\begin{option}{palatino}
-\begin{option}{sourcecodepro}
-\begin{option}{sourcesanspro}
+\begin{option}{sfmath}
 
 Options for fonts:
 
 \begin{MacroCode}{class}
 \ExplSyntaxOn
 \keys_define:nn {edu} {
-  rmfont .tl_gset:N = \g_edu_rmfont_tl,                  % name of the roman font
-  rmfont .initial:n = cmr,
-  sffont .tl_gset:N = \g_edu_sffont_tl,                  % name of the sans-serif font
-  sffont .initial:n = cmss,
-  ttfont .tl_gset:N = \g_edu_ttfont_tl,                  % name of the sans-serif font
-  ttfont .initial:n = cmtt,
   sfdefault .bool_gset:N = \g_edu_sfdefault_bool,          % sans-serif als familydefault
   sfdefault .initial:n = false,
-  beramono .bool_gset:N = \g_edu_beramono_bool,            % use Bera Mono as typewriter
-  beramono .initial:n = true,
-  lato .bool_gset:N = \g_edu_lato_bool,                    % use lato as sans-serif (same as sffont=fla)
-  lato .initial:n = false,
-  palatino .bool_gset:N = \g_edu_palatino_bool,            % use mathpazo
-  palatino .initial:n = true,
-  sourcecodepro .bool_gset:N = \g_edu_sourcecodepro_bool,  % use Source Code Pro
-  sourcecodepro .initial:n = false,
-  sourcesanspro .bool_gset:N = \g_edu_sourcesanspro_bool,  % use Source Sans Pro
-  sourcesanspro .initial:n = true,
+  sfmath .bool_gset:N = \g_edu_sfmath_bool,                % sans-serif als math font
+  sfmath .initial:n = false,
 }
 
 
 \end{MacroCode}
-\end{option}
-\end{option}
-\end{option}
-\end{option}
-\end{option}
-\end{option}
-\end{option}
 \end{option}
 \end{option}
 
@@ -3613,15 +3626,49 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 
 \subsection{Schriften}
 
-\subsubsection{Schriftarten}
-
 Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schrift verwendet:
 
 \begin{MacroCode}{class}
 \bool_if:NT \g_edu_transparency_bool {
-  \keys_set:nn {edu} {
-    sfdefault = true
-  }
+  \keys_set:nn {edu} {sfdefault = true}
+}
+
+\end{MacroCode}
+
+\subsubsection{Schriftarten}
+
+Über die Optionen \opt{palatino}, \opt{lato} und \opt{beramono} können diese als Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
+
+\begin{MacroCode}{class}
+\bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
+	\tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
+	  \RequirePackage[rm]{libertine}
+	  \RequirePackage[libertine, varbb]{newtxmath}
+	}
+	
+	\tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
+	  \RequirePackage{mathpazo}
+	}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {lato} {
+  \RequirePackage[defaultsans]{lato}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {sourcesanspro} {
+  \RequirePackage[scale=0.96]{sourcesanspro}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {roboto} {
+  \RequirePackage[]{roboto}    % Add scaled option after existing bug in roboto is fixed
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {beramono} {
+  \RequirePackage[scaled=0.85]{beramono}
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {
+  \RequirePackage[scale=0.875]{sourcecodepro}
 }
 
 \end{MacroCode}
@@ -3631,86 +3678,61 @@ Mithilfe von \opt{sfdefault} kann \cs{sfdefault} als Standardschrift verwendet w
 \begin{MacroCode}{class}
 \bool_if:NT \g_edu_sfdefault_bool {
   \renewcommand{\familydefault}{\sfdefault}
+  \keys_set:nn {edu} {sfmath = true}
+}
+
+\bool_if:NT \g_edu_sfmath_bool {
+
+  \RequirePackage[]{sansmath}                   % Default sans serif font as math font
+  \sansmath
   
-  \DeclareSymbolFont      {operators} {OT1}{cmbr}{m}{n}
-  \DeclareSymbolFont        {letters} {OML}{cmbrm}{m}{it}
-  \SetSymbolFont      {letters}{bold} {OML}{cmbrm}{b}{it}
-  
-  \DeclareSymbolFont        {symbols} {OMS}{cmbrs}{m}{n}
-  \DeclareMathAlphabet{\mathit} {OT1}{cmbr}{m}{sl}
-  \DeclareMathAlphabet{\mathbf} {OT1}{cmbr}{bx}{n}
-  \DeclareMathAlphabet{\mathtt} {OT1}{cmtl}{m}{n}
-  \DeclareMathAlphabet{\mathbold}{OML}{cmbrm}{b}{it}
-  
-  \DeclareMathSymbol{\alpha}{\mathalpha}{letters}{11}
-  \DeclareMathSymbol{\beta}{\mathalpha}{letters}{12}
-  \DeclareMathSymbol{\gamma}{\mathalpha}{letters}{13}
-  \DeclareMathSymbol{\delta}{\mathalpha}{letters}{14}
-  \DeclareMathSymbol{\epsilon}{\mathalpha}{letters}{15}
-  \DeclareMathSymbol{\zeta}{\mathalpha}{letters}{16}
-  \DeclareMathSymbol{\eta}{\mathalpha}{letters}{17}
-  \DeclareMathSymbol{\theta}{\mathalpha}{letters}{18}
-  \DeclareMathSymbol{\iota}{\mathalpha}{letters}{19}
-  \DeclareMathSymbol{\kappa}{\mathalpha}{letters}{20}
-  \DeclareMathSymbol{\lambda}{\mathalpha}{letters}{21}
-  \DeclareMathSymbol{\mu}{\mathalpha}{letters}{22}
-  \DeclareMathSymbol{\nu}{\mathalpha}{letters}{23}
-  \DeclareMathSymbol{\xi}{\mathalpha}{letters}{24}
-  \DeclareMathSymbol{\pi}{\mathalpha}{letters}{25}
-  \DeclareMathSymbol{\rho}{\mathalpha}{letters}{26}
-  \DeclareMathSymbol{\sigma}{\mathalpha}{letters}{27}
-  \DeclareMathSymbol{\tau}{\mathalpha}{letters}{28}
-  \DeclareMathSymbol{\upsilon}{\mathalpha}{letters}{29}
-  \DeclareMathSymbol{\phi}{\mathalpha}{letters}{30}
-  \DeclareMathSymbol{\chi}{\mathalpha}{letters}{31}
-  \DeclareMathSymbol{\psi}{\mathalpha}{letters}{32}
-  \DeclareMathSymbol{\omega}{\mathalpha}{letters}{33}
-  \DeclareMathSymbol{\varepsilon}{\mathalpha}{letters}{34}
-  \DeclareMathSymbol{\vartheta}{\mathalpha}{letters}{35}
-  \DeclareMathSymbol{\varpi}{\mathalpha}{letters}{36}
-  \DeclareMathSymbol{\varrho}{\mathalpha}{letters}{37}
-  \DeclareMathSymbol{\varsigma}{\mathalpha}{letters}{38}
-  \DeclareMathSymbol{\varphi}{\mathalpha}{letters}{39}
-}
-
-\end{MacroCode}
-
-Außerdem können die Standardschriftarten mithilfe der entsprechenden Optionen geändert werden:
-
-\begin{MacroCode}{class}
-\renewcommand{\rmdefault}{\g_edu_rmfont_tl}
-\renewcommand{\sfdefault}{\g_edu_sffont_tl}
-\renewcommand{\ttdefault}{\g_edu_ttfont_tl}
-
-\end{MacroCode}
-
-Über die Optionen \opt{palatino}, \opt{lato} und \opt{beramono} können diese als Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
-
-\begin{MacroCode}{class}
-\bool_if:NT \g_edu_beramono_bool {
-  \RequirePackage[scaled=0.85]{beramono}
-}
-
-\bool_if:nT {\g_edu_lato_bool || \str_if_eq_p:nn {\g_edu_sffont_tl}{fla}}  {
-  \RequirePackage[defaultsans]{lato}
-  \keys_set:nn {edu}{
-    sffont = fla
-  }
-}
-
-\bool_if:nT {\g_edu_palatino_bool && !\g_edu_sfdefault_bool} {
-  \RequirePackage{mathpazo}
-  \keys_set:nn {edu} {
-    rmfont = ppl
-  }
-}
-
-\bool_if:NT \g_edu_sourcecodepro_bool {
-  \RequirePackage{sourcecodepro}
-}
-
-\bool_if:NT \g_edu_sourcesanspro_bool {
-  \RequirePackage[scale=0.96]{sourcesanspro}
+  \usepackage[bb=pazo, bbscaled=0.9]{mathalfa}  % Load blackboard font of palation
+ 
+  % Load small and large greek letters of Iwona as there are
+  % not many other sans serif greek letters
+	\DeclareSymbolFont{Greekletters}{OT1}{iwona}{m}{n}
+	\DeclareSymbolFont{greekletters}{OML}{iwona}{m}{it}
+	
+	\DeclareMathSymbol{\Delta}{\mathord}{Greekletters}{"01}
+	\DeclareMathSymbol{\Theta}{\mathord}{Greekletters}{"02}
+	\DeclareMathSymbol{\Lambda}{\mathord}{Greekletters}{"03}
+	\DeclareMathSymbol{\Xi}{\mathord}{Greekletters}{"04}
+	\DeclareMathSymbol{\Pi}{\mathord}{Greekletters}{"05}
+	\DeclareMathSymbol{\Sigma}{\mathord}{Greekletters}{"06}
+	\DeclareMathSymbol{\Upsilon}{\mathord}{Greekletters}{"07}
+	\DeclareMathSymbol{\Phi}{\mathord}{Greekletters}{"08}
+	\DeclareMathSymbol{\Psi}{\mathord}{Greekletters}{"09}
+	\DeclareMathSymbol{\Omega}{\mathord}{Greekletters}{"0A}
+	
+	\DeclareMathSymbol{\alpha}{\mathord}{greekletters}{"0B}
+	\DeclareMathSymbol{\beta}{\mathord}{greekletters}{"0C}
+	\DeclareMathSymbol{\gamma}{\mathord}{greekletters}{"0D}
+	\DeclareMathSymbol{\delta}{\mathord}{greekletters}{"0E}
+	\DeclareMathSymbol{\epsilon}{\mathord}{greekletters}{"0F}
+	\DeclareMathSymbol{\zeta}{\mathord}{greekletters}{"10}
+	\DeclareMathSymbol{\eta}{\mathord}{greekletters}{"11}
+	\DeclareMathSymbol{\theta}{\mathord}{greekletters}{"12}
+	\DeclareMathSymbol{\iota}{\mathord}{greekletters}{"13}
+	\DeclareMathSymbol{\kappa}{\mathord}{greekletters}{"14}
+	\DeclareMathSymbol{\lambda}{\mathord}{greekletters}{"15}
+	\DeclareMathSymbol{\mu}{\mathord}{greekletters}{"16}
+	\DeclareMathSymbol{\nu}{\mathord}{greekletters}{"17}
+	\DeclareMathSymbol{\xi}{\mathord}{greekletters}{"18}
+	\DeclareMathSymbol{\pi}{\mathord}{greekletters}{"19}
+	\DeclareMathSymbol{\rho}{\mathord}{greekletters}{"1A}
+	\DeclareMathSymbol{\sigma}{\mathord}{greekletters}{"1B}
+	\DeclareMathSymbol{\tau}{\mathord}{greekletters}{"1C}
+	\DeclareMathSymbol{\upsilon}{\mathord}{greekletters}{"1D}
+	\DeclareMathSymbol{\phi}{\mathord}{greekletters}{"1E}
+	\DeclareMathSymbol{\chi}{\mathord}{greekletters}{"1F}
+	\DeclareMathSymbol{\psi}{\mathord}{greekletters}{"20}
+	\DeclareMathSymbol{\omega}{\mathord}{greekletters}{"21}
+	\DeclareMathSymbol{\varepsilon}{\mathord}{greekletters}{"22}
+	\DeclareMathSymbol{\vartheta}{\mathord}{greekletters}{"23}
+	\DeclareMathSymbol{\varpi}{\mathord}{greekletters}{"24}
+	\DeclareMathSymbol{\varrho}{\mathord}{greekletters}{"25}
+	\DeclareMathSymbol{\varsigma}{\mathord}{greekletters}{"26}
+	\DeclareMathSymbol{\varphi}{\mathord}{greekletters}{"27}
 }
 
 \end{MacroCode}
