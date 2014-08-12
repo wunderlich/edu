@@ -853,7 +853,7 @@
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {roboto} {
-  \RequirePackage[]{roboto}    % Add scaled option after existing bug in roboto is fixed
+  \RequirePackage[scaled=0.9]{roboto}    % Add scaled option after existing bug in roboto is fixed
 }
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {beramono} {
