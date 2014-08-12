@@ -3675,6 +3675,7 @@
   \ensuremath #1 \pm \sqrt{#2}
 }
 
+\DeclareDocumentCommand \corr {  } {\ensuremath{\mathrel{\hat{=}}}}
 \DeclareDocumentCommand \ds {  } {\ensuremath{\displaystyle}}
 \DeclareDocumentCommand \der {  } {\ensuremath{\ \mathrm{d}}}
 \DeclareDocumentCommand \i {  } {\ensuremath{\mathrm{i}}}

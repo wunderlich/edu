@@ -8048,6 +8048,7 @@ Special equations/formulas:
 
 \subsubsection{Verschiedenes}
 
+\begin{macro}{\corr}
 \begin{macro}{\ds}
 \begin{macro}{\der}
 \begin{macro}{\i}
@@ -8057,6 +8058,7 @@ Special equations/formulas:
 \begin{macro}{\textlightning}
 Sonstige Symbole, Konstanten, Abkürzungen etc. Selbsterklärend.
 \begin{MacroCode}{class}
+\DeclareDocumentCommand \corr {  } {\ensuremath{\mathrel{\hat{=}}}}
 \DeclareDocumentCommand \ds {  } {\ensuremath{\displaystyle}}
 \DeclareDocumentCommand \der {  } {\ensuremath{\ \mathrm{d}}}
 \DeclareDocumentCommand \i {  } {\ensuremath{\mathrm{i}}}
@@ -8066,6 +8068,7 @@ Sonstige Symbole, Konstanten, Abkürzungen etc. Selbsterklärend.
 \DeclareDocumentCommand \textlightning {  } {\ensuremath{\lightning}}
 
 \end{MacroCode}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
