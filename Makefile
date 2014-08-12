@@ -3,7 +3,7 @@ TEXMFMAIN ?= $(shell kpsewhich -var-value TEXMFMAIN)
 
 .PHONY: all clean distclean install dist test clean-test # targets which should always be created
 
-all: edu.pdf
+all: edu.pdf examples clean
 
 clean:
 	rm -f *.gl? *.glsdefs *.id? *.aux
@@ -35,6 +35,11 @@ cls: edu.cls
 	makeglossaries $*
 	pdflatex -interaction=nonstopmode -halt-on-error $<
 
+examples: edu-example-*.pdf
+
+edu-example-*.pdf: edu-example-*.tex
+	pdflatex -interaction=nonstopmode -halt-on-error $<
+	pdflatex -interaction=nonstopmode -halt-on-error $<
 
 install: install-local
 
