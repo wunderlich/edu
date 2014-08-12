@@ -344,7 +344,7 @@
   exestyle .tl_gset:N = \g_edu_exestyle_tl,
   exestyle .initial:n = \large\sffamily,
   exepointsstyle .tl_gset:N = \g_edu_exepointsstyle_tl,
-  exepointsstyle .initial:n = \small\bfseries\sffamily,
+  exepointsstyle .initial:n = \bfseries\sffamily,
 }
 
 \keys_define:nn {edu} {
@@ -374,7 +374,7 @@
   subexestyle .tl_gset:N = \g_edu_subexestyle_tl,
   subexestyle .initial:n = \sffamily,
   subexepointsstyle .tl_gset:N = \g_edu_subexepointsstyle_tl,
-  subexepointsstyle .initial:n = \scriptsize\bfseries\sffamily,
+  subexepointsstyle .initial:n = \small\bfseries\sffamily,
 }
 
 \keys_define:nn {edu} {
@@ -437,6 +437,21 @@
   multiexepointsleft .initial:n = [,
   multiexepointsright .tl_gset:N = \g_edu_multiexepointsright_tl,
   multiexepointsright .initial:n = ],
+}
+
+\keys_define:nn {edu} {
+  exepointsachieved .bool_gset:N = \g_edu_exepointsachieved_bool,
+  exepointsachieved .initial:n = true,
+  subexepointsachieved .bool_gset:N = \g_edu_subexepointsachieved_bool,
+  subexepointsachieved .initial:n = false,
+  exepointsachievedspace .dim_gset:N = \g_edu_exepointsachievedspace_dim,
+  exepointsachievedspace .initial:n = 0.6cm,
+  subexepointsachievedspace .dim_gset:N = \g_edu_subexepointsachievedspace_dim,
+  subexepointsachievedspace .initial:n = 0.6cm,
+  exepointsachievedsep .tl_gset:N = \g_edu_exepointsachievedsep_tl,
+  exepointsachievedsep .initial:n = /\,,
+  subexepointsachievedsep .tl_gset:N = \g_edu_subexepointsachievedsep_tl,
+  subexepointsachievedsep .initial:n = /\,,
 }
 
 \keys_define:nn {edu} {
@@ -2305,9 +2320,21 @@
   \IfNoValueTF {#1} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
+    \bool_if:NTF \g_edu_exepointsachieved_bool {
     \tl_set:Nn \l__edu_exepoints_tl {
-      \g_edu_exepointsleft_tl#1\g_edu_exepointslabel_tl\g_edu_exepointsright_tl
+      \g_edu_exepointsleft_tl
+        \hspace{\g_edu_exepointsachievedspace_dim}
+        \g_edu_exepointsachievedsep_tl
+        #1\g_edu_exepointslabel_tl
+      \g_edu_exepointsright_tl
     }
+  }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+      \g_edu_exepointsleft_tl
+        #1\g_edu_exepointslabel_tl
+      \g_edu_exepointsright_tl
+    }
+  }
   }
 
   \tl_if_empty:nTF {#2} {
@@ -2392,11 +2419,23 @@
   \tl_clear:N \l__edu_subexelabeltext_tl
 
   \IfNoValueTF {#1} {
-    \tl_clear:N \__edu_subexepoints
+    \tl_clear:N \l__edu_exepoints_tl
   }{
-    \tl_set:Nn \__edu_subexepoints {
-      \g_edu_subexepointsleft_tl#1\g_edu_subexepointslabel_tl\g_edu_subexepointsright_tl
+    \bool_if:NTF \g_edu_subexepointsachieved_bool {
+    \tl_set:Nn \l__edu_exepoints_tl {
+      \g_edu_subexepointsleft_tl
+        \hspace{\g_edu_subexepointsachievedspace_dim}
+        \g_edu_subexepointsachievedsep_tl
+        #1\g_edu_subexepointslabel_tl
+      \g_edu_subexepointsright_tl
     }
+  }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+      \g_edu_subexepointsleft_tl
+        #1\g_edu_subexepointslabel_tl
+      \g_edu_subexepointsright_tl
+    }
+  }
   }
 
   \tl_if_empty:nTF {#2} {
