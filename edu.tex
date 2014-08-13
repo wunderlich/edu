@@ -4354,7 +4354,7 @@ Deaktivieren der wichtigsten Parameter und Erzeugung des Abstands nach Tabellen 
 \end{macro}
 
 
-\subsubsection{Sonstige Umgebungen}
+\subsubsection{Sonstige Kommandos/Umgebungen}
 
 \begin{macro}{\fpbox}[2]{[<width>]}{<content>}
 Umrahmte Box mit variabler Breite (standardmäßig \cs{linewidth}).
@@ -4365,6 +4365,55 @@ Umrahmte Box mit variabler Breite (standardmäßig \cs{linewidth}).
 
 \end{MacroCode}
 \end{macro}
+
+\begin{macro}{\__edu_moveright:n}[1]{<token list>}
+\begin{environment}{citequote}[3]{[<author>]}{[<key>]}{[<reference>]}
+Umgebung für Zitate, bei der optional ein Author, eine Quelle und dann ebenfalls optional eine genauere Referenz (z.\,B Seite) angegeben werden kann.
+\begin{MacroCode}{class}
+\tl_new:N \l__edu_citetext_tl
+
+% Adapted from TeXbook
+\cs_new:Npn \__edu_moveright:n #1 {
+  \group_begin:
+    \leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil #1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf
+  \group_end:
+}
+
+\DeclareDocumentEnvironment {citequote} { O{} O{} O{} } {
+  \par
+  \vspace{0.5\baselineskip}
+  \parskipreduce
+  \begin{addmargin}{3em}
+    \begin{em}
+}{
+    \bool_if:nT {!\tl_if_empty_p:n {#1} || !\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
+      \tl_clear:N \l__edu_citetext_tl
+      \upshape
+	    \tl_if_empty:nF {#1} {
+	      \tl_put_right:Nn \l__edu_citetext_tl {\textsc{#1}\xspace}
+	    }
+      \bool_if:nT {!\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
+		    \tl_if_empty:nTF {#3} {
+		      \tl_put_right:Nn \l__edu_citetext_tl {\cite{#2}}
+		    }{
+		      \tl_put_right:Nn \l__edu_citetext_tl {\cite[#3]{#2}}
+		    }
+	    }
+	    \__edu_moveright:n \l__edu_citetext_tl
+    }
+    \end{em}      
+  \end{addmargin}
+  \par
+  \vspace{0.5\baselineskip}
+  \parskipreduce
+}
+
+\end{MacroCode}
+\end{environment}
+\end{macro}
+
 
 
 \subsubsection{Seitenränder}

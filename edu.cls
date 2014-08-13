@@ -1321,6 +1321,46 @@
   \noindent\fbox{\parbox{#1}{#2}}
 }
 
+\tl_new:N \l__edu_citetext_tl
+
+% Adapted from TeXbook
+\cs_new:Npn \__edu_moveright:n #1 {
+  \group_begin:
+    \leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil #1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf
+  \group_end:
+}
+
+\DeclareDocumentEnvironment {citequote} { O{} O{} O{} } {
+  \par
+  \vspace{0.5\baselineskip}
+  \parskipreduce
+  \begin{addmargin}{3em}
+    \begin{em}
+}{
+    \bool_if:nT {!\tl_if_empty_p:n {#1} || !\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
+      \tl_clear:N \l__edu_citetext_tl
+      \upshape
+    \tl_if_empty:nF {#1} {
+      \tl_put_right:Nn \l__edu_citetext_tl {\textsc{#1}\xspace}
+    }
+      \bool_if:nT {!\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
+    \tl_if_empty:nTF {#3} {
+      \tl_put_right:Nn \l__edu_citetext_tl {\cite{#2}}
+    }{
+      \tl_put_right:Nn \l__edu_citetext_tl {\cite[#3]{#2}}
+    }
+    }
+    \__edu_moveright:n \l__edu_citetext_tl
+    }
+    \end{em}
+  \end{addmargin}
+  \par
+  \vspace{0.5\baselineskip}
+  \parskipreduce
+}
+
 \DeclareDocumentCommand \setgeometry { } {
   \bool_if:NTF \g_edu_twoup_bool {
     \geometry{a4paper,%
