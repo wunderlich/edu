@@ -372,11 +372,13 @@ lastpage\\
 lato*\\
 listings\\
 mathpazo*\\
+menukeys\\
 multicol\\
 multirow\\
 pdflscape\\
 pifont\\
 polynom\\
+roboto*\\
 rotating\\
 ragged2e\\
 scrpage2\\
@@ -3668,6 +3670,14 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 
 \begin{MacroCode}{class}
 \RequirePackage{listings}
+
+% menukeys needs to be loaded at the end. Otherwise there occurs an 
+% option clash with newtxmath/amsmath, which could not be fixed.
+\AtEndPreamble{
+  \RequirePackage[os=win]{menukeys}
+  \renewmenumacro{\menu}[>]{angularmenus}
+  \renewmenumacro{\keys}{angularkeys}
+}
 
 \end{MacroCode}
 

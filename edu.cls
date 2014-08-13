@@ -854,6 +854,14 @@
 
 \RequirePackage{listings}
 
+% menukeys needs to be loaded at the end. Otherwise there occurs an
+% option clash with newtxmath/amsmath, which could not be fixed.
+\AtEndPreamble{
+  \RequirePackage[os=win]{menukeys}
+  \renewmenumacro{\menu}[>]{angularmenus}
+  \renewmenumacro{\keys}{angularkeys}
+}
+
 \RequirePackage{bibgerm}
 \RequirePackage{hyperref}
 
