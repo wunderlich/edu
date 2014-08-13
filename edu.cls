@@ -300,6 +300,17 @@
 }
 
 \keys_define:nn {edu} {
+  ptolabel .tl_gset:N = \g_edu_ptolabel_tl,
+  ptolabel .initial:n = Bitte~wenden\hspace*{0.25em},
+  ptolabelstyle .tl_gset:N = \g_edu_ptolabelstyle_tl,
+  ptolabelstyle .initial:n = \scriptsize\sffamily,
+  ptosymbol .tl_gset:N = \g_ptosymbol_tl,
+  ptosymbol .initial:n = $\blacktriangleright$,
+  ptosymbolstyle .tl_gset:N = \g_ptosymbolstyle_tl,
+  ptosymbolstyle .initial:n = \small\sffamily,
+}
+
+\keys_define:nn {edu} {
   cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
   cemphfg .initial:n = wuSemiDarkRed,
 }
@@ -1945,6 +1956,15 @@
   \tl_if_empty:nF {#2} {
     \g_edu_nolabel_tl\,#2\xspace
   }
+}
+
+\DeclareDocumentCommand \pto {  } {%
+\vfill
+\par
+\setlength{\parfillskip}{0pt}
+\hfill\fbox{\g_edu_ptolabelstyle_tl \g_edu_ptolabel_tl \g_ptosymbolstyle_tl \g_ptosymbol_tl}
+\par
+\setlength{\parfillskip}{1em plus 1fil}
 }
 
 \cs_new:Npn \__edu_ccScale:n #1 {

@@ -2472,6 +2472,29 @@ Options exercise references (in books):
 \end{option}
 
 
+\subsubsection{Kasten \emph{Bitte wenden}}
+
+\begin{option}{ptolabel}
+\begin{option}{ptosymbol}
+Options for the appearence of the 'please turn over' (p. t. o.) label:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  ptolabel .tl_gset:N = \g_edu_ptolabel_tl,
+  ptolabel .initial:n = Bitte~wenden\hspace*{0.25em},
+  ptolabelstyle .tl_gset:N = \g_edu_ptolabelstyle_tl,
+  ptolabelstyle .initial:n = \scriptsize\sffamily,
+  ptosymbol .tl_gset:N = \g_ptosymbol_tl,
+  ptosymbol .initial:n = $\blacktriangleright$,
+  ptosymbolstyle .tl_gset:N = \g_ptosymbolstyle_tl,
+  ptosymbolstyle .initial:n = \small\sffamily,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+
+
 \subsubsection{Formatierungen}
 
 \begin{option}{cemphfg}
@@ -5255,6 +5278,24 @@ Zur Angabe von Aufgaben im Format S.\,X, Nr.\,Y.
   \tl_if_empty:nF {#2} {
     \g_edu_nolabel_tl\,#2\xspace
   }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\subsubsection{Kasten \emph{Bitte wenden}}
+
+\begin{macro}{\pto}
+Setzt einen kleinen Kasten mit der Aufforderung zum Wenden des Blattes in die rechte untere Ecke.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \pto {  } {%
+	\vfill
+	\par
+	\setlength{\parfillskip}{0pt}
+	\hfill\fbox{\g_edu_ptolabelstyle_tl \g_edu_ptolabel_tl \g_ptosymbolstyle_tl \g_ptosymbol_tl}
+	\par
+	\setlength{\parfillskip}{1em plus 1fil}
 }
 
 \end{MacroCode}
