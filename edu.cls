@@ -829,6 +829,7 @@
 \RequirePackage[svgnames, table]{xcolor}
 \RequirePackage{subfig}
 \RequirePackage{tikz}
+\RequirePackage{tikzsymbols}
 
 \AtEndPreamble{
 \tl_if_empty:NF \g_edu_colortheme_tl {
