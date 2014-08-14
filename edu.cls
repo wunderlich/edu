@@ -720,6 +720,15 @@
 \__edu_keys_initial:n {bbheight = 0.25\linewidth - 2\fboxsep}
 
 \keys_define:nn {edu} {
+  bbsectionstyle .tl_gset:N = \g_edu_bbsectionstyle_tl,
+  bbsectionstyle .initial:n = \normalsize\scshape\color{wuRed},
+  bbsubsectionstyle .tl_gset:N = \g_edu_bbsubsectionstyle_tl,
+  bbsubsectionstyle .initial:n = \small\scshape,
+  bbsubsubsectionstyle .tl_gset:N = \g_edu_bbsubsubsectionstyle_tl,
+  bbsubsubsectionstyle .initial:n = \ulined,
+}
+
+\keys_define:nn {edu} {
   commasep .bool_gset:N = \g_edu_commasep_bool,    % Comma as separator
   commasep .initial:n = true,
   amsoptions .tl_gset:N = \g_edu_amsoptions_tl,  % Pass options to amsmath-package
@@ -829,6 +838,7 @@
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
 \RequirePackage[nobottomtitles*]{titlesec}
+\RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
 
 \RequirePackage{graphicx}
@@ -1887,6 +1897,9 @@
 \DeclareDocumentCommand \csfemph { m } {
   \textcolor{\g_edu_cemphfg_tl}{\sffamily #1}
 }
+
+% Create command \ulined working as a underlined switch (ulem)
+\useunder{\uline}{\ulined}{}
 
 \DeclareDocumentCommand \textrightarrow { } {$\rightarrow$\xspace}
 \DeclareDocumentCommand \textRightarrow { } {$\Rightarrow$\xspace}
@@ -3371,6 +3384,42 @@
 % Hack, because xparse doesn't generate starred environments:
 \cs_new:cpn {bbfull*} {\bbfull*}
 \cs_new_eq:cN {endbbfull*} \endbbfull
+
+\DeclareDocumentCommand \bbsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
+
+\DeclareDocumentCommand \bbsubsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsubsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
+
+\DeclareDocumentCommand \bbsubsubsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsubsubsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
 
 \AtBeginDocument{
   \setlength{\abovedisplayskip}{1.2ex plus 0.2ex minus 0.1ex}

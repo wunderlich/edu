@@ -393,6 +393,7 @@ tikz\\
 tikzsymbols\\
 titlesec\\
 stmaryrd\\
+ulem\\
 xcolor\\
 xparse\\
 xspace}
@@ -3371,7 +3372,7 @@ Colors of labels:
 \begin{option}{bbfontsize}
 \begin{option}{bbbaselineoffset}
 \begin{option}{bbheight}
-Options of blackboard:
+General options of blackboard:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   bbstyle .tl_gset:N = \g_edu_bbstyle_tl,
@@ -3388,6 +3389,25 @@ Options of blackboard:
 
 \end{MacroCode}
 \end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{bbsectionstyle}
+\begin{option}{bbsubsectionstyle}
+\begin{option}{bbsubsubsectionstyle}
+Title style options of blackboard:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  bbsectionstyle .tl_gset:N = \g_edu_bbsectionstyle_tl,
+  bbsectionstyle .initial:n = \normalsize\scshape\color{wuRed},
+  bbsubsectionstyle .tl_gset:N = \g_edu_bbsubsectionstyle_tl,
+  bbsubsectionstyle .initial:n = \small\scshape,
+  bbsubsubsectionstyle .tl_gset:N = \g_edu_bbsubsubsectionstyle_tl,
+  bbsubsubsectionstyle .initial:n = \ulined,
+}
+
+\end{MacroCode}
 \end{option}
 \end{option}
 \end{option}
@@ -3630,6 +3650,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
 \RequirePackage[nobottomtitles*]{titlesec}
+\RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
 
 \end{MacroCode}
@@ -5115,6 +5136,7 @@ Die Formatierung von \cs{pagemark} und der Fußzeile wird durch \pkg{scrheadings
 \begin{macro}{\textsfbf}[1]{<text>}
 \begin{macro}{\cemph}[1]{<text>}
 \begin{macro}{\csfemph}[1]{<text>}
+\begin{macro}{\uline}
 Formatierungskommandos:
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \textsfbf { m } {
@@ -5129,7 +5151,11 @@ Formatierungskommandos:
   \textcolor{\g_edu_cemphfg_tl}{\sffamily #1}
 }
 
+% Create command \ulined working as a underlined switch (ulem)
+\useunder{\uline}{\ulined}{}
+
 \end{MacroCode}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
@@ -7455,6 +7481,58 @@ Entspricht der zentralen, großen Tafelfläche.
 \end{MacroCode}
 \end{environment}
 \end{environment}
+
+\begin{macro}{bbsection}[1]{<name>}
+\begin{macro}{bbsection*}[1]{<name>}
+\begin{macro}{bbsubsection}[1]{<name>}
+\begin{macro}{bbsubsection*}[1]{<name>}
+\begin{macro}{bbsubsubsection}[1]{<name>}
+\begin{macro}{bbsubsubsection*}[1]{<name>}
+Macro für zentrierte Überschriften der obersten Gliederungsebene auf Tafelbildern.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \bbsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
+
+\DeclareDocumentCommand \bbsubsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsubsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
+
+\DeclareDocumentCommand \bbsubsubsection { s m } {%
+  \group_begin:
+  \IfBooleanT {#1} {
+    \begin{center}
+  }
+    {\g_edu_bbsubsubsectionstyle_tl #2}
+  \IfBooleanT {#1} {
+    \end{center}
+  }
+  \group_end:
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
 
 
 \subsection{Mathematik}
