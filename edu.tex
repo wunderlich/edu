@@ -386,15 +386,18 @@ setspace\\
 siunitx\\
 sourcecodepro*\\
 sourcesanspro*\\
+struktex\\
 subfig\\
 tabularx\\
 thmtools\\
 tikz\\
 tikzsymbols\\
+tikz-qtree\\
 titlesec\\
 stmaryrd\\
 ulem\\
 xcolor\\
+xlop\\
 xparse\\
 xspace}
 \end{multicols}
@@ -3725,6 +3728,8 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{polynom}
 \RequirePackage{thmtools}
 \RequirePackage[only, lightning]{stmaryrd}
+\RequirePackage{xlop}
+
 
 \end{MacroCode}
 
@@ -8318,6 +8323,25 @@ This command can be used to typeset a horizontal rule inside an array which span
 
 \end{MacroCode}
 \end{macro}
+
+
+\subsubsection{Schriftliche Grundrechenarten}
+
+Set up \textsf{xlop} to look as much as possible like the german school notation.
+
+\begin{MacroCode}{class}
+\opset{voperation=top}                % Vertikale Ausrichtung der Rechnung
+\opset{voperator=bottom}              % Rechenzeichen in unterer Zeile
+\opset{carrysub=true}                      % Übertrag bei Subtraktion
+\opset{decimalsepsymbol={,}}          % Dezimaltrenner
+\opset{shiftintermediarysymbol=0}     % Mult: Nullen zum Auffüllen
+\opset{displayshiftintermediary=all}  % Mult: Zeilen mit Nullen auffüllen
+\opset{displayintermediary=all}       % Mult: Auch Nullzeilen anzeigen
+\opset{shiftdecimalsep=divisor}       % Div: Nur Nachkommastellen des Divisiors beseitigen
+
+\end{MacroCode}
+
+
 
 
 \subsubsection{Polynomdivision}

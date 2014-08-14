@@ -890,6 +890,8 @@
 \RequirePackage{polynom}
 \RequirePackage{thmtools}
 \RequirePackage[only, lightning]{stmaryrd}
+\RequirePackage{xlop}
+
 
 \RequirePackage{listings}
 
@@ -3897,6 +3899,15 @@
   % From localghost@golatex
   \hspace{0.25em}\kern-\tabcolsep\vrule height\arraystretch\ht\strutbox depth\arraystretch\dp\strutbox\kern-\tabcolsep\hspace{0.25em}
 }
+
+\opset{voperation=top}                % Vertikale Ausrichtung der Rechnung
+\opset{voperator=bottom}              % Rechenzeichen in unterer Zeile
+\opset{carrysub=true}                      % Übertrag bei Subtraktion
+\opset{decimalsepsymbol={,}}          % Dezimaltrenner
+\opset{shiftintermediarysymbol=0}     % Mult: Nullen zum Auffüllen
+\opset{displayshiftintermediary=all}  % Mult: Zeilen mit Nullen auffüllen
+\opset{displayintermediary=all}       % Mult: Auch Nullzeilen anzeigen
+\opset{shiftdecimalsep=divisor}       % Div: Nur Nachkommastellen des Divisiors beseitigen
 
 \polyset{style=C, div=:}
 
