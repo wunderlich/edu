@@ -272,6 +272,8 @@
 \keys_define:nn {edu} {
   seelabel .tl_gset:N = \g_edu_seelabel_tl,% Label of 'see'
   seelabel .initial:n = s.,
+  seeappendixlabel .tl_gset:N = \g_edu_seeappendixlabel_tl,% Label of 'appendix'
+  seeappendixlabel .initial:n = Anh.,
   seeexerciselabel .tl_gset:N = \g_edu_seeexerciselabel_tl,% Label of 'exercise'
   seeexerciselabel .initial:n = Aufg.,
   seefigurelabel .tl_gset:N = \g_edu_seefigurelabel_tl,      % Label of 'figure'
@@ -1966,6 +1968,13 @@
 \DeclareDocumentCommand \see { m } {%
   \g_edu_seeleft_tl%
   \g_edu_seelabel_tl\g_edu_seelabelsep_tl\ref{#1}%
+  \g_edu_seeright_tl%
+}
+
+\DeclareDocumentCommand \seea { m } {%
+  \g_edu_seeleft_tl%
+  \g_edu_seelabel_tl\g_edu_seelabelsep_tl%
+  \g_edu_seeappendixlabel_tl\g_edu_seerefsep_tl\ref{#1}%
   \g_edu_seeright_tl%
 }
 
