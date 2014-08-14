@@ -3038,7 +3038,11 @@ Skips before and after (sub-)solutions:
 \begin{option}{resultfg}
 \begin{option}{resultrule}
 \begin{option}{resultrulelength}
-Delimiter of points:
+\begin{option}{resultrulevoffset}
+\begin{option}{resultboxwidth}
+\begin{option}{resultboxheight}
+\begin{option}{resultrulevoffset}
+Options for typesetting results:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   showresults .bool_gset:N = \g_edu_showresults_bool,
@@ -3051,9 +3055,19 @@ Delimiter of points:
   resultrulelength .initial:n = 2cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultrulevoffset_dim,
   resultrulevoffset .initial:n = -4pt,
+  resultboxwidth .dim_gset:N = \g_edu_resultboxwidth_dim,
+  resultboxwidth .initial:n = 2cm,
+  resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
+  resultboxheight .initial:n = 0.65cm,
+  resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
+  resultrulevoffset .initial:n = -5pt,
 }
 
 \end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -6394,6 +6408,21 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
     \textcolor{\g_edu_resultfg_tl}{#2}%
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
+  }%
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\resb}[4]{[<box width>]}{[<box height>]}{<text>}{[<vertical offset>]}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#3}%
+  }{%
+    \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
   }%
 }
 

@@ -567,6 +567,12 @@
   resultrulelength .initial:n = 2cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultrulevoffset_dim,
   resultrulevoffset .initial:n = -4pt,
+  resultboxwidth .dim_gset:N = \g_edu_resultboxwidth_dim,
+  resultboxwidth .initial:n = 2cm,
+  resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
+  resultboxheight .initial:n = 0.65cm,
+  resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
+  resultrulevoffset .initial:n = -5pt,
 }
 
 \keys_define:nn {edu} {
@@ -2731,6 +2737,14 @@
     \textcolor{\g_edu_resultfg_tl}{#2}%
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
+  }%
+}
+
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#3}%
+  }{%
+    \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
   }%
 }
 
