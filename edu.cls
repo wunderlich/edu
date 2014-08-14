@@ -847,6 +847,7 @@
 \RequirePackage[svgnames, table]{xcolor}
 \RequirePackage{subfig}
 \RequirePackage{tikz}
+\RequirePackage{tikz-qtree}
 \RequirePackage{tikzsymbols}
 
 \AtEndPreamble{
@@ -3549,6 +3550,44 @@
 \cs_new_eq:cN {endaligntr*} \endaligntr
 
 \DeclareDocumentCommand \tr { } {&& \mid}
+
+\ExplSyntaxOff  % Important! Doesn't work within \ExplSyntax*.
+\tikzset{
+  edge from parent/.style={
+    draw,
+    edge from parent path={
+        (\tikzparentnode.north) -| (\tikzchildnode)
+    }
+  }
+}
+
+\tikzset{
+  bet/.style = {
+    grow'=up,
+    every internal node/.style={
+        draw,
+        circle,
+        inner sep=0pt,
+        minimum size=2ex
+    }
+  },
+  betr/.style={
+    draw=none,
+    inner sep=0pt
+  },
+  bete/.style={
+    draw,
+    rectangle,
+    inner sep=2pt
+  }
+}
+
+\tikzset{
+  level distance=3.5ex,
+  sibling distance=2ex,
+  frontier/.style={distance from root=10.5ex}
+}
+\ExplSyntaxOn
 
 \bool_if:nT {
   \bool_if_p:N \g_edu_thmbox_bool &&
