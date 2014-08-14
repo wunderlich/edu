@@ -3823,6 +3823,9 @@
     {ö}{{\"o}}1
 }
 
+\newlength{\templength}
+\newcounter{tempcounter}
+
 \ExplSyntaxOff
 
 
