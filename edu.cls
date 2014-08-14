@@ -46,11 +46,11 @@
 \keys_define:nn {edu} {
   twoup .bool_gset:N = \g_edu_twoup_bool,                 % Print at A5-paper
   twoup .initial:n = false,
+  glue .bool_gset:N = \g_edu_glue_bool,                   % Additional margin for gluing sheet into exercise book
+  glue .initial:n = false,
   transparency .bool_gset:N = \g_edu_transparency_bool,   % Print at transparency
   transparency .initial:n = false
 }
-
-
 
 \ExplSyntaxOn
 \tl_new:N \g_edu_rmfont_tl
@@ -142,14 +142,25 @@
 }
 
 \keys_define:nn {edu} {
-  transparencytop .dim_gset:N = \g_edu_transparencytop_dim,        % Top margin at twoup
+  transparencytop .dim_gset:N = \g_edu_transparencytop_dim,        % Top margin at transparency
   transparencytop .initial:n = 10mm,
-  transparencyright .dim_gset:N = \g_edu_transparencyright_dim,    % Right margin at twoup
+  transparencyright .dim_gset:N = \g_edu_transparencyright_dim,    % Right margin at transparency
   transparencyright .initial:n = 10mm,
-  transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at twoup
+  transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at transparency
   transparencybottom .initial:n = 10mm,
-  transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at twoup
+  transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at transparency
   transparencyleft .initial:n = 22.5mm,
+}
+
+\keys_define:nn {edu} {
+  gluetop .dim_gset:N = \g_edu_gluetop_dim,        % Top margin at glue
+  gluetop .initial:n = 15mm,
+  glueright .dim_gset:N = \g_edu_glueright_dim,    % Right margin at glue
+  glueright .initial:n = 20mm,
+  gluebottom .dim_gset:N = \g_edu_gluebottom_dim,  % Bottom margin at glue
+  gluebottom .initial:n = 20mm,
+  glueleft .dim_gset:N = \g_edu_glueleft_dim,      % Left margin at glue
+  glueleft .initial:n = 15mm,
 }
 
 \keys_define:nn {edu} {
@@ -1531,6 +1542,12 @@
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
       left=\g_edu_transparencyleft_dim, right=\g_edu_transparencyright_dim%
+    }
+  }
+  \bool_if:NT \g_edu_glue_bool {
+    \geometry{a4paper,%
+      top=\g_edu_gluetop_dim, bottom=\g_edu_gluebottom_dim,%
+      left=\g_edu_glueleft_dim, right=\g_edu_glueright_dim%
     }
   }
 }

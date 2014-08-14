@@ -916,6 +916,13 @@ Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenscha
 Im Folgenden wird dieser Zustand als \opt*{transparency}-Modus bezeichnet.
 }
 
+\localeDE{
+\Option{glue}\WithValues{true, false}\AndDefault{false}
+In niedrigeren Klassenstufen werden Ausdrucke häufig in ein Heft geklebt. Um dies zu vereinfachen, kann man das Blatt rechts und unten etwas beschneiden. Die Option \opt*{glue} passt die Seitenränder so an, dass der untere und rechte Seitenrand 5\,mm größer als der obere und linke Seitenrand sind. Nach dem Beschneiden besitzt der Inhalt ungefähr den gleichen Abstand zu allen Rändern des Blattes.
+
+Im Folgenden wird dieser Zustand als \opt*{glue}-Modus bezeichnet.
+}
+
 
 \localeDE{\subsubsection{Schriftarten}}
 
@@ -1025,6 +1032,16 @@ Diese Optionen dienen der Anpassung der Seitenränder im \opt{twoup}-Modus. Sie 
 \Option{transparencybottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{10mm}
 \Option{transparencyleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{22.5mm}
 Diese Optionen dienen der Anpassung der Seitenränder im \opt{transparency}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fußzeile.
+}
+
+\medskip
+
+\localeDE{
+\Option{gluetop}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{10mm}
+\Option{glueright}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{15mm}
+\Option{gluebottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{15mm}
+\Option{glueleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{10mm}
+Diese Optionen dienen der Anpassung der Seitenränder im \opt{glue}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fußzeile.
 }
 
 \localeDE{\subsubsection{Teile (Parts)}}
@@ -1926,18 +1943,20 @@ Im Folgenden werden die Optionen nach Kategorie deklariert.
 
 
 \begin{option}{twoup}
+\begin{option}{glue}
 \begin{option}{transparency}
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   twoup .bool_gset:N = \g_edu_twoup_bool,                 % Print at A5-paper
   twoup .initial:n = false,
+  glue .bool_gset:N = \g_edu_glue_bool,                   % Additional margin for gluing sheet into exercise book
+  glue .initial:n = false,
   transparency .bool_gset:N = \g_edu_transparency_bool,   % Print at transparency
   transparency .initial:n = false
 }
 
-
-
 \end{MacroCode}
+\end{option}
 \end{option}
 \end{option}
 
@@ -2109,14 +2128,38 @@ Options for fonts:
 \begin{option}{transparencyleft}
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
-  transparencytop .dim_gset:N = \g_edu_transparencytop_dim,        % Top margin at twoup
+  transparencytop .dim_gset:N = \g_edu_transparencytop_dim,        % Top margin at transparency
   transparencytop .initial:n = 10mm,
-  transparencyright .dim_gset:N = \g_edu_transparencyright_dim,    % Right margin at twoup
+  transparencyright .dim_gset:N = \g_edu_transparencyright_dim,    % Right margin at transparency
   transparencyright .initial:n = 10mm,
-  transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at twoup
+  transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at transparency
   transparencybottom .initial:n = 10mm,
-  transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at twoup
+  transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at transparency
   transparencyleft .initial:n = 22.5mm,
+}  
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\subsubsection{Margins -- glue mode}
+
+\begin{option}{gluetop}
+\begin{option}{glueright}
+\begin{option}{gluebottom}
+\begin{option}{glueleft}
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  gluetop .dim_gset:N = \g_edu_gluetop_dim,        % Top margin at glue
+  gluetop .initial:n = 15mm,
+  glueright .dim_gset:N = \g_edu_glueright_dim,    % Right margin at glue
+  glueright .initial:n = 20mm,
+  gluebottom .dim_gset:N = \g_edu_gluebottom_dim,  % Bottom margin at glue
+  gluebottom .initial:n = 20mm,
+  glueleft .dim_gset:N = \g_edu_glueleft_dim,      % Left margin at glue
+  glueleft .initial:n = 15mm,
 }  
 
 \end{MacroCode}
@@ -4668,6 +4711,12 @@ Makro zum aktualisieren der Seitenränder, falls eine der Optionen \opt{top} etc
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
       left=\g_edu_transparencyleft_dim, right=\g_edu_transparencyright_dim%
+    }
+  }
+  \bool_if:NT \g_edu_glue_bool {
+    \geometry{a4paper,%
+      top=\g_edu_gluetop_dim, bottom=\g_edu_gluebottom_dim,%
+      left=\g_edu_glueleft_dim, right=\g_edu_glueright_dim%
     }
   }
 }
