@@ -1112,6 +1112,94 @@
   }
 }
 
+\DeclareDocumentCommand \printauthor { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_authorshort_tl\xspace
+  }{
+    \g_edu_author_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printclass { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_classshort_tl\xspace
+  }{
+    \g_edu_class_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printdate { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_dateshort_tl\xspace
+  }{
+    \g_edu_date_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printemail { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_emailshort_tl\xspace
+  }{
+    \g_edu_email_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printfield { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_fieldshort_tl\xspace
+  }{
+    \g_edu_field_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printgroup { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_groupshort_tl\xspace
+  }{
+    \g_edu_group_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printlicense { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_licenseshort_tl\xspace
+  }{
+    \g_edu_license_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printsubject { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_subjectshort_tl\xspace
+  }{
+    \g_edu_subject_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printsubtitle { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_subtitleshort_tl\xspace
+  }{
+    \g_edu_subtitle_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printtitle { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_titleshort_tl\xspace
+  }{
+    \g_edu_title_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printversion { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_versionshort_tl\xspace
+  }{
+    \g_edu_version_tl\xspace
+  }
+}
+
 \tl_new:N \g__edu_pdftitletemp_tl
 \tl_gset:Nn \g__edu_pdftitletemp_tl {\g_edu_title_tl}
 

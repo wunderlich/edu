@@ -878,20 +878,6 @@ Durch ein zusätzliches (hier nicht verwendetes) drittes und optionales Argument
 
 
 
-
-
-%\begin{macro}{\author}[2]{[<author short>]}{<author>}
-%\begin{macro}{\class}[2]{[<class short>]}{<class>}
-%\begin{macro}{\date}[2]{[<date short>]}{<date>}
-%\begin{macro}{\email}[2]{[<email short>]}{<email>}
-%\begin{macro}{\field}[2]{[<field short>]}{<field>}
-%\begin{macro}{\group}[2]{[<group short>]}{<group>}
-%\begin{macro}{\license}[2]{[<license short>]}{<license>}
-%\begin{macro}{\subject}[2]{[<subject short>]}{<subject>}
-%\begin{macro}{\subtitle}[2]{[<subtitle short>]}{<subtitle>}
-%\begin{macro}{\title}[2]{[<title short>]}{<title>}
-%\begin{macro}{\version}[2]{[<version short>]}{<version>}
-
 \newpage
 \localeDE{\part{Dokumentation}}
 
@@ -4056,6 +4042,142 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 }
 
 \end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+
+
+\begin{macro}{\printauthor}
+\begin{macro}{\printauthor*}
+\begin{macro}{\printclass}
+\begin{macro}{\printclass*}
+\begin{macro}{\printdate}
+\begin{macro}{\printdate*}
+\begin{macro}{\printemail}
+\begin{macro}{\printemail*}
+\begin{macro}{\printfield}
+\begin{macro}{\printfield*}
+\begin{macro}{\printgroup}
+\begin{macro}{\printgroup*}
+\begin{macro}{\printlicense}
+\begin{macro}{\printlicense*}
+\begin{macro}{\printsubject}
+\begin{macro}{\printsubject*}
+\begin{macro}{\printsubtitle}
+\begin{macro}{\printsubtitle*}
+\begin{macro}{\printtitle}
+\begin{macro}{\printtitle*}
+\begin{macro}{\printversion}
+\begin{macro}{\printversion*}
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \printauthor { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_authorshort_tl\xspace
+  }{
+    \g_edu_author_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printclass { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_classshort_tl\xspace
+  }{
+    \g_edu_class_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printdate { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_dateshort_tl\xspace
+  }{
+    \g_edu_date_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printemail { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_emailshort_tl\xspace
+  }{
+    \g_edu_email_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printfield { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_fieldshort_tl\xspace
+  }{
+    \g_edu_field_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printgroup { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_groupshort_tl\xspace
+  }{
+    \g_edu_group_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printlicense { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_licenseshort_tl\xspace
+  }{
+    \g_edu_license_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printsubject { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_subjectshort_tl\xspace
+  }{
+    \g_edu_subject_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printsubtitle { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_subtitleshort_tl\xspace
+  }{
+    \g_edu_subtitle_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printtitle { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_titleshort_tl\xspace
+  }{
+    \g_edu_title_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printversion { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_versionshort_tl\xspace
+  }{
+    \g_edu_version_tl\xspace
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
