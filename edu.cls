@@ -805,6 +805,19 @@
   lstrulefg .initial:n = gray,
 }
 
+\tl_new:N \g_edu_struktexqtree_tl
+
+\keys_define:nn {edu} {
+  struktexqtree .choice_code:n = {
+    \tl_gset:NV \g_edu_struktexqtree_tl \l_keys_choice_tl
+  },
+  struktexqtree .generate_choices:n = {  % option for choosing package
+    struktex,
+    tikz-qtree
+  },
+  struktexqtree .initial:n = struktex
+}
+
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{scrartcl}%
 }
@@ -847,7 +860,13 @@
 \RequirePackage[svgnames, table]{xcolor}
 \RequirePackage{subfig}
 \RequirePackage{tikz}
-\RequirePackage{tikz-qtree}
+
+\tl_if_eq:VnT \g_edu_struktexqtree_tl {tikz-qtree} {
+  \ExplSyntaxOff
+  \RequirePackage{tikz-qtree}
+  \ExplSyntaxOn
+}
+
 \RequirePackage{tikzsymbols}
 
 \AtEndPreamble{
@@ -880,6 +899,10 @@
   \RequirePackage[os=win]{menukeys}
   \renewmenumacro{\menu}[>]{angularmenus}
   \renewmenumacro{\keys}{angularkeys}
+}
+
+\tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
+  \RequirePackage{struktex}
 }
 
 \RequirePackage{bibgerm}
@@ -3551,11 +3574,11 @@
 
 \DeclareDocumentCommand \tr { } {&& \mid}
 
-\ExplSyntaxOff  % Important! Doesn't work within \ExplSyntax*.
+\tl_if_eq:VnT \g_edu_struktexqtree_tl {tikz-qtree} {
 \tikzset{
-  edge from parent/.style={
+  edge~from~parent/.style={
     draw,
-    edge from parent path={
+    edge~from~parent~path={
         (\tikzparentnode.north) -| (\tikzchildnode)
     }
   }
@@ -3564,30 +3587,30 @@
 \tikzset{
   bet/.style = {
     grow'=up,
-    every internal node/.style={
+    every~internal~node/.style={
         draw,
         circle,
-        inner sep=0pt,
-        minimum size=2ex
+        inner~sep=0pt,
+        minimum~size=2ex
     }
   },
   betr/.style={
     draw=none,
-    inner sep=0pt
+    inner~sep=0pt
   },
   bete/.style={
     draw,
     rectangle,
-    inner sep=2pt
+    inner~sep=2pt
   }
 }
 
 \tikzset{
-  level distance=3.5ex,
-  sibling distance=2ex,
+  level~distance=3.5ex,
+  sibling~distance=2ex,
   frontier/.style={distance from root=10.5ex}
 }
-\ExplSyntaxOn
+}
 
 \bool_if:nT {
   \bool_if_p:N \g_edu_thmbox_bool &&
