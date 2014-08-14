@@ -3812,6 +3812,17 @@
   style=lststyle
 }
 
+% Support for Umlaute
+\lstset{literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+}
+
 \ExplSyntaxOff
 
 
