@@ -127,7 +127,7 @@
   bottom .dim_gset:N = \g_edu_bottom_dim,
   bottom .initial:n = 15mm,
   left .dim_gset:N = \g_edu_left_dim,
-  left .initial:n = 15mm,
+  left .initial:n = 22.5mm,
 }
 
 \keys_define:nn {edu} {
@@ -138,7 +138,7 @@
   twoupbottom .dim_gset:N = \g_edu_twoupbottom_dim,  % Bottom margin A5-print
   twoupbottom .initial:n = 20mm,
   twoupleft .dim_gset:N = \g_edu_twoupleft_dim,      % Left margin A5-print
-  twoupleft .initial:n = 20mm,
+  twoupleft .initial:n = 25mm,
 }
 
 \keys_define:nn {edu} {
@@ -149,7 +149,7 @@
   transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at twoup
   transparencybottom .initial:n = 10mm,
   transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at twoup
-  transparencyleft .initial:n = 15mm,
+  transparencyleft .initial:n = 22.5mm,
 }
 
 \keys_define:nn {edu} {

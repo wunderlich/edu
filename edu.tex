@@ -1003,7 +1003,7 @@ Absatzabstand kann (de-)aktiviert werden.
 \Option{top}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{15mm}
 \Option{right}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{15mm}
 \Option{bottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{15mm}
-\Option{left}\WithValues{\meta{Linker Seitenrand}}\AndDefault{15mm}
+\Option{left}\WithValues{\meta{Linker Seitenrand}}\AndDefault{22.5mm}
 Diese Optionen dienen der Anpassung der Seitenränder. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fußzeile.
 }
 
@@ -1013,7 +1013,7 @@ Diese Optionen dienen der Anpassung der Seitenränder. Sie beziehen sich auf den
 \Option{twouptop}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{20mm}
 \Option{twoupright}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{20mm}
 \Option{twoupbottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{20mm}
-\Option{twoupleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{20mm}
+\Option{twoupleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{25mm}
 Diese Optionen dienen der Anpassung der Seitenränder im \opt{twoup}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fußzeile.
 }
 
@@ -1023,7 +1023,7 @@ Diese Optionen dienen der Anpassung der Seitenränder im \opt{twoup}-Modus. Sie 
 \Option{transparencytop}\WithValues{\meta{Oberer Seitenrand}}\AndDefault{10mm}
 \Option{transparencyright}\WithValues{\meta{Rechter Seitenrand}}\AndDefault{10mm}
 \Option{transparencybottom}\WithValues{\meta{Unterer Seitenrand}}\AndDefault{10mm}
-\Option{transparencyleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{15mm}
+\Option{transparencyleft}\WithValues{\meta{Linker Seitenrand}}\AndDefault{22.5mm}
 Diese Optionen dienen der Anpassung der Seitenränder im \opt{transparency}-Modus. Sie beziehen sich auf den gesamten Inhalt der Seite, inklusive Kopf- und Fußzeile.
 }
 
@@ -2068,7 +2068,7 @@ Options for fonts:
   bottom .dim_gset:N = \g_edu_bottom_dim,
   bottom .initial:n = 15mm,
   left .dim_gset:N = \g_edu_left_dim,
-  left .initial:n = 15mm,
+  left .initial:n = 22.5mm,
 }
 
 \end{MacroCode}
@@ -2092,7 +2092,7 @@ Options for fonts:
   twoupbottom .dim_gset:N = \g_edu_twoupbottom_dim,  % Bottom margin A5-print
   twoupbottom .initial:n = 20mm,
   twoupleft .dim_gset:N = \g_edu_twoupleft_dim,      % Left margin A5-print
-  twoupleft .initial:n = 20mm,
+  twoupleft .initial:n = 25mm,
 }
 
 \end{MacroCode}
@@ -2116,7 +2116,7 @@ Options for fonts:
   transparencybottom .dim_gset:N = \g_edu_transparencybottom_dim,  % Bottom margin at twoup
   transparencybottom .initial:n = 10mm,
   transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at twoup
-  transparencyleft .initial:n = 15mm,
+  transparencyleft .initial:n = 22.5mm,
 }  
 
 \end{MacroCode}
