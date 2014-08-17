@@ -420,7 +420,7 @@
 
 \keys_define:nn {edu} {
   multiexenumberstyle .tl_gset:N = \g_edu_multiexenumberstyle_tl,
-  multiexenumberstyle .initial:n =,
+  multiexenumberstyle .initial:n = \sffamily,
   multiexepointsstyle .tl_gset:N = \g_edu_multiexepointsstyle_tl,
   multiexepointsstyle .initial:n = \sffamily\footnotesize\bfseries,
 }
@@ -847,7 +847,7 @@
 
 \RequirePackage{booktabs}
 \RequirePackage{ccicons}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \RequirePackage{eurosym}                                           % Euro-Sign
 \RequirePackage{expdlist}
 \RequirePackage{geometry}
@@ -920,6 +920,11 @@
 
 \RequirePackage{bibgerm}
 \RequirePackage{hyperref}
+
+\AtBeginEnvironment{center}{
+  \medmuskip=4mu
+\thickmuskip=5mu
+}
 
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
@@ -1357,6 +1362,12 @@
 }{
   \end{list}%
   \vspace{0.5\baselineskip}
+}
+
+\newenvironment{edulisti}[1][]{
+  \begin{enumerate*}[#1]
+}{
+  \end{enumerate*}%
 }
 
 \newenvironment{itemizet}{%
@@ -2919,6 +2930,45 @@
 % Hack, because xparse doesn't generate starred environments:
 \cs_new:cpn {multiexelist*} {\multiexelist*}
 \cs_new_eq:cN {endmultiexelist*} \endmultiexelist
+
+\DeclareDocumentEnvironment {multiexelisti} { s } {
+  \IfBooleanTF {#1}{
+  \begin{edulisti}[%
+    label=\multiexelabel,%
+    format=\g_edu_multiexenumberstyle_tl,%
+    itemjoin={,\ },%
+  ]
+}{
+    \par
+    \bool_if:NTF \g_edu_parskip_bool {
+      \vspace{-0.25\baselineskip}
+    }{
+      \vspace{-0.175\baselineskip}
+    }
+    \begin{center}
+  \begin{edulisti}[%
+    label=\multiexelabel,%
+    format=\g_edu_multiexenumberstyle_tl,%
+    afterlabel=\hspace{\g_edu_listarraysep_dim},%
+    itemjoin=\qquad,%
+  ]
+}
+}{
+  \end{edulisti}
+  \IfBooleanF {#1} {
+    \end{center}
+    \par
+    \bool_if:NTF \g_edu_parskip_bool {
+      \vspace{-0.25\baselineskip}
+    }{
+      \vspace{-0.175\baselineskip}
+    }
+  }
+}
+
+% Hack, because xparse doesn't generate starred environments:
+\cs_new:cpn {multiexelisti*} {\multiexelisti*}
+\cs_new_eq:cN {endmultiexelisti*} \endmultiexelisti
 
 \DeclareDocumentEnvironment {multiexearray} { s O{0.25\baselineskip} m } {
   \IfBooleanTF {#1} {
