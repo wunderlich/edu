@@ -2919,9 +2919,11 @@
    }%
 }
 
-\DeclareDocumentCommand \res { O{} m} {%
+\DeclareDocumentCommand \res { +O{} +m} {%
   \bool_if:NTF \g_edu_showresults_bool {
-    \textcolor{\g_edu_resultfg_tl}{#2}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #2%
+    \group_end:
   }{#1}%
 }
 

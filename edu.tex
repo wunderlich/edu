@@ -6716,9 +6716,11 @@ Setzt die Punktzahl der aktuellen Teilaufgabe zusammen. Die Sternvariante setzt 
 \begin{macro}{\res}[2]{[<alternative text>]}{<text>}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \res { O{} m} {%
+\DeclareDocumentCommand \res { +O{} +m} {%
   \bool_if:NTF \g_edu_showresults_bool {
-    \textcolor{\g_edu_resultfg_tl}{#2}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #2%
+    \group_end:
   }{#1}%
 }
 
