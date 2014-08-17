@@ -1484,6 +1484,23 @@
   \noindent\fbox{\parbox{#1}{#2}}
 }
 
+\DeclareDocumentCommand \ibox { O{2cm} O{0.65cm} O{-5pt} } {%
+  \tikz[baseline=-#3] \draw (0,0) rectangle (#1, #2);
+  \hspace{5pt}
+}
+
+\DeclareDocumentCommand \dbox { O{\linewidth} O{3cm} } {%
+  \par
+  \parskipreduce
+  \fbox{%
+    \noindent\parbox[t][#2]{#1}{\mbox{}}
+  }
+  \par
+  \bool_if:NF \g_edu_parskip_bool {
+    \vspace{0.5\baselineskip}
+  }
+}
+
 \tl_new:N \l__edu_citetext_tl
 
 % Adapted from TeXbook
@@ -2913,6 +2930,7 @@
     \textcolor{\g_edu_resultfg_tl}{#3}%
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
+    \hspace{5pt}
   }%
 }
 

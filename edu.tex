@@ -4651,6 +4651,35 @@ Umrahmte Box mit variabler Breite (standardmäßig \cs{linewidth}).
 \end{MacroCode}
 \end{macro}
 
+\begin{macro}{\ibox}[3]{[<width>]}{[<height>]}{[<vertical offset>]}
+Umrahmte leere Box zur Verwendung im Fließtext ("`inline"'). Breite, Höhe und vertikale Verschiebung können optional verändert werden.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \ibox { O{2cm} O{0.65cm} O{-5pt} } {%
+  \tikz[baseline=-#3] \draw (0,0) rectangle (#1, #2); 
+  \hspace{5pt}
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\dbox}[2]{[<width>]}{[<height>]}
+Umrahmte, abgesetzte ("`display"') leere Box. Breite und Höhe können optional verändert werden.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \dbox { O{\linewidth} O{3cm} } {%
+  \par
+  \parskipreduce
+  \fbox{%
+    \noindent\parbox[t][#2]{#1}{\mbox{}}
+  }
+  \par
+  \bool_if:NF \g_edu_parskip_bool {
+    \vspace{0.5\baselineskip}
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
 \begin{macro}{\__edu_moveright:n}[1]{<token list>}
 \begin{environment}{citequote}[3]{[<author>]}{[<key>]}{[<reference>]}
 Umgebung für Zitate, bei der optional ein Author, eine Quelle und dann ebenfalls optional eine genauere Referenz (z.\,B Seite) angegeben werden kann.
@@ -6712,6 +6741,7 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
     \textcolor{\g_edu_resultfg_tl}{#3}%
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
+    \hspace{5pt}
   }%
 }
 
