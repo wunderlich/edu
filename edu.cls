@@ -2876,6 +2876,10 @@
   }%
 }
 
+\DeclareDocumentCommand \multiexe { } {%
+  \multiexelabel\xspace
+}
+
 \DeclareDocumentCommand \points { s m } {%
   \IfBooleanT{#1} {
    \hspace*{0pt}\hfill\hspace{0.5em}%
@@ -2988,6 +2992,55 @@
 \cs_new_eq:cN {endmultiexearray*} \endmultiexearray
 
 \DeclareExpandableDocumentCommand \ls { } {\addlinespace[1.5ex]}
+
+\DeclareDocumentCommand \lastexe { s } {
+  \int_compare:nNnTF {\value{exercisecounter}} > {0} {
+    \addtocounter{exercisecounter}{-1}
+    \arabic{exercisecounter}
+    \addtocounter{exercisecounter}{1}
+  }{
+    ??
+  }
+  \IfBooleanT {#1} {
+    \g_edu_exenumberseparator_tl\,\g_edu_exelabel_tl
+  }
+  \xspace
+}
+
+\DeclareDocumentCommand \lastsubexe { s } {
+  \IfBooleanT {#1} {
+    \g_edu_exelabel_tl\xspace
+  }
+  \int_compare:nNnTF {\value{subexercisecounter}} > {0} {
+    \addtocounter{subexercisecounter}{-1}
+    \arabic{exercisecounter}.\arabic{subexercisecounter}
+    \addtocounter{subexercisecounter}{1}
+  }{
+    ??
+  }
+  \xspace
+}
+
+\DeclareDocumentCommand \lastmultiexe { s } {
+  \IfBooleanT {#1} {
+    \group_begin:
+    \g_edu_multiexenumberstyle_tl
+    \color{\g_edu_multiexenumberfg_tl}
+    \g_edu_multiexenumberleft_tl
+  }
+  \int_compare:nNnTF {\value{multiexecounter}} > {0} {
+  \addtocounter{multiexecounter}{-1}
+  \alph{multiexecounter}
+  \addtocounter{multiexecounter}{1}
+  }{
+    ??
+  }
+  \IfBooleanT {#1} {
+    \g_edu_multiexenumberright_tl
+    \group_end:
+  }
+  \xspace
+}
 
 \newcounter{question}
 \newcounter{@questmccounter}
