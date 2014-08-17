@@ -696,6 +696,8 @@
   ttshowtime .initial:n = true,
   ttentrytimelabel .tl_gset:N = \g_edu_ttentrytimelabel_tl,
   ttentrytimelabel .initial:n = ,
+  ttdisablehyphenation .bool_gset:N = \g_edu_ttdisablehyphenation_bool,
+  ttdisablehyphenation .initial:n = true,
 }
 
 \keys_define:nn {edu} {
@@ -3472,25 +3474,30 @@
 
 
 \DeclareDocumentCommand \ttable { s o } {%
+  \group_begin:
+  \bool_if:NT \g_edu_ttdisablehyphenation_bool {
+    \hyphenpenalty 10000
+    \exhyphenpenalty 10000
+  }
   \IfBooleanTF {#1} {
     \landscape
     \IfValueT {#2} {
       #2
     }
     \begin{tabularx}{\linewidth}{%
-      p{\g_edu_tttimewidthlscape_dim}%
-      p{\g_edu_ttstagewidthlscape_dim}%
-      X%
-      p{\g_edu_ttmethodwidthlscape_dim}%
-      p{\g_edu_ttmediawidthlscape_dim}%
+      >{\RaggedRight}p{\g_edu_tttimewidthlscape_dim}%
+      >{\RaggedRight}p{\g_edu_ttstagewidthlscape_dim}%
+      >{\RaggedRight}X%
+      >{\RaggedRight}p{\g_edu_ttmethodwidthlscape_dim}%
+      >{\RaggedRight}p{\g_edu_ttmediawidthlscape_dim}%
     }
   }{
   \begin{tabularx}{\linewidth}{%
-    p{\g_edu_tttimewidth_dim}%
-    p{\g_edu_ttstagewidth_dim}%
-    X%
-    p{\g_edu_ttmethodwidth_dim}%
-    p{\g_edu_ttmediawidth_dim}%
+    >{\RaggedRight}p{\g_edu_tttimewidth_dim}%
+    >{\RaggedRight}p{\g_edu_ttstagewidth_dim}%
+    >{\RaggedRight}X%
+    >{\RaggedRight}p{\g_edu_ttmethodwidth_dim}%
+    >{\RaggedRight}p{\g_edu_ttmediawidth_dim}%
   }
   }
   \bool_if:NTF \g_edu_ttendtime_bool {
@@ -3520,6 +3527,7 @@
   \IfBooleanT {#1} {
     \endlandscape
   }
+  \group_end:
 }
 
 \DeclareDocumentCommand \ttentry { s O{} O{} m +m +m +m } {%
