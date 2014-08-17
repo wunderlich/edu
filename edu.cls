@@ -3262,7 +3262,7 @@
 
 \tl_new:N \g__edu_aligntemp_tl
 
-\DeclareDocumentEnvironment {graphicscol} { s O{0.5\linewidth} m O{width=\linewidth} o } {%
+\DeclareDocumentEnvironment {graphicscol} { s O{0.5\linewidth} m O{width=\linewidth} o O{t} } {%
 
   \IfValueTF {#5} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#5}
@@ -3273,8 +3273,12 @@
     \tl_gset:Nn \g__edu_aligntemp_tl {r}
   }
   }
+  \str_if_eq:nnTF {#6} {c} {
+    \begin{cols2*}[#2]
+  }{
+    \begin{cols2}[#2]
+  }
 
-  \begin{cols2*}[#2]
   \IfBooleanT {#1} {
     \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
@@ -3309,7 +3313,11 @@
       \hfill
     }
   }
-  \end{cols2*}
+  \str_if_eq:nnTF {#6} {c} {
+    \end{cols2*}
+  }{
+    \end{cols2}
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -3317,7 +3325,7 @@
 \cs_new:cpn {endgraphicscol*} {\endgraphicscol}
 
 
-\DeclareDocumentEnvironment {tikzcol} { s O{0.5\linewidth} m o } {%
+\DeclareDocumentEnvironment {tikzcol} { s O{0.5\linewidth} m o O{t}} {%
 
   \IfValueTF {#4} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#4}
@@ -3329,7 +3337,11 @@
   }
   }
 
-  \begin{cols2*}[#2]
+  \str_if_eq:nnTF {#5} {c} {
+    \begin{cols2*}[#2]
+  }{
+    \begin{cols2}[#2]
+  }
   \IfBooleanT {#1} {
     \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
@@ -3363,7 +3375,11 @@
       \hfill
     }
   }
-  \end{cols2*}
+  \str_if_eq:nnTF {#5} {c} {
+    \end{cols2*}
+  }{
+    \end{cols2}
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:

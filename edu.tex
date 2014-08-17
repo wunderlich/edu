@@ -7300,17 +7300,17 @@ kann mit diesem Befehl beseitigt werden.
 
 
 \begin{macro}{\g__edu_aligntemp_tl}
-\begin{environment}{graphicscol}[4]{[<width of graphicscolumn>]}{<file>}{[<options of \cs*{includegraphics}>]}{[<l|r|c>]}
-\begin{environment}{graphicscol*}[4]{[<width of graphicscolumn>]}{<file>}{[<options of \cs*{includegraphics}>]}{[<l|r|c>]}
+\begin{environment}{graphicscol}[5]{[<width of graphicscolumn>]}{<file>}{[<options of \cs*{includegraphics}>]}{[<l|r|c>]}{[<t|c>]}
+\begin{environment}{graphicscol*}[5]{[<width of graphicscolumn>]}{<file>}{[<options of \cs*{includegraphics}>]}{[<l|r|c>]}{[<t|c>]}
 Das folgende Makro erzeugt ein zweispaltiges Layout, wobei die rechte 
 Spalte (in der Sternversion die linke Spalte) eine beliebige Abbildung 
-linksbündig (\texttt{c}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) darstellt.
+linksbündig (\texttt{c}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) innerhalb der jeweiligen Spalte angezeigt wird. Außerdem kann optional die vertikale Ausrichtung durch \texttt{t} (oben, Standard) und \texttt{c} (mittig) bestimmt werden.
 Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraphics} können angegeben werden.
 \begin{MacroCode}{class}
 
 \tl_new:N \g__edu_aligntemp_tl
 
-\DeclareDocumentEnvironment {graphicscol} { s O{0.5\linewidth} m O{width=\linewidth} o } {%
+\DeclareDocumentEnvironment {graphicscol} { s O{0.5\linewidth} m O{width=\linewidth} o O{t} } {%
   
   \IfValueTF {#5} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#5}
@@ -7321,8 +7321,12 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
 	    \tl_gset:Nn \g__edu_aligntemp_tl {r}
 	  }
   }
-    
-  \begin{cols2*}[#2]
+  \str_if_eq:nnTF {#6} {c} {
+    \begin{cols2*}[#2]
+  }{
+    \begin{cols2}[#2]
+  }
+  
   \IfBooleanT {#1} {
     \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
@@ -7357,7 +7361,11 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
       \hfill
     }
   }
-  \end{cols2*}
+  \str_if_eq:nnTF {#6} {c} {
+    \end{cols2*}
+  }{
+    \end{cols2}
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -7370,14 +7378,14 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
 \end{macro}
 
 
-\begin{environment}{tikzcol}[3]{[<width of tikz-column>]}{<file>}{[<l|r|c>]}
-\begin{environment}{tikzcol*}[3]{[<width of tikz-column>]}{<file>}{[<l|r|c>]}
+\begin{environment}{tikzcol}[4]{[<width of tikz-column>]}{<file>}{[<l|r|c>]}{[<t|c>]}
+\begin{environment}{tikzcol*}[4]{[<width of tikz-column>]}{<file>}{[<l|r|c>]}{[<t|c>]}
 Das folgende Makro erzeugt ein zweispaltiges Layout, wobei die rechte 
 Spalte (in der Sternversion die linke Spalte) eine beliebige \pkg{tikz}-Grafik 
-zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{tikzpath} vorliegen und wird mittels \cs{tikzinput*} eingebunden. Die Grafik wird wahlweise linksbündig (\texttt{c}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) gesetzt.
+zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{tikzpath} vorliegen und wird mittels \cs{tikzinput*} eingebunden. Die Grafik wird wahlweise linksbündig (\texttt{c}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) innerhalb der jeweiligen Spalte angezeigt wird. Außerdem kann optional die vertikale Ausrichtung durch \texttt{t} (oben, Standard) und \texttt{c} (mittig) bestimmt werden.
 \begin{MacroCode}{class}
 
-\DeclareDocumentEnvironment {tikzcol} { s O{0.5\linewidth} m o } {%
+\DeclareDocumentEnvironment {tikzcol} { s O{0.5\linewidth} m o O{t}} {%
   
   \IfValueTF {#4} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#4}
@@ -7389,7 +7397,11 @@ zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{ti
 	  }
   }
     
-  \begin{cols2*}[#2]
+  \str_if_eq:nnTF {#5} {c} {
+    \begin{cols2*}[#2]
+  }{
+    \begin{cols2}[#2]
+  }
   \IfBooleanT {#1} {
     \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
@@ -7423,7 +7435,11 @@ zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{ti
       \hfill
     }
   }
-  \end{cols2*}
+  \str_if_eq:nnTF {#5} {c} {
+    \end{cols2*}
+  }{
+    \end{cols2}
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
