@@ -810,6 +810,41 @@
 }
 
 \keys_define:nn {edu} {
+  linepname .tl_gset:N = \g_edu_linepname_tl,    % Line in parametrical form with vector variable: Name
+  linepname .initial:n = g,
+  linepsupport .tl_gset:N = \g_edu_linepsupport_tl,    % Line in parametrical form with vector variable: Support vector
+  linepsupport .initial:n = p,
+  linepdir .tl_gset:N = \g_edu_linepdir_tl,    % Line in parametrical form with vector variable: Directional vector
+  linepdir .initial:n = u,
+  lineppar .tl_gset:N = \g_edu_lineppar_tl,    % Line in parametrical form with vector variable: Parameter 1
+  lineppar .initial:n = r,
+}
+
+\keys_define:nn {edu} {
+  planepname .tl_gset:N = \g_edu_planepname_tl,    % Plane in parametrical form with vector variable: Name
+  planepname .initial:n = E,
+  planepsupport .tl_gset:N = \g_edu_planepsupport_tl,    % Plane in parametrical form with vector variable: Support vector
+  planepsupport .initial:n = p,
+  planepdiri .tl_gset:N = \g_edu_planepdiri_tl,    % Plane in parametrical form with vector variable: Directional vector 1
+  planepdiri .initial:n = u,
+  planepdirii .tl_gset:N = \g_edu_planepdirii_tl,    % Plane in parametrical form with vector variable: Directional vector 2
+  planepdirii .initial:n = v,
+  planeppari .tl_gset:N = \g_edu_planeppari_tl,    % Plane in parametrical form with vector variable: Parameter 1
+  planeppari .initial:n = r,
+  planepparii .tl_gset:N = \g_edu_planepparii_tl,    % Plane in parametrical form with vector variable: Parameter 2
+  planepparii .initial:n = s,
+}
+
+\keys_define:nn {edu} {
+  planenvarname .tl_gset:N = \g_edu_planenvarname_tl,    % Plane in normal form with vector variable: Name
+  planenvarname .initial:n = E,
+  planenvarsupport .tl_gset:N = \g_edu_planenvarsupport_tl,    % Plane in normal form with vector variable: Support vector
+  planenvarsupport .initial:n = p,
+  planenvarnormal .tl_gset:N = \g_edu_planenvarnormal_tl,    % Plane in normal form with vector variable: Normal vector
+  planenvarnormal .initial:n = n,
+}
+
+\keys_define:nn {edu} {
   lstnumberfg .tl_gset:N = \g_edu_lstnumberfg_tl,
   lstnumberfg .initial:n = black,
   lstkeywordfg .tl_gset:N = \g_edu_lstkeywordfg_tl,
@@ -4150,6 +4185,118 @@
 
 \DeclareDocumentCommand \qevar { m m } {
   \ensuremath #1 \pm \sqrt{#2}
+}
+
+\DeclareDocumentCommand \linepvar { s O{\g_edu_linepname_tl} O{\g_edu_linepsupport_tl} O{\g_edu_linepdir_tl} O{\g_edu_lineppar_tl} } {
+  \tl_if_empty:nF {#2} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+    \vec{x} = #3 + #5 #4
+  }{
+    \vec{x} = \vec{#3} + #5 \vec{#4}
+  }
+}
+
+\DeclareDocumentCommand \linepvec { s O{\g_edu_linepname_tl} O{\g_edu_linepsupport_tl} O{\g_edu_linepdir_tl} O{\g_edu_lineppar_tl} } {
+  \tl_if_empty:nF {#1} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+    \vec{x} =
+    \vect{
+      #3 \c_math_subscript_token 1 \\
+  #3 \c_math_subscript_token 2 \\
+  #3 \c_math_subscript_token 3
+    } +
+    #5
+    \vect{
+      #4 \c_math_subscript_token 1 \\
+  #4 \c_math_subscript_token 2 \\
+  #4 \c_math_subscript_token 3
+    }
+}{
+  \vec{x} = \vect{#3} + #5 \vect{#4}
+}
+}
+
+\DeclareDocumentCommand \planepvar { s O{\g_edu_planepname_tl} O{\g_edu_planepsupport_tl} O{\g_edu_planepdiri_tl} O{\g_edu_planepdirii_tl} O{\g_edu_planeppari_tl} O{\g_edu_planepparii_tl} } {
+  \tl_if_empty:nF {#2} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+    \vec{x} = #3 + #6 #4 + #7 #5
+  }{
+    \vec{x} = \vec{#3} + #6 \vec{#4} + #7 \vec{#5}
+  }
+}
+
+\DeclareDocumentCommand \planepvec { s O{\g_edu_planepname_tl} O{\g_edu_planepsupport_tl} O{\g_edu_planepdiri_tl} O{\g_edu_planepdirii_tl} O{\g_edu_planeppari_tl} O{\g_edu_planepparii_tl} } {
+  \tl_if_empty:nF {#1} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+    \vec{x} =
+    \vect{
+      #3 \c_math_subscript_token 1 \\
+  #3 \c_math_subscript_token 2 \\
+  #3 \c_math_subscript_token 3
+    } +
+    #6
+    \vect{
+      #4 \c_math_subscript_token 1 \\
+  #4 \c_math_subscript_token 2 \\
+  #4 \c_math_subscript_token 3
+    } +
+    #7
+    \vect{
+      #5 \c_math_subscript_token 1 \\
+  #5 \c_math_subscript_token 2 \\
+  #5 \c_math_subscript_token 3
+    }
+}{
+  \vec{x} = \vect{#3} + #6 \vect{#4} + #7 \vect{#5}
+}
+}
+
+\DeclareDocumentCommand \planenvar { s O{\g_edu_planenvarname_tl} O{\g_edu_planenvarsupport_tl} O{\g_edu_planenvarnormal_tl} } {
+  \tl_if_empty:nF {#2} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+    \left( \vec{x} - #3 \right) \cdot #4 = 0
+  }{
+    \left( \vec{x} - \vec{#3} \right) \cdot \vec{#4} = 0
+  }
+}
+
+\DeclareDocumentCommand \planenvec { s O{\g_edu_planenvarname_tl} O{\g_edu_planenvarsupport_tl} O{\g_edu_planenvarnormal_tl} } {
+  \tl_if_empty:nF {#1} {
+    #2:
+  }
+  \ensuremath
+  \IfBooleanTF {#1} {
+  \left[
+    \vec{x} -
+  \vect{
+    #3 \c_math_subscript_token 1 \\
+    #3 \c_math_subscript_token 2 \\
+    #3 \c_math_subscript_token 3
+    }
+  \right] \cdot
+  \vect{
+    #4 \c_math_subscript_token 1 \\
+    #4 \c_math_subscript_token 2 \\
+    #4 \c_math_subscript_token 3
+  } = 0
+}{
+  \left[ \vec{x} - \vect{#3} \right] \cdot \vect{#4} = 0
+}
 }
 
 \DeclareDocumentCommand \corr {  } {\ensuremath{\mathrel{\hat{=}}}}
