@@ -869,6 +869,10 @@
 \RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
 
+\bool_if:NT \g_edu_transparency_bool {
+  \RequirePackage[none]{hyphenat}
+}
+
 \RequirePackage{graphicx}
 \RequirePackage[svgnames, table]{xcolor}
 \RequirePackage{subfig}
@@ -1769,6 +1773,8 @@
 
   \bool_if:NT \g_edu_transparency_bool {
     \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+    \flushleft
+    \tolerance 10000
   }
 
 }{ % star

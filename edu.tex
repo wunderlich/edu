@@ -911,7 +911,7 @@ Im Folgenden wird dieser Zustand als \opt*{twoup}-Modus bezeichnet.
 
 \localeDE{
 \Option{transparency}\WithValues{true, false}\AndDefault{false}
-Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenschaften des Dokuments angepasst werden: Die Schrift muss (drastisch) vergrößert werden, Seitenränder können hingegen minimiert werden. Außerdem sollte serifenlose Schrift als Standardschrift verwendet werden, da sie die Lesbarkeit auf größerer Entfernung verbessert. Diese Anpassungen werden durch die Option \opt*{transparency} vorgenommen.
+Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenschaften des Dokuments angepasst werden: Die Schrift muss (drastisch) vergrößert werden, Seitenränder können hingegen minimiert werden. Außerdem sollte serifenlose Schrift als Standardschrift verwendet werden, da sie die Lesbarkeit auf größerer Entfernung verbessert. Silbentrennung wird überdies deaktiviert. Diese Anpassungen werden durch die Option \opt*{transparency} vorgenommen.
 
 Im Folgenden wird dieser Zustand als \opt*{transparency}-Modus bezeichnet.
 }
@@ -3720,6 +3720,10 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
 
+\bool_if:NT \g_edu_transparency_bool {
+  \RequirePackage[none]{hyphenat}
+}
+
 \end{MacroCode}
 
 
@@ -5066,6 +5070,8 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 		
 	  \bool_if:NT \g_edu_transparency_bool {
 	    \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+	    \flushleft
+	    \tolerance 10000
 	  }
 
 	}{ % star
