@@ -3522,7 +3522,7 @@
   }
 }
 
-\DeclareDocumentCommand \ttentry { s O{} m +m +m +m } {%
+\DeclareDocumentCommand \ttentry { s O{} O{} m +m +m +m } {%
   \bool_if:nT {!\tl_if_empty_p:n {#2} && \bool_if_p:N \g_edu_ttshowtime_bool} {
     \tl_gput_right:Nx \g__edu_ttable_tl {\edu_ttentrytime:}
     \tl_gput_right:Nn \g__edu_ttable_tl {\newline}
@@ -3532,16 +3532,20 @@
 
     \tl_gput_right:Nn \g__edu_ttable_tl {#2\textbar}
     \tl_gput_right:NV \g__edu_ttable_tl {\g__edu_ttminutesum_int}
+
+    \tl_if_empty:nF {#3} {
+      \tl_gput_right:NV \g__edu_ttable_tl {\newline \textcolor{gray}{(#3)}}
+    }
   }%
-  \tl_gput_right:Nn \g__edu_ttable_tl { & #3 & }
+  \tl_gput_right:Nn \g__edu_ttable_tl { & #4 & }
   \IfBooleanT {#1} {
     \tl_gput_right:Nn \g__edu_ttable_tl { \begin{itemizet} }
   }
-  \tl_gput_right:Nn \g__edu_ttable_tl { #4 }
+  \tl_gput_right:Nn \g__edu_ttable_tl { #5 }
   \IfBooleanT {#1} {
     \tl_gput_right:Nn \g__edu_ttable_tl { \end{itemizet} }
   }
-  \tl_gput_right:Nn \g__edu_ttable_tl {& #5 & #6 \tabularnewline \midrule
+  \tl_gput_right:Nn \g__edu_ttable_tl {& #6 & #7 \tabularnewline \midrule
   }
 }
 
