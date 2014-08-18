@@ -1687,7 +1687,14 @@
 
 \titleformat{\section}
   [hang]                                                % Shape
-  {\sffamily\bfseries\Large\color{\g_edu_sectionfg_tl}} % Format
+    {
+    \bool_if:NTF \g_edu_transparency_bool {
+      \large
+    }{
+      \Large
+    }
+    \sffamily\bfseries\color{\g_edu_sectionfg_tl}
+  } % Format
   {\setlength{\fboxsep}{0.125em}%
     \raisebox{0.2ex}{%
       \g_edu_sectionnumbersize_tl%
@@ -1712,7 +1719,14 @@
 
 \titleformat{\subsection}
   [hang]                                                   % Shape
-  {\sffamily\bfseries\large\color{\g_edu_subsectionfg_tl}} % Format
+  {
+    \bool_if:NTF \g_edu_transparency_bool {
+      \normalsize
+    }{
+      \large
+    }
+    \sffamily\bfseries\color{\g_edu_subsectionfg_tl}
+  } % Format
   {\setlength{\fboxsep}{0.125em}%
     \raisebox{0.15ex}{%
       \g_edu_subsectionnumbersize_tl%
@@ -1827,8 +1841,8 @@
 
   \bool_if:NT \g_edu_transparency_bool {
     \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
-    \flushleft
-    \tolerance 10000
+    \RaggedRight
+    \tolerance=10000
   }
 
 }{ % star
@@ -1970,6 +1984,8 @@
 
   \bool_if:NT \g_edu_transparency_bool {
     \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+    \RaggedRight
+    \tolerance=10000
   }
 } % no star
 }
