@@ -174,7 +174,7 @@
 }
 
 \__edu_keys_initial:n {listarraysep = 0.5em}
-\__edu_keys_initial:n {listarraymargin = 0.25em}
+\__edu_keys_initial:n {listarraymargin = 0.5em}
 
 \keys_define:nn {edu} {
   authorstyle .tl_gset:N = \g_edu_authorstyle_tl,
@@ -1428,21 +1428,40 @@
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
 
+\bool_new:N \__edu_multiexebonus_bool
+\bool_gset_false:N \__edu_multiexebonus_bool
+
 \newcolumntype{e}{%
   >{%
-    {\sffamily\multiexelabelboxed}%
-      \hspace{\g__edu_listarraysep_dim}\hangpara{\g__edu_hangindention_dim}{1}\raggedright\arraybackslash%
-     }%
-     X%
+    {\sffamily
+      \bool_if:NTF \__edu_multiexebonus_bool {
+        \multiexelabelboxed*%
+      }{
+        \multiexelabelboxed%
+      }
+    }
+    \bool_gset_false:N \__edu_multiexebonus_bool
+    \hspace{\g__edu_listarraysep_dim}
+    \hangpara{\g__edu_hangindention_dim}{1}
+    \raggedright\arraybackslash%
+  }%
+  X%
 }%
 
 \newcolumntype{E}{%
   >{%
-    {\sffamily\multiexelabelboxed}%
-      \hspace{\g__edu_listarraysep_dim}$\displaystyle%
-     }%
-     X%
-    <{$}%
+    {\sffamily
+      \bool_if:NTF \__edu_multiexebonus_bool {
+        \multiexelabelboxed*%
+      }{
+        \multiexelabelboxed%
+      }
+    }
+    \bool_gset_false:N \__edu_multiexebonus_bool
+    \hspace{\g__edu_listarraysep_dim}$\displaystyle%
+  }%
+  X%
+  <{$}%
 }%
 
 \newcolumntype{q}{%
@@ -2611,12 +2630,12 @@
 \DeclareDocumentCommand \rstsubexe { } {\setcounter{subexercisecounter}{0}}
 \DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
 
-\DeclareDocumentCommand \exe { o m }{
+\DeclareDocumentCommand \exe { s o m }{
   \refstepcounter{exercisecounter}
 
   \tl_clear:N \l__edu_exelabeltext_tl
 
-  \IfNoValueTF {#1} {
+  \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_exepointsachieved_bool {
@@ -2624,19 +2643,19 @@
       \g_edu_exepointsleft_tl
         \hspace{\g_edu_exepointsachievedspace_dim}
         \g_edu_exepointsachievedsep_tl
-        #1\g_edu_exepointslabel_tl
+        #2\g_edu_exepointslabel_tl
       \g_edu_exepointsright_tl
     }
   }{
       \tl_set:Nn \l__edu_exepoints_tl {
       \g_edu_exepointsleft_tl
-        #1\g_edu_exepointslabel_tl
+        #2\g_edu_exepointslabel_tl
       \g_edu_exepointsright_tl
     }
   }
   }
 
-  \tl_if_empty:nTF {#2} {
+  \tl_if_empty:nTF {#3} {
     \tl_if_empty:NTF \g_edu_exelabel_tl {
       \tl_clear:N \l__edu_exelabeltext_tl
     }{
@@ -2665,6 +2684,11 @@
       \colorbox{\g_edu_exenumberbg_tl}{%
         \textcolor{\g_edu_exenumberfg_tl}{%
           \g_edu_exenumberstyle_tl\theexercisecounter\g_edu_exenumberseparator_tl%
+          \IfBooleanT{#1} {
+          \raisebox{0.15ex}{%
+            $\star$
+          }
+          }
         }%
       }%
     }%
@@ -2675,7 +2699,7 @@
   }%
   {
     \colorbox{\g_edu_exebg_tl}{%
-      \textcolor{\g_edu_exefg_tl}{\g_edu_exestyle_tl #2}%
+      \textcolor{\g_edu_exefg_tl}{\g_edu_exestyle_tl #3}%
     }%
   }%
   \hfill%
@@ -2691,33 +2715,20 @@
   \setlength{\parfillskip}{1em plus 1fil}
 
   \bool_if:NT \g_edu_exetoc_bool {
-  \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #2}
+  \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #3}
   }
 
   \setcounter{subexercisecounter}{0}
   \setcounter{multiexecounter}{0}
   \setcounter{question}{0}
-
-%  \__edu_remove_multiexespace
-%
-%  \peek_meaning_ignore_spaces:NTF {L} {
-%    \bool_if:NTF \g_edu_parskip {
-%      \vspace{0.5\baselineskip}
-%    }{
-%      \vspace{-0.375\baselineskip}
-%    }
-%    Ja
-%  }{
-%    Nein
-%  }
 }
 
-\DeclareDocumentCommand \subexe { o m }{
+\DeclareDocumentCommand \subexe { s o m }{
   \refstepcounter{subexercisecounter}
 
   \tl_clear:N \l__edu_subexelabeltext_tl
 
-  \IfNoValueTF {#1} {
+  \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_subexepointsachieved_bool {
@@ -2725,19 +2736,19 @@
       \g_edu_subexepointsleft_tl
         \hspace{\g_edu_subexepointsachievedspace_dim}
         \g_edu_subexepointsachievedsep_tl
-        #1\g_edu_subexepointslabel_tl
+        #2\g_edu_subexepointslabel_tl
       \g_edu_subexepointsright_tl
     }
   }{
       \tl_set:Nn \l__edu_exepoints_tl {
       \g_edu_subexepointsleft_tl
-        #1\g_edu_subexepointslabel_tl
+        #2\g_edu_subexepointslabel_tl
       \g_edu_subexepointsright_tl
     }
   }
   }
 
-  \tl_if_empty:nTF {#2} {
+  \tl_if_empty:nTF {#3} {
     \tl_if_empty:NTF \g_edu_subexelabel_tl {
       \tl_clear:N \l__edu_subexelabeltext_tl
     }{
@@ -2768,6 +2779,11 @@
           \g_edu_subexenumberstyle_tl%
           \thesubexercisecounter%
           \g_edu_subexenumberseparator_tl%
+          \IfBooleanT{#1} {
+          \raisebox{0.15ex}{%
+            \,$\star$
+          }
+          }
         }%
       }%
     }%
@@ -2777,7 +2793,7 @@
   }%
   {%
     \colorbox{\g_edu_subexebg_tl}{%
-      \textcolor{\g_edu_subexefg_tl}{\g_edu_subexestyle_tl #2}%
+      \textcolor{\g_edu_subexefg_tl}{\g_edu_subexestyle_tl #3}%
     }%
   }%
   \hfill%
@@ -2793,7 +2809,7 @@
   \setlength{\parfillskip}{1em plus 1fil}
 
   \bool_if:NT \g_edu_exetoc_bool {
-  \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #2}
+  \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #3}
   }
 
   \setcounter{multiexecounter}{0}
@@ -2916,28 +2932,53 @@
   \setcounter{multiexecounter}{0}
 }
 
-\DeclareDocumentCommand \multiexelabel { } {%
+\DeclareDocumentCommand \multiexelabel { s } {%
   \stepcounter{multiexecounter}%
   {\g_edu_multiexenumberstyle_tl%
     \textcolor{\g_edu_multiexenumberfg_tl}{%
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }
       \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl%
     }%
   }
 }
 
-\newcommand{\multiexelabelboxed}{%
+\DeclareDocumentCommand \multiexelabelboxed { s } {%
   \stepcounter{multiexecounter}%    War \refstepcounter. Dies erzeugt vertikalen Abstand.
   \setlength{\fboxsep}{0pt}%
   \makebox[\g__edu_listlabelwidth_dim][r]{%
     \g_edu_multiexenumberstyle_tl%
     \textcolor{\g_edu_multiexenumberfg_tl}{%
-      \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }
+      \g_edu_multiexenumberleft_tl\alph{multiexecounter}
+      \g_edu_multiexenumberright_tl
     }%
   }%
 }
 
-\DeclareDocumentCommand \multiexe { } {%
-  \multiexelabel\xspace
+\let\itemorig\item
+
+\DeclareDocumentCommand \item { s } {%
+  \IfBooleanTF{#1} {
+    \itemorig[\multiexelabelboxed*]
+  }{
+    \itemorig
+  }
+}
+
+\DeclareDocumentCommand \multiexe { s } {%
+  \IfBooleanTF{#1} {
+    \multiexelabel*\xspace
+  }{
+    \multiexelabel\xspace
+  }
 }
 
 \DeclareDocumentCommand \points { s m } {%
@@ -3053,6 +3094,10 @@
 % Hack, because xparse doesn't generate starred environments:
 \cs_new:cpn {multiexearray*} {\multiexearray*}
 \cs_new_eq:cN {endmultiexearray*} \endmultiexearray
+
+\DeclareExpandableDocumentCommand \bonus { } {
+  \bool_gset_true:N \__edu_multiexebonus_bool
+}
 
 \DeclareExpandableDocumentCommand \ls { } {\addlinespace[1.5ex]}
 

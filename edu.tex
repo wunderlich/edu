@@ -2195,7 +2195,7 @@ These options affect to lists and arrays:
 }
 
 \__edu_keys_initial:n {listarraysep = 0.5em}
-\__edu_keys_initial:n {listarraymargin = 0.25em}
+\__edu_keys_initial:n {listarraymargin = 0.5em}
 
 \end{MacroCode}
 \end{option}
@@ -4592,12 +4592,24 @@ Spaltentyp für zentrierte Spalten mit fester Breite:
 
 Spaltentyp für \env{multiexearray}.
 \begin{MacroCode}{class}
+\bool_new:N \__edu_multiexebonus_bool
+\bool_gset_false:N \__edu_multiexebonus_bool
+
 \newcolumntype{e}{%
   >{%
-    {\sffamily\multiexelabelboxed}%
-      \hspace{\g__edu_listarraysep_dim}\hangpara{\g__edu_hangindention_dim}{1}\raggedright\arraybackslash%
-     }%
-     X%
+    {\sffamily
+      \bool_if:NTF \__edu_multiexebonus_bool {
+        \multiexelabelboxed*%
+      }{
+        \multiexelabelboxed%
+      }
+    }
+    \bool_gset_false:N \__edu_multiexebonus_bool
+    \hspace{\g__edu_listarraysep_dim}
+    \hangpara{\g__edu_hangindention_dim}{1}
+    \raggedright\arraybackslash%
+  }%
+  X%
 }%
 
 \end{MacroCode}
@@ -4606,11 +4618,18 @@ Spaltentyp für \env{multiexearray*}.
 \begin{MacroCode}{class}
 \newcolumntype{E}{%
   >{%
-    {\sffamily\multiexelabelboxed}%
-      \hspace{\g__edu_listarraysep_dim}$\displaystyle%
-     }%
-     X%
-    <{$}%
+    {\sffamily
+      \bool_if:NTF \__edu_multiexebonus_bool {
+        \multiexelabelboxed*%
+      }{
+        \multiexelabelboxed%
+      }
+    }
+    \bool_gset_false:N \__edu_multiexebonus_bool
+    \hspace{\g__edu_listarraysep_dim}$\displaystyle%
+  }%
+  X%
+  <{$}%
 }%
 
 \end{MacroCode}
@@ -6397,14 +6416,17 @@ Nun werden die Überschriften-Klassen für Aufgaben (\cs{exercise}) und Unterauf
 
 Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufgaben \cs{multiexecounter} auf Null.
 
+Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') gedacht. Bei ihnen wird hinter der Nummer der Aufgabe ein Sternchen eingefügt.
+
 \begin{macro}{\exe}[2]{[<number points>]}{<title>}
+\begin{macro}{\exe*}[2]{[<number points>]}{<title>}
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \exe { o m }{
+\DeclareDocumentCommand \exe { s o m }{
   \refstepcounter{exercisecounter}
   
   \tl_clear:N \l__edu_exelabeltext_tl
   
-  \IfNoValueTF {#1} {
+  \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_exepointsachieved_bool {
@@ -6412,19 +6434,19 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
 	      \g_edu_exepointsleft_tl
 	        \hspace{\g_edu_exepointsachievedspace_dim}
 	        \g_edu_exepointsachievedsep_tl
-	        #1\g_edu_exepointslabel_tl
+	        #2\g_edu_exepointslabel_tl
 	      \g_edu_exepointsright_tl
 	    }
 	  }{
       \tl_set:Nn \l__edu_exepoints_tl {
 	      \g_edu_exepointsleft_tl
-	        #1\g_edu_exepointslabel_tl
+	        #2\g_edu_exepointslabel_tl
 	      \g_edu_exepointsright_tl
 	    }
 	  }
   }
 
-  \tl_if_empty:nTF {#2} {
+  \tl_if_empty:nTF {#3} {
     \tl_if_empty:NTF \g_edu_exelabel_tl {
       \tl_clear:N \l__edu_exelabeltext_tl
     }{
@@ -6453,6 +6475,11 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
       \colorbox{\g_edu_exenumberbg_tl}{%
         \textcolor{\g_edu_exenumberfg_tl}{%
           \g_edu_exenumberstyle_tl\theexercisecounter\g_edu_exenumberseparator_tl%
+          \IfBooleanT{#1} {
+	          \raisebox{0.15ex}{%
+	            $\star$
+	          }
+          }
         }%
       }%
     }%
@@ -6463,7 +6490,7 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
   }%
   {
     \colorbox{\g_edu_exebg_tl}{%
-      \textcolor{\g_edu_exefg_tl}{\g_edu_exestyle_tl #2}%
+      \textcolor{\g_edu_exefg_tl}{\g_edu_exestyle_tl #3}%
     }%
   }%
   \hfill%
@@ -6479,38 +6506,27 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
   \setlength{\parfillskip}{1em plus 1fil}
   
   \bool_if:NT \g_edu_exetoc_bool {
-  \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #2}
+  \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #3}
   }
   
   \setcounter{subexercisecounter}{0}
   \setcounter{multiexecounter}{0}
   \setcounter{question}{0}
-  
-%  \__edu_remove_multiexespace
-%
-%  \peek_meaning_ignore_spaces:NTF {L} {
-%    \bool_if:NTF \g_edu_parskip {
-%      \vspace{0.5\baselineskip}
-%    }{
-%      \vspace{-0.375\baselineskip}
-%    }
-%    Ja
-%  }{
-%    Nein
-%  }
 }
 
 \end{MacroCode}
 \end{macro}
+\end{macro}
 
 \begin{macro}{\subexe}[2]{[<number points>]}{<title>}
+\begin{macro}{\subexe*}[2]{[<number points>]}{<title>}
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \subexe { o m }{
+\DeclareDocumentCommand \subexe { s o m }{
   \refstepcounter{subexercisecounter}
   
   \tl_clear:N \l__edu_subexelabeltext_tl
   
-  \IfNoValueTF {#1} {
+  \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_subexepointsachieved_bool {
@@ -6518,19 +6534,19 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
 	      \g_edu_subexepointsleft_tl
 	        \hspace{\g_edu_subexepointsachievedspace_dim}
 	        \g_edu_subexepointsachievedsep_tl
-	        #1\g_edu_subexepointslabel_tl
+	        #2\g_edu_subexepointslabel_tl
 	      \g_edu_subexepointsright_tl
 	    }
 	  }{
       \tl_set:Nn \l__edu_exepoints_tl {
 	      \g_edu_subexepointsleft_tl
-	        #1\g_edu_subexepointslabel_tl
+	        #2\g_edu_subexepointslabel_tl
 	      \g_edu_subexepointsright_tl
 	    }
 	  }
   }
 
-  \tl_if_empty:nTF {#2} {
+  \tl_if_empty:nTF {#3} {
     \tl_if_empty:NTF \g_edu_subexelabel_tl {
       \tl_clear:N \l__edu_subexelabeltext_tl
     }{
@@ -6561,6 +6577,11 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
           \g_edu_subexenumberstyle_tl%
           \thesubexercisecounter%
           \g_edu_subexenumberseparator_tl%
+          \IfBooleanT{#1} {
+	          \raisebox{0.15ex}{%
+	            \,$\star$
+	          }
+          }
         }%
       }%
     }%
@@ -6570,7 +6591,7 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
   }%
   {%
     \colorbox{\g_edu_subexebg_tl}{%
-      \textcolor{\g_edu_subexefg_tl}{\g_edu_subexestyle_tl #2}%
+      \textcolor{\g_edu_subexefg_tl}{\g_edu_subexestyle_tl #3}%
     }%
   }%
   \hfill%
@@ -6586,7 +6607,7 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
   \setlength{\parfillskip}{1em plus 1fil}
   
   \bool_if:NT \g_edu_exetoc_bool {
-  \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #2}
+  \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #3}
   }
   
   \setcounter{multiexecounter}{0}
@@ -6595,6 +6616,8 @@ Sowohl \cs{exercise} als auch \cs{subexercise} setzen den Counter für Teilaufga
 
 \end{MacroCode}
 \end{macro}
+\end{macro}
+
 Die Implementierung der Überschriften für Lösungen erfolgt analog:
 
 \begin{macro}{\sol}[1]{<title>}
@@ -6732,22 +6755,33 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
 \begin{macro}{\multiexelabelboxed}
 Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstaben mit anschließender Klammer (a), b),\dots) und erhöhen den Counter um Eins. \cs{multiexelabelboxed} setzt die Buchstaben zusätzlich rechtsbündig in eine Box.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \multiexelabel { } {%
+\DeclareDocumentCommand \multiexelabel { s } {%
   \stepcounter{multiexecounter}%
   {\g_edu_multiexenumberstyle_tl%
     \textcolor{\g_edu_multiexenumberfg_tl}{%
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }  
       \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl%
     }%
   }
 }
 
-\newcommand{\multiexelabelboxed}{%
+\DeclareDocumentCommand \multiexelabelboxed { s } {%
   \stepcounter{multiexecounter}%    War \refstepcounter. Dies erzeugt vertikalen Abstand.
   \setlength{\fboxsep}{0pt}%
   \makebox[\g__edu_listlabelwidth_dim][r]{%
     \g_edu_multiexenumberstyle_tl%
     \textcolor{\g_edu_multiexenumberfg_tl}{%
-      \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }   
+      \g_edu_multiexenumberleft_tl\alph{multiexecounter}   
+      \g_edu_multiexenumberright_tl
     }%
   }%
 }
@@ -6756,11 +6790,31 @@ Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstabe
 \end{macro}
 \end{macro}
 
+\begin{macro}{\item*}
+Innerhalb einer Teilaufgaben-Liste können Zusatzaufgaben (Bonusaufgaben oder "`Sternchenaufgaben"') mithilfe dieser neu definierten Sternvariante von \Macro\item erstellt werden.
+\begin{MacroCode}{class}
+\let\itemorig\item
+
+\DeclareDocumentCommand \item { s } {%
+  \IfBooleanTF{#1} {
+    \itemorig[\multiexelabelboxed*]
+  }{
+    \itemorig
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
 \begin{macro}{\multiexe}
 Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstaben mit anschließender Klammer (a), b),\dots) und erhöhen den Counter um Eins. \cs{multiexelabelboxed} setzt die Buchstaben zusätzlich rechtsbündig in eine Box.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \multiexe { } {%
-  \multiexelabel\xspace
+\DeclareDocumentCommand \multiexe { s } {%
+  \IfBooleanTF{#1} {
+    \multiexelabel*\xspace
+  }{
+    \multiexelabel\xspace
+  }
 }
 
 \end{MacroCode}
@@ -6963,6 +7017,17 @@ Die Sternvariante versetzt alle Zellen für Teilaufgaben in den Mathematik-Modus
 
 \end{MacroCode}
 \end{environment}
+
+
+\begin{macro}{\bonus}
+Setzt die \emph{nächste} Teilaufgabe als Zusatzaufgabe (Bonusaufgabe, "`Sternchenaufgabe"'). Muss vor dem Wechsel zur nächsten Aufgabe (also vor \texttt{\&}) aufgerufen werden!
+\begin{MacroCode}{class}
+\DeclareExpandableDocumentCommand \bonus { } {
+  \bool_gset_true:N \__edu_multiexebonus_bool
+}
+
+\end{MacroCode}
+\end{macro}
 
 
 \begin{macro}{\ls}
