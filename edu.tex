@@ -3899,6 +3899,14 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 
 \end{MacroCode}
 
+\begin{macro*}{\c_colon_tl}
+Define a token list which can be used as a colon in \textsf{TikZ} within \cs*{\ExplSyntaxOn} and \cs*{\ExplSyntaxOff}.
+\begin{MacroCode}{class}
+\tl_const:Nx \c_colon_tl { \token_to_str:N : }
+
+\end{MacroCode}
+\end{macro*}
+
 
 \subsection{Schriften}
 
@@ -9109,6 +9117,82 @@ Planes in normal form:
 \end{MacroCode}
 \end{macro}
 \end{macro}
+
+
+\subsubsection{Planfiguren}
+
+\begin{macro}{\planfigurLines}[1]{<edges to highlight>}
+\begin{macro}{\planfigurAngles}[1]{<angles to highlight>}
+These commands are used to draw the highlighted elements (edges, angles) of the following \Macro\planfigur. They are necessary because of the incompatibility between \textsf{expl3} and \textsf{tikz}.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \planfigurLines { m } {
+
+  \tl_clear:N \__edu_planfigur_temp
+  
+  \tl_if_in:nnT {#1} {a} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (b) -- (c);}
+  }
+  
+  \tl_if_in:nnT {#1} {b} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (c);}
+  }
+  
+  \tl_if_in:nnT {#1} {c} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (b);}
+  }
+  
+  \tl_use:N \__edu_planfigur_temp
+}
+
+\DeclareExpandableDocumentCommand \planfigurAngles { m } {
+  \tl_if_in:nnT {#1} {a} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(a) + (0 \c_colon_tl 0.7)$) arc (0 \c_colon_tl 40 \c_colon_tl 0.7) ($(a) + (20 \c_colon_tl 0.5)$) node {$\alpha$};}
+  }
+  \tl_if_in:nnT {#1} {b} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(b) + (120 \c_colon_tl 0.7)$) arc (120 \c_colon_tl 180 \c_colon_tl 0.7) ($(b) + (150 \c_colon_tl 0.45)$) node {$\beta$};}
+  }
+  \tl_if_in:nnT {#1} {c} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(c) + (220 \c_colon_tl 0.7)$) arc (220 \c_colon_tl 300 \c_colon_tl 0.7) ($(c) + (263 \c_colon_tl 0.4)$) node {$\gamma$};}
+  }
+  
+  \tl_use:N \__edu_planfigur_temp
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+
+
+\begin{macro}{\planfigur}[2]{<edges to highlight>}{<angles to highlight>}
+Draws a "`planfigur"' (sketch) of a triangle, where the given edges and angles are highlighted.
+\begin{MacroCode}{class}
+\ExplSyntaxOff
+
+\DeclareDocumentCommand \planfigur { O{1.0} m m } {
+  \begin{tikzpicture}[scale=#1, line join=round, thick]
+
+    \coordinate (a) at (0,0);
+    \coordinate (b) at (3,0);
+    \coordinate (c) at (2.02, 1.7);
+
+    \draw (a) -- node[below] {$c$} (b) -- node[above right] {$a$} (c) -- node[above left] {$b$} (a) -- cycle;
+
+    \draw (a) node[left] {$A$};
+    \draw (b) node[right] {$B$};
+    \draw (c) node[above] {$C$};
+
+    \begin{scope}[color=red, fill=red!25, very thick]
+      \planfigurLines{#2}
+      \planfigurAngles{#3}
+    \end{scope}
+
+\end{tikzpicture}
+}
+\ExplSyntaxOn
+
+\end{MacroCode}
+\end{macro}
+
 
 
 

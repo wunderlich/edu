@@ -967,6 +967,8 @@
 \thickmuskip=5mu
 }
 
+\tl_const:Nx \c_colon_tl { \token_to_str:N : }
+
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
 }
@@ -4387,6 +4389,63 @@
   \left[ \vec{x} - \vect{#3} \right] \cdot \vect{#4} = 0
 }
 }
+
+\DeclareDocumentCommand \planfigurLines { m } {
+
+  \tl_clear:N \__edu_planfigur_temp
+
+  \tl_if_in:nnT {#1} {a} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (b) -- (c);}
+  }
+
+  \tl_if_in:nnT {#1} {b} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (c);}
+  }
+
+  \tl_if_in:nnT {#1} {c} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (b);}
+  }
+
+  \tl_use:N \__edu_planfigur_temp
+}
+
+\DeclareExpandableDocumentCommand \planfigurAngles { m } {
+  \tl_if_in:nnT {#1} {a} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(a) + (0 \c_colon_tl 0.7)$) arc (0 \c_colon_tl 40 \c_colon_tl 0.7) ($(a) + (20 \c_colon_tl 0.5)$) node {$\alpha$};}
+  }
+  \tl_if_in:nnT {#1} {b} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(b) + (120 \c_colon_tl 0.7)$) arc (120 \c_colon_tl 180 \c_colon_tl 0.7) ($(b) + (150 \c_colon_tl 0.45)$) node {$\beta$};}
+  }
+  \tl_if_in:nnT {#1} {c} {
+    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(c) + (220 \c_colon_tl 0.7)$) arc (220 \c_colon_tl 300 \c_colon_tl 0.7) ($(c) + (263 \c_colon_tl 0.4)$) node {$\gamma$};}
+  }
+
+  \tl_use:N \__edu_planfigur_temp
+}
+
+\ExplSyntaxOff
+
+\DeclareDocumentCommand \planfigur { O{1.0} m m } {
+  \begin{tikzpicture}[scale=#1, line join=round, thick]
+
+    \coordinate (a) at (0,0);
+    \coordinate (b) at (3,0);
+    \coordinate (c) at (2.02, 1.7);
+
+    \draw (a) -- node[below] {$c$} (b) -- node[above right] {$a$} (c) -- node[above left] {$b$} (a) -- cycle;
+
+    \draw (a) node[left] {$A$};
+    \draw (b) node[right] {$B$};
+    \draw (c) node[above] {$C$};
+
+    \begin{scope}[color=red, fill=red!25, very thick]
+      \planfigurLines{#2}
+      \planfigurAngles{#3}
+    \end{scope}
+
+\end{tikzpicture}
+}
+\ExplSyntaxOn
 
 \DeclareDocumentCommand \corr {  } {\ensuremath{\mathrel{\hat{=}}}}
 \DeclareDocumentCommand \ds {  } {\ensuremath{\displaystyle}}
