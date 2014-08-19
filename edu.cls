@@ -2258,18 +2258,23 @@
 }
 
 
-\DeclareDocumentCommand \pgno { O{} O{} } {
+\DeclareDocumentCommand \pg { m } {
   \tl_if_empty:nF {#1} {
     \g_edu_pglabel_tl\,#1\xspace
   }
+}
 
-  \bool_if:nT {!\tl_if_empty_p:n {#1} && !\tl_if_empty_p:n {#2}} {
-    ,\,
-  }
 
-  \tl_if_empty:nF {#2} {
-    \g_edu_nolabel_tl\,#2\xspace
+\DeclareDocumentCommand \no { m } {
+  \tl_if_empty:nF {#1} {
+    \g_edu_nolabel_tl\,#1\xspace
   }
+}
+
+
+\DeclareDocumentCommand \pgno { m m } {
+  \g_edu_pglabel_tl\,#1,\xspace
+  \g_edu_nolabel_tl\,#2\xspace
 }
 
 \DeclareDocumentCommand \pto {  } {%

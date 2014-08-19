@@ -5765,22 +5765,41 @@ Geklammerte 'Siehe'-Verweise auf Abschnitte, Abbildungen, etc:
 
 \subsubsection{Aufgaben angeben: S.\,X, Nr.\,Y}
 
-\begin{macro}{\pgno}[2]{[<pagenumber>]}{[<no>]}
-Zur Angabe von Aufgaben im Format S.\,X, Nr.\,Y.
+\begin{macro}{\pg}[1]{<pagenumber>}
+Zur Angabe von Seiten im Format S.\,X.
 \begin{MacroCode}{class}
 
-\DeclareDocumentCommand \pgno { O{} O{} } {
+\DeclareDocumentCommand \pg { m } {
   \tl_if_empty:nF {#1} {
     \g_edu_pglabel_tl\,#1\xspace
   }
-  
-  \bool_if:nT {!\tl_if_empty_p:n {#1} && !\tl_if_empty_p:n {#2}} {
-    ,\,
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\no}[1]{<number>}
+Zur Angabe von Aufgaben im Format Nr.\,Y.
+\begin{MacroCode}{class}
+
+\DeclareDocumentCommand \no { m } {
+  \tl_if_empty:nF {#1} {
+    \g_edu_nolabel_tl\,#1\xspace
   }
-  
-  \tl_if_empty:nF {#2} {
-    \g_edu_nolabel_tl\,#2\xspace
-  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\pgno}[2]{<pagenumber>}{<number>}
+Zur Angabe von Aufgaben im Format S.\,X, Nr.\,Y.
+\begin{MacroCode}{class}
+
+\DeclareDocumentCommand \pgno { m m } {
+  \g_edu_pglabel_tl\,#1,\xspace
+  \g_edu_nolabel_tl\,#2\xspace
 }
 
 \end{MacroCode}
