@@ -3582,6 +3582,11 @@
 }
 
 
+\DeclareDocumentCommand \ttcontinue {  } {
+  \tl_clear:N \g__edu_ttable_tl
+}
+
+
 \DeclareDocumentCommand \ttable { s o } {%
   \group_begin:
   \bool_if:NT \g_edu_ttdisablehyphenation_bool {

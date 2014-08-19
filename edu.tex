@@ -7793,6 +7793,17 @@ Dieser Befehl inizialisiert die Zeit-Variablen. Als Argumente müssen die aktuel
 \end{MacroCode}
 \end{macro}
 
+\begin{macro}{\ttcontinue}
+Muss die Tabelle unterbrochen werden -- z.\,B. weil ein Seitenumbruch vonnöten ist -- kann diese durch diesen Befehl fortgesetzt werden.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \ttcontinue {  } {
+  \tl_clear:N \g__edu_ttable_tl
+}
+
+
+\end{MacroCode}
+\end{macro}
+
 
 \begin{macro}{ttable}
 \begin{macro}{ttable*}[1]{[<text before>]}
