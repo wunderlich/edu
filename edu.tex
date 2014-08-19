@@ -4495,29 +4495,29 @@ Configure list-settings:
   \dim_gset:Nn \g__edu_listlabelwidth_dim {1.2em}
 }
 
-\setlist{%
-  partopsep=0ex,
-  topsep=0.5\baselineskip - \parskip,
-  itemsep=0.5\baselineskip - \parskip,
-  parsep=\parskip,
-  labelsep=\g__edu_listsep_dim,
-  leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
-}
-
-\setlist[2]{topsep=0.5\baselineskip - \parskip}
-\setlist[3]{topsep=0.5\baselineskip - \parskip}
-\setlist[4]{topsep=0.5\baselineskip - \parskip}
-\setlist[5]{topsep=0.5\baselineskip - \parskip}
-
-\setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
-\setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
-\setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
-
-\setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
-\setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
-\setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
-
-\setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
+	\setlist{%
+	  partopsep=0ex,
+	  topsep=0.5\baselineskip - \parskip,
+	  itemsep=0.5\baselineskip - \parskip,
+	  parsep=\parskip,
+	  labelsep=\g__edu_listsep_dim,
+	  leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
+	}
+	
+	\setlist[2, 3, 4, 5]{
+	  topsep=0.5\baselineskip - \parskip, 
+	  leftmargin=1em,
+	}
+	
+	\setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
+	\setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
+	\setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
+	
+	\setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
+	\setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
+	\setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
+	
+	\setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
 
 \end{MacroCode}
 
@@ -4566,7 +4566,12 @@ Liste ohne oberen und unteren Abstand. Geeignet für Aufzählungen in Tabellen. 
 \newenvironment{itemizet}{%
   \@minipagetrue
 %  \compress
-  \begin{itemize}[nosep, leftmargin=1em]
+  \begin{itemize}[
+    topsep=0pt,
+    itemsep=-0.25\baselineskip,
+    leftmargin=1em,
+    parsep=0.25\baselineskip,
+  ]
 }{%
   \vspace{-\baselineskip}
   \end{itemize}
@@ -7813,6 +7818,19 @@ Die Sternvariante setzt die Tabelle im Querformat. Die Breiten der Spalten werde
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \ttable { s o } {%
   \group_begin:
+  
+  \setlist[itemize]{%
+    topsep=-0.25\baselineskip,
+    itemsep=-0.25\baselineskip,
+    parsep=0.25\baselineskip,
+  }
+  
+  \setlist[enumerate]{%
+    topsep=-0.25\baselineskip,
+    itemsep=-0.25\baselineskip,
+    parsep=0.25\baselineskip,
+  }
+  
   \bool_if:NT \g_edu_ttdisablehyphenation_bool {
     \hyphenpenalty 10000
     \exhyphenpenalty 10000
@@ -8337,7 +8355,7 @@ Zuerst werden benötigte Längen definiert. After that, sequences with the diffe
 \end{macro}
 \end{macro}
 
-Nun werden die Theoremstyles definiert. For this purpose, two control sequences \cs{__edu_theoremstyleimp:n} and \cs{__edu_theoremstyleimp:n} are defined, which takes an argument for numbered theorems (\texttt{yes} or \texttt{no}).
+Nun werden die Theoremstyles definiert. For this purpose, two control sequences \cs{__edu_theoremstyleimp:n} and \cs{__edu_theoremstyleimp:n} are defined, which take an argument for numbered theorems (\texttt{yes} or \texttt{no}).
 
 Depending on the options \opt{theoremstyleimp} and \opt{theoremstyleunimp} the theoremstyles are declared.
 

@@ -1370,10 +1370,10 @@
   leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
 }
 
-\setlist[2]{topsep=0.5\baselineskip - \parskip}
-\setlist[3]{topsep=0.5\baselineskip - \parskip}
-\setlist[4]{topsep=0.5\baselineskip - \parskip}
-\setlist[5]{topsep=0.5\baselineskip - \parskip}
+\setlist[2, 3, 4, 5]{
+  topsep=0.5\baselineskip - \parskip,
+  leftmargin=1em,
+}
 
 \setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
 \setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
@@ -1414,7 +1414,12 @@
 \newenvironment{itemizet}{%
   \@minipagetrue
 %  \compress
-  \begin{itemize}[nosep, leftmargin=1em]
+  \begin{itemize}[
+    topsep=0pt,
+    itemsep=-0.25\baselineskip,
+    leftmargin=1em,
+    parsep=0.25\baselineskip,
+  ]
 }{%
   \vspace{-\baselineskip}
   \end{itemize}
@@ -3589,6 +3594,19 @@
 
 \DeclareDocumentCommand \ttable { s o } {%
   \group_begin:
+
+  \setlist[itemize]{%
+    topsep=-0.25\baselineskip,
+    itemsep=-0.25\baselineskip,
+    parsep=0.25\baselineskip,
+  }
+
+  \setlist[enumerate]{%
+    topsep=-0.25\baselineskip,
+    itemsep=-0.25\baselineskip,
+    parsep=0.25\baselineskip,
+  }
+
   \bool_if:NT \g_edu_ttdisablehyphenation_bool {
     \hyphenpenalty 10000
     \exhyphenpenalty 10000
