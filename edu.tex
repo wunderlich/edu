@@ -355,6 +355,7 @@ booktabs\\
 calc\\
 cancel\\
 ccicons\\
+datetime\\
 enumitem\\
 esvect\\
 etoolbox\\
@@ -3785,6 +3786,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \begin{MacroCode}{class}
 \RequirePackage{booktabs}
 \RequirePackage{ccicons}
+\RequirePackage{datetime}
 \RequirePackage[inline]{enumitem}
 \RequirePackage{eurosym}                                           % Euro-Sign
 \RequirePackage{expdlist}
@@ -4386,6 +4388,55 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \end{macro}
 \end{macro}
 \end{macro}
+
+
+\subsection{Datum und Zeit}
+
+\begin{macro*}{\ddmmyydateformat}
+Defining the default date format D(D).M(M).YYYY.
+\begin{MacroCode}{class}
+\renewcommand{\dateseparator}{.}
+
+\newdateformat{ddmmyydateformat}{
+  \THEDAY.\THEMONTH.\THEYEAR\xspace
+}
+
+\AtBeginDocument{
+  \ddmmyydateformat
+}
+
+\end{MacroCode}
+\end{macro*}
+
+\begin{macro*}{\timestampdateformat}
+\begin{macro*}{\timestamptimeformat}
+Defining a date and time format for typesetting a timestamp.
+\begin{MacroCode}{class}
+\newdateformat{timestampdateformat}{
+  \THEYEAR\twodigit{\THEMONTH}\twodigit{\THEDAY}
+}
+
+\newtimeformat{timestamptimeformat}{
+  \twodigit{\THEHOUR}\twodigit{\THEMINUTE}\twodigit{\THESECOND}
+}
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+
+\begin{macro*}{\timestamp}
+This command typesets a timestamp in the format YYYYMMDDHHMMSS.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \timestamp {  } {
+  \timestampdateformat
+  \settimeformat{timestamptimeformat}
+  \today\currenttime
+  \ddmmyydate
+}
+
+\end{MacroCode}
+\end{macro*}
+
 
 
 \subsection{Hyperref}
@@ -5617,22 +5668,6 @@ Das Eurozeichen der Tastatur als \cs{euro}-Makro auffassen, dass mithilfe des Pa
 
 \end{MacroCode}
 
-\begin{macro}{\today*}
-Analog zu \cs{today} stellt die hier definierte Sternvariante das aktuelle Datum an. Es wird jedoch im Format T.M.JJJJ (bzw. D.M.YYYY) dargestellt.
-\begin{MacroCode}{class}
-\AfterPreamble{
-  \cs_new_eq:NN \__edu_todaytemp \today
-	\DeclareDocumentCommand \today { s } {
-	  \IfBooleanTF{#1} {
-	    \the\day.\the\month.\the\year
-	  }{
-	    \__edu_todaytemp
-	  }
-	}
-}
-
-\end{MacroCode}
-\end{macro}
 
 
 \begin{macro}{\headrule}

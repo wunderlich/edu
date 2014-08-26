@@ -892,6 +892,7 @@
 
 \RequirePackage{booktabs}
 \RequirePackage{ccicons}
+\RequirePackage{datetime}
 \RequirePackage[inline]{enumitem}
 \RequirePackage{eurosym}                                           % Euro-Sign
 \RequirePackage{expdlist}
@@ -1291,6 +1292,31 @@
   }{
     \g_edu_version_tl\xspace
   }
+}
+
+\renewcommand{\dateseparator}{.}
+
+\newdateformat{ddmmyydateformat}{
+  \THEDAY.\THEMONTH.\THEYEAR\xspace
+}
+
+\AtBeginDocument{
+  \ddmmyydateformat
+}
+
+\newdateformat{timestampdateformat}{
+  \THEYEAR\twodigit{\THEMONTH}\twodigit{\THEDAY}
+}
+
+\newtimeformat{timestamptimeformat}{
+  \twodigit{\THEHOUR}\twodigit{\THEMINUTE}\twodigit{\THESECOND}
+}
+
+\DeclareDocumentCommand \timestamp {  } {
+  \timestampdateformat
+  \settimeformat{timestamptimeformat}
+  \today\currenttime
+  \ddmmyydate
 }
 
 \tl_new:N \g__edu_pdftitletemp_tl
@@ -2178,17 +2204,6 @@
 \DeclareDocumentCommand \textRightarrow { } {$\Rightarrow$\xspace}
 
 \DeclareUnicodeCharacter{20AC}{\euro}
-
-\AfterPreamble{
-  \cs_new_eq:NN \__edu_todaytemp \today
-\DeclareDocumentCommand \today { s } {
-  \IfBooleanTF{#1} {
-    \the\day.\the\month.\the\year
-  }{
-    \__edu_todaytemp
-  }
-}
-}
 
 \DeclareExpandableDocumentCommand \headrule { } {
   \midrule[\heavyrulewidth]
