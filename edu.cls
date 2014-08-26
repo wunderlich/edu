@@ -195,6 +195,8 @@
   subjectstyle .initial:n = \large\sffamily,
   subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
   subtitlestyle .initial:n = \Large\sffamily\bfseries,
+  timestampstyle .tl_gset:N = \g_edu_timestampstyle_tl,
+  timestampstyle .initial:n = \small\sffamily,
   titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
@@ -202,8 +204,6 @@
 }
 
 \keys_define:nn {edu} {
-  titleskip .skip_gset:N = \g_edu_titleskip_skip,
-  titleskip .initial:n = 1.75cm,
   titlefg .tl_gset:N = \g_edu_titlefg_tl,
   titlefg .initial:n = black,
   titlebg .tl_gset:N = \g_edu_titlebg_tl,
@@ -212,6 +212,10 @@
   groupfg .initial:n = white,
   groupbg .tl_gset:N = \g_edu_groupbg_tl,
   groupbg .initial:n = black,
+  titleskip .skip_gset:N = \g_edu_titleskip_skip,
+  titleskip .initial:n = 1.75cm,
+  timestamptitle .bool_gset:N = \g_edu_timestamptitle_bool,
+  timestamptitle .initial:n = false,
 }
 
 \keys_define:nn {edu} {
@@ -225,6 +229,8 @@
   footskip .initial:n = 1cm,
   twoupfootskip .dim_gset:N = \g_edu_twoupfootskip_dim,      % Skip to first baseline of  footer in twoup-mode
   twoupfootskip .initial:n = 0.75cm,
+  timestampfooter .bool_gset:N = \g_edu_timestampfooter_bool,
+  timestampfooter .initial:n = false,
 }
 
 \keys_define:nn {edu} {
@@ -1992,7 +1998,7 @@
   }
 }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl || !\tl_if_empty_p:N \g_edu_license_tl} {
+\bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl || \bool_if_p:N \g_edu_timestamptitle_bool || !\tl_if_empty_p:N \g_edu_license_tl} {
   \tl_put_right:Nn \g__edu_titletext_tl {
     \vspace{4ex}
   }
@@ -2008,7 +2014,7 @@
 
 \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl && !\tl_if_empty_p:N \g_edu_version_tl} {
   \tl_put_right:Nn \g__edu_titletext_tl {
-    \g_edu_datestyle_tl,~
+    ,~
   }
 }
 
@@ -2022,6 +2028,15 @@
 
 \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl} {
   \tl_put_right:Nn \g__edu_titletext_tl {
+    \par\parskipreduce
+  }
+}
+
+\bool_if:NT \g_edu_timestamptitle_bool {
+  \tl_put_right:Nn \g__edu_titletext_tl {
+    \group_begin:
+      \g_edu_timestampstyle_tl\timestamp
+    \group_end:
     \par\parskipreduce
   }
 }
@@ -2134,9 +2149,42 @@
     }
   }
 
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl ||
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertext_tl {
+      \quad(
+    }
+  }
+
   \tl_if_empty:NF \g_edu_versionshort_tl {
     \tl_put_right:Nn \l__edu_footertext_tl {
-      \quad(\g_edu_versionshort_tl)
+      \g_edu_versionshort_tl
+    }
+  }
+
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl &&
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertext_tl {
+      ,~
+    }
+  }
+
+  \bool_if:NT \g_edu_timestampfooter_bool {
+    \tl_put_right:Nn \l__edu_footertext_tl {
+      \timestamp
+    }
+  }
+
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl ||
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertext_tl {
+      )
     }
   }
 
