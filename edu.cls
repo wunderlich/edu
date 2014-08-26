@@ -248,6 +248,8 @@
   sectionnumbersize .initial:n = \normalsize,
   subsectionnumbersize .tl_gset:N = \g_edu_subsectionnumbersize_tl,  % Size of subsection numbers
   subsectionnumbersize .initial:n = \footnotesize,
+  subsubsectionnumbersize .tl_gset:N = \g_edu_subsubsectionnumbersize_tl,  % Size of subsubsection numbers
+  subsubsectionnumbersize .initial:n = \scriptsize,
 }
 
 \keys_define:nn {edu} {
@@ -269,6 +271,12 @@
   subsectionnumberbg .initial:n = black,
   subsectionfg .tl_gset:N = \g_edu_subsectionfg_tl,             % Foreground color of subsection
   subsectionfg .initial:n = black,
+  subsubsectionnumberfg .tl_gset:N = \g_edu_subsubsectionnumberfg_tl, % Foreground color of subsubsection numbers
+  subsubsectionnumberfg .initial:n = white,
+  subsubsectionnumberbg .tl_gset:N = \g_edu_subsubsectionnumberbg_tl, % Background color of subsection numbers
+  subsubsectionnumberbg .initial:n = black,
+  subsubsectionfg .tl_gset:N = \g_edu_subsubsectionfg_tl,             % Foreground color of subsubsection
+  subsubsectionfg .initial:n = black,
 }
 
 \keys_define:nn {edu} {
@@ -1751,18 +1759,37 @@
   {\g__edu_subsectionbefore_dim - \parskip}      % Beforesep
   {\g__edu_subsectionafter_dim - \parskip}       % Aftersep
 
+\dim_new:N \g__edu_subsubsectionbefore_dim
+\dim_new:N \g__edu_subsubsectionafter_dim
+\dim_gset:Nn \g__edu_subsubsectionbefore_dim {1.75ex}
+\dim_gset:Nn \g__edu_subsubsectionafter_dim {0.75ex}
+
 \titleformat{\subsubsection}
-  [hang]                               % Shape
-  {\sffamily\bfseries\small}           % Format
-  {\thesubsubsection}                  % Label
-  {0.5em}                              % Sep
-  {}                                   % Before
-  {}                                   % After
+  [hang]                                                   % Shape
+  {
+    \bool_if:NTF \g_edu_transparency_bool {
+      \small
+    }{
+      \normalsize
+    }
+    \sffamily\bfseries\color{\g_edu_subsubsectionfg_tl}
+  } % Format
+  {\setlength{\fboxsep}{0.125em}%
+    \raisebox{0.15ex}{%
+      \g_edu_subsubsectionnumbersize_tl%
+      \colorbox{\g_edu_subsubsectionnumberbg_tl}{%
+        \textcolor{\g_edu_subsubsectionnumberfg_tl}{\thesubsubsection}%
+      }
+    }
+  }                                  % Label
+  {0.5em}                             % Sep
+  {}                                  % Before
+  {}                                  % After
 
 \titlespacing*{\subsubsection}
-  {0pt}                                % Left
-  {1ex}                                % Beforesep
-  {0.1ex}                              % Aftersep
+  {0pt}                                        % Left
+  {\g__edu_subsubsectionbefore_dim - \parskip}      % Beforesep
+  {\g__edu_subsubsectionafter_dim - \parskip}       % Aftersep
 
 \DeclareDocumentCommand \setpar { } {
   \bool_if:NTF \g_edu_parindent_bool {
