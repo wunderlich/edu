@@ -6502,6 +6502,105 @@ Zum Laden von PGF-Dateien mit TikZ-Code aus dem Ordner/Pfad \cs{g_edu_tikzpath} 
 \end{macro}
 
 
+\subsubsection{PDF-Raster}
+
+\begin{macro}{\pdfgrid}[4]{[<included pages>]}{<number of pages>}{<filename>}{[<page width>]}
+\begin{macro}{\pdfgrid*}[4]{[<excluded pages>]}{<number of pages>}{<filename>}{[<page width>]}
+Allows to include a PDF file arranged in a grid. The number of pages of the PDF has to be specified. Opionally, some pages may be included (excluded in starred version) as a comma separated list and the width of one page can be specified.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand{\pdfgrid} { s o m m O{0.445\linewidth} } {
+  \IfBooleanTF {#1} {
+    \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+  }{
+    % \edu_create_grid_include only works, if #2 is not empty
+    % Otherwise, \edu_create_grid_exclude works
+    \IfNoValueTF {#2} {
+      \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+    }{
+      \edu_create_grid_include:nnnn {#2} {#3} {#4} {#5}
+    }
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+
+\begin{macro*}{\l_edu_loop_count_int}
+\begin{macro*}{\l_edu_loop_count_int}
+Counters for creating the grid.
+\begin{MacroCode}{class}
+\int_new:N \l_edu_loop_count_int
+\int_set:Nn \l_edu_loop_count_int {1}
+
+\int_new:N \l_edu_break_count_int
+\int_set:Nn \l_edu_break_count_int {1}
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+
+\begin{macro*}{\edu_create_grid_include:nnnn}[4]{[<included pages>]}{<number of pages>}{<filename>}{[<page width>]}
+\begin{macro*}{\edu_create_grid_exclude:nnnn}[4]{[<excluded pages>]}{<number of pages>}{<filename>}{[<page width>]}
+Counters for creating the grid.
+\begin{MacroCode}{class}
+\cs_new_protected:Npn \edu_create_grid_include:nnnn #1 #2 #3 #4 {
+
+  \setlength{\parfillskip}{0em}
+	\par
+  \vspace{0.25\baselineskip}
+  \int_set:Nn \l_edu_loop_count_int {1}
+  \int_set:Nn \l_edu_break_count_int {1}
+
+  \prg_replicate:nn {#2} {
+      \clist_if_in:nVT {#1} {\int_use:N \l_edu_loop_count_int} {
+        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \int_if_odd:nTF {\l_edu_break_count_int} {
+            \hfill
+          }{
+            \par
+            \bigskip
+            \noindent
+          }
+          \int_incr:N \l_edu_break_count_int
+      }
+      \int_incr:N \l_edu_loop_count_int
+  }
+  \par
+	\setlength{\parfillskip}{1em plus 1fil}
+}
+
+\cs_new_protected:Npn \edu_create_grid_exclude:nnnn #1 #2 #3 #4 {
+
+  \setlength{\parfillskip}{0em}
+	\par
+  \vspace{0.25\baselineskip}
+  \int_set:Nn \l_edu_loop_count_int {1}
+  \int_set:Nn \l_edu_break_count_int {1}
+
+  \prg_replicate:nn {#2} {
+      \clist_if_in:nVF {#1} {\int_use:N \l_edu_loop_count_int} {
+        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \int_if_odd:nTF {\l_edu_break_count_int} {
+            \hfill
+          }{
+            \par
+            \bigskip
+            \noindent
+          }
+          \int_incr:N \l_edu_break_count_int
+      }
+      \int_incr:N \l_edu_loop_count_int
+  }
+  \par
+	\setlength{\parfillskip}{1em plus 1fil}
+}
+
+\end{MacroCode}
+\end{macro*}
+\end{macro*}
+
+
 \subsection{Einrichtung der \textsf{edu}-Klasse}
 
 \begin{macro}{\edusetup}[1]{<key>=<val> list}

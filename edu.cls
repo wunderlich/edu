@@ -2717,6 +2717,78 @@
   \fp_set:Nn \g_edu_tikzscale_fp {1.0}%
 }
 
+\DeclareDocumentCommand{\pdfgrid} { s o m m O{0.445\linewidth} } {
+  \IfBooleanTF {#1} {
+    \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+  }{
+    % \edu_create_grid_include only works, if #2 is not empty
+    % Otherwise, \edu_create_grid_exclude works
+    \IfNoValueTF {#2} {
+      \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+    }{
+      \edu_create_grid_include:nnnn {#2} {#3} {#4} {#5}
+    }
+  }
+}
+
+\int_new:N \l_edu_loop_count_int
+\int_set:Nn \l_edu_loop_count_int {1}
+
+\int_new:N \l_edu_break_count_int
+\int_set:Nn \l_edu_break_count_int {1}
+
+\cs_new_protected:Npn \edu_create_grid_include:nnnn #1 #2 #3 #4 {
+
+  \setlength{\parfillskip}{0em}
+\par
+  \vspace{0.25\baselineskip}
+  \int_set:Nn \l_edu_loop_count_int {1}
+  \int_set:Nn \l_edu_break_count_int {1}
+
+  \prg_replicate:nn {#2} {
+      \clist_if_in:nVT {#1} {\int_use:N \l_edu_loop_count_int} {
+        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \int_if_odd:nTF {\l_edu_break_count_int} {
+            \hfill
+          }{
+            \par
+            \bigskip
+            \noindent
+          }
+          \int_incr:N \l_edu_break_count_int
+      }
+      \int_incr:N \l_edu_loop_count_int
+  }
+  \par
+\setlength{\parfillskip}{1em plus 1fil}
+}
+
+\cs_new_protected:Npn \edu_create_grid_exclude:nnnn #1 #2 #3 #4 {
+
+  \setlength{\parfillskip}{0em}
+\par
+  \vspace{0.25\baselineskip}
+  \int_set:Nn \l_edu_loop_count_int {1}
+  \int_set:Nn \l_edu_break_count_int {1}
+
+  \prg_replicate:nn {#2} {
+      \clist_if_in:nVF {#1} {\int_use:N \l_edu_loop_count_int} {
+        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \int_if_odd:nTF {\l_edu_break_count_int} {
+            \hfill
+          }{
+            \par
+            \bigskip
+            \noindent
+          }
+          \int_incr:N \l_edu_break_count_int
+      }
+      \int_incr:N \l_edu_loop_count_int
+  }
+  \par
+\setlength{\parfillskip}{1em plus 1fil}
+}
+
 \DeclareDocumentCommand  \edusetup { m } {
   \keys_set:nn {edu} {#1}
 }
