@@ -2717,16 +2717,16 @@
   \fp_set:Nn \g_edu_tikzscale_fp {1.0}%
 }
 
-\DeclareDocumentCommand{\pdfgrid} { s o m m O{0.445\linewidth} } {
+\DeclareDocumentCommand{\pdfgrid} { s o m O{0.445\linewidth} } {
   \IfBooleanTF {#1} {
-    \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+    \edu_create_grid_exclude:nnn {#2} {#3} {#4}
   }{
     % \edu_create_grid_include only works, if #2 is not empty
     % Otherwise, \edu_create_grid_exclude works
     \IfNoValueTF {#2} {
-      \edu_create_grid_exclude:nnnn {#2} {#3} {#4} {#5}
+      \edu_create_grid_exclude:nnn {#2} {#3} {#4}
     }{
-      \edu_create_grid_include:nnnn {#2} {#3} {#4} {#5}
+      \edu_create_grid_include:nnn {#2} {#3} {#4}
     }
   }
 }
@@ -2737,7 +2737,7 @@
 \int_new:N \l_edu_break_count_int
 \int_set:Nn \l_edu_break_count_int {1}
 
-\cs_new_protected:Npn \edu_create_grid_include:nnnn #1 #2 #3 #4 {
+\cs_new_protected:Npn \edu_create_grid_include:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
 \par
@@ -2745,9 +2745,11 @@
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
 
-  \prg_replicate:nn {#2} {
+  \pdfximage{\g_edu_graphicspath_tl#2}
+
+  \prg_replicate:nn {\the\pdflastximagepages} {
       \clist_if_in:nVT {#1} {\int_use:N \l_edu_loop_count_int} {
-        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \frame{\includegraphics[width=#3, page=\tl_use:N \l_edu_loop_count_int]{#2}}
         \int_if_odd:nTF {\l_edu_break_count_int} {
             \hfill
           }{
@@ -2763,7 +2765,7 @@
 \setlength{\parfillskip}{1em plus 1fil}
 }
 
-\cs_new_protected:Npn \edu_create_grid_exclude:nnnn #1 #2 #3 #4 {
+\cs_new_protected:Npn \edu_create_grid_exclude:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
 \par
@@ -2771,9 +2773,11 @@
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
 
-  \prg_replicate:nn {#2} {
+  \pdfximage{\g_edu_graphicspath_tl#2}
+
+  \prg_replicate:nn {\the\pdflastximagepages} {
       \clist_if_in:nVF {#1} {\int_use:N \l_edu_loop_count_int} {
-        \frame{\includegraphics[width=#4, page=\tl_use:N \l_edu_loop_count_int]{#3}}
+        \frame{\includegraphics[width=#3, page=\tl_use:N \l_edu_loop_count_int]{#2}}
         \int_if_odd:nTF {\l_edu_break_count_int} {
             \hfill
           }{
