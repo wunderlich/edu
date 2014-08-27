@@ -6407,6 +6407,22 @@ Definition der verwendeten Farben:
 \end{MacroCode}
 
 
+\subsubsection{Umgebungen}
+
+\begin{macro}{\includegraphicsc}[2]{[<optional arguments>]}{<filename>}
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \includegraphicsc { o m } {
+  \group_begin:
+    \centering \includegraphics[#1]{#2}
+    \par
+  \group_end:
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+
 \subsubsection{TikZ}
 
 Laden zusätzlicher \pkg{tikz}-Bibliotheken:

@@ -2673,6 +2673,13 @@
   \graphicspath{\g_edu_graphicspath_tl}
 }
 
+\DeclareDocumentCommand \includegraphicsc { o m } {
+  \group_begin:
+    \centering \includegraphics[#1]{#2}
+    \par
+  \group_end:
+}
+
 \ExplSyntaxOff  % Important! \usetikzlibrary doesn't work within \ExplSyntax*.
 \usetikzlibrary{calc}
 \usetikzlibrary{fadings}
