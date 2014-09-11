@@ -4363,7 +4363,7 @@
     \edu_ttaddminutes:n {#2}
     \int_gadd:Nn \g__edu_ttminutesum_int {#2}
 
-    \tl_gput_right:Nn \g__edu_ttable_tl {#2\textbar}
+    \tl_gput_right:Nn \g__edu_ttable_tl {#2\,\textbar\,}
     \tl_gput_right:NV \g__edu_ttable_tl {\g__edu_ttminutesum_int}
 
     \tl_if_empty:nF {#3} {
