@@ -195,6 +195,8 @@
   groupstyle .initial:n = \Large\sffamily\bfseries,
   licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
   licensestyle .initial:n = \small\sffamily,
+  shortstyle .tl_gset:N = \g_edu_shortstyle_tl,
+  shortstyle .initial:n = \Large\sffamily\bfseries,
   subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
   subjectstyle .initial:n = \large\sffamily,
   subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
@@ -208,6 +210,10 @@
 }
 
 \keys_define:nn {edu} {
+  shortfg .tl_gset:N = \g_edu_shortfg_tl,
+  shortfg .initial:n = white,
+  shortbg .tl_gset:N = \g_edu_shortbg_tl,
+  shortbg .initial:n = black,
   titlefg .tl_gset:N = \g_edu_titlefg_tl,
   titlefg .initial:n = black,
   titlebg .tl_gset:N = \g_edu_titlebg_tl,
@@ -1167,6 +1173,7 @@
 \tl_new:N \g_edu_field_tl
 \tl_new:N \g_edu_group_tl
 \tl_new:N \g_edu_license_tl
+\tl_new:N \g_edu_short_tl
 \tl_new:N \g_edu_subject_tl
 \tl_new:N \g_edu_subtitle_tl
 \tl_new:N \g_edu_title_tl
@@ -1180,6 +1187,7 @@
 \tl_new:N \g_edu_fieldshort_tl
 \tl_new:N \g_edu_groupshort_tl
 \tl_new:N \g_edu_licenseshort_tl
+\tl_new:N \g_edu_shortshort_tl
 \tl_new:N \g_edu_subjectshort_tl
 \tl_new:N \g_edu_subtitleshort_tl
 \tl_new:N \g_edu_titleshort_tl
@@ -1245,6 +1253,15 @@
     \tl_gset:Nn \g_edu_licenseshort_tl {#2}
   }{
     \tl_gset:Nn \g_edu_licenseshort_tl {#1}
+  }
+}
+
+\DeclareDocumentCommand \short {o m} {
+  \tl_gset:Nn \g_edu_short_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_shortshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_shortshort_tl {#1}
   }
 }
 
@@ -1337,6 +1354,14 @@
     \g_edu_licenseshort_tl\xspace
   }{
     \g_edu_license_tl\xspace
+  }
+}
+
+\DeclareDocumentCommand \printshort { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_shortshort_tl\xspace
+  }{
+    \g_edu_short_tl\xspace
   }
 }
 
@@ -1955,10 +1980,18 @@
     \noindent\g_edu_title_tl%
   \group_end:
   \hfill%
-  \tl_if_empty:NTF \g_edu_group_tl {
-    \ ~
-  }{
+  \tl_if_empty:NF \g_edu_short_tl {
     \group_begin:
+      \setlength{\fboxsep}{0.25em}
+      \g_edu_shortstyle_tl%
+      \colorbox{\g_edu_shortbg_tl}{%
+        \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
+      }%
+    \group_end:
+  }
+  \tl_if_empty:NF \g_edu_group_tl {
+    \group_begin:
+      \hspace{0.5em}
       \setlength{\fboxsep}{0.25em}
       \g_edu_groupstyle_tl%
       \colorbox{\g_edu_groupbg_tl}{%
@@ -1966,6 +1999,7 @@
       }%
     \group_end:
   }
+  \mbox{}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
 
@@ -2177,16 +2211,16 @@
 
   \bool_if:NT \g_edu_footer_bool {
 
-  \tl_new:N \l__edu_footertext_tl
+  \tl_new:N \l__edu_footertextl_tl
 
   \tl_if_empty:NF \g_edu_licenseshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
-      \g_edu_licenseshort_tl\hspace{0.4em}
+    \tl_put_right:Nn \l__edu_footertextl_tl {
+      \g_edu_licenseshort_tl\hspace{0.6em}
     }
   }
 
   \tl_if_empty:NF \g_edu_authorshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \textsc{\g_edu_authorshort_tl}\hspace{0.4em}
     }
   }
@@ -2195,13 +2229,13 @@
     !\tl_if_empty_p:N \g_edu_fieldshort_tl ||
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \textbar\hspace{0.4em}
     }
   }
 
   \tl_if_empty:NF \g_edu_fieldshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_fieldshort_tl
     }
   }
@@ -2210,13 +2244,13 @@
     !\tl_if_empty_p:N \g_edu_fieldshort_tl &&
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       :\
     }
   }
 
   \tl_if_empty:NF \g_edu_titleshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_titleshort_tl
     }
   }
@@ -2225,13 +2259,13 @@
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \quad(
     }
   }
 
   \tl_if_empty:NF \g_edu_versionshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_versionshort_tl
     }
   }
@@ -2240,13 +2274,13 @@
     !\tl_if_empty_p:N \g_edu_versionshort_tl &&
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       ,~
     }
   }
 
   \bool_if:NT \g_edu_timestampfooter_bool {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \timestamp
     }
   }
@@ -2255,21 +2289,28 @@
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       )
     }
   }
 
-  \refoot[]{\l__edu_footertext_tl}  % gerade rechts
-  \lofoot[]{\l__edu_footertext_tl}  % ungerade links
+  \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
+  \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
 
 
-  \tl_new:N \l__edu_groupfooter_tl
-  \tl_set:Nn \l__edu_groupfooter_tl {
-    \tl_if_empty:NTF \g_edu_group_tl {
-    \ ~
-  }{
-      \setlength{\fboxsep}{0.25em}
+  \tl_new:N \l__edu_footertextr_tl
+  \tl_put_right:Nn \l__edu_footertextr_tl {
+    \setlength{\fboxsep}{0.25em}
+
+    \tl_if_empty:NF \g_edu_short_tl {
+      \g_edu_shortstyle_tl\small%
+      \colorbox{black}{%
+        \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
+      }%
+    }
+
+    \tl_if_empty:NF \g_edu_group_tl {
+      \hspace{0.5em}
       \g_edu_groupstyle_tl\small%
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
@@ -2279,13 +2320,13 @@
   }
 
   \bool_if:NT \g_edu_pagecount_bool {
-    \rofoot[]{\l__edu_groupfooter_tl\small\normalfont\sffamily%
+    \rofoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
-    \lefoot[]{\l__edu_groupfooter_tl\small\normalfont\sffamily%
+    \lefoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
-    \lefoot[]{\l__edu_groupfooter_tl\pagemark}                    % gerade links
-    \rofoot[]{\l__edu_groupfooter_tl\pagemark}                    % ungerade rechts
+    \lefoot[]{\l__edu_footertextr_tl\pagemark}                    % gerade links
+    \rofoot[]{\l__edu_footertextr_tl\pagemark}                    % ungerade rechts
   }
 
   \lehead[]{}  % gerade links

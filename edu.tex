@@ -527,6 +527,7 @@ Horst kennt seine Schüler -- die meisten von ihnen sind unordentlich. Um sie zu
      Gebiet & \Macro\field & \Macro\class{Programmierung} \\ 
      Gruppe & \Macro\group & \Macro\group{A} \\ 
      Lizenz & \Macro\license & \Macro\license{Public Domain} \\ 
+     Abkürzung & \Macro\short & \Macro\short{AB1} \\ 
      Fach & \Macro\subject & \Macro\subject{Informatik} \\ 
      Untertitel & \Macro\subtitle & \Macro\subtitle{Mach es mehrmals!} \\ 
      Titel & \Macro\title & \Macro\title{Die While-Schleife} \\ 
@@ -1090,6 +1091,7 @@ Bestimmt in Aufgaben den Abstand zwischen Textrand und Aufgabennummerierung (s.\
 \Option{fieldstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
 \Option{groupstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{Large}\cs*{sffamily}\cs*{bfseries}}
 \Option{licensestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{small}\cs*{sffamily}}
+\Option{shortstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{Large\cs*{sffamily}\cs*{bfseries}}}
 \Option{subjectstyle}\WithValues{\meta{Format}}\AndDefault{\cs*{large}\cs*{sffamily}}
 \Option{subtitlestyle}\WithValues{\meta{Format}}\AndDefault{\cs*{Large}\cs*{sffamily}\cs*{bfseries}}
 \Option{timestamp}\WithValues{\meta{Boolean}}\AndDefault{\cs*{false}\cs*{sffamily}\cs*{bfseries}}
@@ -1119,6 +1121,8 @@ Bestimmen die Vorder- und Hintergrundfarbe des Titels.
 \localeDE{
 \Option{groupfg}\WithValues{\meta{Farbe}}\AndDefault{white}
 \Option{groupbg}\WithValues{\meta{Farbe}}\AndDefault{black}
+\Option{shortfg}\WithValues{\meta{Farbe}}\AndDefault{white}
+\Option{shortbg}\WithValues{\meta{Farbe}}\AndDefault{black}
 Bestimmen die Vorder- und Hintergrundfarbe der Gruppe.
 
 \WarningColorthemeDE*
@@ -2218,8 +2222,10 @@ These options affect to lists and arrays:
 \begin{option}{fieldstyle}
 \begin{option}{groupstyle}
 \begin{option}{licensestyle}
+\begin{option}{shortstyle}
 \begin{option}{subjectstyle}
-\begin{option}{topicstyle}
+\begin{option}{timestampstyle}
+\begin{option}{titlestyle}
 \begin{option}{versionstyle}
 Styles of metadata:
 \begin{MacroCode}{class}
@@ -2238,6 +2244,8 @@ Styles of metadata:
   groupstyle .initial:n = \Large\sffamily\bfseries,
   licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
   licensestyle .initial:n = \small\sffamily,
+  shortstyle .tl_gset:N = \g_edu_shortstyle_tl,
+  shortstyle .initial:n = \Large\sffamily\bfseries,
   subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
   subjectstyle .initial:n = \large\sffamily,
   subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
@@ -2261,11 +2269,15 @@ Styles of metadata:
 \end{option}
 \end{option}
 \end{option}
+\end{option}
+\end{option}
 
 
 \subsubsection{Title}
 
 
+\begin{option}{shortfg}
+\begin{option}{shortbg}
 \begin{option}{titlefg}
 \begin{option}{titlebg}
 \begin{option}{groupfg}
@@ -2275,6 +2287,10 @@ Styles of metadata:
 Options of title:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
+  shortfg .tl_gset:N = \g_edu_shortfg_tl,
+  shortfg .initial:n = white,
+  shortbg .tl_gset:N = \g_edu_shortbg_tl,
+  shortbg .initial:n = black,
   titlefg .tl_gset:N = \g_edu_titlefg_tl,
   titlefg .initial:n = black,
   titlebg .tl_gset:N = \g_edu_titlebg_tl,
@@ -2290,6 +2306,8 @@ Options of title:
 }
 
 \end{MacroCode}
+\end{option}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -4219,6 +4237,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro*}{\g_edu_field_tl}
 \begin{macro*}{\g_edu_group_tl}
 \begin{macro*}{\g_edu_license_tl}
+\begin{macro*}{\g_edu_short_tl}
 \begin{macro*}{\g_edu_subject_tl}
 \begin{macro*}{\g_edu_subtitle_tl}
 \begin{macro*}{\g_edu_title_tl}
@@ -4232,12 +4251,14 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \tl_new:N \g_edu_field_tl
 \tl_new:N \g_edu_group_tl
 \tl_new:N \g_edu_license_tl
+\tl_new:N \g_edu_short_tl
 \tl_new:N \g_edu_subject_tl
 \tl_new:N \g_edu_subtitle_tl
 \tl_new:N \g_edu_title_tl
 \tl_new:N \g_edu_version_tl
 
 \end{MacroCode}
+\end{macro*}
 \end{macro*}
 \end{macro*}
 \end{macro*}
@@ -4257,6 +4278,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro*}{\g_edu_fieldshort_tl}
 \begin{macro*}{\g_edu_groupshort_tl}
 \begin{macro*}{\g_edu_licenseshort_tl}
+\begin{macro*}{\g_edu_shortshort_tl}
 \begin{macro*}{\g_edu_subjectshort_tl}
 \begin{macro*}{\g_edu_subtitleshort_tl}
 \begin{macro*}{\g_edu_titleshort_tl}
@@ -4270,12 +4292,14 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \tl_new:N \g_edu_fieldshort_tl
 \tl_new:N \g_edu_groupshort_tl
 \tl_new:N \g_edu_licenseshort_tl
+\tl_new:N \g_edu_shortshort_tl
 \tl_new:N \g_edu_subjectshort_tl
 \tl_new:N \g_edu_subtitleshort_tl
 \tl_new:N \g_edu_titleshort_tl
 \tl_new:N \g_edu_versionshort_tl
 
 \end{MacroCode}
+\end{macro*}
 \end{macro*}
 \end{macro*}
 \end{macro*}
@@ -4296,6 +4320,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro}{\field}[2]{[<field short>]}{<field>}
 \begin{macro}{\group}[2]{[<group short>]}{<group>}
 \begin{macro}{\license}[2]{[<license short>]}{<license>}
+\begin{macro}{\short}[2]{[<short short>]}{<short>}
 \begin{macro}{\subject}[2]{[<subject short>]}{<subject>}
 \begin{macro}{\subtitle}[2]{[<subtitle short>]}{<subtitle>}
 \begin{macro}{\title}[2]{[<title short>]}{<title>}
@@ -4364,6 +4389,15 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
   }
 }
 
+\DeclareDocumentCommand \short {o m} {
+  \tl_gset:Nn \g_edu_short_tl {#2}
+  \IfNoValueTF{#1} {
+    \tl_gset:Nn \g_edu_shortshort_tl {#2}
+  }{
+    \tl_gset:Nn \g_edu_shortshort_tl {#1}
+  }
+}
+
 \DeclareDocumentCommand \subject {o m} {
   \tl_gset:Nn \g_edu_subject_tl {#2}
   \IfNoValueTF{#1} {
@@ -4412,6 +4446,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \end{macro}
 \end{macro}
 \end{macro}
+\end{macro}
 
 
 \begin{macro}{\printauthor}
@@ -4428,6 +4463,8 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro}{\printgroup*}
 \begin{macro}{\printlicense}
 \begin{macro}{\printlicense*}
+\begin{macro}{\printshort}
+\begin{macro}{\printshort*}
 \begin{macro}{\printsubject}
 \begin{macro}{\printsubject*}
 \begin{macro}{\printsubtitle}
@@ -4493,6 +4530,14 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
   }
 }
 
+\DeclareDocumentCommand \printshort { s } {
+  \IfBooleanTF{#1} {
+    \g_edu_shortshort_tl\xspace
+  }{
+    \g_edu_short_tl\xspace
+  }
+}
+
 \DeclareDocumentCommand \printsubject { s } {
   \IfBooleanTF{#1} {
     \g_edu_subjectshort_tl\xspace
@@ -4526,6 +4571,8 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 }
 
 \end{MacroCode}
+\end{macro}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
@@ -5414,10 +5461,18 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 	    \noindent\g_edu_title_tl%
 	  \group_end:
 	  \hfill%
-	  \tl_if_empty:NTF \g_edu_group_tl {
-	    \ ~
-	  }{
+	  \tl_if_empty:NF \g_edu_short_tl {
 	    \group_begin:
+	      \setlength{\fboxsep}{0.25em}
+	      \g_edu_shortstyle_tl%
+	      \colorbox{\g_edu_shortbg_tl}{%
+	        \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
+	      }%
+	    \group_end:
+	  }
+	  \tl_if_empty:NF \g_edu_group_tl {
+	    \group_begin:
+	      \hspace{0.5em}
 	      \setlength{\fboxsep}{0.25em}
 	      \g_edu_groupstyle_tl%
 	      \colorbox{\g_edu_groupbg_tl}{%
@@ -5425,6 +5480,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 	      }%
 	    \group_end:
 	  }
+	  \mbox{}
 	  \par
 	  \setlength{\parfillskip}{1em plus 1fil}
 	  
@@ -5673,19 +5729,19 @@ Die Fußzeilen werden durch das Package \pkg{scrheadings} realisiert. Dieses wir
     
 \end{MacroCode}
 
-Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \cs{field} etc. wird der Inhalt der inneren Seite der Fußzeile (bei einseitigem Satz links) im Makro \cs{__edu_footertext} erzeugt und an der entsprechenden Position der Fußzeile eingefügt:
-\begin{macro*}{\l__edu_footertext_tl}
+Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \cs{field} etc. wird der Inhalt der inneren Seite der Fußzeile (bei einseitigem Satz links) im Makro \cs{__edu_footertextl} erzeugt und an der entsprechenden Position der Fußzeile eingefügt:
+\begin{macro*}{\l__edu_footertextl_tl}
 \begin{MacroCode}{class}
-  \tl_new:N \l__edu_footertext_tl
+  \tl_new:N \l__edu_footertextl_tl
   
   \tl_if_empty:NF \g_edu_licenseshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
-      \g_edu_licenseshort_tl\hspace{0.4em}
+    \tl_put_right:Nn \l__edu_footertextl_tl {
+      \g_edu_licenseshort_tl\hspace{0.6em}
     }
   }
   
   \tl_if_empty:NF \g_edu_authorshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \textsc{\g_edu_authorshort_tl}\hspace{0.4em}
     }
   }
@@ -5694,13 +5750,13 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     !\tl_if_empty_p:N \g_edu_fieldshort_tl || 
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \textbar\hspace{0.4em}
     }
   }  
   
   \tl_if_empty:NF \g_edu_fieldshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_fieldshort_tl
     }
   }
@@ -5709,13 +5765,13 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     !\tl_if_empty_p:N \g_edu_fieldshort_tl && 
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       :\
     }
   }
   
   \tl_if_empty:NF \g_edu_titleshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_titleshort_tl
     }
   }
@@ -5724,13 +5780,13 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     !\tl_if_empty_p:N \g_edu_versionshort_tl || 
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \quad(
     }
   }
   
   \tl_if_empty:NF \g_edu_versionshort_tl {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_versionshort_tl
     }
   }
@@ -5739,13 +5795,13 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     !\tl_if_empty_p:N \g_edu_versionshort_tl && 
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       ,~
     }
   }
   
   \bool_if:NT \g_edu_timestampfooter_bool {
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       \timestamp
     }
   }
@@ -5754,27 +5810,34 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     !\tl_if_empty_p:N \g_edu_versionshort_tl || 
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertext_tl {
+    \tl_put_right:Nn \l__edu_footertextl_tl {
       )
     }
   }
   
-  \refoot[]{\l__edu_footertext_tl}  % gerade rechts
-  \lofoot[]{\l__edu_footertext_tl}  % ungerade links
+  \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
+  \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
 
 \end{MacroCode}
 \end{macro*}
 
 Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- je nach Wert der Option \opt{pagecount} -- zusätzlich der Anzahl der Seiten (\cs{pageref{LastPage}}) versehen:
-\begin{macro*}{\l__edu_groupfooter_tl}
+\begin{macro*}{\l__edu_footertextr_tl}
 \begin{MacroCode}{class}
   
-  \tl_new:N \l__edu_groupfooter_tl
-  \tl_set:Nn \l__edu_groupfooter_tl {
-    \tl_if_empty:NTF \g_edu_group_tl {
-	    \ ~
-	  }{
-      \setlength{\fboxsep}{0.25em}
+  \tl_new:N \l__edu_footertextr_tl
+  \tl_put_right:Nn \l__edu_footertextr_tl {
+    \setlength{\fboxsep}{0.25em}
+    
+    \tl_if_empty:NF \g_edu_short_tl {
+      \g_edu_shortstyle_tl\small%
+      \colorbox{black}{%
+        \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
+      }%
+    }
+    
+    \tl_if_empty:NF \g_edu_group_tl {
+      \hspace{0.5em}
       \g_edu_groupstyle_tl\small%
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
@@ -5784,13 +5847,13 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
   }
   
   \bool_if:NT \g_edu_pagecount_bool {
-    \rofoot[]{\l__edu_groupfooter_tl\small\normalfont\sffamily%
+    \rofoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
-    \lefoot[]{\l__edu_groupfooter_tl\small\normalfont\sffamily%
+    \lefoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
-    \lefoot[]{\l__edu_groupfooter_tl\pagemark}                    % gerade links
-    \rofoot[]{\l__edu_groupfooter_tl\pagemark}                    % ungerade rechts
+    \lefoot[]{\l__edu_footertextr_tl\pagemark}                    % gerade links
+    \rofoot[]{\l__edu_footertextr_tl\pagemark}                    % ungerade rechts
   }
 
 \end{MacroCode}
