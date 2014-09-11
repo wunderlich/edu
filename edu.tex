@@ -1908,6 +1908,10 @@ Messages for future use:
 \cs_generate_variant:Nn \tl_if_eq:nnF { V }
 \cs_generate_variant:Nn \tl_if_eq:nnTF { V }
 
+\cs_generate_variant:Nn \tl_if_eq:nnT { v }
+\cs_generate_variant:Nn \tl_if_eq:nnF { v }
+\cs_generate_variant:Nn \tl_if_eq:nnTF { v }
+
 \end{MacroCode}
 
 
@@ -3470,6 +3474,151 @@ Title style options of blackboard:
 \end{option}
 \end{option}
 \end{option}
+
+
+\subsubsection{Klassenarbeiten}
+
+First, we define the options for the exam title:
+
+\begin{option}{examtitlefieldilabel}
+\begin{option}{examtitlefieldiilabel}
+\begin{option}{examtitlefieldiiilabel}
+\begin{option}{examtitlegraphiclabel}
+Options for configuring the labeling:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  examtitlefieldilabel .tl_gset:N = \g_edu_examtitlefieldilabel_tl,
+  examtitlefieldilabel .initial:n = Nr.,
+  examtitlefieldiilabel .tl_gset:N = \g_edu_examtitlefieldiilabel_tl,
+  examtitlefieldiilabel .initial:n = Nachname,
+  examtitlefieldiiilabel .tl_gset:N = \g_edu_examtitlefieldiiilabel_tl,
+  examtitlefieldiiilabel .initial:n = Vorname,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{examtitlefieldsep}
+\begin{option}{examtitlefieldiwidth}
+\begin{option}{examtitlefieldiiwidth}
+\begin{option}{examtitlefieldiiiwidth}
+\begin{option}{examtitlegraphicsscale}
+\begin{option}{examtitlegraphicsheight}
+Options for configuring the spacing:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  examtitlefieldsep .dim_gset:N = \g_edu_examtitlefieldsep_dim,
+  examtitlefieldsep .initial:n = 0.75cm,
+  examtitlefieldiwidth .dim_gset:N = \g_edu_examtitlefieldiwidth_dim,
+  examtitlefieldiwidth .initial:n = 1cm,
+  examtitlefieldiiwidth .dim_gset:N = \g_edu_examtitlefieldiiwidth_dim,
+  examtitlefieldiiwidth .initial:n = 5cm,
+  examtitlefieldiiiwidth .dim_gset:N = \g_edu_examtitlefieldiiiwidth_dim,
+  examtitlefieldiiiwidth .initial:n = 5cm,
+  examtitlegraphicsscale .fp_gset:N = \g_edu_examtitlegraphicsscale_fp,
+  examtitlegraphicsscale .initial:n = 0.075,
+  examtitlegraphicsheight .dim_gset:N = \g_edu_examtitlegraphicsheight_dim,
+  examtitlegraphicsheight .initial:n = 2cm,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+Now, the options for the result box are defined:
+
+\begin{option}{exampointstabletype}
+By default, the tabular for achieved points in exams spread over a fix width (\texttt{x}). In some cases (e. g. only a few exercises), this doesn't look good an \texttt{c} should be used, which leads to a tabular of minimal width.
+\begin{MacroCode}{class}
+\tl_new:N \g_edu_exampointstabletype_tl
+
+\keys_define:nn {edu} {
+  exampointstabletype .choice_code:n = {
+    \tl_gset:NV \g_edu_exampointstabletype_tl \l_keys_choice_tl
+  },
+  exampointstabletype .generate_choices:n = {  
+    X,
+    C
+  },
+  exampointstabletype .initial:n = X
+}
+
+\end{MacroCode}
+\end{option}
+
+
+\begin{option}{exampointsmarklabel}
+\begin{option}{exampointsoflabel}
+\begin{option}{exampointsaveragelabel}
+\begin{option}{exampointssignaturelabel}
+Options for configuring the exam results:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exampointsmarklabel .tl_gset:N = \g_edu_exampointsmarklabel_tl,
+  exampointsmarklabel .initial:n = Note,
+  exampointsoflabel .tl_gset:N = \g_edu_exampointsoflabel_tl,
+  exampointsoflabel .initial:n = von,
+  exampointsaveragelabel .tl_gset:N = \g_edu_exampointsaveragelabel_tl,
+  exampointsaveragelabel .initial:n = $\varnothing$,
+  exampointssignaturelabel .tl_gset:N = \g_edu_exampointssignaturelabel_tl,
+  exampointssignaturelabel .initial:n = Unterschrift~Erziehungberechtigte(r),
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{exampointstablelabel}
+\begin{option}{exampointstableexelabel}
+\begin{option}{exampointstablemaxlabel}
+\begin{option}{exampointstableachlabel}
+\begin{option}{exampointstablesumlabel}
+Options for configuring the tabular of exam results:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exampointstablelabel .tl_gset:N = \g_edu_exampointstablelabel_tl,
+  exampointstablelabel .initial:n = Punkteverteilung,
+  exampointstableexelabel .tl_gset:N = \g_edu_exampointstableexelabel_tl,
+  exampointstableexelabel .initial:n = Aufg.,
+  exampointstablemaxlabel .tl_gset:N = \g_edu_exampointstablemaxlabel_tl,
+  exampointstablemaxlabel .initial:n = Max.~P.,
+  exampointstableachlabel .tl_gset:N = \g_edu_exampointstableachlabel_tl,
+  exampointstableachlabel .initial:n = Err.~P.,
+  exampointstablesumlabel .tl_gset:N = \g_edu_exampointstablesumlabel_tl,
+  exampointstablesumlabel .initial:n = $\sum$,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+\begin{option}{exampointstablewidth}
+Width of the points table.
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exampointstablewidth .tl_gset:N = \g_edu_exampointstablewidth_tl,
+  exampointstablewidth .initial:n = 0.625\linewidth,
+}
+
+%\__edu_keys_initial:n {exampointstablewidth = 0.625\linewidth}
+
+\end{MacroCode}
+\end{option}
+
 
 
 \subsubsection{Mathematik}
@@ -5254,7 +5403,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 	
 	\IfBooleanTF{#1} {
 		  
-		  
+		
 		\setlength{\parfillskip}{0em}
 	  \par
 	  \vspace{0.75ex}
@@ -6619,6 +6768,433 @@ Counters for creating the grid.
 \end{MacroCode}
 \end{macro*}
 \end{macro*}
+
+
+\subsubsection{Mario}
+
+Definition of Mario's colors:
+\begin{MacroCode}{class}
+\definecolor{marioBrown}{HTML}{8F581F}
+
+\definecolor{marioBlue1}{HTML}{002F5F}
+\definecolor{marioBlue2}{HTML}{004994}
+\definecolor{marioBlue3}{HTML}{0068D2}
+
+\definecolor{marioRed1}{HTML}{4C040B}
+\definecolor{marioRed2}{HTML}{9E0918}
+\definecolor{marioRed3}{HTML}{FF0E26}
+
+\definecolor{marioSkin}{HTML}{FFD0C0}
+
+\end{MacroCode}
+
+\begin{macro}{\edu_mariovictory_pixel:}
+Pixels of Mario graphic in \pkg{tikz}.
+\begin{MacroCode}{class}
+\cs_new:Npn \edu_mariovictory_pixel: {
+	\filldraw[marioRed1]		(7, 27)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(8, 27)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(9, 27)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(10, 27)	rectangle ++(1, 1);
+	
+	\filldraw[black]			  (1, 26)		rectangle ++(1, 1);
+	\filldraw[black]			  (2, 26)		rectangle ++(1, 1);
+	\filldraw[black]			  (4, 26)		rectangle ++(1, 1);
+	\filldraw[black]			  (5, 26)		rectangle ++(1, 1);
+	\filldraw[marioRed1]	  (6, 26)		rectangle ++(1, 1);
+	\filldraw[marioRed3]	  (7, 26)		rectangle ++(1, 1);
+	\filldraw[marioRed3]	  (8, 26)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(9, 26)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(10, 26)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(11, 26)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(12, 26)	rectangle ++(1, 1);
+	
+	\filldraw[black]			  (1, 25)		rectangle ++(1, 1);
+	\filldraw[white]			  (2, 25)		rectangle ++(1, 1);
+	\filldraw[black]			  (3, 25)		rectangle ++(1, 1);
+	\filldraw[white]			  (4, 25)		rectangle ++(1, 1);
+	\filldraw[black]			  (5, 25)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(6, 25)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(7, 25)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(8, 25)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(9, 25)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(10, 25)	rectangle ++(1, 1);
+	\filldraw[marioRed3]		(11, 25)	rectangle ++(1, 1);
+	\filldraw[marioRed2]		(12, 25)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(13, 25)	rectangle ++(1, 1);
+	
+	\filldraw[black]			  (2, 24)		rectangle ++(1, 1);
+	\filldraw[white]			  (3, 24)		rectangle ++(1, 1);
+	\filldraw[white]			  (4, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (5, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (6, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (7, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (8, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (9, 24)		rectangle ++(1, 1);
+	\filldraw[black]			  (10, 24)	rectangle ++(1, 1);
+	\filldraw[black]		  	(11, 24)	rectangle ++(1, 1);
+	\filldraw[marioRed3]		(12, 24)	rectangle ++(1, 1);
+	\filldraw[marioRed2]		(13, 24)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(14, 24)	rectangle ++(1, 1);
+	
+	\filldraw[black]		  	(1, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(2, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(3, 23)		rectangle ++(1, 1);
+	\filldraw[white]		  	(4, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(6, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(7, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(8, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(9, 23)		rectangle ++(1, 1);
+	\filldraw[black]		  	(10, 23)	rectangle ++(1, 1);
+	\filldraw[black]		  	(11, 23)	rectangle ++(1, 1);
+	\filldraw[black]		  	(12, 23)	rectangle ++(1, 1);
+	\filldraw[marioRed2]		(13, 23)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(14, 23)	rectangle ++(1, 1);
+	
+	\filldraw[black]	  		(0, 22)		rectangle ++(1, 1);
+	\filldraw[white]		  	(1, 22)		rectangle ++(1, 1);
+	\filldraw[white]		  	(2, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(3, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(4, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(6, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(7, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(8, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(9, 22)		rectangle ++(1, 1);
+	\filldraw[black]		  	(10, 22)	rectangle ++(1, 1);
+	\filldraw[black]		  	(11, 22)	rectangle ++(1, 1);
+	\filldraw[black]		  	(12, 22)	rectangle ++(1, 1);
+	\filldraw[black]		  	(13, 22)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(14, 22)	rectangle ++(1, 1);
+	
+	\filldraw[black]		  	(0, 21)		rectangle ++(1, 1);
+	\filldraw[white]		  	(1, 21)		rectangle ++(1, 1);
+	\filldraw[black]		  	(2, 21)		rectangle ++(1, 1);
+	\filldraw[white]		  	(3, 21)		rectangle ++(1, 1);
+	\filldraw[white]		  	(4, 21)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 21)		rectangle ++(1, 1);
+	\filldraw[white]	  		(6, 21)		rectangle ++(1, 1);
+	\filldraw[white]	  		(7, 21)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 21)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 21)		rectangle ++(1, 1);
+	\filldraw[white]		  	(10, 21)	rectangle ++(1, 1);
+	\filldraw[white]		  	(11, 21)	rectangle ++(1, 1);
+	\filldraw[black]		  	(12, 21)	rectangle ++(1, 1);
+	\filldraw[black]		  	(13, 21)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(14, 21)	rectangle ++(1, 1);
+	
+	\filldraw[black]	  		(0, 20)		rectangle ++(1, 1);
+	\filldraw[black]	  		(1, 20)		rectangle ++(1, 1);
+	\filldraw[black]	  		(2, 20)		rectangle ++(1, 1);
+	\filldraw[black]	  		(3, 20)		rectangle ++(1, 1);
+	\filldraw[white]	  		(4, 20)		rectangle ++(1, 1);
+	\filldraw[black]	  		(5, 20)		rectangle ++(1, 1);
+	\filldraw[white]	  		(6, 20)		rectangle ++(1, 1);
+	\filldraw[black]	  		(7, 20)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 20)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 20)		rectangle ++(1, 1);
+	\filldraw[black]		  	(10, 20)	rectangle ++(1, 1);
+	\filldraw[white]			  (11, 20)	rectangle ++(1, 1);
+	\filldraw[marioSkin]	 	(12, 20)	rectangle ++(1, 1);
+	\filldraw[marioSkin]  	(13, 20)	rectangle ++(1, 1);
+	\filldraw[black]			  (14, 20)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(15, 20)	rectangle ++(1, 1);
+	
+	\filldraw[black]			  (0, 19)		rectangle ++(1, 1);
+	\filldraw[white]			  (1, 19)		rectangle ++(1, 1);
+	\filldraw[white]			  (2, 19)		rectangle ++(1, 1);
+	\filldraw[white]		  	(3, 19)		rectangle ++(1, 1);
+	\filldraw[white]		  	(4, 19)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 19)		rectangle ++(1, 1);
+	\filldraw[white]		  	(6, 19)		rectangle ++(1, 1);
+	\filldraw[black]		  	(7, 19)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 19)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 19)		rectangle ++(1, 1);
+	\filldraw[black]		  	(10, 19)	rectangle ++(1, 1);
+	\filldraw[white]		  	(11, 19)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(12, 19)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(13, 19)	rectangle ++(1, 1);
+	\filldraw[black]			  (14, 19)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(15, 19)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(1, 18)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(2, 18)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(3, 18)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(4, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(5, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(6, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(7, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 18)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(10, 18)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(11, 18)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(12, 18)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(13, 18)	rectangle ++(1, 1);
+	\filldraw[black]		  	(14, 18)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(15, 18)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]  	(1, 17)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(2, 17)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(3, 17)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(4, 17)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 17)		rectangle ++(1, 1);
+	\filldraw[black]		  	(6, 17)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(7, 17)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 17)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 17)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(10, 17)	rectangle ++(1, 1);
+	\filldraw[black]		  	(11, 17)	rectangle ++(1, 1);
+	\filldraw[black]		  	(12, 17)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(13, 17)	rectangle ++(1, 1);
+	\filldraw[black]		  	(14, 17)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(15, 17)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]	  (1, 16)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(2, 16)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(3, 16)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(4, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(5, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(6, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(7, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(8, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(9, 16)		rectangle ++(1, 1);
+	\filldraw[black]		  	(10, 16)	rectangle ++(1, 1);
+	\filldraw[black]	  		(11, 16)	rectangle ++(1, 1);
+	\filldraw[black]	  		(12, 16)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(13, 16)	rectangle ++(1, 1);
+	\filldraw[marioBrown]		(14, 16)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(1, 15)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(2, 15)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(3, 15)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(4, 15)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(5, 15)		rectangle ++(1, 1);
+	\filldraw[black]		  	(6, 15)		rectangle ++(1, 1);
+	\filldraw[black]		  	(7, 15)		rectangle ++(1, 1);
+	\filldraw[black]	  		(8, 15)		rectangle ++(1, 1);
+	\filldraw[black]	  		(9, 15)		rectangle ++(1, 1);
+	\filldraw[black]	  		(10, 15)	rectangle ++(1, 1);
+	\filldraw[black]	  		(11, 15)	rectangle ++(1, 1);
+	\filldraw[marioSkin]		(12, 15)	rectangle ++(1, 1);
+	\filldraw[marioBrown]		(13, 15)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(1, 14)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(2, 14)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(3, 14)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(4, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(5, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(6, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(7, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(8, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(9, 14)		rectangle ++(1, 1);
+	\filldraw[marioSkin]		(10, 14)	rectangle ++(1, 1);
+	\filldraw[marioBrown]		(11, 14)	rectangle ++(1, 1);
+	\filldraw[marioBrown]		(12, 14)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(2, 13)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(3, 13)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(4, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(5, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(6, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(7, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(8, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(9, 13)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(10, 13)	rectangle ++(1, 1);
+	\filldraw[marioRed3]		(11, 13)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(12, 13)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(2, 12)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(3, 12)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(4, 12)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(5, 12)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(6, 12)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(7, 12)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(8, 12)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(9, 12)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(10, 12)	rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(11, 12)	rectangle ++(1, 1);
+	\filldraw[marioRed3]		(12, 12)	rectangle ++(1, 1);
+	\filldraw[marioRed1]		(13, 12)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed1]		(2, 11)		rectangle ++(1, 1);
+	\filldraw[marioRed2]		(3, 11)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(4, 11)		rectangle ++(1, 1);
+	\filldraw[marioRed3]		(5, 11)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(6, 11)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(7, 11)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(8, 11)		rectangle ++(1, 1);
+	\filldraw[marioRed1]		(9, 11)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(10, 11)	rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(11, 11)	rectangle ++(1, 1);
+	\filldraw[marioRed2]		(12, 11)	rectangle ++(1, 1);
+	\filldraw[black]			  (13, 11)	rectangle ++(1, 1);
+	\filldraw[black]		  	(14, 11)	rectangle ++(1, 1);
+	
+	\filldraw[marioRed2]		(3, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(4, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(5, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(6, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(7, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(8, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(9, 10)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(10, 10)	rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(11, 10)	rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(12, 10)	rectangle ++(1, 1);
+	\filldraw[white]			  (13, 10)	rectangle ++(1, 1);
+	\filldraw[white]		  	(14, 10)	rectangle ++(1, 1);
+	\filldraw[black]	  		(15, 10)	rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(3, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(4, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(5, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(6, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(7, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(8, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(9, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(10, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(11, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(12, 9)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(13, 9)		rectangle ++(1, 1);
+	\filldraw[white]	  		(14, 9)		rectangle ++(1, 1);
+	\filldraw[black]		  	(15, 9)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(3, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(4, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(5, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(6, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(7, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(8, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(9, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(10, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(11, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(12, 8)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(13, 8)		rectangle ++(1, 1);
+	\filldraw[white]		  	(14, 8)		rectangle ++(1, 1);
+	\filldraw[black]		  	(15, 8)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(3, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(4, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(5, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(6, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(7, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(8, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(9, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(10, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(11, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(12, 7)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(13, 7)		rectangle ++(1, 1);
+	\filldraw[black]	  		(14, 7)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(2, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(3, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(4, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(5, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(6, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(7, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(8, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(9, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(10, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(11, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(12, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(13, 6)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(14, 6)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(2, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(3, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(4, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(5, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(6, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(7, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(8, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(9, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(10, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(11, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue3]		(12, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(13, 5)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(14, 5)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(2, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(3, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(4, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(5, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(6, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(10, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(11, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(12, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue2]		(13, 4)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(14, 4)		rectangle ++(1, 1);
+	
+	\filldraw[marioBlue1]		(2, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(3, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(4, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(5, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(10, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(11, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(12, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(13, 3)		rectangle ++(1, 1);
+	\filldraw[marioBlue1]		(14, 3)		rectangle ++(1, 1);
+	
+	\filldraw[black] 		  	(1, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(2, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(3, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(4, 2)		rectangle ++(1, 1);
+	\filldraw[black] 		  	(5, 2)		rectangle ++(1, 1);
+	\filldraw[black] 		  	(10, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(11, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(12, 2)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(13, 2)		rectangle ++(1, 1);
+	\filldraw[black] 	  		(14, 2)		rectangle ++(1, 1);
+	
+	\filldraw[black] 		  	(0, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(1, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(2, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(3, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown]		(4, 1)		rectangle ++(1, 1);
+	\filldraw[black] 		  	(5, 1)		rectangle ++(1, 1);
+	\filldraw[black] 		  	(10, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(11, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(12, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(13, 1)		rectangle ++(1, 1);
+	\filldraw[marioBrown] 	(14, 1)		rectangle ++(1, 1);
+	\filldraw[black] 		  	(15, 1)		rectangle ++(1, 1);
+	
+	\filldraw[black]			(0, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(1, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(2, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(3, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(4, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(5, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(10, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(11, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(12, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(13, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(14, 0)		rectangle ++(1, 1);
+	\filldraw[black]			(15, 0)		rectangle ++(1, 1);                          
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\mariovictory}[2]{[<text>]}{[<scale>]}
+Prints the Mario victory graphic. The optional \texttt{<text>} is typeset to Mario's right. Mario is very large by default (about 27 centimeters) and should be scaled using the \texttt{<scale>} factor.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \mariovictory { O{} O{\fp_use:N \g_edu_examtitlegraphicsscale_fp} } {
+  \tikz[scale=#2] {
+  
+    \setlength{\baselineskip}{2.5ex}
+    
+    \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
+    
+    \edu_mariovictory_pixel:
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+
 
 
 \subsection{Einrichtung der \textsf{edu}-Klasse}
@@ -8436,6 +9012,281 @@ Macro für zentrierte Überschriften der obersten Gliederungsebene auf Tafelbild
 \end{macro}
 \end{macro}
 \end{macro}
+
+
+\subsection{Klassenarbeit}
+
+\subsubsection{Titel}
+
+\begin{macro}{\edu_examtitlegraphicoverlay:nn}[2]{<filename>}{<height>}
+This function creates a graphic overlay using a graphics file (\texttt{<filename>}) for the exam title (\cs{makeexamtitle}). The height of the graphic needs to be specified via \texttt{<height>}.
+\begin{MacroCode}{class}
+\cs_new:Npn \edu_examtitlegraphicoverlay:nn #1 #2 {
+  \tikz {
+	    \node[inner~sep=0pt, outer~sep=0pt, anchor=north~east] (n) at (0, 0) {\strut};
+	  \begin{pgfinterruptboundingbox}
+	    \node[anchor=north~east, inner~sep=0pt, outer~sep=0pt] at (0, 0) {\includegraphics[height=#2]{#1}};
+		\end{pgfinterruptboundingbox}
+	}
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\edu_mariovictory_shifted:nn}[2]{<text>}{<scale>}
+This function creates a graphic overlay of the Mario victory graphic. The \texttt{<text>} is typeset to Mario's right. Mario is very large by default (about 27 centimeters) and should be scaled using the \texttt{<scale>} factor.
+\begin{MacroCode}{class}
+\cs_new:Npn \edu_mariovictory_shifted:nn #1 #2 {
+	\tikz[scale=#2] {
+	  \node[inner~sep=0pt,outer~sep=0pt,anchor=north~east] (n) at (0, 0){\strut};
+	  
+	  \setlength{\baselineskip}{2.5ex}
+	  
+	  \begin{pgfinterruptboundingbox}
+			\begin{scope}[xshift=-35cm, yshift=-27cm]
+	    \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
+				\edu_mariovictory_pixel:
+		  \end{scope}
+		\end{pgfinterruptboundingbox}
+	}
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\makeexamtitle}[3]{[<text>]}{[<filename>]}{[<height>]}
+This function typesets the exam title. It is derived from \cs{maketitle*}. By default, the Mario victory graphic is placed at the title. With the first optional argument, the \texttt{<text>} typeset to Mario's right can be modified. Alternatively, you can choose your own graphic with the the second optional argument \texttt{<filename>} (which makes \texttt{<text>} obsolete). The height of the graphic can be specified using the argument \texttt{<height>}.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \makeexamtitle {s O{Viel\\ Erfolg!} O{mario-victory} O{\g_edu_examtitlegraphicsheight_dim}} {
+	
+	\setlength{\parfillskip}{0em}
+  \par
+  \vspace{0.75ex}
+  \parskipreduce
+  \group_begin:
+    \g_edu_titlestyle_tl%
+    \color{\g_edu_titlefg_tl}%
+    \noindent\g_edu_title_tl%
+  \group_end:
+  \hfill%
+  \group_begin:
+    \tl_if_empty:nF {#3} {
+	    \tl_if_eq:nnTF {#3} {mario-victory} {
+	      \edu_mariovictory_shifted:nn {#2}{\fp_use:N \g_edu_examtitlegraphicsscale_fp}
+	    }{
+	      \edu_examtitlegraphicoverlay:nn{#3}{#4}
+	    }
+	  }
+  \group_end:
+  \tl_if_empty:NTF \g_edu_group_tl {
+    \hspace*{1cm}
+  }{
+    \hspace*{0.75cm}
+    \group_begin:
+      \setlength{\fboxsep}{0.25em}
+      \g_edu_groupstyle_tl%
+      \colorbox{\g_edu_groupbg_tl}{%
+        \textcolor{\g_edu_groupfg_tl}{\g_edu_group_tl}%
+      }%
+    \group_end:
+  }
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
+  
+  \tl_if_empty:NTF \g_edu_subtitle_tl {
+    \addvspace{0.5\baselineskip}
+  }{
+    \parskipreduce
+    \group_begin:
+      \g_edu_subtitlestyle_tl
+      \color{\g_edu_titlefg_tl}\noindent\g_edu_subtitle_tl\par
+    \group_end:
+  }
+  \group_begin:
+    \tl_set:Nn \l__edu_tempi_tl {}
+    \tl_set:Nn \l__edu_tempii_tl {}
+    
+    \tl_if_empty:NF \g_edu_examtitlefieldilabel_tl {
+    
+      \tl_put_right:Nn \l__edu_tempi_tl {
+        \rule{\g_edu_examtitlefieldiwidth_dim}{0.4pt}
+	      \hspace*{\g_edu_examtitlefieldsep_dim} \=
+	    }
+	    
+      \tl_put_right:Nn \l__edu_tempii_tl {
+        \g_edu_examtitlefieldilabel_tl \> 
+	    }
+    }
+    
+    \tl_if_empty:NF \g_edu_examtitlefieldiilabel_tl {
+    
+      \tl_put_right:Nn \l__edu_tempi_tl {
+        \rule{\g_edu_examtitlefieldiiwidth_dim}{0.4pt}
+	      \hspace*{\g_edu_examtitlefieldsep_dim} \=
+	    }
+	    
+      \tl_put_right:Nn \l__edu_tempii_tl {
+        \g_edu_examtitlefieldiilabel_tl \> 
+	    }
+    }
+    
+    \tl_if_empty:NF \g_edu_examtitlefieldiiilabel_tl {
+    
+      \tl_put_right:Nn \l__edu_tempi_tl {
+        \rule{\g_edu_examtitlefieldiiiwidth_dim}{0.4pt}
+	      \hspace*{\g_edu_examtitlefieldsep_dim} \=
+	    }
+	    
+      \tl_put_right:Nn \l__edu_tempii_tl {
+        \g_edu_examtitlefieldiiilabel_tl \> 
+	    }
+    }
+    
+	  \setlength{\topsep}{-\parskip}
+	  \setlength{\partopsep}{0pt}
+	  \vspace{0.5cm}
+	  \small\sffamily
+	  \begin{tabbing}
+	    \l__edu_tempi_tl \\[-0.5ex]
+	    \l__edu_tempii_tl
+	  \end{tabbing}
+  \group_end:
+  
+  \addvspace{0.25\baselineskip}
+	
+  \bool_if:NT \g_edu_transparency_bool {
+    \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+    \RaggedRight
+    \tolerance=10000
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+
+
+\subsubsection{Ergebnisse}
+
+\begin{macro}{\edu_exampointstable:nnn}[3]{<exercise numbers clist>}{<exercise points clist>}{<total points>}
+This command creates a tabular listing the exercises (\texttt{<exercise numbers clist>}) with the associated points (\texttt{<exercise points clist>}) and the \texttt{<total points>}. There is also a row to note the achieved number of points.
+
+The columntype of the exercises is \texttt{>{\centering}X} or \texttt{C{1em}}, depending on the option \opt{exampointstabletype}.
+\begin{MacroCode}{class}
+\cs_new:Npn \edu_exampointstable:nnn #1 #2 #3 {
+  \tl_set:Nn \l_tmpi_tl {}
+  \tl_set:Nn \l_tmpii_tl {}
+  
+  \clist_map_inline:nn {#1} {
+    \tl_put_right:Nn \l_tmpi_tl {##1 & }
+  }
+  
+  \clist_map_inline:nn {#2} {
+    \tl_put_right:Nn \l_tmpii_tl {##1 & }
+  }
+  
+  \renewcommand{\arraystretch}{1.2}
+	\group_begin:
+	  \sffamily
+	  \tl_if_eq:VnT \g_edu_exampointstabletype_tl {X} {
+	    \begin{tabularx}{\linewidth}{|l|*{\clist_count:n {#1}}{>{\centering}X|}c|}
+	      \hline
+		    \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
+		    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
+		    \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
+		    \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
+	  	\end{tabularx}
+	  }
+	  
+	  \tl_if_eq:VnT \g_edu_exampointstabletype_tl {C} {
+	    \begin{tabular}{|l|*{\clist_count:n {#1}}{C{1em}|}c|}
+	      \hline
+		    \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
+		    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
+		    \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
+		    \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
+	    \end{tabular}
+	  }
+	\group_end:
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\exampointstable}[3]{<exercise numbers clist>}{<exercise points clist>}{<total points>}
+User command for \cs{edu_exampointstable:nnn}.
+\begin{MacroCode}{class}
+\NewDocumentCommand \exampointstable { m m m } {
+  \edu_exampointstable:nnn {#1}{#2}{#3}
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\makeexamrestable}[3]{<exercise numbers clist>}{<exercise points clist>}{<total points>}
+Typesets a box for entering the results of an exam (table with maximum/achieved points per exercise, total number of points (\texttt{<total points>}), mark, average mark, field for signature of parents).
+
+The numbers of exercises and the associated maximum points are defined as a comma separated list \texttt{<exercise numbers clist>}/\texttt{<exercise points clist>}.
+\begin{MacroCode}{class}
+\NewDocumentCommand \makeexamrestable { s m m m } {
+  
+  \setlength{\fboxsep}{10pt}
+	\fbox{
+	  \parbox{\linewidth-2\fboxsep-2\fboxrule}{
+		  \begin{minipage}{\g_edu_exampointstablewidth_tl-\fboxsep}
+		    \exampointstable{#2}{#3}{#4}
+		  \end{minipage}
+		  \hfill
+		  \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl-\fboxsep}
+			  \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);
+			  \hspace{0.5cm} \LARGE \g_edu_exampointsaveragelabel_tl
+			  
+			  \par
+			  \mdseries\footnotesize
+			  \vspace{0.75cm}
+			  \rule{\linewidth}{0.4pt}\\
+			  \g_edu_exampointssignaturelabel_tl
+		  \end{minipage}
+	  }
+	}
+}
+
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\makeexamres}[1]{<total points>}
+Typesets a reduced box for entering the results of an exam (acchieved points, mark, average mark, field for signature of parents).
+\begin{MacroCode}{class}
+\NewDocumentCommand \makeexamres { s m } {
+  \setlength{\fboxsep}{10pt}
+	\fbox{
+	  \parbox{\linewidth-2\fboxsep-2\fboxrule}{
+	    \sffamily\Large
+		  \begin{minipage}{0.55\linewidth-\fboxsep}
+			  \textbf{Punkte:} 
+		    \hspace{1.75cm} \g_edu_exampointsoflabel_tl\ #2
+		    
+		    \par
+		    \vspace{0.5\baselineskip}
+		    \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);} 
+		    \hspace{0.75cm} \textbf{\g_edu_exampointsaveragelabel_tl}
+	    \end{minipage}
+	    \begin{minipage}{0.45\linewidth-\fboxsep}
+			  \vspace{1cm}
+	      \mdseries\footnotesize
+	      \rule{7cm}{0.4pt}\\
+			  \g_edu_exampointssignaturelabel_tl
+	    \end{minipage}
+	  }
+	}
+}
+
+\end{MacroCode}
+\end{macro}
+
 
 
 \subsection{Mathematik}
