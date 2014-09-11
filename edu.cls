@@ -4382,6 +4382,24 @@
   }
 }
 
+\DeclareDocumentCommand \ttbreak { s O{} +O{} +O{} +O{}} {%
+  \bool_if:nT {!\tl_if_empty_p:n {#2} && \bool_if_p:N \g_edu_ttshowtime_bool} {
+    \tl_gput_right:Nx \g__edu_ttable_tl {\edu_ttentrytime:}
+
+    \edu_ttaddminutes:n {#2}
+  }
+  \tl_gput_right:Nn \g__edu_ttable_tl { & \textsfbf{Pause} & }
+  \IfBooleanT {#1} {
+    \tl_gput_right:Nn \g__edu_ttable_tl { \begin{itemizet} }
+  }
+  \tl_gput_right:Nn \g__edu_ttable_tl { #3 }
+  \IfBooleanT {#1} {
+    \tl_gput_right:Nn \g__edu_ttable_tl { \end{itemizet} }
+  }
+  \tl_gput_right:Nn \g__edu_ttable_tl {& #4 & #5 \tabularnewline \midrule
+  }
+}
+
 \tl_new:N \g_edu_teachera_tl
 \tl_new:N \g_edu_teachers_tl
 \tl_new:N \g_edu_studenta_tl
