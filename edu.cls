@@ -5437,6 +5437,7 @@
 }
 
 \newlength{\templength}
+\newcommand{\tempcommand}{}
 \newcounter{tempcounter}
 
 \ExplSyntaxOff
