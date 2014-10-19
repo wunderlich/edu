@@ -801,12 +801,16 @@
     X,
     C
   },
-  exampointstabletype .initial:n = X
+  exampointstabletype .initial:n = X,
+  exampointssecondmark .bool_gset:N = \g_edu_exampointssecondmark_bool,    % Print secondary mark
+  exampointssecondmark .initial:n = true,
 }
 
 \keys_define:nn {edu} {
   exampointsmarklabel .tl_gset:N = \g_edu_exampointsmarklabel_tl,
   exampointsmarklabel .initial:n = Note,
+  exampointssecondmarklabel .tl_gset:N = \g_edu_exampointssecondmarklabel_tl,
+  exampointssecondmarklabel .initial:n = M\"undlich,
   exampointsoflabel .tl_gset:N = \g_edu_exampointsoflabel_tl,
   exampointsoflabel .initial:n = von,
   exampointsaveragelabel .tl_gset:N = \g_edu_exampointsaveragelabel_tl,
@@ -830,7 +834,7 @@
 
 \keys_define:nn {edu} {
   exampointstablewidth .tl_gset:N = \g_edu_exampointstablewidth_tl,
-  exampointstablewidth .initial:n = 0.625\linewidth,
+  exampointstablewidth .initial:n = 0.65\linewidth,
 }
 
 %\__edu_keys_initial:n {exampointstablewidth = 0.625\linewidth}
@@ -4697,7 +4701,7 @@
 \group_begin:
   \sffamily
   \tl_if_eq:VnT \g_edu_exampointstabletype_tl {X} {
-    \begin{tabularx}{\linewidth}{|l|*{\clist_count:n {#1}}{>{\centering}X|}c|}
+    \begin{tabularx}{\linewidth}{|l|*{\clist_count:n {#1}}{>{\centering}X|}C{0.75cm}|}
       \hline
     \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
     \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
@@ -4732,8 +4736,15 @@
   \end{minipage}
   \hfill
   \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl-\fboxsep}
-  \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);
+  \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
   \hspace{0.5cm} \LARGE \g_edu_exampointsaveragelabel_tl
+
+  \bool_if:NT \g_edu_exampointssecondmark_bool {
+  \par
+  \normalsize
+  \medskip
+  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+  }
 
   \par
   \mdseries\footnotesize
