@@ -4701,10 +4701,10 @@
 \group_begin:
   \sffamily
   \tl_if_eq:VnT \g_edu_exampointstabletype_tl {X} {
-    \begin{tabularx}{\linewidth}{|l|*{\clist_count:n {#1}}{>{\centering}X|}C{0.75cm}|}
+    \begin{tabularx}{\linewidth}{|l||*{\clist_count:n {#1}}{>{\centering}X|}|C{0.75cm}|}
       \hline
     \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
-    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
+    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline\hline
     \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
     \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
    \end{tabularx}
@@ -4737,7 +4737,7 @@
   \hfill
   \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl-\fboxsep}
   \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
-  \hspace{0.5cm} \LARGE \g_edu_exampointsaveragelabel_tl
+  \hspace{0.35cm} \large \g_edu_exampointsaveragelabel_tl
 
   \bool_if:NT \g_edu_exampointssecondmark_bool {
   \par
