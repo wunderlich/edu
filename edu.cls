@@ -804,6 +804,8 @@
   exampointstabletype .initial:n = X,
   exampointssecondmark .bool_gset:N = \g_edu_exampointssecondmark_bool,    % Print secondary mark
   exampointssecondmark .initial:n = true,
+  exampointssignature .bool_gset:N = \g_edu_exampointssignature_bool,    % Print field for signature
+  exampointssignature .initial:n = true,
 }
 
 \keys_define:nn {edu} {
@@ -4746,11 +4748,14 @@
   \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
   }
 
-  \par
-  \mdseries\footnotesize
-  \vspace{0.75cm}
-  \rule{\linewidth}{0.4pt}\\
-  \g_edu_exampointssignaturelabel_tl
+
+  \bool_if:NT \g_edu_exampointssignature_bool {
+    \par
+    \mdseries\footnotesize
+    \vspace{0.75cm}
+    \rule{\linewidth}{0.4pt}\\
+    \g_edu_exampointssignaturelabel_tl
+  }
   \end{minipage}
   }
 }
