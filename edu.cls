@@ -4728,13 +4728,20 @@
   \edu_exampointstable:nnn {#1}{#2}{#3}
 }
 
-\NewDocumentCommand \makeexamrestable { s m m m } {
+\NewDocumentCommand \makeexamrestable { s o m m m } {
 
   \setlength{\fboxsep}{10pt}
 \fbox{
   \parbox{\linewidth-2\fboxsep-2\fboxrule}{
+    \IfNoValueF {#2} {
+      \group_begin:
+        \Large\sffamily\bfseries #2
+      \group_end:
+      \medskip
+    }
+    \par
   \begin{minipage}{\g_edu_exampointstablewidth_tl-\fboxsep}
-    \exampointstable{#2}{#3}{#4}
+    \exampointstable{#3}{#4}{#5}
   \end{minipage}
   \hfill
   \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl-\fboxsep}
