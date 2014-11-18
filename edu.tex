@@ -9388,12 +9388,30 @@ Typesets a reduced box for entering the results of an exam (acchieved points, ma
 		    \vspace{0.5\baselineskip}
 		    \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);} 
 		    \hspace{0.75cm} \textbf{\g_edu_exampointsaveragelabel_tl}
+		    
+			  \bool_if:nT {\g_edu_exampointssecondmark_bool 
+			    && \g_edu_exampointssignature_bool
+			  }{
+				  \par
+				  \large\bfseries
+				  \medskip
+				  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+			  }
 	    \end{minipage}
 	    \begin{minipage}{0.45\linewidth-\fboxsep}
-			  \vspace{1cm}
-	      \mdseries\footnotesize
-	      \rule{7cm}{0.4pt}\\
-			  \g_edu_exampointssignaturelabel_tl
+			  \bool_if:NTF \g_edu_exampointssignature_bool {	
+			    \vspace{1cm}
+	        \mdseries\footnotesize
+	        \rule{7cm}{0.4pt}\\
+		  	  \g_edu_exampointssignaturelabel_tl
+		  	}{
+			  	\bool_if:NT \g_edu_exampointssecondmark_bool {	
+			  	  \par
+				    \large\bfseries
+					  \medskip
+					  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+					}
+		  	}
 	    \end{minipage}
 	  }
 	}
