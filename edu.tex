@@ -328,6 +328,8 @@ An einem Beispiel sei an dieser Stelle kurz der Unterschied zwischen notwendigen
 \medskip
 \fpbox{Dies ist ein umrahmter Absatz.}
 
+\medskip
+
 \noindent Das Argument \meta{Breite} ist \emph{optional}, es \emph{kann} angegeben werden. Im obigen Beispiel war dies nicht der Fall. Das Makro greift dann ggf. auf einen Standardwert, in diesem Fall \cs*{linewidth} (Breite der aktuellen Zeile), zurück. Der Aufruf \Macro\fpbox[3cm]{Dies ist ein umrahmter Absatz.} hingegen erzeugt einen umrahmten Absatz der Breite 5\,cm:
 
 \medskip
@@ -467,10 +469,12 @@ Deshalb ist die zweite Methode \emph{grundsätzlich} vorzuziehen: In jedem Absat
 \newpage
 \localeDE{\part{Tutorials: Der schnelle Einstieg}}
 
-\localeDE{\section{Horst erstellt ein Arbeitsblatt}}
+Dieser Teil der Dokumentation soll dem schnellen Einstieg in die Anwendung von \thepackage\ ermöglichen. Er ist in die wichtigsten Anwendungsfälle aufgeteilt und behandelt jeweils die zentralen Aspekte. Es werden jedoch nicht alle Funktionen von \thepackage\ thematisiert. Es soll ein möglichst einfacher Einstieg ermöglicht werden, grundlegende \LaTeX-Fähigkeiten werden jedoch vorausgesetzt.
+
+\localeDE{\section{Das erste Arbeitsblatt}}
 
 \localeDE{
-In diesem Teil begleiten wir einen fiktiven Lehrenden -- namentlich Horst -- dabei, ein Arbeitsblatt mit \thepackage zu erstellen. Horst hat mit \LaTeX\ bereits einige Erfahrungen gesammelt und ist in der Lage, einfache Dokumente zu erstellen.
+Im ersten Abschnitt beschäftigen wir uns mit dem schulischen Tagesgeschäft: der Erstellung eines Arbeitsblattes. 
 }
 
 \localeDE{\subsection{Laden der Dokumentenklasse}}
@@ -486,7 +490,7 @@ Der erste Schritt besteht im Laden der Dokumentenklasse. Dies geschieht im einfa
 \endcode
 %
 \localeDE{
-Viele Einstellungen von \thepackage\ lassen sich direkt beim Laden der Dokumentenklasse konfigurieren. Dies geschieht über sogenannte \emph{Optionen}. Horst hat z.\,B. nicht die besten Augen. Deshalb entscheidet er sich, die Standardschriftgröße etwas zu erhöhen. Dies geschieht über die Option \opt*{fontsize}. Diese wird beim Laden der Dokumentenklasse angegeben:
+Viele Einstellungen von \thepackage\ lassen sich direkt beim Laden der Dokumentenklasse konfigurieren. Dies geschieht über sogenannte \emph{Optionen}. So kann man z.\,B. die Standardschriftgröße durch die Option \opt*{fontsize} auf \opt*{12pt} erhöhen:
 }
 
 \startcode{de}
@@ -495,13 +499,13 @@ Viele Einstellungen von \thepackage\ lassen sich direkt beim Laden der Dokumente
 \end{Verbatim}
 \endcode
 %
-Möchte man mehrere Optionen laden, sollte man sie -- zugunsten der Lesbarkeit -- in einzelne Zeilen schreiben:
+Möchte man mehrere Optionen verwenden, werde diese jeweils durch ein Komma getrennt. Man sollte sie -- zugunsten der Lesbarkeit -- in einzelne Zeilen schreiben:
 
 \startcode{de}
 \begin{Verbatim}
 \documentclass[
-  fontsize=14pt,
-  footer=false,
+  fontsize=12pt,
+  footer=false
 ]{edu}
 \end{Verbatim}
 \endcode
@@ -509,7 +513,7 @@ Möchte man mehrere Optionen laden, sollte man sie -- zugunsten der Lesbarkeit -
 \localeDE{\subsection{Metadaten eingeben}}
 
 \localeDE{
-Horst kennt seine Schüler -- die meisten von ihnen sind unordentlich. Um sie zu unterstützten möchte er die wichtigsten Metadaten (d.\,h. in diesem Fall Daten über das Arbeitsblatt, nicht der Inhalt des Blattes selbst) auf dem Blatt platzieren. Viele der hierfür verwendeten Makros kennt Horst bereits aus den Standard-Dokumentenklassen. Doch ein Blick auf Tabelle~\ref{tab:metadaten} beinhaltet auch Makros, die für ihn neu sind.
+Um die Ordnung in den Unterlagen von SchülerInnen \emph{und} LehrerInnen zu unterstützten, sollten wir zuerst die wichtigsten Metadaten (d.\,h. in diesem Fall Daten \emph{über} das Arbeitsblatt, nicht der Inhalt des Blattes selbst) auf dem Blatt platzieren. Viele der hierfür verwendeten Makros sind bereits aus den Standard-Dokumentenklassen bekannt. Doch ein Blick auf Tabelle~\ref{tab:metadaten} beinhaltet auch Makros, welche von \thepackage\ neu zur Verfügung gestellt werden.
 }
 
 \localeDE{
@@ -537,7 +541,7 @@ Horst kennt seine Schüler -- die meisten von ihnen sind unordentlich. Um sie zu
 }
 
 \localeDE{
-Nach etwas Bedenkzeit (s.\,Abschnitt~\ref{sec:kopfzeile}) hat sich Horst für die wichtigsten Metadaten entschieden und ergänzt diese in seiner Quelldatei in der Präambel:
+In Abschnitt~\ref{sec:kopfzeile} wurde bereits erörtert, welche Metadaten sinnvollerweise auf einem Arbeitsblatt gesetzt werden sollten. Diese ergänzen wir in der Präambel unseres Arbeitsblattes:
 }
 
 \startcode{de}
@@ -552,9 +556,9 @@ Nach etwas Bedenkzeit (s.\,Abschnitt~\ref{sec:kopfzeile}) hat sich Horst für di
 \endcode
 %
 \localeDE{
-Diese Auswahl an Metadaten sollte in jedem Dokument angegeben werden. Weitere Metadaten können wahlweise verwendet werden. Die Makros bewirken, dass die angegebenen Daten sinnvoll im Titel und in Kopf- und Fußzeile des Dokuments gesetzt werden.
+Diese Auswahl an Metadaten sollte in jedem Dokument angegeben werden. Weitere Metadaten können wahlweise verwendet werden. Die Makros bewirken, dass die angegebenen Daten sinnvoll im Titel bzw. in Kopf- oder Fußzeile des Dokuments gesetzt werden.
 
-Horst möchte seiner Kollegin Ingeborg Hubmüller-Weidenfels die Vorteile von \thepackage\ näherbringen. Diese stellt jedoch fest, dass ihr Name zu einem Problem führt: Wegen seiner Länge passt dieser -- zusammen mit weiteren Metadaten -- in die Fußzeile\footnote{Wir werden uns erst später mit Fußzeilen beschäftigen.}. Aus diesem Grund verfügen die Makros zur Angabe der Metadaten zusätzlich über ein optionales Argument. Dieses kann verwendet werden, um eine kürzere Variante des eigentlichen Datums zu wählen. Diese kurze Version wird in Kopf- bzw. Fußzeile verwendet. Ingeborg kürzt deshalb ihren Vornamen für die Fußzeile ab:
+In einigen Fällen benötigen die Metadaten z.\,B. in der Fußzeile mehr Platz, als zur Verfügung steht.  Aus diesem Grund verfügen die Makros zur Angabe der Metadaten zusätzlich über ein optionales Argument. Dieses kann verwendet werden, um eine kürzere Variante der eigentlichen Daten zu wählen, welche dann in Kopf- bzw. Fußzeile verwendet werden. Dies kann z.\,B. bei einem langen Namen hilfreich sein:
 }
 
 \startcode{de}
@@ -567,7 +571,8 @@ Horst möchte seiner Kollegin Ingeborg Hubmüller-Weidenfels die Vorteile von \t
 \localeDE{\subsection{Kopfzeile erzeugen}}
 
 \localeDE{
-Nachdem Horst in seinem Arbeitsblatt alle wichtigen Metadaten angegeben hat, möchte er es nun endlich mit "`richtigem"' Inhalt füllen. Er ergänzt die \env*{document}-Umgebung, welche den Dokumentenkörper beinhaltet:
+
+Nach diesen "`Vorarbeiten"' widmen wir uns nun dem tatsächlichen Inhalt unseres Arbeitsblattes. Zuerst ergänzen wir hierzu die \env*{document}-Umgebung, welche den Dokumentenkörper beinhaltet:
 }
 
 \startcode{de}
@@ -595,11 +600,11 @@ Horst kompiliert seinen Quelltext und freut sich über das Ergebnis: Die Kopfzei
 \localeDE{\subsection{Titel erzeugen}}
 
 \localeDE{
-Als nächstes möchte sich Horst den Titel seines Arbeitsblattes einfügen. Nachdem er den Titel bereits mithilfe des Makros \Macro\title eingegeben hat, muss dieser noch erzeugt werden. Dies geschieht durch das Makro \Macro\maketitle.
+Als Nächstes soll der Titel unseres Dokumentes eingefügt werden. Nachdem wir den Titel bereits mithilfe des Makros \cs{title} eingegeben haben, muss dieser noch erzeugt werden. Dies geschieht durch das Makro \Macro\maketitle.
 
-Die normale Variante \Macro\maketitle erzeugt einen "`ausführlichen"' Titel, der neben Titel und Untertitel noch fast alle weiteren Metadaten des Dokuments beinhaltet. Sie eignet sich zur Verwendung in Dokumenten größeren Umfangs (Zusammenfassungen u.\,Ä.).
+Die normale Variante \Macro\maketitle erzeugt einen "`ausführlichen"' Titel, der neben Titel und Untertitel noch fast alle weiteren Metadaten des Dokuments beinhaltet. Somit eignet sich \Macro\maketitle tendenziell für umfangreichere Dokumente (Zusammenfassungen u.\,Ä.).
 
-Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternvariante \Macro\maketitle*. Diese erzeugt lediglich den Titel. Falls angegeben, werden außerdem Untertitel gesetzt.
+Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternvariante \Macro\maketitle*. Diese greift lediglich auf Titel (\cs{title}), Untertitel (\cs{subtitle}), Gruppe (\cs{group}) und Abkürzung (\cs{short}) zurück.
 }
 
 \startcode{de}
@@ -611,48 +616,37 @@ Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternva
 \localeDE{\subsection{Aufgaben erstellen}}
 
 \localeDE{
-"`Genug des Vorgeplänkels!"', denkt sich Horst. Nun ist es Zeit, Aufgaben zu erstellen. Um Überschriften für Aufgaben zu erstellen (1.~Aufgbabe, 2.~Augabe, \dots) verwendet man das Makro \Macro\exe\ (engl. \emph{exercise} -- \emph{Aufgabe}). Hierbei werden Aufgaben automatisch arabisch nummeriert. Anschließend verfasst man wie gewünscht den Inhalt der Aufgabe:
+Nun ist es Zeit, endlich Aufgaben zu erstellen. Um Überschriften für Aufgaben zu erstellen (\emph{1.~Aufgbabe}, \emph{2.~Augabe}, \dots) steht das Makro \Macro\exe\ (engl. \emph{exercise} -- \emph{Aufgabe}) zur Verfügung. Um die Aufgaben übersichtlich zu strukturieren, empfiehlt es sich, jeder Aufgabe einen kurzen, prägnanten Titel zu vergeben, was durch das notwendige Argument bewerkstelligt wird. Sollte kein Aufgabentitel gewünscht werden, muss das Klammerpaar ohne Inhalt verwendet werden. Aufgaben werden automatisch arabisch nummeriert. Anschließend verfasst man wie gewünscht den Inhalt der Aufgabe:
 }
 
 \startcode{de}
 \begin{Verbatim}
-\exe{}
+\exe{Erste Aufgabe}
 
 Lorem ipsum dolor sit amet ...
 \end{Verbatim}
 \endcode
 %
 \localeDE{
-Horst fände es praktisch, wenn er den Aufgaben einen Titel geben könnte. Gleichzeitig wundert er sich über das geschwungene Klammerpaar nach \Macro\exe. Zu Recht! Das Makro verfügt über ein notwendiges Argument, den Titel der Aufgabe. Gibt man keinen Titel an (wie es im obigen Beispiel der Fall ist), erscheint lediglich \emph{1.~Aufgabe}. Ansonsten wird der Titel direkt hinter dieser Beschriftung gesetzt. Horst möchte diese Funktion nutzen und ergänzt:
+Es besteht die Möglichkeit, als zusätzliche Gliederungsebene \emph{Unteraufgaben} zu erstellen. Wie bei \cs*{section} und \cs*{subsection} bezeichnet man das entsprechende Pendant zu \Macro\exe\ mit \Macro\subexe. Auch die Verwendung geschieht analog. Die Nummerierung hingegen geschieht durch eine zweite Ebene (1.1, 1.2, 1.3, \dots). Auch \Macro\subexe verfügt über ein notwendiges Argument zur Angabe eines Titels für die Aufgabe. Soll kein Titel verwendet werden, die Klammern dennoch angegeben werden.
 }
 
 \startcode{de}
 \begin{Verbatim}
-\exe{Mehrfache Ausgabe}
+\exe{Aufgabe mit Unteraufgabem}
+
+\subsexe{Erste Unteraufgabe}
+Lorem ipsum dolor sit amet ...
+
+\subsexe{Zweite Unteraufgabe}
 Lorem ipsum dolor sit amet ...
 \end{Verbatim}
 \endcode
 %
 \localeDE{
-Es besteht die Möglichkeit, als zusätzliche Gliederungsebene "`Unteraufgaben"' zu erstellen. Wie bei \cs*{section} und \cs*{subsection} bezeichnet man das entsprechende Pendant zu \Macro\exe\ mit \Macro\subexe. Auch die Verwendung geschieht analog. Die Nummerierung hingegen geschieht durch eine zweite Ebene (1.1, 1.2, 1.3, \dots). Auch \Macro\subexe verfügt über ein notwendiges Argument zur Angabe eines Titels für die Aufgabe. Soll kein Titel verwendet werden, die Klammern dennoch angegeben werden. Horst gefällt die Idee der Unteraufgaben und er möchte sie gleich verwenden:
-}
+Mit jeder Erstellung einer neuen Aufgabe durch \Macro\exe beginnt die Nummerierung von \Macro\subexe von vorne.
 
-\startcode{de}
-\begin{Verbatim}
-\exe{Mehrfache Ausgabe}
-
-\subsexe{Text}
-Lorem ipsum dolor sit amet ...
-
-\subsexe{Berechnungen}
-Lorem ipsum dolor sit amet ...
-\end{Verbatim}
-\endcode
-%
-\localeDE{
-Mit jeder Erstellung einer neuen Aufgabe durch \Macro\exe wird die Nummerierung von \Macro\subexe vorn vorne begonnen.
-
-Unteraufgaben eignen sich hauptsächlich bei sehr Umfangreichen Aufgaben.  Horst fragt sich, ob es auch die Möglichkeit gibt, mehrere kurze Aufgaben in einer alphabetisch nummerierten Liste zu setzen, wie man es z.\,B. aus Mathematik-Büchern kennt. Die gibt es tatsächlich: "`Teilaufgaben"' können zum einen als Liste gesetzt werden. Hierzu dient die Umgebung \env{multiexelist}. Sie verhält sich wie die \env*{itemize} Umgebung, nummeriert die Einträge jedoch alphabetisch.
+Unteraufgaben eignen sich hauptsächlich bei sehr Umfangreichen Aufgaben.  Es besteht zusätzlich die Möglichkeit, mehrere kurze Aufgaben in einer alphabetisch nummerierten Liste zu setzen, wie man es z.\,B. aus Mathematik-Büchern kennt: \emph{Teilaufgaben} können zum einen als Liste gesetzt werden. Hierzu dient die Umgebung \env{multiexelist}. Sie verhält sich wie die \env*{itemize}-Umgebung, nummeriert die Einträge jedoch alphabetisch.
 }
 
 \startcode{de}
@@ -666,9 +660,9 @@ Unteraufgaben eignen sich hauptsächlich bei sehr Umfangreichen Aufgaben.  Horst
 \endcode
 %
 \localeDE{
-Folgt eine Teilaufgabenliste direkt auf eine (Unter-)Aufgabenüberschrift (d.\,h. auf \Macro\exe oder \Macro\subexe), sollte die Sternvariante \env{multiexelist} verwendet werden, da sie einen zusätzlichen Abstand über der Liste einfügt.
+%Folgt eine Teilaufgabenliste direkt auf eine (Unter-)Aufgabenüberschrift (d.\,h. auf \Macro\exe oder \Macro\subexe), sollte die Sternvariante \env{multiexelist} verwendet werden, da sie einen zusätzlichen Abstand über der Liste einfügt.
 
-Falls gewünscht, kann über ein optionales Argument ein zusätzlicher Abstand zwischen den Einträgen eingefügt werden:
+Falls gewünscht, kann über ein optionales Argument ein zusätzlicher Abstand zwischen den Einträgen eingefügt werden. Dies kann z.\,B. bei mathematischen Formeln, welche viel vertikalen Platz benötigen, von Nöten sein:
 }
 
 \startcode{de}
@@ -682,14 +676,28 @@ Falls gewünscht, kann über ein optionales Argument ein zusätzlicher Abstand z
 \endcode
 %
 \localeDE{
-Möchte man mehrere kurze Teilaufgaben verfassen -- was häufig bei Mathematikaufgaben der Fall ist -- kann die Umgebung \env{multiexearray} verwenden. Sie ordnet die Teilaufgaben wie in einer Tabelle an. Als notwendiges Argument benötigt sie deshalb die Anzahl der Spalten und wird ansonsten wie eine Tabelle verwendet. Hier ein Beispiel für den dreispaltigen Satz von Teilaufgaben:
+Bei sehr kurzen Teilaufgaben kann die Liste horizontal innerhalb einer Zeile (engl. \emph{inline}) gesetzt werden. Hierzu steht die Umgebung \env{multiexelisti} zur Verfügung. Hierbei werden die Teilaufgaben in einer zentrierten Zeile positioniert. Sollen sie stattdessen innerhalb des aktuellen Absatzes im Fließtext erscheinen kann die Sternvariante \env{multiexelisti*} verwendet werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\begin{multiexelisti}
+  \item Erste Teilaufgabe
+  \item Zweite Teilaufgabe
+  \item Dritte Teilaufgabe
+\end{multiexelisti}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Möchte man mehrere sehr kurze Teilaufgaben verfassen -- was häufig bei Mathematikaufgaben der Fall ist -- kann die Umgebung \env{multiexearray} verwendet werden. Sie ordnet die Teilaufgaben wie in einer Tabelle an. Als notwendiges Argument benötigt sie deshalb die Anzahl der Spalten und wird ansonsten wie eine Tabelle verwendet. Hier ein Beispiel für den dreispaltigen Satz von Teilaufgaben:
 }
 
 \startcode{de}
 \begin{Verbatim}
 \begin{multiexearray}{3}
-	Erste Teilaufgabe & Zweite Teilaufgabe & Dritte Teilaufgabe \\
-	Vierte Teilaufgabe & 	Fünfte Teilaufgabe
+  Erste Teilaufgabe   & Zweite Teilaufgabe  & Dritte Teilaufgabe \\
+  Vierte Teilaufgabe  & Fünfte Teilaufgabe
 \end{multiexearray}
 \end{Verbatim}
 \endcode
@@ -701,21 +709,21 @@ Es wir deutlich, dass die unterste Zeile nicht komplett "`befüllt"' werden muss
 \startcode{de}
 \begin{Verbatim}
 \begin{multiexearray*}{4}
-  2x = 3,5 & 3x = 4 & 4x = 5 & 5x = 6 \\
-  6x = 7 & 7x = 8
+  2x = 3,5  & 3x = 4  & 4x = 5  & 5x = 6 \\
+  6x = 7    & 7x = 8
 \end{multiexearray*}
 \end{Verbatim}
 \endcode
 %
 \localeDE{
-Insbesondere beim Satz von Mathematikaufgaben kann es vorkommen, dass sich einzelne Zeilen berühren -- vor allem bei "`höheren"' Elementen wie Brüchen oder Integralen. Deshalb kann man auch bei \env{multiexearray} und \env{multiexearray*} als optionales Argument einen zusätzlichen Zeilenabstand angeben:
+Insbesondere beim Satz von Mathematikaufgaben kann es vorkommen, dass sich einzelne Zeilen berühren -- vor allem bei Elementen wie Brüchen oder Integralen, welche viel vertikalen Platz benötigen. Deshalb kann man auch bei \env{multiexearray} und \env{multiexearray*} als optionales Argument einen zusätzlichen Zeilenabstand angeben:
 }
 
 \startcode{de}
 \begin{Verbatim}
 \begin{multiexearray*}[2ex]{3}
-  \frac{1}{2} x = 3 & \frac{2}{3} x = 4 & \frac{3}{4} x = 5 \\ 
-  \frac{4}{5} x = 6 & \frac{5}{6} x = 7 & \frac{6}{7} x = 8
+  \frac{1}{2} x = 3  & \frac{2}{3} x = 4  & \frac{3}{4} x = 5 \\ 
+  \frac{4}{5} x = 6  & \frac{5}{6} x = 7  & \frac{6}{7} x = 8
 \end{multiexearray*}
 \end{Verbatim}
 \endcode
@@ -724,12 +732,33 @@ Insbesondere beim Satz von Mathematikaufgaben kann es vorkommen, dass sich einze
 Innerhalb einer (Unter-)Aufgabe können mehrere Umgebungen mit Teilaufgaben verwendet werden. Die Nummerierung beginnt von vorne, sobald eine (Unter-)Aufgabe beginnt. Eine Limitierung ist jedoch zu berücksichtigen: Es können pro (Unter-)Aufgabe maximal 26 Teilaufgaben erstellt werden -- mehr Kleinbuchstaben bietet das deutsche Alphabet nicht (abgesehen von Umlauten und scharfem S).
 
 Zähler können manuell zurückgesetzt werden. Nach dem Aufruf den Makros \Macro\rstexe, \Macro\rstsubexe oder \Macro\rstmultiexe\ (engl. \emph{reset} -- \emph{zurücksetzen}) beginnt die Nummerierung von \Macro\exe, \Macro\subexe bzw. \env{multiexelist}/\env{multiexearray} bei der nächsten Verwendung von vorne.
+
+Außerdem besteht auf allen Ebenen die Möglichkeit, (optionale) Zusatzaufgaben (auch Bonus- oder "`Sternchen"'-Aufgaben) durch einen Stern zu markieren. Hierzu existieren auf (Unter-)Aufgabenebene die Sternvarianten \Macro{\exe*} und \Macro{\subexe*}. Bei Teilaufgaben muss unterschieden werden: In den Listen \env{multiexelist} und \env{multiexelisti} können Zusatzaufgaben durch \Macro{\item*} erzeugt werden. In \env{multiexearray} kann auf das Makro \Macro\bonus zurückgegriffen werden, welches \emph{vor} dem Wechsel zur nächsten Teilaufgabe (also vor \texttt{\&} bzw. \texttt{\textbackslash\textbackslash}) angegeben werden muss:
 }
+
+\startcode{de}
+\begin{Verbatim}
+\exe*{Zusatzaufgabe}
+
+\subexe*{Zusatzaufgabe}
+
+\begin{multiexelist}
+  \item Teilaufgabe
+  \item Teilaufgabe
+  \item* Zusatzaufgabe
+\end{multiexelist}
+
+\begin{multiexearray}{3}
+  Teilaufgabe \bonus  & Zusatzaufgabe  & Teilaufgabe \bonus \\
+  Zusatzaufgabe       & Teilaufgabe
+\end{multiexearray}
+\end{Verbatim}
+\endcode
 
 \localeDE{\subsection{Spalten verwenden}}
 
 \localeDE{
-Zwar unterrichtet Horst keine Sprachen im üblichen Sinne, dennoch sei an dieser Stelle erwähnt, dass \thepackage\ eine Vielzahl von Möglichkeiten bietet, Text in Spalten zu setzen. Den Möglichkeiten ist gemeinsam, dass der Fokus auf manuellem Spaltenumbruch basiert. Dies ist insbesondere bei Arbeitsblättern sinnvoll, da hier platzsparend gearbeitet werden soll.
+Neben den aus \LaTeX\ bekannten Möglichkeiten bietet auch \thepackage\ eine Möglichkeit, Inhalte in Spalten zu setzen. Den Möglichkeiten ist gemeinsam, dass der Fokus auf manuellem Spaltenumbruch basiert. Dies ist insbesondere bei Arbeitsblättern sinnvoll, da hier platzsparend gearbeitet werden soll.
 
 Die grundlegende Umgebung zur Erstellung von Spalten ist \env{cols}. Standardmäßig erzeugt \env{cols} zwei Spalten. Der Spaltenumbruch geschieht durch das Makro \Macro\colbreak:
 }
@@ -768,9 +797,9 @@ Wie bei Text meistens gewünscht, werden die beiden Spalten oben aneinander ausg
 }
 
 \localeDE{
-Manchmal ist es -- insbesondere bei zwei Spalten -- hilfreich, die Breite einer Spalte manuell angeben zu können. Hierzu kann die Umgebung \env{cols2} verwendet werden. Ohne optionales Argument verhält sie sich wie \env{cols} und erzeugt zwei gleich breite Spalten. Durch das optionale Argument kann jedoch die Breite der linken Spalte angegeben werde. Die Breite der rechten Spalte erstreckt sich über den restlichen Platz der Zeilenbreite.
+Beim Arbeiten mit zwei Spalten ist es oft hilfreich, die Breite einer Spalte manuell angeben zu können. Hierzu kann die Umgebung \env{cols2} verwendet werden. Ohne optionales Argument verhält sie sich wie \env{cols} und erzeugt zwei gleich breite Spalten. Durch das optionale Argument kann jedoch die Breite der linken Spalte angegeben werde. Die Breite der rechten Spalte erstreckt sich über den restlichen Platz der Zeilenbreite.
 
-Hier zwei Beispiele -- eines mit einer \SI{5}{\cm} breiten Spalte und eines mit einer linken Spalte, deren Breite \SI{35}{\%} der Zeilenbreite entspricht:
+Hier zwei Beispiele -- eines mit einer \SI{5}{\cm} breiten linken Spalte und eines mit einer linken Spalte, deren Breite \SI{35}{\%} der Zeilenbreite entspricht:
 }
 
 
@@ -795,20 +824,32 @@ Auch \env{cols2} verfügt über eine Sternvariante, bei der die Spalten vertikal
 }
 
 \localeDE{
-\emph{Bemerkung:} Es handelt sich bei der Angabe der linken Spaltenbreite nicht um die exakte Breite der Spalte. Genau genommen handelt es sich um den Abstand zwischen dem Beginn der Zeile und der Mitte des Abstandes zwischen den Spalten. Mathematisch formuliert:
-\[
-	\text{Tatsächliche linke Spaltenbreite} = \text{Angegebene linke Spaltenbreite} - 0.5 \cdot \text{Spaltenabstand}
-\]
+\emph{Bemerkung:} Es handelt sich bei der Angabe der linken Spaltenbreite nicht um die exakte Breite der Spalte. Genau genommen handelt es sich um den Abstand zwischen dem Beginn der Zeile und der Mitte des Abstandes zwischen den Spalten:
+\begin{center}
+\begin{tikzpicture}[font=\scriptsize]
+	\draw[fill=gray!20] (0,0) rectangle node[above, font=\sffamily] {Spalte 1} (0.6\textwidth, 1.2);
+	\draw[fill=gray!20] (0.7\textwidth,0) rectangle node[above, font=\sffamily] {Spalte 2} (\textwidth, 1.2);
+
+	\draw[dashed] (0.65\linewidth, 1.3) -- (0.65\linewidth, -0.35);
+
+	\draw[<->] (0.6\linewidth, 0.2) -- node[above=1pt, fill=white, inner sep=1pt] {\texttt{\texttt{\textbackslash{}columnsep}}} (0.7\textwidth, 0.2);
+	\draw[<->] (0, -0.3) -- node[below] {$\texttt{<Angegebene Spaltenbreite>}$} (0.65\textwidth, -0.3);
+	\draw[<->] (0, 0.2) -- node[above] {$\texttt{<Spaltenbreite>} = \texttt{<Angegebene Spaltenbreite>} - 0.5 \cdot \texttt{\textbackslash{}columnsep}$} (0.6\textwidth, 0.2);
+\end{tikzpicture}
+\end{center}
+%\[
+%	\text{Tatsächliche linke Spaltenbreite} = \text{Angegebene linke Spaltenbreite} - 0.5 \cdot \text{Spaltenabstand}
+%\]
 }
 
-\localeDE{\subsection{Rastergrafiken (Bilder) einfügen}}
+\localeDE{\subsection{Grafikdateien einfügen}}
 
 \localeDE{
-"`A propros Spalten!"', schaltet sich Horst wieder ein. "`Ich würde gerne neben einer Aufgabe eine Abbildung einfügen. Geht das auch durch Spalten?"' Eine berechtigte Frage! Bevor wir uns Horsts Problem widmen, einige grundlegende Aspekte zu Rastergrafiken in \thepackage:
+In vielen Fällen möchte man neben einem Text eine passende Grafik einfügen.  Auch dies lässt sich einfach in \thepackage\ realisieren. Bevor wir uns diesem Anliegen widmen, noch einige grundlegende Aspekte zu Rastergrafiken in \thepackage:
 
-Rastergrafiken werden von \thepackage\ im Unterverzeichnis\footnote{Der Begriff \emph{Verzeichnis} wird in dieser Dokumentation synonym zu \emph{Ordner} verwendet.} \texttt{img} (engl. \emph{image} -- \emph{Bild}, \emph{Abbildung}) gesucht. Diese Maßnahme dient dazu, Ordnung im eigentlichen "`Arbeitsverzeichnis"' zu wahren. Das Einbinden von Grafiken geschieht grundsätzlich wie in \LaTeX\ üblich durch \Macro\includegraphics.
+Grafikdateien werden von \thepackage\ im Unterverzeichnis\footnote{Der Begriff \emph{Verzeichnis} wird in dieser Dokumentation synonym zu \emph{Ordner} verwendet.} \texttt{img} (engl. \emph{image} -- \emph{Bild}, \emph{Abbildung}) gesucht. Diese Maßnahme dient dazu, Ordnung im eigentlichen "`Arbeitsverzeichnis"' zu wahren. Das Einbinden von Grafiken geschieht grundsätzlich wie in \LaTeX\ üblich durch \Macro\includegraphics.
 
-Zurück zu Horsts Anliegen. Die Umgebung \env{graphicscol} dient genau dem von ihm angesprochenen Zweck: Er erzeugt zwei Spalten, wobei in der linken Spalte der Text und in der rechten Spalte die Grafik eingefügt wird. Die Verwendung von \env{graphicscol} soll anhand eines Beispiels erläutert werden. Als erstes Argument kann optional die Breite der linken Spalte angegeben werden (z.\,B. \SI{70}{\%} der Zeilenbreite, \texttt{0.7}\cs*{linewidth}). Es folgt die notwendige Angabe des Dateinamens (z.\,B. \texttt{image-example.jpg}). Abschließend können optional Optionen des Makros \cs*{includegraphics} angegeben werden, die auf die Grafik angewendet werden (z.\,B. \texttt{width=4cm}). Der Inhalt der Umgebung entspricht dem Text, der neben der Grafik angezeigt wird -- z.\,B. eine Aufgabe:
+Die Umgebung \env{graphicscol} dient genau dem ursprünglich angesprochenen Zweck: Sie erzeugt zwei Spalten, wobei in der linken Spalte der Text und in der rechten Spalte die Grafik eingefügt wird. Die Verwendung von \env{graphicscol} soll anhand eines Beispiels erläutert werden. Als erstes Argument kann optional die Breite der linken Spalte angegeben werden (z.\,B. \SI{70}{\%} der Zeilenbreite, d.\,h. \texttt{0.7}\cs*{linewidth}). Es folgt die notwendige Angabe des Dateinamens (z.\,B. \texttt{image-example.jpg}). Abschließend können optional Optionen des Makros \cs*{includegraphics} angegeben werden, die auf die Grafik angewendet werden (z.\,B. \texttt{width=4cm}). Der Inhalt der Umgebung entspricht dem Text, der neben der Grafik angezeigt wird -- z.\,B. eine Aufgabe:
 }
 
 \startcode{de}
@@ -822,16 +863,16 @@ Zurück zu Horsts Anliegen. Die Umgebung \env{graphicscol} dient genau dem von i
 \localeDE{
 Um die Grafik links des Textes zu setzen, kann die Sternvariante \env{graphicscol*} genutzt werden, die ansonsten analog zu \env{graphicscol} verwendet wird.
 
-Zusätzlich kann durch ein weiteres, letztes optionales Argument bestimmt werden, wie die Grafik innerhalb ihrer Spalte horizontal ausgerichtet werden soll. Mögliche Angaben sind \texttt{l} für linksbündig, \texttt{r} für rechtsbündig und \texttt{c} für zentriert (engl. \emph{centered} -- \emph{zentriert}). Standardmäßig werden Grafiken in \env{graphicscol} linksbündig und in \env{graphicscol*} rechtsbündig ausgerichtet.
+Zusätzlich kann durch ein weiteres, optionales Argument bestimmt werden, wie die Grafik innerhalb ihrer Spalte horizontal ausgerichtet werden soll. Mögliche Angaben sind \texttt{l} für linksbündig, \texttt{r} für rechtsbündig und \texttt{c} für zentriert (engl. \emph{centered} -- \emph{zentriert}). Standardmäßig werden Grafiken in \env{graphicscol} rechtsbündig und in \env{graphicscol*} linksbündig ausgerichtet. Durch ein letztes optionales Argument kann spezifiziert werden, wie die Grafik innerhalb der Spalte vertikal ausgerichtet werden soll. Hierbei steht \texttt{t} für oben (engl. \emph{top} -- \emph{oben}, Standard) und \texttt{c} für zentriert.
 }
 
 
 \localeDE{\subsection{TikZ-Grafiken einfügen}}
 
 \localeDE{
-Horst erstellt häufig Grafiken mit Makropackage Ti\textit{k}z \cite{tikz}. Den Quellcode der Grafiken speichert er in PGF-Dateien ab. Durch das Makro \cs{input} bindet er diese Dateien in sein Dokument ein. \thepackage\ erweitert das Einbinden von Ti\textit{k}z-Grafiken um einige Funktionen.
+Grafiken können in \LaTeX\ auch mit dem Makropackage Ti\textit{k}z \cite{tikz} erstellt werden. Den Quellcode der Grafiken kann man dann in PGF-Dateien abspeichern und diese durch das Makro \cs{input} in sein Dokument einbinden. \thepackage\ erweitert das Einbinden von Ti\textit{k}z-Grafiken um einige Funktionen.
 
-Wie bei Rastergrafiken müssen die Grafiken in einem Unterverzeichnis des aktuellen Dokuments -- in diesem Fall mit dem Namen \texttt{tikz} -- vorliegen. An der jeweiligen Stelle des Dokument können die Grafiken durch \Macro\tikzinput eingebunden werden, z.\,B.
+Wie bei Grafikdateien müssen die Grafiken in einem Unterverzeichnis des aktuellen Dokuments -- in diesem Fall mit dem Namen \texttt{tikz} -- vorliegen. An der jeweiligen Stelle des Dokument können die Grafiken dann durch \Macro\tikzinput eingebunden werden, z.\,B.
 }
 
 \startcode{de}
@@ -841,7 +882,7 @@ Wie bei Rastergrafiken müssen die Grafiken in einem Unterverzeichnis des aktuel
 \endcode
 %
 \localeDE{
-"`Schön und gut -- aber ich hätte meine Grafik gerne zentriert. Muss ich jetzt jedes Mal eine \env{center}-Umgebung um \Macro\tikzinput packen?"', erwidert Horst. Nein, das muss Horst nicht. Exakt zu diesem Zweck gibt es die Sternvariante \Macro\tikzinput*. Sie zentriert die Grafik durch eine \env{center}-Umgebung:
+Da sich Grafiken zentriert meistens ansprechender ins Seitenlayout einfügen, existiert die Sternvariante \Macro\tikzinput*. Sie zentriert die Grafik zusätzlich mithilfe einer \env{center}-Umgebung:
 }
 
 \startcode{de}
@@ -851,7 +892,7 @@ Wie bei Rastergrafiken müssen die Grafiken in einem Unterverzeichnis des aktuel
 \endcode
 %
 \localeDE{
-Horst ist fast zufrieden. Text neben einer Ti\textit{k}z-Grafik, das würde ihn glücklich stimmen. Er erinnert sich an \env{graphicscol} aus dem vorherigen Abschnitt und mutmaßt, dass es eine analoge Umgebung \env{tikzcol} gibt:
+Überdies besteht die Möglichkeit, Ti\textit{k}z-Grafiken durch die \env{tikzcol}-Umgebung -- analog zu \env*{graphicscol} -- neben Text zu platzieren:
 }
 
 \startcode{de}
@@ -863,9 +904,9 @@ Horst ist fast zufrieden. Text neben einer Ti\textit{k}z-Grafik, das würde ihn 
 \endcode
 %
 \localeDE{
-Und er liegt richtig! Durch das erste, optionale Argument kann die Breite der linken Spalte angegeben werden, die den Text beinhaltet. Es folgt der notwendig anzugebende Dateiname \texttt{tikz-example.pgf}. Bei der Sternvariante \env{tikzcol*} wird der Text rechts der Grafik gesetzt.
+Durch das erste, optionale Argument kann die Breite der linken Spalte angegeben werden, die den Text beinhaltet. Es folgt der notwendig anzugebende Dateiname, z.\,B. \texttt{tikz-example.pgf}. Bei der Sternvariante \env{tikzcol*} wird der Text rechts der Grafik gesetzt.
 
-Durch ein zusätzliches (hier nicht verwendetes) drittes und optionales Argument kann die horizontale Ausrichtung der Grafik angegeben werden: Mögliche Angaben sind auch hier \texttt{l} für linksbündig, \texttt{r} für rechtsbündig und \texttt{c} für zentriert. Standardmäßig werden Ti\textit{k}z-Grafiken in \env{tikzcol} linksbündig und in \env{tikzcol*} rechtsbündig ausgerichtet.
+Ebenfalls verfügt \env{tikzcol} über zwei weitere Argumente, mit deren Hilfe die horizontale Ausrichtung durch \texttt{l} (links), \texttt{c} (zentriert) und \texttt{r} (rechts) bzw. die vertikale Ausrichtung durch \texttt{t} (oben) und \texttt{c} (zentriert) spezifiziert werden kann.
 }
 
 
@@ -8420,7 +8461,7 @@ kann mit diesem Befehl beseitigt werden.
 \begin{environment}{graphicscol*}[5]{[<width of graphicscolumn>]}{<file>}{[<options of \cs*{includegraphics}>]}{[<l|r|c>]}{[<t|c>]}
 Das folgende Makro erzeugt ein zweispaltiges Layout, wobei die rechte 
 Spalte (in der Sternversion die linke Spalte) eine beliebige Abbildung 
-linksbündig (\texttt{c}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) innerhalb der jeweiligen Spalte angezeigt wird. Außerdem kann optional die vertikale Ausrichtung durch \texttt{t} (oben, Standard) und \texttt{c} (mittig) bestimmt werden.
+linksbündig (\texttt{l}), rechtsbündig (\texttt{r}) oder zentriert (\texttt{c}) innerhalb der jeweiligen Spalte angezeigt wird. Außerdem kann optional die vertikale Ausrichtung durch \texttt{t} (oben, Standard) und \texttt{c} (mittig) bestimmt werden.
 Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraphics} können angegeben werden.
 \begin{MacroCode}{class}
 
