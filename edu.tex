@@ -633,7 +633,7 @@ Es besteht die Möglichkeit, als zusätzliche Gliederungsebene \emph{Unteraufgab
 
 \startcode{de}
 \begin{Verbatim}
-\exe{Aufgabe mit Unteraufgabem}
+\exe{Aufgabe mit Unteraufgaben}
 
 \subsexe{Erste Unteraufgabe}
 Lorem ipsum dolor sit amet ...
@@ -912,7 +912,97 @@ Ebenfalls verfügt \env{tikzcol} über zwei weitere Argumente, mit deren Hilfe d
 
 \localeDE{\subsection{Lösungen erstellen}}
 
+\localeDE{
+Häufig ist es hiflreich, auch Lösungen zu gestellen Aufgaben zu verfassen. 
+Es gibt in \thepackage\ zwei Methoden, um dies zu  bewerkstelligen. Zum einen können Lösungen analog zu Aufgaben erstellt werden, was insbesondere bei längeren Lösungen (ausführliche Lösungen/Lösungswege/Musterlösungen) vorteilhaft ist. Hierzu existieren die Makros \Macro\sol\ (engl. \emph{solution} -- \emph{Lösung}) und \Macro\subsol als Pendants zu \cs{exe} und \cs{subexe}. Beide erwarten als notwendiges Argument den Titel der Lösung und verhalten sich auch sonst analog zu \cs{exe} und \cs{subexe}. Dies betrifft insbesondere die Nummerierung der Lösungs-Überschriften.
+}
+
+\startcode{de}
+\begin{Verbatim}
+\sol{Lösung mit Unterlösungen}
+
+\subsol{Erste Unterlösung}
+Lorem ipsum dolor sit amet ...
+
+\subsol{Zweite Unterlösung}
+Lorem ipsum dolor sit amet ...
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Die Lösungen zu Teilaufgaben können auch im Zusammenhang von \Macro\sol und \Macro\subsol mithilfe der Umgebungen \env{mutliexelist} bzw. \env{multiexearray} und ihrer Varianten besetzt werden. Mit jedem Aufruf von \Macro\sol oder \Macro\subsol beginnt die Nummerierung der Teilaufgaben von vorne.
+
+Die zweite Methode zum Erstellen von Lösungen verfolgt einen anderen Ansatz. Hierbei werden die Ergebnisse direkt nach den einzelnen Aufgaben oder Fragen eingefügt. Hierzu steht z.\,B. das Makro \Macro\res\ (engl. \emph{result} -- \emph{Ergebnis}) zur Verfügung. Als notwendiges Argument übergibt man ihm das Ergebnis der jeweiligen Aufgabe:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\exe{Erste Aufgabe}
+
+Lorem ipsum dolor sit amet ...
+
+\res{Ergebnis der ersten Aufgabe}
+
+
+\exe{Zweite Aufgabe}
+
+Lorem ipsum dolor sit amet ...
+
+\res{Ergebnis der zweiten Aufgabe}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+\thepackage\ ist so voreingestellt, dass diese Ergebnisse standardmäßig bei der Erzeugung des Arbeitsblattes nicht dargestellt werden. Um dies zu ändern, muss die Option \opt{showresults} verwendet werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\documentclass[showresults]{edu}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Es besteht die Möglichkeit, \Macro\res durch ein optionales Argument einen Alternativen Inhalt zu übergeben, der ausgegeben wird, wenn die Ergebnisse \emph{nicht} angezeigt werden sollen (d.\,h. im Standardfall bzw. bei \opt*{showresults=false}). Dies kann z.\,B. hilfreich sein, um einen manuellen Seitenumbruch oder einen zusätzlichen Abstand einzufügen, der in der Lösung nicht benötigt wird:
+}
+
+\startcode{de}
+\begin{Verbatim}
+Lorem ipsum dolor sit amet ...
+
+\res[\vspace*{5cm}]{Ergebnis}
+
+Lorem ipsum dolor sit amet ...
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Es kann hilfreich sein, auf erwartete Ergebnisse durch eine Linie oder eine Box hinzuweisen. Zu diesem Zweck können die Makros \Macro\resr\ (engl. \emph{rule} -- \emph{Linie}) und \Macro\resb\ (engl. \emph{box} -- \emph{Box}) verwendet werden. Beide verhalten sich grundsätzlich wie \cs{res}, zeigen die Ergebnisse also nur an, wenn \opt{showresults} gesetzt ist. Werden die Ergebnisse nicht angezeigt, erzeugt ersteres jedoch eine vertikale Linie, letztes einen rechteckigen Rahmen.
+
+Die Linie von \Macro\resr ist standardmäßig \SI{2}{cm} lang und befindet sich \SI{4}{pt} unterhalb der Grundlinie der Zeile. Durch zwei optionale Argumente können diese Eigenschaften manipuliert werde. Lautet das Ergebnis z.\,B. "`Sonett"' und soll sich eine \SI{5}{cm} auf der Grundlinie befinden (also um \SI{0}{cm} verschoben sein), kann dies wie folgt realisiert werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\resr[5cm]{Sonett}[0cm]
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch und um \SI{5}{pt} unter die Grundlinie verschoben. Auch diese Eigenschaften können durch optionale Argumente -- diesmal entsprechen drei Stück -- angepasst werden. Die Lösung der Folgenden Aufgabe lautet "`Wasserstoff"', die Box ist \SI{4}{cm} breit, \SI{1}{cm} hoch und um \SI{2}{pt} unter die Grundlinie verschoben:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\resb[4cm][1cm]{Wasserstoff}[-2pt]
+\end{Verbatim}
+\endcode
+
+
 \localeDE{\subsection{DIN-A4-Druckvorlage und Folien}}
+%
+
+\localeDE{\subsection{Notizen}}
 
 
 
@@ -921,6 +1011,10 @@ Ebenfalls verfügt \env{tikzcol} über zwei weitere Argumente, mit deren Hilfe d
 
 
 \localeDE{\section{Horst bereitet Mathematikunterricht vor}}
+
+
+
+\localeDE{\section{Erscheindungsbild anpassen}}
 
 
 
