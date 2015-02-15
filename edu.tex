@@ -73,6 +73,36 @@
 % Fontsize
 \KOMAoption{fontsize}{10}
 
+% Colors
+
+% Original colors of skdoc:
+%\definecolorset{RGB}{}{}{
+%    section,145,0,0;
+%    intlink,140,35,24;
+%    keydesc,140,35,24;
+%    scriptcolor,140,35,24;
+%    sharp,250,105,0;
+%    bright,198,229,217;
+%    extlink,2,10,61;
+%    macrodesc,73,10,61;
+%    macroimpl,73,10,61;
+%    optioncolor,73,10,61;
+%    opt,73,10,61;
+%    meta,11,72,107
+%}
+
+\definecolor{section}{RGB}{145,0,0}
+
+\definecolor{extlink}{RGB}{87,0,0}
+\definecolor{intlink}{RGB}{87,0,0}
+
+\definecolor{macrodesc}{RGB}{145,0,0}
+\definecolor{macroimpl}{RGB}{145,0,0}
+\definecolor{opt}{RGB}{145,0,0}
+\definecolor{optioncolor}{RGB}{145,0,0}
+\definecolor{meta}{RGB}{120,120,120}
+
+
 % Multilanguage support
 \providecommand\locale{de}
 \ExplSyntaxOn
@@ -96,8 +126,10 @@
     \cs_gset:Npn\glossaryname{Abbildung}
     \cs_gset:Npn\refname{Referenzen}
     \cs_gset:Npn\tablename{Tabelle}
-    \tl_gset:Nn \g_edu_warningname {Warnung}
     \tl_gset:Nn \partname {Teil}
+    \tl_gset:Nn \g_edu_noticename {Bemerkung}
+    \tl_gset:Nn \g_edu_todoname {Todo}
+    \tl_gset:Nn \g_edu_warningname {Warnung}
   }
 }
 
@@ -161,7 +193,14 @@
   \noindent\fbox{\parbox{#1}{#2}}
 }
 
-\DeclareDocumentCommand \LongWarning { +m } {
+\DeclareDocumentCommand \Notice { +m } {
+  \textsf{\textbf{\g_edu_noticename{}:}}~ 
+  \itshape
+    #1
+  \upshape
+}
+
+\DeclareDocumentCommand \Warning { +m } {
   \vspace{\baselineskip}
   \par\noindent
   \fbox{
@@ -174,21 +213,37 @@
   \par
 }
 
+\DeclareDocumentCommand \Todo { +m } {
+  \vspace{\baselineskip}
+  \par\noindent
+  \group_begin:
+  \color{lightgray}
+  \fbox{
+    \begin{minipage}[c]{\linewidth}
+      \textsf{\textbf{\g_edu_todoname{}:}}~
+      #1
+    \end{minipage}
+  }
+  \vspace{\baselineskip}
+  \group_end:
+  \par
+}
+
 \ExplSyntaxOff
 
 \DeclareDocumentCommand \WarningStylethemeDE { s } {
   \IfBooleanTF {#1} {
-    \LongWarning{Obige Optionen können durch Styletheme überschrieben werden.}
+    \Warning{Obige Optionen können durch Styletheme überschrieben werden.}
   }{
-    \LongWarning{Obige Option kann durch Styletheme überschrieben werden.}
+    \Warning{Obige Option kann durch Styletheme überschrieben werden.}
   }
 }
 
 \DeclareDocumentCommand \WarningColorthemeDE { s } {
   \IfBooleanTF {#1} {
-    \LongWarning{Obige Optionen können durch Colortheme überschrieben werden.}
+    \Warning{Obige Optionen können durch Colortheme überschrieben werden.}
   }{
-    \LongWarning{Obige Option kann durch Colortheme überschrieben werden.}
+    \Warning{Obige Option kann durch Colortheme überschrieben werden.}
   }
 }
 
@@ -253,7 +308,10 @@
 
 \usepackage[scaled=0.8]{beramono}
 
+
 \begin{document}
+
+
 % Change & version info
 \version{0.5}
 \changes{0.5}{%
@@ -604,7 +662,7 @@ Als Nächstes soll der Titel unseres Dokumentes eingefügt werden. Nachdem wir d
 
 Die normale Variante \Macro\maketitle erzeugt einen "`ausführlichen"' Titel, der neben Titel und Untertitel noch fast alle weiteren Metadaten des Dokuments beinhaltet. Somit eignet sich \Macro\maketitle tendenziell für umfangreichere Dokumente (Zusammenfassungen u.\,Ä.).
 
-Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternvariante \Macro\maketitle*. Diese greift lediglich auf Titel (\cs{title}), Untertitel (\cs{subtitle}), Gruppe (\cs{group}) und Abkürzung (\cs{short}) zurück.
+Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternvariante \Macro{\maketitle*}. Diese greift lediglich auf Titel (\cs{title}), Untertitel (\cs{subtitle}), Gruppe (\cs{group}) und Abkürzung (\cs{short}) zurück.
 }
 
 \startcode{de}
@@ -824,7 +882,7 @@ Auch \env{cols2} verfügt über eine Sternvariante, bei der die Spalten vertikal
 }
 
 \localeDE{
-\emph{Bemerkung:} Es handelt sich bei der Angabe der linken Spaltenbreite nicht um die exakte Breite der Spalte. Genau genommen handelt es sich um den Abstand zwischen dem Beginn der Zeile und der Mitte des Abstandes zwischen den Spalten:
+\Notice{Es handelt sich bei der Angabe der linken Spaltenbreite nicht um die exakte Breite der Spalte. Genau genommen handelt es sich um den Abstand zwischen dem Beginn der Zeile und der Mitte des Abstandes zwischen den Spalten.}
 \begin{center}
 \begin{tikzpicture}[font=\scriptsize]
 	\draw[fill=gray!20] (0,0) rectangle node[above, font=\sffamily] {Spalte 1} (0.6\textwidth, 1.2);
@@ -837,10 +895,11 @@ Auch \env{cols2} verfügt über eine Sternvariante, bei der die Spalten vertikal
 	\draw[<->] (0, 0.2) -- node[above] {$\texttt{<Spaltenbreite>} = \texttt{<Angegebene Spaltenbreite>} - 0.5 \cdot \texttt{\textbackslash{}columnsep}$} (0.6\textwidth, 0.2);
 \end{tikzpicture}
 \end{center}
+}
 %\[
 %	\text{Tatsächliche linke Spaltenbreite} = \text{Angegebene linke Spaltenbreite} - 0.5 \cdot \text{Spaltenabstand}
 %\]
-}
+
 
 \localeDE{\subsection{Grafikdateien einfügen}}
 
@@ -999,8 +1058,25 @@ Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch
 \endcode
 
 
-\localeDE{\subsection{DIN-A4-Druckvorlage und Folien}}
+\localeDE{\subsection{Pseudo-A5-Druckvorlage und Folien}}
 %
+\localeDE{
+
+\Warning{Mechanismus zum A5-Druck wird komplett überarbeitet.}
+
+Es bietet es sich an, Dokumente mit wenig Inhalt in A5 anzufertigen. Der Druck auf A5 ist im heimischen Umfeld nicht immer unproblematisch. Auch das zweifache Drucken eines A5-Dokumentes auf ein A4-Blatt funktioniert nicht immer. Deshalb bietet sich häufig das folgende Prozedere an: Man druckt das Dokument in A4, skaliert es ansprechend auf irgendeinem Wege auf A5 und druckt es (meist im gleichen Schritt) zwei Mal auf ein A4-Blatt, welches abschließend in zwei A5-Blätter zerschnitten wird. Unabhängig davon, wie die nachträgliche Skalierung von A4 auf A5 vorgenommen wird, muss berücksichtigt werden, dass sich alle Elemente des Dokuments -- also insbesondere Schrift und Grafiken -- verkleinern. Auch Längen, die durch absolute Werte angegeben werden, sollten angepasst werden. 
+
+\Todo{Teil zum A5-Druck fehlt.}
+
+Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenschaften des Dokuments angepasst werden: Die Schrift muss (drastisch) vergrößert, Seitenränder hingegen können minimiert werden. Außerdem sollte serifenlose Schrift als Standardschrift verwendet werden, da sie die Lesbarkeit auf größerer Entfernung verbessert. Silbentrennung wird überdies deaktiviert. Durch die Option \opt{transparency} werden all diese Änderungen am Dokument durch \thepackage\ vorgenommen. Sie sollte beim Laden der Dokumentenklasse gewählt werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\documentclass[transparency]{edu}
+\end{Verbatim}
+\endcode
+
 
 \localeDE{\subsection{Notizen}}
 
@@ -1036,7 +1112,7 @@ Die Optionen von \thepackage\ werden thematisch gruppiert beschrieben. Der Stand
 \localeDE{
 \thepackage\ verfügt über Modi für spezielle Medienarten. Diese Modi führen zu einer Anpassung insbesondere der Schriftgröße und der Seitenränder. In manchen fällen kann außerdem die Schriftfamilie geändert werden.
 
-\LongWarning{Diese Optionen werden mit hoher Priorität verarbeitet. D.\,h. andere Optionen (z.\,B. \opt{fontsize}) werden gegebenenfalls überschrieben und habe keine Wirkung mehr.}
+\Warning{Diese Optionen werden mit hoher Priorität verarbeitet. D.\,h. andere Optionen (z.\,B. \opt{fontsize}) werden gegebenenfalls überschrieben und habe keine Wirkung mehr.}
 }
 
 \localeDE{
@@ -1212,7 +1288,7 @@ Bestimmt in Aufgaben den Abstand zwischen Aufgabennummerierung und dem folgenden
 \Option{listarraymargin}\WithValues{\meta{Länge}}\AndDefault{0.5em}
 Bestimmt in Aufgaben den Abstand zwischen Textrand und Aufgabennummerierung (s.\,Abb.\,\ref{fig:lists}).
 
-\LongWarning{Um ein einheitliches Bild zu gewährleisten, wirken sich die Optionen \opt*{listarraysep} und \opt*{listarraymargin} analog auch auf \env*{itemize} und \env*{enumerate} aus.}
+\Warning{Um ein einheitliches Bild zu gewährleisten, wirken sich die Optionen \opt*{listarraysep} und \opt*{listarraymargin} analog auch auf \env*{itemize} und \env*{enumerate} aus.}
 }
 
 
@@ -1928,11 +2004,11 @@ Möchte man gezielt Optionen an das Package \pkg{amsmath} übergeben, sollte die
 \Option{thmbox}\WithValues{true, false}\AndDefault{false}
 Durch diese Optionen kann angegeben werden, ob gängige deutsche \env{theorem}-Umgebungen (\emph{Satz}, \emph{Definition}, \emph{Beispiel}, \dots) erstellt werden sollen. \opt*{amsthm} erzeugt Theoreme im Stile von \pkg{amsthm}, \opt*{framedthm} Theoreme die umrahmt und farbig hinterlegt sein können und \opt*{thmbox} Theoreme im Stile von \pkg{thmbox}.
 
-\LongWarning{\opt*{thmbox} erfordert zwingend nummerierte Theoreme. Deshalb muss in diesem Fall zusätzlich \opt{thmimpnumbered} und \opt{thmunimpnumbered} gewählt werden.}
+\Warning{\opt*{thmbox} erfordert zwingend nummerierte Theoreme. Deshalb muss in diesem Fall zusätzlich \opt{thmimpnumbered} und \opt{thmunimpnumbered} gewählt werden.}
 }
 \medskip
 
-\LongWarning{Irgendein Text}
+\Warning{Irgendein Text}
 
 \localeDE{
 \Option{thmimpnumbered}\WithValues{true, false}\AndDefault{true}
