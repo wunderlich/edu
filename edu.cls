@@ -489,7 +489,7 @@
 
 \keys_define:nn {edu} {
   exepointsachieved .bool_gset:N = \g_edu_exepointsachieved_bool,
-  exepointsachieved .initial:n = true,
+  exepointsachieved .initial:n = false,
   subexepointsachieved .bool_gset:N = \g_edu_subexepointsachieved_bool,
   subexepointsachieved .initial:n = false,
   exepointsachievedspace .dim_gset:N = \g_edu_exepointsachievedspace_dim,

@@ -582,6 +582,8 @@ Deshalb ist die zweite Methode \emph{grundsätzlich} vorzuziehen: In jedem Absat
 
 \localeDE{
 Dieser Teil der Dokumentation soll dem schnellen Einstieg in die Anwendung von \thepackage\ ermöglichen. Er ist in die wichtigsten Anwendungsfälle aufgeteilt und behandelt jeweils die zentralen Aspekte. Es werden jedoch nicht alle Funktionen von \thepackage\ thematisiert. Es soll ein möglichst einfacher Einstieg ermöglicht werden, grundlegende \LaTeX-Fähigkeiten werden jedoch vorausgesetzt.
+
+Die einzelnen Abschnitte behandeln die jeweiligen Themen nur oberflächlich, wobei am Ende der Abschnitte verwandte Makros und Optionen aufgelistet sind, die zum vertiefenden Verständnis beitragen können. Eine detaillierte Dokumentation der zugehörigen Optionen und Makros bietet Teil~\ref{sec:doc}.
 }
 
 \localeDE{
@@ -946,24 +948,11 @@ Verwandte Makros und Optionen:
 	\item \opt{exenumberfg}
 	\item \opt{exenumberseparator}
 	\item \opt{exenumberstyle}
-	\item \opt{exepointsachieved}
-	\item \opt{exepointsachievedspace}
-	\item \opt{exepointsachievedsep}
-	\item \opt{exepointsfg}
-	\item \opt{exepointslabel}
-	\item \opt{exepointsleft}
-	\item \opt{exepointsright}
-	\item \opt{exepointsstyle}
 	\item \opt{exestyle}
 	\item \opt{multiexenumberfg}
 	\item \opt{multiexenumberstyle}
 	\item \opt{multiexenumberleft}
 	\item \opt{multiexenumberright}
-	\item \opt{multiexepointsfg}
-	\item \opt{multiexepointslabel}
-	\item \opt{multiexepointsleft}
-	\item \opt{multiexepointsright}
-	\item \opt{multiexepointsstyle}
 	\item \opt{multiexestyle}
 	\item \opt{subexeafterskip}
 	\item \opt{subexebeforeskip}
@@ -977,18 +966,12 @@ Verwandte Makros und Optionen:
 	\item \opt{subexenumberfg}
 	\item \opt{subexenumberseparator}
 	\item \opt{subexenumberstyle}
-	\item \opt{subexepointsachieved}
-	\item \opt{subexepointsachievedspace}
-	\item \opt{subexepointsachievedsep}
-	\item \opt{subexepointsfg}
-	\item \opt{subexepointslabel}
-	\item \opt{subexepointsleft}
-	\item \opt{subexepointsright}
-	\item \opt{subexepointsstyle}
 	\item \opt{subexestyle}
 \end{itemize}
 \end{multicols}
 }
+
+\localeDE{\subsection{Fragen: Freie Antworten und Multiple Choice}}
 
 \localeDE{\subsection{Spalten verwenden}}
 
@@ -1364,12 +1347,14 @@ Verwandte Makros und Optionen:
 
 \localeDE{
 Im zweiten Tutorial widmen wir uns dem Erstellen von Klassenarbeiten. Neben den grundlegenden Funktionen aus dem vorherigen Abschnitt~\ref{sec:tut:arbeitsblatt} verfügt \thepackage\ über Makros und Optionen zum Erstellen von Klassenarbeiten.
+
+\Notice{Unter Verrechnungspunkten (VP) verstehen wir in diesem Abschnitt, die Punkte, man beim Lösen der einzelnen Aufgaben erhält und die abschließend in eine Note oder Notenpunkte (Sek~II) umgerechnet werden.}
 }
 
 \localeDE{\subsection{Zeile für Schülerdaten -- Viel Erfolg!}}
 
 \localeDE{
-Zuerst sollen die SchülerInnen ihren Namen auf die Klassenarbeit schreiben. Eine Vorlage stellt das Makro \Macro\makeexamtitle zur Verfügung. Es erweitert den Titel von \cs{makeexamtitle} um drei Felder zum Ausfüllen: Als erstes können (bzw. sollen) die SchülerInnen eine ihnen eindeutig zugeordnete Nummer ergänzen, welche ihrer Stelle in der alphabetisch sortierten Klassenliste entspricht. Es bietet sich an, vor der ersten Klassenarbeit eine Folie mit der nummerierten Klassenliste anzufertigen und diese vor den Klassenarbeiten aufzulegen. Die Nummer vereinfacht das Sortieren der Klassenarbeiten vor der Korrektur. Des Weiteren sind Felder für Nach- und Vornamen vorhanden. Die Beschriftung und Länge der Felder kann durch Optionen beliebig angepasst werden. Neben den formalen Feldern wird zusätzlich eine kleine Mario-Figur am rechten Rand eingefügt, welche viel Erfolg wünscht.
+Zuerst sollen die SchülerInnen ihren Namen auf die Klassenarbeit schreiben. Eine Vorlage stellt das Makro \Macro\makeexamtitle\ (engl. \emph{exam} -- \emph{Klausur, Prüfung}) zur Verfügung. Es erweitert den Titel von \cs{makeexamtitle} um drei Felder zum Ausfüllen: Als erstes können (bzw. sollen) die SchülerInnen eine ihnen eindeutig zugeordnete Nummer ergänzen, welche ihrer Stelle in der alphabetisch sortierten Klassenliste entspricht. Es bietet sich an, vor der ersten Klassenarbeit eine Folie mit der nummerierten Klassenliste anzufertigen und diese vor den Klassenarbeiten aufzulegen. Die Nummer vereinfacht das Sortieren der Klassenarbeiten vor der Korrektur. Des Weiteren sind Felder für Nach- und Vornamen vorhanden. Die Beschriftung und Länge der Felder kann durch Optionen beliebig angepasst werden. Neben den formalen Feldern wird zusätzlich eine kleine Mario-Figur am rechten Rand eingefügt, welche viel Erfolg wünscht.
 }
 
 \startcode{de}
@@ -1392,6 +1377,159 @@ Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} 
 \end{Verbatim}
 \endcode
 %
+\localeDE{
+  An dieser Stelle sei noch ein Mal auf das Makro \Macro\group verwiesen, mit desen Hilfe man zwei Verseionen der Klassenarbeit unterscheiden und jeweils einer Gruppe (z.\,B. Gruppe A und B) zuweisen kann. Die Bezeichnung der Gruppe wird im Titel neben der Grafik positioniert.
+}
+
+\localeDE{
+Verwandte Makros und Optionen:
+\begin{multicols}{3}\raggedcolumns
+\begin{itemize}
+  \item \opt{examtitlefieldilabel}
+  \item \opt{examtitlefieldiilabel}
+  \item \opt{examtitlefieldiiilabel}
+  \item \opt{examtitlefieldiwidth}
+  \item \opt{examtitlefieldiiwidth}
+  \item \opt{examtitlefieldiiiwidth}
+  \item \opt{examtitlefieldsep}
+  \item \opt{examtitlegraphicsheight}
+  \item \opt{examtitlegraphicsscale}
+\end{itemize}
+\end{multicols}
+}
+
+\localeDE{\subsection{Verrechnungspunkte angeben}}
+
+\localeDE{
+Bei Klassenarbeiten sollten die je Aufgabe erreichbaren VP aufgeführt werden. Zu diesem Zweck verfügen die aus Abschnitt~\ref{sec:tut:arbeitsblatt} bekannten Makros \Macro\exe und \Macro\subexe über optionale Argumente, durch welche diese VP angegeben werden können:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\exe[5]{Erste Aufgabe}
+
+Erste Aufgabe insgesamt 5VP
+
+\subexe[2]{Erste Unteraufgabe}
+
+Erste Unteraufgabe 2 VP
+
+\subexe[3]{Zweite Unteraufgabe}
+
+Erste Unteraufgabe 3 VP
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Sogar einzelnen Teilaufgaben (\env{multiexelist} oder \env{multiexearray}) können VP zugeteilt werden. Hierfür muss das Makro \Macro\points bedient werden. Normalerweise wird die Punktzahl hierbei direkt hinter den jeweiligen Inhalt der Teilaufgabe gesetzt, in der Sternvariante \Macro{\points*} wird sie hingegen an den rechten Rand der entsprechenden Zeile geschoben:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\begin{multiexelist}
+  \item Erste Teilaufgabe \point{1}
+  \item Zweite Teilaufgabe \points*{2}
+\end{multiexelist}
+
+\begin{multiexearray}{2}
+  Erste Teilaufgabe \points{3}  & Zweite Teilaufgabe \points{4} \\
+  Dritte Teilaufgabe \points*{5} \\
+\end{multiexearray}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Durch die Optionen \opt{exepointsachieved} und \opt{subexepointsachieved} kann neben den VP der jeweiligen Aufgabe ein Feld für die erreichten VP eingefügt werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\documentclass[
+  exepointsachieved,
+  subexepointsachieved
+]{edu}
+\end{Verbatim}
+\endcode
+%
+
+
+\localeDE{
+Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
+\begin{multicols}{3}\raggedcolumns
+\begin{itemize}
+	\item \opt{exepointsachieved}
+	\item \opt{exepointsachievedspace}
+	\item \opt{exepointsachievedsep}
+	\item \opt{exepointsfg}
+	\item \opt{exepointslabel}
+	\item \opt{exepointsleft}
+	\item \opt{exepointsright}
+	\item \opt{exepointsstyle}
+	\item \opt{multiexepointsfg}
+	\item \opt{multiexepointslabel}
+	\item \opt{multiexepointsleft}
+	\item \opt{multiexepointsright}
+	\item \opt{multiexepointsstyle}
+	\item \opt{subexepointsachieved}
+	\item \opt{subexepointsachievedspace}
+	\item \opt{subexepointsachievedsep}
+	\item \opt{subexepointsfg}
+	\item \opt{subexepointslabel}
+	\item \opt{subexepointsleft}
+	\item \opt{subexepointsright}
+	\item \opt{subexepointsstyle}
+\end{itemize}
+\end{multicols}
+}
+
+
+\localeDE{\subsection{Bereiche für Ergebnisse}}
+
+\localeDE{
+\thepackage\ verfügt über die Möglichkeit, Bereiche zu erstellen, in denen die Ergebnisse der Klassenarbeit zusammengefasst werden können. Die kompakteste und einfachste Variante bildet das Makro \Macro\makeexamres\ (engl. \emph{result} -- \emph{Ergebnis}). Es erwartet als notwendiges Argument die Anzahl der maximal erreichbaren VP und erzeugt einen Kasten, in welchem die Anzahl der erreichten VP, die zugehörige Note, der Notendurchschnitt und der aktuelle Stand in der mündlichen Mitarbeit notiert werden kann. Des Weiteren ist ein Feld für die Unterschrift der/des Erziehungsberechtigten vorhanden. Durch Optionen kann der Kasten detailliert konfiguriert werden. So können z.\,B. die Felder für die mündliche Note oder die Unterschrift entfernt werden. Im folgenden Beispiel können 25\,VP erreicht werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\makeexamres{25}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Umfangreicher wird der Ergebnisbereich durch das Makro \Macro\makeexamrestable\ (engl. \emph{table} -- \emph{Tabelle}). Es erzeugt neben den aus \cs*{makeexamres} bekannten Feldern zusätzlich eine Tabelle, in der die je Aufgabe erreichten VP eingetragen werden können. Das Makro besitzt deshalb drei notwendige Argumente: Als erstes müssen die Nummern der Aufgaben (für gewöhnlich 1 bis $n$) angegeben werden. Anschließend die erreichbaren VP der jeweiligen Aufgaben (in gleichen Reihenfolge) und zum Schluss die Summe der insgesamt erreichbaren VP. Durch ein optionales Argument kann der SchülerInnenname ergänzt werden. Dies kann hilfreich sein, wenn die Ergebnisbereiche gesondert gedruckt werden sollen. Im folgenden Beispiel liegen die Aufgaben 1 bis 7 vor, für die 2, 4, 6, \dots, 14\,VP vergeben und somit ingsgesamt 56\,VP erreicht werden können. Der Ergebnisbereich soll für Horst Schlämmer personalisiert werden.
+}
+
+\startcode{de}
+\begin{Verbatim}
+\makeexamrestable[Horst Schlämmer]{1, 2, 3, 4, 5, 6, 7}{2, 4, 6, 8, 10, 12, 14}{56}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+\Notice{Die durch \Macro\makeexamrestable erstellte Tabelle bietet Platz für maximal 10 Aufgaben.}
+}
+
+\localeDE{
+Verwandte Makros und Optionen:
+\begin{multicols}{3}\raggedcolumns
+\begin{itemize}
+  \item \opt{exampointsaveragelabel}
+  \item \opt{exampointsmarklabel}
+  \item \opt{exampointsoflabel}
+  \item \opt{exampointssecondmark}
+  \item \opt{exampointssecondmarklabel}
+  \item \opt{exampointssignature}
+  \item \opt{exampointssignaturelabel}
+  \item \opt{exampointstableexelabel}
+  \item \opt{exampointstablelabel}
+  \item \opt{exampointstablemaxlabel}
+  \item \opt{exampointstablesumlabel}
+  \item \opt{exampointstabletype}
+  \item \opt{exampointstablewidth}
+\end{itemize}
+\end{multicols}
+}
 
 \localeDE{
   \section{Die erste Unterrichtsplanung}
@@ -1407,7 +1545,10 @@ Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} 
 
 
 \newpage
-\localeDE{\part{Dokumentation}}
+\localeDE{
+  \part{Dokumentation}
+  \label{sec:doc}
+}
 
 \localeDE{\subsection{Allgemeines}}
 
@@ -3425,7 +3566,7 @@ Achieved points:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   exepointsachieved .bool_gset:N = \g_edu_exepointsachieved_bool,
-  exepointsachieved .initial:n = true,
+  exepointsachieved .initial:n = false,
   subexepointsachieved .bool_gset:N = \g_edu_subexepointsachieved_bool,
   subexepointsachieved .initial:n = false,
   exepointsachievedspace .dim_gset:N = \g_edu_exepointsachievedspace_dim,
