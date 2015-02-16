@@ -43,6 +43,7 @@
 \usepackage{tabularx}
 \usepackage{tikz}
 \usepackage{units}
+\usepackage{xspace}
 \usepackage[only, lightning]{stmaryrd}
 \usepackage[newcommands]{ragged2e}
 \usepackage{hyperref}
@@ -133,6 +134,7 @@
     \cs_gset:Npn\refname{Referenzen}
     \cs_gset:Npn\tablename{Tabelle}
     \tl_gset:Nn \partname {Teil}
+    \tl_gset:Nn \g_edu_bugname {Bug}
     \tl_gset:Nn \g_edu_noticename {Bemerkung}
     \tl_gset:Nn \g_edu_todoname {Todo}
     \tl_gset:Nn \g_edu_warningname {Warnung}
@@ -193,10 +195,41 @@
   
 }
 
+% Git support
+\tl_new:N \g_edu_gitrepo
+\tl_gset:Nn \g_edu_gitrepo {wunderlich/edu}
+
+\tl_new:N \g_edu_gitrepourl
+\tl_gset:Nn \g_edu_gitrepourl {https://github.com/wunderlich/edu/}
+
+\DeclareDocumentCommand \gitIssue { m } {
+  {\ttfamily \href{\tl_use:N \g_edu_gitrepourl issues/#1.html}{\g_edu_gitrepo / \# #1}}\xspace
+}
 
 % New Commands:
-\DeclareDocumentCommand \fpbox { O{\linewidth} m } {
+\DeclareDocumentCommand \fpbox { O{\linewidth-2\fboxsep-2\fboxrule} m } {
   \noindent\fbox{\parbox{#1}{#2}}
+}
+
+\DeclareDocumentCommand \Bug { +m } {
+  \vspace{\baselineskip}
+  \par\noindent
+  \group_begin:
+  \color{section}
+  \fbox{
+    \begin{minipage}[c]{\linewidth-2\fboxsep-2\fboxrule}
+      \textsf{\textbf{\g_edu_bugname{}:}}~
+      #1
+    \end{minipage}
+  }
+  \vspace{\baselineskip}
+  \group_end:
+  \par
+}
+
+
+\DeclareDocumentCommand \BugGit { +m } {
+  \Bug{\gitIssue{#1}}
 }
 
 \DeclareDocumentCommand \Notice { +m } {
@@ -206,32 +239,32 @@
   \upshape
 }
 
-\DeclareDocumentCommand \Warning { +m } {
-  \vspace{\baselineskip}
-  \par\noindent
-  \fbox{
-    \begin{minipage}[c]{\linewidth}
-      \textsf{\textbf{\g_edu_warningname{}:}}~
-      #1
-    \end{minipage}
-  }
-  \vspace{\baselineskip}
-  \par
-}
-
 \DeclareDocumentCommand \Todo { +m } {
   \vspace{\baselineskip}
   \par\noindent
   \group_begin:
   \color{lightgray}
   \fbox{
-    \begin{minipage}[c]{\linewidth}
+    \begin{minipage}[c]{\linewidth-2\fboxsep-2\fboxrule}
       \textsf{\textbf{\g_edu_todoname{}:}}~
       #1
     \end{minipage}
   }
   \vspace{\baselineskip}
   \group_end:
+  \par
+}
+
+\DeclareDocumentCommand \Warning { +m } {
+  \vspace{\baselineskip}
+  \par\noindent
+  \fbox{
+    \begin{minipage}[c]{\linewidth-2\fboxsep-2\fboxrule}
+      \textsf{\textbf{\g_edu_warningname{}:}}~
+      #1
+    \end{minipage}
+  }
+  \vspace{\baselineskip}
   \par
 }
 
@@ -1349,8 +1382,9 @@ Zuerst sollen die SchülerInnen ihren Namen auf die Klassenarbeit schreiben. Ein
 Das Makro verfügt über drei optionale Argumente. Mit dem ersten optionalen Argument kann der Text neben Mario verändet werden. Mit dem zweiten optionalen Argument kann man eine beliebige Grafikdatei spezifizieren, welche statt Mario eingesetzt wird. Hierbei müssen die Aspekte aus Abschnitt~\ref{sec:tut:grafik} berücksichtigt werden. Mithilfe des dritten und letzten optionalen Arguments kann die Höhe der selbst gewählten Graphik bestimmt werden. Standardmäßig ist diese \SI{2}{cm} hoch.
 
 Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} Höhe mit dem Text "`Viel Glück!"' verwendet:
-}
 
+\BugGit{72}
+}
 
 \startcode{de}
 \begin{Verbatim}
