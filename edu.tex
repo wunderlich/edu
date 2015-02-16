@@ -532,7 +532,7 @@ Alle Packages sind über \emph{CTAN} erhältlich -- sie können unter Linux übe
 \newpage
 \localeDE{\part{Allgemeines zum Textsatz in der Schule}}
 
-\localeDE{\section{Kopf- und Fußzeilen}\label{sec:kopfzeile}}
+\localeDE{\section{Kopf- und Fußzeilen}\label{sec:allg:kopfzeile}}
 
 \localeDE{\section{Absatzauszeichnung}}
 
@@ -547,9 +547,14 @@ Deshalb ist die zweite Methode \emph{grundsätzlich} vorzuziehen: In jedem Absat
 \newpage
 \localeDE{\part{Tutorials: Der schnelle Einstieg}}
 
+\localeDE{
 Dieser Teil der Dokumentation soll dem schnellen Einstieg in die Anwendung von \thepackage\ ermöglichen. Er ist in die wichtigsten Anwendungsfälle aufgeteilt und behandelt jeweils die zentralen Aspekte. Es werden jedoch nicht alle Funktionen von \thepackage\ thematisiert. Es soll ein möglichst einfacher Einstieg ermöglicht werden, grundlegende \LaTeX-Fähigkeiten werden jedoch vorausgesetzt.
+}
 
-\localeDE{\section{Das erste Arbeitsblatt}}
+\localeDE{
+  \section{Das erste Arbeitsblatt}
+  \label{sec:tut:arbeitsblatt}
+}
 
 \localeDE{
 Im ersten Abschnitt beschäftigen wir uns mit dem schulischen Tagesgeschäft: der Erstellung eines Arbeitsblattes. 
@@ -619,7 +624,7 @@ Um die Ordnung in den Unterlagen von SchülerInnen \emph{und} LehrerInnen zu unt
 }
 
 \localeDE{
-In Abschnitt~\ref{sec:kopfzeile} wurde bereits erörtert, welche Metadaten sinnvollerweise auf einem Arbeitsblatt gesetzt werden sollten. Diese ergänzen wir in der Präambel unseres Arbeitsblattes:
+In Abschnitt~\ref{sec:allg:kopfzeile} wurde bereits erörtert, welche Metadaten sinnvollerweise auf einem Arbeitsblatt gesetzt werden sollten. Diese ergänzen wir in der Präambel unseres Arbeitsblattes:
 }
 
 \startcode{de}
@@ -681,7 +686,7 @@ Nach diesen "`Vorarbeiten"' widmen wir uns nun dem tatsächlichen Inhalt unseres
 \endcode
 
 \localeDE{
-Zu Beginn der ersten Seite möchte Horst die Kopfzeile\footnote{In Abschnitt~\ref{sec:kopfzeile} wird erläutert, weshalb standardmäßig lediglich die erste Seite mit einer Kopfzeile versehen wird.} erstellen. Dies geschieht  sehr leicht gleich zu Beginn des Dokumentenkörpers durch das Makro \Macro\makeheader:
+Zu Beginn der ersten Seite möchte Horst die Kopfzeile\footnote{In Abschnitt~\ref{sec:allg:kopfzeile} wird erläutert, weshalb standardmäßig lediglich die erste Seite mit einer Kopfzeile versehen wird.} erstellen. Dies geschieht  sehr leicht gleich zu Beginn des Dokumentenkörpers durch das Makro \Macro\makeheader:
 }
 
 \startcode{de}
@@ -1040,7 +1045,10 @@ Auch \env{cols2} verfügt über eine Sternvariante, bei der die Spalten vertikal
 %\]
 
 
-\localeDE{\subsection{Grafikdateien einfügen}}
+\localeDE{
+  \subsection{Grafikdateien einfügen}
+  \label{sec:tut:grafik}
+}
 
 \localeDE{
 In vielen Fällen möchte man neben einem Text eine passende Grafik einfügen.  Auch dies lässt sich einfach in \thepackage\ realisieren. Bevor wir uns diesem Anliegen widmen, noch einige grundlegende Aspekte zu Rastergrafiken in \thepackage:
@@ -1292,7 +1300,7 @@ Hat man in einem Arbeitsblatt Notizen ergänzt, möchte dieses jedoch noch einma
 \endcode
 %
 \localeDE{
-Insbesondere im Zusammenhang mit der Unterrichtsplanung (s.\,Abschnitt~\ref{sec:unterrichtsplanung}) kann es hilfreich sein, horizontale Linien als Notizen einzufügen ("`Bis hier hin sind wir gekommen."'). Dies kann durch das Makro \Macro\notehr\ (engl. \emph{horizontal rule} -- \emph{horizontale Linie}) getätigt werden:
+Insbesondere im Zusammenhang mit der Unterrichtsplanung (s.\,Abschnitt~\ref{sec:tut:unterrichtsplanung}) kann es hilfreich sein, horizontale Linien als Notizen einzufügen ("`Bis hier hin sind wir gekommen."'). Dies kann durch das Makro \Macro\notehr\ (engl. \emph{horizontal rule} -- \emph{horizontale Linie}) getätigt werden:
 }
 
 \startcode{de}
@@ -1321,16 +1329,44 @@ Verwandte Makros und Optionen:
 
 \localeDE{\section{Die erste Klassenarbeit}}
 
+\localeDE{
+Im zweiten Tutorial widmen wir uns dem Erstellen von Klassenarbeiten. Neben den grundlegenden Funktionen aus dem vorherigen Abschnitt~\ref{sec:tut:arbeitsblatt} verfügt \thepackage\ über Makros und Optionen zum Erstellen von Klassenarbeiten.
+}
 
+\localeDE{\subsection{Zeile für Schülerdaten -- Viel Erfolg!}}
+
+\localeDE{
+Zuerst sollen die SchülerInnen ihren Namen auf die Klassenarbeit schreiben. Eine Vorlage stellt das Makro \Macro\makeexamtitle zur Verfügung. Es erweitert den Titel von \cs{makeexamtitle} um drei Felder zum Ausfüllen: Als erstes können (bzw. sollen) die SchülerInnen eine ihnen eindeutig zugeordnete Nummer ergänzen, welche ihrer Stelle in der alphabetisch sortierten Klassenliste entspricht. Es bietet sich an, vor der ersten Klassenarbeit eine Folie mit der nummerierten Klassenliste anzufertigen und diese vor den Klassenarbeiten aufzulegen. Die Nummer vereinfacht das Sortieren der Klassenarbeiten vor der Korrektur. Des Weiteren sind Felder für Nach- und Vornamen vorhanden. Die Beschriftung und Länge der Felder kann durch Optionen beliebig angepasst werden. Neben den formalen Feldern wird zusätzlich eine kleine Mario-Figur am rechten Rand eingefügt, welche viel Erfolg wünscht.
+}
+
+\startcode{de}
+\begin{Verbatim}
+\makeexamtitle
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Das Makro verfügt über drei optionale Argumente. Mit dem ersten optionalen Argument kann der Text neben Mario verändet werden. Mit dem zweiten optionalen Argument kann man eine beliebige Grafikdatei spezifizieren, welche statt Mario eingesetzt wird. Hierbei müssen die Aspekte aus Abschnitt~\ref{sec:tut:grafik} berücksichtigt werden. Mithilfe des dritten und letzten optionalen Arguments kann die Höhe der selbst gewählten Graphik bestimmt werden. Standardmäßig ist diese \SI{2}{cm} hoch.
+
+Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} Höhe mit dem Text "`Viel Glück!"' verwendet:
+}
+
+
+\startcode{de}
+\begin{Verbatim}
+\makeexamtitle[Viel Glück!][image-example.jpg][3cm]
+\end{Verbatim}
+\endcode
+%
 
 \localeDE{
   \section{Die erste Unterrichtsplanung}
-  \label{sec:unterrichtsplanung}
+  \label{sec:tut:unterrichtsplanung}
 }
 
 
 
-\localeDE{\section{Erscheindungsbild anpassen}}
+\localeDE{\section{Erscheinungsbild anpassen}}
 
 \localeDE{\subsection{Fußzeile}}
 
@@ -1349,7 +1385,7 @@ Verwandte Makros und Optionen:
 Die Optionen von \thepackage\ werden thematisch gruppiert beschrieben. Der Standardwert ist rechtsbündig in Klammern angegeben.
 }
 
-\localeDE{\subsubsection{Medienarten}\label{sec:medienarten}}
+\localeDE{\subsubsection{Medienarten}\label{sec:doc:medienarten}}
 
 \localeDE{
 \thepackage\ verfügt über Modi für spezielle Medienarten. Diese Modi führen zu einer Anpassung insbesondere der Schriftgröße und der Seitenränder. In manchen fällen kann außerdem die Schriftfamilie geändert werden.
