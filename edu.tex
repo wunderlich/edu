@@ -98,16 +98,23 @@
 
 \definecolor{section}{RGB}{145,0,0}
 
-\definecolor{extlink}{RGB}{87,0,0}
-\definecolor{intlink}{RGB}{87,0,0}
+\definecolor{extlink}{RGB}{145,0,0}
+\definecolor{intlink}{RGB}{145,0,0}
 
 \definecolor{macrodesc}{RGB}{145,0,0}
 \definecolor{macroimpl}{RGB}{145,0,0}
+
 \definecolor{opt}{RGB}{145,0,0}
 \definecolor{optioncolor}{RGB}{145,0,0}
+
 \definecolor{meta}{RGB}{120,120,120}
 
+% New colors (not used in skdoc)
 \definecolor{itemize}{RGB}{145,0,0}
+\definecolor{csref}{RGB}{145,0,0}   % used by \cs
+\definecolor{envref}{RGB}{145,0,0}  % used by \env
+\definecolor{optref}{RGB}{145,0,0}  % used by \opt
+\definecolor{pkgref}{RGB}{145,0,0}  % used by \pkg
 
 
 % Multilanguage support
@@ -205,6 +212,55 @@
 \DeclareDocumentCommand \gitIssue { m } {
   {\ttfamily \href{\tl_use:N \g_edu_gitrepourl issues/#1.html}{\g_edu_gitrepo / \# #1}}\xspace
 }
+
+% Reimplementing inline referencing concerning color
+\makeatletter
+
+\DeclareDocumentCommand \cs { s m } {
+    \IfBooleanTF{#1}{
+      \texttt{\char`\\#2}
+    }{
+      \textcolor{csref}{\texttt{\char`\\#2}}
+    }
+    \bool_if:NF\g__skdoc_no_index_bool{
+        \IfBooleanTF{#1}{}{\index@macro{#2}}
+    }
+}
+
+\DeclareDocumentCommand \env { s m } {
+    \IfBooleanTF{#1}{
+      \texttt{#2}
+    }{
+      \textcolor{envref}{\texttt{#2}}
+    }
+    \bool_if:NF\g__skdoc_no_index_bool{
+        \IfBooleanTF{#1}{}{\index@environment{#2}}
+    }
+}
+
+\DeclareDocumentCommand \opt { s m } {
+    \IfBooleanTF{#1}{
+      \texttt{#2}
+    }{
+      \textcolor{optref}{\texttt{#2}}
+    }
+    \bool_if:NF\g__skdoc_no_index_bool{
+        \IfBooleanTF{#1}{}{\index@option{#2}}
+    }
+}
+
+\DeclareDocumentCommand \pkg { s m } {
+    \IfBooleanTF{#1}{
+      \textsf{#2}
+    }{
+      \textcolor{pkgref}{\texttt{#2}}
+    }
+    \bool_if:NF\g__skdoc_no_index_bool{
+        \IfBooleanTF{#1}{}{\index@package{#2}}
+    }
+}
+
+\makeatother
 
 % New Commands:
 \DeclareDocumentCommand \fpbox { O{\linewidth-2\fboxsep-2\fboxrule} m } {
