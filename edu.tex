@@ -687,6 +687,7 @@ In einigen Fällen benötigen die Metadaten z.\,B. in der Fußzeile mehr Platz, 
 %
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{4}\raggedcolumns
 \begin{itemize}
 	\item \Macro{\printauthor}
@@ -737,6 +738,7 @@ Horst kompiliert seinen Quelltext und freut sich über das Ergebnis: Die Kopfzei
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{4}\raggedcolumns
 \begin{itemize}
 	\item \opt{headerrulewidth}
@@ -762,6 +764,7 @@ Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternva
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{4}\raggedcolumns
 \begin{itemize}
 	\item \opt{authorstyle}
@@ -788,7 +791,10 @@ Verwandte Makros und Optionen:
 \end{multicols}
 }
 
-\localeDE{\subsection{Aufgaben erstellen}}
+\localeDE{
+  \subsection{Aufgaben erstellen}
+  \label{sec:tut:aufgaben}
+}
 
 \localeDE{
 Nun ist es Zeit, endlich Aufgaben zu erstellen. Um Überschriften für Aufgaben zu erstellen (\emph{1.~Aufgbabe}, \emph{2.~Augabe}, \dots) steht das Makro \Macro\exe\ (engl. \emph{exercise} -- \emph{Aufgabe}) zur Verfügung. Um die Aufgaben übersichtlich zu strukturieren, empfiehlt es sich, jeder Aufgabe einen kurzen, prägnanten Titel zu vergeben, was durch das notwendige Argument bewerkstelligt wird. Sollte kein Aufgabentitel gewünscht werden, muss das Klammerpaar ohne Inhalt verwendet werden. Aufgaben werden automatisch arabisch nummeriert. Anschließend verfasst man wie gewünscht den Inhalt der Aufgabe:
@@ -929,9 +935,14 @@ Außerdem besteht auf allen Ebenen die Möglichkeit, (optionale) Zusatzaufgaben 
 \end{multiexearray}
 \end{Verbatim}
 \endcode
+%
+\localeDE{
+Aufgaben können zusätzlich durch optionale Argumente Verrechnungspunkte zugewiesen werden, welche in Klassenarbeiten relevant sind. Dies wird im entsprechenden Abschnitt~\ref{sec:tut:vp} über Klassenarbeiten thematisiert.
+}
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
 	\item \opt{arrayafterskip}
@@ -971,7 +982,124 @@ Verwandte Makros und Optionen:
 \end{multicols}
 }
 
-\localeDE{\subsection{Fragen: Freie Antworten und Multiple Choice}}
+\localeDE{
+  \subsection{Fragen: Freie Antworten und Multiple Choice}
+  \label{sec:tut:fragen}
+}
+
+\localeDE{
+Möchte man Wissen durch Aufgaben überprüfen, bieten Fragen an, welche beantwortet werden sollen. \thepackage\ verfügt über umfangreiche Möglichkeiten, Fragen und zugehörige Antwortmöglichkeiten zu erzeugen.
+
+Das Stellen einer Frage geschieht durch das Makro \Macro\quest\ (engl. \emph{question} -- \emph{Frage}). Es erwartet als notwendiges Argument den Fragentext:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\quest{Eine ganz knifflige Frage ...}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Nachdem die Frage gestellt wurde, muss Raum für die Antwort gegeben werden. Hierzu gibt es verschiedene Möglichkeiten. Eine Gruppe von Möglichkeiten setzt voraus, dass die Antworten in irgendeiner Art und Weise schriftlich frei verfasst werden müssen. Die erste dieser Alternativen besteht darin, lediglich freien Platz auf dem Blatt zur Verfügung zu stellen (z.\,B. für eine Skizze). Dies kann durch das Makro \Macro\questblank\ (engl. \emph{blank} -- \emph{unbeschrieben}) umgesetzt werden, welchem als optionales Argument die Höhe des Freiraumes übergeben werden kann. Standardmäßig werden \SI{3}{cm} frei gelassen. Die nächste Möglichkeit sind vorgedruckte Linien zum Verfassen eines Antworttextes. Das Makro \Macro\questtext nimmt hierzu als notwendiges Argument die Anzahl der Zeilen entgegen. Optional kann der Abstand zwischen den Linien angegeben werden. Die letzte Makro \Macro\questtextblank kombiniert die beiden bisherigen Makros. Es erzeugt Linien, welche sich jedoch nicht über die gesamte Textbreite erstrecken. Es besteht hierdurch z.\,B. die Möglichkeit, eine Beschreibung oder Erklärung einzufordern, welche durch eine Skizze verdeutlicht werden soll. Durch zwei notwendige Argumente müssen die Linienanzahl und die Breite der Linien angegeben werden. Ein optionales Argument lässt den Abstand der Linien bestimmen. Im folgenden ein Beipiel mit allen Antwortmöglichkeiten: 
+}
+
+\startcode{de}
+\begin{Verbatim}
+\quest{Erste Frage: 2 cm freier Raum zum Antworten}
+
+\questblank[2cm]
+
+\quest{Zweite Frage: 3 Zeilen Text mit jeweils 1cm Abstand}
+
+\questtext[1cm]{3}
+
+\quest{Dritte Frage: 5 Zeilen mit jeweils 0,75 cm Abstand über halbe Textbreite}
+
+\questtextblank[0.75cm]{5}{0.5\linewidth}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Die zweite Gruppe von Antwortmöglichkeiten betrifft Multiple-Choice-Fragen. Grundsätzlich wird hier -- wie bei Teilaufgaben in Abschnitt~\ref{sec:tut:aufgaben} -- zwischen Aufgabenlisten und Aufgaben, die tabellarisch angeordnet sind, unterschieden. In beiden Fällen besteht wiederum die Möglichkeit, leere Kästchen zum Ankreuzen oder alphabetisch nummerierte Kästchen zu verwenden. Letztere können im Anschluss besser verglichen werden.
+
+Als Listen stehen die Umgebungen \env{questmclist} (leere Kästchen) und \env{questmclistalph} (alphabetisch nummeriert) zur Verfügung. Sie werden wie gewöhnliche Listen verwendet. Durch ein optionales Argument kann ein zusätzlicher Abstand zwischen den Antwortmöglichkeiten  eingefügt werden, was insbesondere bei der Verwendung von hohen Formeln vonnöten sein kann.
+}
+
+\startcode{de}
+\begin{Verbatim}
+\quest{Erste Frage: Multiple Choice mit leeren Kästchen}
+
+\begin{questmclist}
+  \item Antwortmöglichkeit 1
+  \item Antwortmöglichkeit 2
+\end{questmclist}
+
+\quest{Zweite Frage: Multiple Choice mit leeren Kästchen (erhöhter Abstand)}
+
+\begin{questmclist}[2ex]
+  \item Antwortmöglichkeit 1
+  \item Antwortmöglichkeit 2
+\end{questmclist}
+
+\quest{Dritte Frage: Multiple Choice mit alphabetisch nummerierten Kästchen}
+
+\begin{questmclistalph}
+  \item Antwortmöglichkeit 1
+  \item Antwortmöglichkeit 2
+\end{questmclistalph}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Die tabellarische Anordnung von Multiple-Choice-Antworten geschieht durch die Umgebungen \env{questmcarray} (leere Kästchen) und \env{questmcarrayalph} (alphabetisch nummeriert). Als notwendiges Argument erwarten beide Umgebungen die Anzahl der Tabellenspalten. Auch hier kann durch ein optionales Argument der Abstand zwischen den Zeilen angegeben werden. Die Sternvarianten der Umgebungen versetzen die Zellen automatisch in den Mathematikmodus.
+}
+
+\startcode{de}
+\begin{Verbatim}
+\quest{Erste Frage: Multiple Choice mit leeren Kästchen in 4 Spalten}
+
+\begin{questmcarray}{4}
+  Antwort 1  & Antwort 2  & Antwort 3  & Antwort 4 \\ 
+  Antwort 5  & Antwort 6
+\end{questmcarray}
+
+\quest{Zweite Frage: Multiple Choice mit alph. nummerierten Kästchen in 3 Spalten}
+
+\begin{questmcarrayalph}{3}
+  Antwort 1  & Antwort 2  & Antwort 3 \\ 
+  Antwort 4  & Antwort 5
+\end{questmcarrayalph}
+
+\quest{Dritte Frage: Multiple Choice (Mathemodus & erhöhter Zeilenabstand)}
+
+\begin{questmcarray}[2ex]{4}
+  2x = 3  & 3x = 4  & 4x = 5  & 5x = 6 \\
+  6x = 7  & 7x = 8  & 8x = 9  & 9x = 10
+\end{questmcarray}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
+Fragen können zusätzlich durch optionale Argumente Verrechnungspunkte zugewiesen werden, welche in Klassenarbeiten relevant sind. Dies wird im entsprechenden Abschnitt~\ref{sec:tut:vp} über Klassenarbeiten thematisiert.
+}
+
+\localeDE{
+Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
+\begin{multicols}{4}\raggedcolumns
+\begin{itemize}
+	\item \opt{questafterskip}
+	\item \opt{questbeforeskip}
+	\item \opt{questlabel}
+	\item \opt{questlabelfg}
+	\item \opt{questlabelstyle}
+	\item \opt{questmclabelfg}
+	\item \opt{questsep}
+	\item \opt{queststyle}
+\end{itemize}
+\end{multicols}
+}
+
 
 \localeDE{\subsection{Spalten verwenden}}
 
@@ -1090,6 +1218,7 @@ Zusätzlich kann durch ein weiteres, optionales Argument bestimmt werden, wie di
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
 	\item \opt{graphicspath}
@@ -1142,6 +1271,7 @@ Ebenfalls verfügt \env{tikzcol} über zwei weitere Argumente, mit deren Hilfe d
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
 	\item \opt{tikzpath}
@@ -1240,6 +1370,7 @@ Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
 	\item \opt{solafterskip}
@@ -1331,6 +1462,7 @@ Lorem ipsum dolor sit amet ...
 %
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{4}\raggedcolumns
 \begin{itemize}
   \item \opt{notetstyle}
@@ -1383,6 +1515,7 @@ Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} 
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
   \item \opt{examtitlefieldilabel}
@@ -1398,7 +1531,10 @@ Verwandte Makros und Optionen:
 \end{multicols}
 }
 
-\localeDE{\subsection{Verrechnungspunkte angeben}}
+\localeDE{
+ \subsection{Verrechnungspunkte angeben}
+ \label{sec:tut:vp}
+}
 
 \localeDE{
 Bei Klassenarbeiten sollten die je Aufgabe erreichbaren VP aufgeführt werden. Zu diesem Zweck verfügen die aus Abschnitt~\ref{sec:tut:arbeitsblatt} bekannten Makros \Macro\exe und \Macro\subexe über optionale Argumente, durch welche diese VP angegeben werden können:
@@ -1439,6 +1575,24 @@ Sogar einzelnen Teilaufgaben (\env{multiexelist} oder \env{multiexearray}) könn
 \endcode
 %
 \localeDE{
+Werden in einer Klassenarbeit die in Abschnitt~\ref{sec:tut:fragen} vorgestellten Fragen verwendet, kann auch diesen jeweils durch ein optionales Argument eine Punktzahl zugeteilt werden:
+}
+
+\startcode{de}
+\begin{Verbatim}
+\exe[5]{Verständnisfragen mit insgesamt 5 VP}
+
+\quest[2]{Erste Frage mit 2 VP}
+
+\questblank
+
+\quest[3]{Zweite Frage mit 3 VP}
+
+\questtext{3}
+\end{Verbatim}
+\endcode
+%
+\localeDE{
 Durch die Optionen \opt{exepointsachieved} und \opt{subexepointsachieved} kann neben den VP der jeweiligen Aufgabe ein Feld für die erreichten VP eingefügt werden:
 }
 
@@ -1471,6 +1625,11 @@ Verwandte Makros und Optionen:
 	\item \opt{multiexepointsleft}
 	\item \opt{multiexepointsright}
 	\item \opt{multiexepointsstyle}
+	\item \opt{questpointslabel}
+	\item \opt{questpointsleft}
+	\item \opt{questpointsright}
+	\item \opt{questpointssep}
+	\item \opt{questpointsstyle}
 	\item \opt{subexepointsachieved}
 	\item \opt{subexepointsachievedspace}
 	\item \opt{subexepointsachievedsep}
@@ -1512,6 +1671,7 @@ Umfangreicher wird der Ergebnisbereich durch das Makro \Macro\makeexamrestable\ 
 
 \localeDE{
 Verwandte Makros und Optionen:
+\vspace{-0.25\baselineskip}
 \begin{multicols}{3}\raggedcolumns
 \begin{itemize}
   \item \opt{exampointsaveragelabel}
