@@ -11,9 +11,11 @@ clean:
 	rm -f *.fls *.log *.out *.run.xml *.toc
 	rm -f *.cod *.gnuplot *.table
 	rm -f *.log
+	make -C doc/ clean
 
 distclean: clean
 	rm -f *.cls *.pdf *.clo *.tar.gz *.tds.zip
+	make -C doc/ distclean
 
 cls: edu.cls
 
@@ -24,6 +26,7 @@ cls: edu.cls
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"
 	makeglossaries $*
 	biber $*
+	make -C doc/
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"
 	makeglossaries $*
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"

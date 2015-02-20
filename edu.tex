@@ -35,6 +35,7 @@
 \usepackage{etoolbox}
 \usepackage{eurosym}
 \usepackage{fancyvrb}
+\usepackage{filecontents}
 \usepackage{geometry}
 \usepackage[notcomma, notperiod, notquote, notquery]{hanging}
 %\usepackage{listings}
@@ -70,7 +71,7 @@
 \geometry{left=4cm, top=2.5cm, right=2.5cm, bottom=2.5cm, includefoot}
 
 % Fancyvrb
-\fvset{frame=single}
+\fvset{frame=single, rulecolor=\color{coderule}}
 
 % Font
 \usepackage{sourcesanspro}
@@ -111,10 +112,11 @@
 
 % New colors (not used in skdoc)
 \definecolor{itemize}{RGB}{145,0,0}
-\definecolor{csref}{RGB}{145,0,0}   % used by \cs
-\definecolor{envref}{RGB}{145,0,0}  % used by \env
-\definecolor{optref}{RGB}{145,0,0}  % used by \opt
-\definecolor{pkgref}{RGB}{145,0,0}  % used by \pkg
+\definecolor{csref}{RGB}{145,0,0}     % used by \cs
+\definecolor{envref}{RGB}{145,0,0}    % used by \env
+\definecolor{optref}{RGB}{145,0,0}    % used by \opt
+\definecolor{pkgref}{RGB}{145,0,0}    % used by \pkg
+\definecolor{coderule}{RGB}{145,0,0}  % used by fancyvrb and \pdfinput
 
 
 % Multilanguage support
@@ -162,45 +164,71 @@
   \__edu_use_language:nn {en} {#1}
 }
 
-\DeclareDocumentCommand \codeDE { O{0} v } {
-  \prg_replicate:nn {#1} {\phantom{m}\phantom{m}}
-  \__edu_use_language:nn {de} {#2}
-}
-
-\newsavebox{\codebox}
-
-\DeclareDocumentEnvironment {codeblockDE} { } {
-  \localeDE{%
-    \begin{lrbox}{\codebox}
-      \begin{minipage}[c]{\linewidth}
-      \begin{ttfamily}
-  }
-}{
-  \localeDE{
-      \end{ttfamily}
-      \end{minipage}
-    \end{lrbox}
-    \vspace{0.75\baselineskip}
-    \par\noindent
-    \color{gray}\fbox{\color{black}\usebox{\codebox}}
-    \vspace{0.75\baselineskip}
-  }
-}
-
 \DeclareDocumentCommand \endcode { } {
   \relax
 }
 
-\DeclareDocumentCommand \skipcode { u \endcode } {
+\DeclareDocumentCommand \skipcode { +u \endcode } {
   \relax
 }
 
 \DeclareDocumentCommand \startcode { m } {
   \bool_if:nT {!\str_if_eq_p:nV {#1} {\locale}} {\skipcode}
-%  \skipcode
-%  \tl_if_eq:xnT {\locale} {#1} {\skipcode}
-  
 }
+
+\DeclareDocumentCommand \codeinput { m } {
+  \vspace{0.75\baselineskip}
+	\noindent \begin{minipage}{\linewidth}
+	\VerbatimInput{#1.tex}
+	
+	\vspace{-\baselineskip}
+	\vspace{-4.5pt}
+  \setlength{\fboxsep}{1.5pt}
+  \noindent
+  \colorbox{coderule}{\textcolor{white}{
+    \scriptsize\texttt{\LaTeX}
+  }}
+	\end{minipage}
+}
+
+\DeclareDocumentCommand \pdfinput { m } {
+  \par
+  \IfFileExists{#1.pdf}{
+	  \noindent
+	  \begin{minipage}{\linewidth}
+		  \setlength{\fboxsep}{1.5pt}
+		  \hspace*{0pt}\hfill
+		  \colorbox{coderule}{\textcolor{white}{
+		    \scriptsize\texttt{PDF}}
+		  }
+		  \hspace*{-2\fboxrule}%\hspace*{-0.5em}
+		  
+		  \par
+		  \vspace*{-2.5\fboxrule}
+		  \noindent\fcolorbox{coderule}{white}{
+	  	  \includegraphics[width=\linewidth-2\fboxsep]{#1.pdf}
+		  }
+	  \end{minipage}
+		\vspace{\baselineskip}
+  }{
+    \Warning{Die~Graphik~\texttt{#1.pdf}~ist~nicht~vorhanden.~Erzeuge~die~ Graphiken~der~Dokumentation~durch~\texttt{make~all}.}
+  }
+}
+
+
+
+\DeclareDocumentEnvironment {codefilecontent} { s m } {
+  \VerbatimOut{#2.tex}
+} {
+  \endVerbatimOut
+  \codeinput{#2}
+  
+  \par
+  \IfBooleanF{#1} {
+	  \pdfinput{#2}
+  }
+}
+
 
 % Git support
 \tl_new:N \g_edu_gitrepo
@@ -857,27 +885,53 @@ Nun ist es Zeit, endlich Aufgaben zu erstellen. Um Überschriften für Aufgaben 
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-exe}
 \exe{Erste Aufgabe}
 
 Lorem ipsum dolor sit amet ...
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
+
+%\codeinput{doc/tut-de-exe.tex}
+
+%\startcode{de}
+%\begin{Verbatim}
+%\exe{Erste Aufgabe}
+%
+%Lorem ipsum dolor sit amet ...
+%\end{Verbatim}
+%%  \nopagebreak[4]
+%%  \setlength{\fboxsep}{1.5pt}
+%%  \noindent\rotatebox{0}{\colorbox{section}{\textcolor{white}{\scriptsize\texttt{\TeX}}}}
+%\endcode
+
+  
+%{
+%  \setlength{\fboxsep}{1.5pt}
+%  \hfill\rotatebox{0}{\colorbox{section}{\textcolor{white}{\scriptsize\texttt{PDF}}}}\hspace*{-0.5em}\hspace*{-1.5\fboxrule}
+%  
+%  \vspace*{-2.5\fboxrule}
+%  \noindent\fcolorbox{section}{white}{
+%    \includegraphics[width=\linewidth-2\fboxsep]{doc/tut-de-exe.pdf}
+%  }
+%}
+%\vspace{\baselineskip}
+
 %
 \localeDE{
 Es besteht die Möglichkeit, als zusätzliche Gliederungsebene \emph{Unteraufgaben} zu erstellen. Wie bei \cs*{section} und \cs*{subsection} bezeichnet man das entsprechende Pendant zu \Macro\exe\ mit \Macro\subexe. Auch die Verwendung geschieht analog. Die Nummerierung hingegen geschieht durch eine zweite Ebene (1.1, 1.2, 1.3, \dots). Auch \Macro\subexe verfügt über ein notwendiges Argument zur Angabe eines Titels für die Aufgabe. Soll kein Titel verwendet werden, die Klammern dennoch angegeben werden.
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-subexe}
 \exe{Aufgabe mit Unteraufgaben}
 
-\subsexe{Erste Unteraufgabe}
+\subexe{Erste Unteraufgabe}
 Lorem ipsum dolor sit amet ...
 
-\subsexe{Zweite Unteraufgabe}
+\subexe{Zweite Unteraufgabe}
 Lorem ipsum dolor sit amet ...
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
 %
 \localeDE{
