@@ -38,6 +38,11 @@ cls: edu.cls
 	makeglossaries $*
 	pdflatex -interaction=nonstopmode -halt-on-error $<
 
+previews:
+	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+	make -C doc/
+	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+
 examples: edu-example-*.pdf
 
 edu-example-*.pdf: edu-example-*.tex

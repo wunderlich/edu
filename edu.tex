@@ -191,9 +191,9 @@
 	\end{minipage}
 }
 
-\DeclareDocumentCommand \pdfinput { m } {
+\DeclareDocumentCommand \pdfinput { O{\linewidth-2\fboxsep} m } {
   \par
-  \IfFileExists{#1.pdf}{
+  \IfFileExists{#2.pdf}{
 	  \noindent
 	  \begin{minipage}{\linewidth}
 		  \setlength{\fboxsep}{1.5pt}
@@ -205,29 +205,47 @@
 		  
 		  \par
 		  \vspace*{-2.5\fboxrule}
+		  \setlength{\fboxsep}{5pt}
 		  \noindent\fcolorbox{coderule}{white}{
-	  	  \includegraphics[width=\linewidth-2\fboxsep]{#1.pdf}
+		    \makebox[\linewidth-2\fboxsep][l]{
+  	  	  \includegraphics[width=#1]{#2.pdf}
+  	  	}
 		  }
 	  \end{minipage}
 		\vspace{\baselineskip}
   }{
-    \Warning{Die~Graphik~\texttt{#1.pdf}~ist~nicht~vorhanden.~Erzeuge~die~ Graphiken~der~Dokumentation~durch~\texttt{make~all}.}
+    \Warning{Die~Graphik~\texttt{#2.pdf}~ist~nicht~vorhanden.~Erzeuge~die~ Graphiken~der~Dokumentation~durch~\texttt{make~all}.}
   }
 }
 
 
 
-\DeclareDocumentEnvironment {codefilecontent} { s m } {
-  \VerbatimOut{#2.tex}
+\DeclareDocumentEnvironment {codefilecontent} { s O{\linewidth-2\fboxsep} m } {
+  \IfBooleanTF{#1} {
+    \VerbatimOut{#3-nopreview.tex}
+  }{
+    \VerbatimOut{#3.tex}
+  }
 } {
   \endVerbatimOut
-  \codeinput{#2}
+  
+  \IfBooleanTF{#1} {
+    \codeinput{#3-nopreview}
+  }{
+    \codeinput{#3}
+  }
   
   \par
-  \IfBooleanF{#1} {
-	  \pdfinput{#2}
+  \IfBooleanTF{#1} {
+    \vspace{0.5\baselineskip}
+  }{
+	  \pdfinput[#2]{#3}
   }
 }
+
+% Hack, because xparse doesn't generate starred environments:
+\cs_new:cpn {codefilecontent*} {\codefilecontent*}
+\cs_new_eq:cN {endcodefilecontent*} \endcodefilecontent
 
 
 % Git support
@@ -686,36 +704,77 @@ Der erste Schritt besteht im Laden der Dokumentenklasse. Dies geschieht im einfa
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-documentclass}
 \documentclass{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
-%
+
+
+\localeDE{\subsection{Optionen verwenden}}
+
 \localeDE{
-Viele Einstellungen von \thepackage\ lassen sich direkt beim Laden der Dokumentenklasse konfigurieren. Dies geschieht über sogenannte \emph{Optionen}. So kann man z.\,B. die Standardschriftgröße durch die Option \opt*{fontsize} auf \opt*{12pt} erhöhen:
+Viele Einstellungen von \thepackage\ lassen sich konfigurieren. Da in den Tutorials einige Optionen thematisiert werden, betrachten wir an dieser Stelle einige grundlegende Aspekte.
+
+Dies geschieht über sogenannte \emph{Optionen}. Man unterscheidet verschiedene Typen von Optionen: Einigen Optionen kann ein beliebiger Text (\meta{String}, engl. \emph{string} -- \emph{Zeichenkette}) zugeordnet werden. Andere Optionen erwarten eine Maßeinheit (\meta{Dim}, engl. \emph{dimension} -- \emph{Maßangabe}), z.\,B. in \texttt{cm}, \texttt{mm}, \texttt{pt}, \texttt{ex} oder \texttt{em}. Booleschen Optionen (\meta{Bool}, engl. \emph{boolean} -- \emph{boolesch}) hingegen können die \emph{Wahrheitswerte} \texttt{true} (\emph{wahr}) und \texttt{false} (\emph{falsch}) zugeordnet werden. Boolesche Optionen können alternativ auch ohne Wert angegeben werden, was dem Wert \texttt{true} entspricht. So entspricht z.\,B. die Angabe \texttt{showresults} der Angabe \texttt{showresults=true}. Tabelle \ref{tab:option-types} fasst die Optionstypen zusammen.
+}
+
+\localeDE{
+\begin{table}[h!tb]
+  \centering
+  \caption{Typen von Optionen.}
+  \label{tab:option-types}
+  \medskip
+  \begin{tabular}{lll}\toprule
+    \sffamily Typ & \sffamily Bezeichnung & \sffamily Beispiel \\\midrule
+    Text & \meta{String} & \texttt{autor=Max Mustermann} \\
+    Maßeinheit & \meta{Dim} & \texttt{listarraysep=0.5cm} \\
+    Boolesch & \meta{Bool} & \texttt{twoup=true} oder \texttt{twoup} \\\bottomrule
+  \end{tabular}
+\end{table}
+}
+
+\localeDE{
+Alle Optionen lassen sich direkt beim Laden der Dokumentenklasse konfigurieren. So kann man z.\,B. die Standardschriftgröße durch die Option \opt*{fontsize} auf \opt*{12pt} erhöhen:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-options-example-1}
 \documentclass[fontsize=12pt]{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
-%
-Möchte man mehrere Optionen verwenden, werde diese jeweils durch ein Komma getrennt. Man sollte sie -- zugunsten der Lesbarkeit -- in einzelne Zeilen schreiben:
+
+\localeDE{
+Möchte man mehrere Optionen verwenden, werden diese jeweils durch ein Komma getrennt. Man sollte sie -- zugunsten der Lesbarkeit -- in einzelne Zeilen schreiben:
+}
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-options-example-2}
 \documentclass[
   fontsize=12pt,
   footer=false
 ]{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
+
+\localeDE{
+Viele Optionen können außerdem über die Makros \Macro\edusetup und \Macro\eduoption innerhalb der Präambel (d.\,h. vor Begin von \env*{document}) manipuliert werden. \Macro\edusetup dient dem Ändern mehrerer Optionen, wobei die Wertzuweisungen jeweils durch ein Komma getrennt werden müssen. \Macro\eduoption hingegen ermöglicht nur das Setzen einer Option:
+}
+
+\startcode{de}
+\begin{codefilecontent*}{doc/tut-de-content-options-edusetup-eduoption}
+\edusetup{fontsize=12pt, footer=false}
+
+\eduoption{fontsize}{12pt}
+\end{codefilecontent*}
+\endcode
+
 
 \localeDE{\subsection{Metadaten eingeben}}
 
 \localeDE{
 Um die Ordnung in den Unterlagen von SchülerInnen \emph{und} LehrerInnen zu unterstützten, sollten wir zuerst die wichtigsten Metadaten (d.\,h. in diesem Fall Daten \emph{über} das Arbeitsblatt, nicht der Inhalt des Blattes selbst) auf dem Blatt platzieren. Viele der hierfür verwendeten Makros sind bereits aus den Standard-Dokumentenklassen bekannt. Doch ein Blick auf Tabelle~\ref{tab:metadaten} beinhaltet auch Makros, welche von \thepackage\ neu zur Verfügung gestellt werden.
+
+\Notice{In Beispielen dieser Dokumentation, welche auf Metadaten zurückgreifen, werden die Angaben aus Tabelle~\ref{tab:metadaten} verwendet.}
 }
 
 \localeDE{
@@ -726,20 +785,20 @@ Um die Ordnung in den Unterlagen von SchülerInnen \emph{und} LehrerInnen zu unt
   \medskip
    \begin{tabular}{lll}\toprule
      \sffamily Datum & \sffamily Makro  & \sffamily Beispiel \\\midrule
-     Author & \Macro\author & \Macro\author{Horst} \\ 
+     Author & \Macro\author & \Macro\author{Horst Schlämmer} \\ 
      Klasse & \Macro\class & \Macro\class{Klasse 10} \\ 
      Datum & \Macro\date & \Macro\date{6.3.2013} \\ 
      E-Mail & \Macro\email & \Macro\email{horst@intern.et} \\ 
-     Gebiet & \Macro\field & \Macro\class{Programmierung} \\ 
+     Gebiet & \Macro\field & \Macro\field{Programmierung} \\ 
      Gruppe & \Macro\group & \Macro\group{A} \\ 
      Lizenz & \Macro\license & \Macro\license{Public Domain} \\ 
      Abkürzung & \Macro\short & \Macro\short{AB1} \\ 
      Fach & \Macro\subject & \Macro\subject{Informatik} \\ 
-     Untertitel & \Macro\subtitle & \Macro\subtitle{Mach es mehrmals!} \\ 
+     Untertitel & \Macro\subtitle & \Macro\subtitle{Wir drehen uns im Kreis} \\ 
      Titel & \Macro\title & \Macro\title{Die While-Schleife} \\ 
      Version & \Macro\version & \Macro\version{1.0} \\ \bottomrule
-   \end{tabular}
- \end{table}
+  \end{tabular}
+\end{table}
 }
 
 \localeDE{
@@ -747,16 +806,16 @@ In Abschnitt~\ref{sec:allg:kopfzeile} wurde bereits erörtert, welche Metadaten 
 }
 
 \startcode{de}
-\begin{Verbatim}
-\author{Horst}
+\begin{codefilecontent*}{doc/tut-de-content-metadata}
+\author{Horst Schlaemmer}
 \class{Klasse 10}
 \date{6.3.2013}
 \field{Zuordnungen}
 \subject{Informatik}
 \title{Die While-Schleife}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
-%
+
 \localeDE{
 Diese Auswahl an Metadaten sollte in jedem Dokument angegeben werden. Weitere Metadaten können wahlweise verwendet werden. Die Makros bewirken, dass die angegebenen Daten sinnvoll im Titel bzw. in Kopf- oder Fußzeile des Dokuments gesetzt werden.
 
@@ -764,11 +823,11 @@ In einigen Fällen benötigen die Metadaten z.\,B. in der Fußzeile mehr Platz, 
 }
 
 \startcode{de}
-\begin{Verbatim}
-\author[I. Hubmüller-Weidenfels]{Ingeborg Hubmüller-Weidenfels}
-\end{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-author}
+\author[I. Hubmueller-Weidenfels]{Ingeborg Hubmueller-Weidenfels}
+\end{codefilecontent*}
 \endcode
-%
+
 \localeDE{
 Verwandte Makros und Optionen:
 \vspace{-0.25\baselineskip}
@@ -798,11 +857,11 @@ Nach diesen "`Vorarbeiten"' widmen wir uns nun dem tatsächlichen Inhalt unseres
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-document}
 \begin{document}
-  % Hier wird der Inhalt des Dokuments ergänzt.
+  % Hier wird der Inhalt des Dokuments ergaenzt.
 \end{document}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
 
 \localeDE{
@@ -810,15 +869,15 @@ Zu Beginn der ersten Seite möchte Horst die Kopfzeile\footnote{In Abschnitt~\re
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-makeheader}
 \makeheader
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Horst kompiliert seinen Quelltext und freut sich über das Ergebnis: Die Kopfzeile wurde erstellt und beinhaltet die angegebenen Metadaten! Und auch die Fußzeile\footnote{Durch die Option \opt{footer} kann die Fußzeile deaktiviert werden.} wurde automatisch durch \thepackage\ erstellt.
 }
-%
+
 
 \localeDE{
 Verwandte Makros und Optionen:
@@ -835,15 +894,23 @@ Verwandte Makros und Optionen:
 \localeDE{
 Als Nächstes soll der Titel unseres Dokumentes eingefügt werden. Nachdem wir den Titel bereits mithilfe des Makros \cs{title} eingegeben haben, muss dieser noch erzeugt werden. Dies geschieht durch das Makro \Macro\maketitle.
 
-Die normale Variante \Macro\maketitle erzeugt einen "`ausführlichen"' Titel, der neben Titel und Untertitel noch fast alle weiteren Metadaten des Dokuments beinhaltet. Somit eignet sich \Macro\maketitle tendenziell für umfangreichere Dokumente (Zusammenfassungen u.\,Ä.).
+Die normale Variante \Macro\maketitle erzeugt einen "`ausführlichen"' Titel, der neben Titel und Untertitel noch fast alle weiteren Metadaten des Dokuments beinhaltet. Somit eignet sich \Macro\maketitle tendenziell für umfangreichere Dokumente (Zusammenfassungen u.\,Ä.):
+}
 
+\startcode{de}
+\begin{codefilecontent}{doc/tut-de-content-maketitle-1}
+\maketitle
+\end{codefilecontent}
+\endcode
+
+\localeDE{
 Aus Platzgründen empfiehlt sich bei Arbeitsblättern die Verwendung der Sternvariante \Macro{\maketitle*}. Diese greift lediglich auf Titel (\cs{title}), Untertitel (\cs{subtitle}), Gruppe (\cs{group}) und Abkürzung (\cs{short}) zurück.
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-maketitle-2}
 \maketitle*
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
 
 \localeDE{
@@ -892,7 +959,7 @@ Lorem ipsum dolor sit amet ...
 \end{codefilecontent}
 \endcode
 
-%
+
 \localeDE{
 Es besteht die Möglichkeit, als zusätzliche Gliederungsebene \emph{Unteraufgaben} zu erstellen. Wie bei \cs*{section} und \cs*{subsection} bezeichnet man das entsprechende Pendant zu \Macro\exe\ mit \Macro\subexe. Auch die Verwendung geschieht analog. Die Nummerierung hingegen geschieht durch eine zweite Ebene (1.1, 1.2, 1.3, \dots). Auch \Macro\subexe verfügt über ein notwendiges Argument zur Angabe eines Titels für die Aufgabe. Soll kein Titel verwendet werden, die Klammern dennoch angegeben werden.
 }
@@ -908,7 +975,7 @@ Lorem ipsum dolor sit amet ...
 Lorem ipsum dolor sit amet ...
 \end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Mit jeder Erstellung einer neuen Aufgabe durch \Macro\exe beginnt die Nummerierung von \Macro\subexe von vorne.
 
@@ -916,15 +983,15 @@ Unteraufgaben eignen sich hauptsächlich bei sehr Umfangreichen Aufgaben.  Es be
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexelist-1}
 \begin{multiexelist}
   \item Erste Teilaufgabe
   \item Zweite Teilaufgabe
   \item Dritte Teilaufgabe
 \end{multiexelist}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 %Folgt eine Teilaufgabenliste direkt auf eine (Unter-)Aufgabenüberschrift (d.\,h. auf \Macro\exe oder \Macro\subexe), sollte die Sternvariante \env{multiexelist} verwendet werden, da sie einen zusätzlichen Abstand über der Liste einfügt.
 
@@ -932,68 +999,68 @@ Falls gewünscht, kann über ein optionales Argument ein zusätzlicher Abstand z
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexelist-2}
 \begin{multiexelist}[2ex]
   \item Erste Teilaufgabe
   \item Zweite Teilaufgabe
   \item Dritte Teilaufgabe
 \end{multiexelist}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Bei sehr kurzen Teilaufgaben kann die Liste horizontal innerhalb einer Zeile (engl. \emph{inline}) gesetzt werden. Hierzu steht die Umgebung \env{multiexelisti} zur Verfügung. Hierbei werden die Teilaufgaben in einer zentrierten Zeile positioniert. Sollen sie stattdessen innerhalb des aktuellen Absatzes im Fließtext erscheinen kann die Sternvariante \env{multiexelisti*} verwendet werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexelisti}
 \begin{multiexelisti}
   \item Erste Teilaufgabe
   \item Zweite Teilaufgabe
   \item Dritte Teilaufgabe
 \end{multiexelisti}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Möchte man mehrere sehr kurze Teilaufgaben verfassen -- was häufig bei Mathematikaufgaben der Fall ist -- kann die Umgebung \env{multiexearray} verwendet werden. Sie ordnet die Teilaufgaben wie in einer Tabelle an. Als notwendiges Argument benötigt sie deshalb die Anzahl der Spalten und wird ansonsten wie eine Tabelle verwendet. Hier ein Beispiel für den dreispaltigen Satz von Teilaufgaben:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexearray-1}
 \begin{multiexearray}{3}
   Erste Teilaufgabe   & Zweite Teilaufgabe  & Dritte Teilaufgabe \\
-  Vierte Teilaufgabe  & Fünfte Teilaufgabe
+  Vierte Teilaufgabe  & Fuenfte Teilaufgabe
 \end{multiexearray}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Es wir deutlich, dass die unterste Zeile nicht komplett "`befüllt"' werden muss. Es existiert zusätzlich eine Sternvariante \env{multiexearray*}. Diese versetzt die Zellen der Tabelle automatisch in den Mathematikmodus:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexearray-2}
 \begin{multiexearray*}{4}
   2x = 3,5  & 3x = 4  & 4x = 5  & 5x = 6 \\
   6x = 7    & 7x = 8
 \end{multiexearray*}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Insbesondere beim Satz von Mathematikaufgaben kann es vorkommen, dass sich einzelne Zeilen berühren -- vor allem bei Elementen wie Brüchen oder Integralen, welche viel vertikalen Platz benötigen. Deshalb kann man auch bei \env{multiexearray} und \env{multiexearray*} als optionales Argument einen zusätzlichen Zeilenabstand angeben:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-multiexearray-3}
 \begin{multiexearray*}[2ex]{3}
   \frac{1}{2} x = 3  & \frac{2}{3} x = 4  & \frac{3}{4} x = 5 \\ 
   \frac{4}{5} x = 6  & \frac{5}{6} x = 7  & \frac{6}{7} x = 8
 \end{multiexearray*}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Innerhalb einer (Unter-)Aufgabe können mehrere Umgebungen mit Teilaufgaben verwendet werden. Die Nummerierung beginnt von vorne, sobald eine (Unter-)Aufgabe beginnt. Eine Limitierung ist jedoch zu berücksichtigen: Es können pro (Unter-)Aufgabe maximal 26 Teilaufgaben erstellt werden -- mehr Kleinbuchstaben bietet das deutsche Alphabet nicht (abgesehen von Umlauten und scharfem S).
 
@@ -1003,7 +1070,7 @@ Außerdem besteht auf allen Ebenen die Möglichkeit, (optionale) Zusatzaufgaben 
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-bonus-exercises}
 \exe*{Zusatzaufgabe}
 
 \subexe*{Zusatzaufgabe}
@@ -1018,9 +1085,9 @@ Außerdem besteht auf allen Ebenen die Möglichkeit, (optionale) Zusatzaufgaben 
   Teilaufgabe \bonus  & Zusatzaufgabe  & Teilaufgabe \bonus \\
   Zusatzaufgabe       & Teilaufgabe
 \end{multiexearray}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Aufgaben können zusätzlich durch optionale Argumente Verrechnungspunkte zugewiesen werden, welche in Klassenarbeiten relevant sind. Dies wird im entsprechenden Abschnitt~\ref{sec:tut:vp} über Klassenarbeiten thematisiert.
 }
@@ -1079,17 +1146,17 @@ Das Stellen einer Frage geschieht durch das Makro \Macro\quest\ (engl. \emph{que
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-quest}
 \quest{Eine ganz knifflige Frage ...}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Nachdem die Frage gestellt wurde, muss Raum für die Antwort gegeben werden. Hierzu gibt es verschiedene Möglichkeiten. Eine Gruppe von Möglichkeiten setzt voraus, dass die Antworten in irgendeiner Art und Weise schriftlich frei verfasst werden müssen. Die erste dieser Alternativen besteht darin, lediglich freien Platz auf dem Blatt zur Verfügung zu stellen (z.\,B. für eine Skizze). Dies kann durch das Makro \Macro\questblank\ (engl. \emph{blank} -- \emph{unbeschrieben}) umgesetzt werden, welchem als optionales Argument die Höhe des Freiraumes übergeben werden kann. Standardmäßig werden \SI{3}{cm} frei gelassen. Die nächste Möglichkeit sind vorgedruckte Linien zum Verfassen eines Antworttextes. Das Makro \Macro\questtext nimmt hierzu als notwendiges Argument die Anzahl der Zeilen entgegen. Optional kann der Abstand zwischen den Linien angegeben werden. Die letzte Makro \Macro\questtextblank kombiniert die beiden bisherigen Makros. Es erzeugt Linien, welche sich jedoch nicht über die gesamte Textbreite erstrecken. Es besteht hierdurch z.\,B. die Möglichkeit, eine Beschreibung oder Erklärung einzufordern, welche durch eine Skizze verdeutlicht werden soll. Durch zwei notwendige Argumente müssen die Linienanzahl und die Breite der Linien angegeben werden. Ein optionales Argument lässt den Abstand der Linien bestimmen. Im folgenden ein Beipiel mit allen Antwortmöglichkeiten: 
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-quest-answers}
 \quest{Erste Frage: 2 cm freier Raum zum Antworten}
 
 \questblank[2cm]
@@ -1098,12 +1165,12 @@ Nachdem die Frage gestellt wurde, muss Raum für die Antwort gegeben werden. Hie
 
 \questtext[1cm]{3}
 
-\quest{Dritte Frage: 5 Zeilen mit jeweils 0,75 cm Abstand über halbe Textbreite}
+\quest{Dritte Frage: 5 Zeilen mit jeweils 0,75 cm Abstand ueber halbe Textbreite}
 
 \questtextblank[0.75cm]{5}{0.5\linewidth}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Die zweite Gruppe von Antwortmöglichkeiten betrifft Multiple-Choice-Fragen. Grundsätzlich wird hier -- wie bei Teilaufgaben in Abschnitt~\ref{sec:tut:aufgaben} -- zwischen Aufgabenlisten und Aufgaben, die tabellarisch angeordnet sind, unterschieden. In beiden Fällen besteht wiederum die Möglichkeit, leere Kästchen zum Ankreuzen oder alphabetisch nummerierte Kästchen zu verwenden. Letztere können im Anschluss besser verglichen werden.
 
@@ -1111,59 +1178,59 @@ Als Listen stehen die Umgebungen \env{questmclist} (leere Kästchen) und \env{qu
 }
 
 \startcode{de}
-\begin{Verbatim}
-\quest{Erste Frage: Multiple Choice mit leeren Kästchen}
+\begin{codefilecontent}{doc/tut-de-content-quest-lists}
+\quest{Erste Frage: Multiple Choice mit leeren Kaestchen}
 
 \begin{questmclist}
-  \item Antwortmöglichkeit 1
-  \item Antwortmöglichkeit 2
+  \item Antwortmoeglichkeit 1
+  \item Antwortmoeglichkeit 2
 \end{questmclist}
 
-\quest{Zweite Frage: Multiple Choice mit leeren Kästchen (erhöhter Abstand)}
+\quest{Zweite Frage: Multiple Choice mit leeren Kaestchen (erhoehter Abstand)}
 
 \begin{questmclist}[2ex]
-  \item Antwortmöglichkeit 1
-  \item Antwortmöglichkeit 2
+  \item Antwortmoeglichkeit 1
+  \item Antwortmoeglichkeit 2
 \end{questmclist}
 
-\quest{Dritte Frage: Multiple Choice mit alphabetisch nummerierten Kästchen}
+\quest{Dritte Frage: Multiple Choice mit alphabetisch nummerierten Kaestchen}
 
 \begin{questmclistalph}
-  \item Antwortmöglichkeit 1
-  \item Antwortmöglichkeit 2
+  \item Antwortmoeglichkeit 1
+  \item Antwortmoeglichkeit 2
 \end{questmclistalph}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Die tabellarische Anordnung von Multiple-Choice-Antworten geschieht durch die Umgebungen \env{questmcarray} (leere Kästchen) und \env{questmcarrayalph} (alphabetisch nummeriert). Als notwendiges Argument erwarten beide Umgebungen die Anzahl der Tabellenspalten. Auch hier kann durch ein optionales Argument der Abstand zwischen den Zeilen angegeben werden. Die Sternvarianten der Umgebungen versetzen die Zellen automatisch in den Mathematikmodus.
 }
 
 \startcode{de}
-\begin{Verbatim}
-\quest{Erste Frage: Multiple Choice mit leeren Kästchen in 4 Spalten}
+\begin{codefilecontent}{doc/tut-de-content-quest-arrays}
+\quest{Erste Frage: Multiple Choice mit leeren Kaestchen in 4 Spalten}
 
 \begin{questmcarray}{4}
   Antwort 1  & Antwort 2  & Antwort 3  & Antwort 4 \\ 
   Antwort 5  & Antwort 6
 \end{questmcarray}
 
-\quest{Zweite Frage: Multiple Choice mit alph. nummerierten Kästchen in 3 Spalten}
+\quest{Zweite Frage: Multiple Choice mit alph. nummerierten Kaestchen in 3 Spalten}
 
 \begin{questmcarrayalph}{3}
   Antwort 1  & Antwort 2  & Antwort 3 \\ 
   Antwort 4  & Antwort 5
 \end{questmcarrayalph}
 
-\quest{Dritte Frage: Multiple Choice (Mathemodus & erhöhter Zeilenabstand)}
+\quest{Dritte Frage: Multiple Choice (Mathemodus \& erhoehter Zeilenabstand)}
 
 \begin{questmcarray}[2ex]{4}
   2x = 3  & 3x = 4  & 4x = 5  & 5x = 6 \\
   6x = 7  & 7x = 8  & 8x = 9  & 9x = 10
 \end{questmcarray}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Fragen können zusätzlich durch optionale Argumente Verrechnungspunkte zugewiesen werden, welche in Klassenarbeiten relevant sind. Dies wird im entsprechenden Abschnitt~\ref{sec:tut:vp} über Klassenarbeiten thematisiert.
 }
@@ -1195,22 +1262,23 @@ Die grundlegende Umgebung zur Erstellung von Spalten ist \env{cols}. Standardmä
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-cols-1}
+Text vor den Spalten ...
 \begin{cols}
   Erste Spalte ...
   \colbreak
   Zweite Spalte ...
 \end{cols}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Durch ein optionales Argument kann \env{cols} eine Spaltenanzahl übergeben werden:
 }
 
-
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-cols-2}
+Text vor den Spalten ...
 \begin{cols}[4]
   Erste Spalte ...
   \colbreak
@@ -1220,9 +1288,9 @@ Durch ein optionales Argument kann \env{cols} eine Spaltenanzahl übergeben werd
   \colbreak
   Vierte Spalte ...
 \end{cols}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Wie bei Text meistens gewünscht, werden die beiden Spalten oben aneinander ausgerichtet. Die Sternvariante \env{cols*} (ebenfalls mit optionaler Spaltenanzahl) zentriert den Inhalt der beiden Spalten vertikal.
 }
@@ -1233,9 +1301,8 @@ Beim Arbeiten mit zwei Spalten ist es oft hilfreich, die Breite einer Spalte man
 Hier zwei Beispiele -- eines mit einer \SI{5}{\cm} breiten linken Spalte und eines mit einer linken Spalte, deren Breite \SI{35}{\%} der Zeilenbreite entspricht:
 }
 
-
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-cols2}
 \begin{cols2}[5cm]
   Erste Spalte ...
   \colbreak
@@ -1247,9 +1314,9 @@ Hier zwei Beispiele -- eines mit einer \SI{5}{\cm} breiten linken Spalte und ein
   \colbreak
   Zweite Spalte ...
 \end{cols2}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Auch \env{cols2} verfügt über eine Sternvariante, bei der die Spalten vertikal zentriert werden.
 }
@@ -1288,13 +1355,13 @@ Die Umgebung \env{graphicscol} dient genau dem ursprünglich angesprochenen Zwec
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-graphicscol}
 \begin{graphicscol}[0.7\linewidth]{image-example.jpg}[width=4cm]
   Lorem ipsum dolor sit amet ...
 \end{graphicscol}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Um die Grafik links des Textes zu setzen, kann die Sternvariante \env{graphicscol*} genutzt werden, die ansonsten analog zu \env{graphicscol} verwendet wird.
 
@@ -1321,33 +1388,33 @@ Wie bei Grafikdateien müssen die Grafiken in einem Unterverzeichnis des aktuell
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-tikzinput-1}
 \tikzinput{tikz-example.pgf}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Da sich Grafiken zentriert meistens ansprechender ins Seitenlayout einfügen, existiert die Sternvariante \Macro{\tikzinput*}. Sie zentriert die Grafik zusätzlich mithilfe einer \env{center}-Umgebung:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-tikzinput-2}
 \tikzinput*{tikz-example.pgf}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Überdies besteht die Möglichkeit, Ti\textit{k}z-Grafiken durch die \env{tikzcol}-Umgebung -- analog zu \env*{graphicscol} -- neben Text zu platzieren:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-tikzcol}
 \begin{tikzcol}[0.45\linewidth]{tikz-example.pgf}
   Lorem ipsum dolor sit amet ...
 \end{tikzcol}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Durch das erste, optionale Argument kann die Breite der linken Spalte angegeben werden, die den Text beinhaltet. Es folgt der notwendig anzugebende Dateiname, z.\,B. \texttt{tikz-example.pgf}. Bei der Sternvariante \env{tikzcol*} wird der Text rechts der Grafik gesetzt.
 
@@ -1373,17 +1440,17 @@ Es gibt in \thepackage\ zwei Methoden, um dies zu  bewerkstelligen. Zum einen k�
 }
 
 \startcode{de}
-\begin{Verbatim}
-\sol{Lösung mit Unterlösungen}
+\begin{codefilecontent}{doc/tut-de-content-sol-subsol}
+\sol{Loesung mit Unterloesungen}
 
-\subsol{Erste Unterlösung}
+\subsol{Erste Unterloesung}
 Lorem ipsum dolor sit amet ...
 
-\subsol{Zweite Unterlösung}
+\subsol{Zweite Unterloesung}
 Lorem ipsum dolor sit amet ...
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Die Lösungen zu Teilaufgaben können auch im Zusammenhang von \Macro\sol und \Macro\subsol mithilfe der Umgebungen \env{mutliexelist} bzw. \env{multiexearray} und ihrer Varianten besetzt werden. Mit jedem Aufruf von \Macro\sol oder \Macro\subsol beginnt die Nummerierung der Teilaufgaben von vorne.
 
@@ -1391,7 +1458,7 @@ Die zweite Methode zum Erstellen von Lösungen verfolgt einen anderen Ansatz. Hi
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-res-1}
 \exe{Erste Aufgabe}
 
 Lorem ipsum dolor sit amet ...
@@ -1404,53 +1471,63 @@ Lorem ipsum dolor sit amet ...
 Lorem ipsum dolor sit amet ...
 
 \res{Ergebnis der zweiten Aufgabe}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 \thepackage\ ist so voreingestellt, dass diese Ergebnisse standardmäßig bei der Erzeugung des Arbeitsblattes nicht dargestellt werden. Um dies zu ändern, muss die Option \opt{showresults} verwendet werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-showresults}
 \documentclass[showresults]{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
-%
+
 \localeDE{
 Es besteht die Möglichkeit, \Macro\res durch ein optionales Argument einen Alternativen Inhalt zu übergeben, der ausgegeben wird, wenn die Ergebnisse \emph{nicht} angezeigt werden sollen (d.\,h. im Standardfall bzw. bei \opt*{showresults=false}). Dies kann z.\,B. hilfreich sein, um einen manuellen Seitenumbruch oder einen zusätzlichen Abstand einzufügen, der in der Lösung nicht benötigt wird:
 }
 
 \startcode{de}
-\begin{Verbatim}
-Lorem ipsum dolor sit amet ...
-
-\res[\vspace*{5cm}]{Ergebnis}
+\begin{codefilecontent}{doc/tut-de-content-res-2}
+\eduoption{showresults}{false}
 
 Lorem ipsum dolor sit amet ...
-\end{Verbatim}
+
+\res[\vspace*{2cm}]{Ergebnis}
+
+Lorem ipsum dolor sit amet ...
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Es kann hilfreich sein, auf erwartete Ergebnisse durch eine Linie oder eine Box hinzuweisen. Zu diesem Zweck können die Makros \Macro\resr\ (engl. \emph{rule} -- \emph{Linie}) und \Macro\resb\ (engl. \emph{box} -- \emph{Box}) verwendet werden. Beide verhalten sich grundsätzlich wie \cs{res}, zeigen die Ergebnisse also nur an, wenn \opt{showresults} gesetzt ist. Werden die Ergebnisse nicht angezeigt, erzeugt ersteres jedoch eine vertikale Linie, letztes einen rechteckigen Rahmen.
 
-Die Linie von \Macro\resr ist standardmäßig \SI{2}{cm} lang und befindet sich \SI{4}{pt} unterhalb der Grundlinie der Zeile. Durch zwei optionale Argumente können diese Eigenschaften manipuliert werde. Lautet das Ergebnis z.\,B. "`Sonett"' und soll sich eine \SI{5}{cm} auf der Grundlinie befinden (also um \SI{0}{cm} verschoben sein), kann dies wie folgt realisiert werden:
+Die Linie von \Macro\resr ist standardmäßig \SI{2}{cm} lang und befindet sich \SI{4}{pt} unterhalb der Grundlinie der Zeile. Durch zwei optionale Argumente können diese Eigenschaften manipuliert werden. Im folgenden Beispiel lautet das Ergebnis jeweils "`Sonett"', die Linie ist im zweiten Fall \SI{5}{cm} lang und befindet sich auf der Grundlinie (ist also um \SI{0}{cm} verschoben):
 }
 
 \startcode{de}
-\begin{Verbatim}
-\resr[5cm]{Sonett}[0cm]
-\end{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-resr}
+\eduoption{showresults}{false}
+
+Lorem ipsum dolor sit amet: \resr{Sonett}
+
+Lorem ipsum dolor sit amet: \resr[5cm]{Sonett}[0cm]
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
-Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch und um \SI{5}{pt} unter die Grundlinie verschoben. Auch diese Eigenschaften können durch optionale Argumente -- diesmal entsprechen drei Stück -- angepasst werden. Die Lösung der Folgenden Aufgabe lautet "`Wasserstoff"', die Box ist \SI{4}{cm} breit, \SI{1}{cm} hoch und um \SI{2}{pt} unter die Grundlinie verschoben:
+Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch und um \SI{5}{pt} unter die Grundlinie verschoben. Auch diese Eigenschaften können durch optionale Argumente -- diesmal entsprechen drei Stück -- angepasst werden. Die Lösung der Folgenden Aufgabe lautet "`Wasserstoff"', die Box ist bei der zweiten Verwendung \SI{4}{cm} breit, \SI{1}{cm} hoch und um \SI{2}{pt} unter die Grundlinie verschoben:
 }
 
 \startcode{de}
-\begin{Verbatim}
-\resb[4cm][1cm]{Wasserstoff}[-2pt]
-\end{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-resb}
+\eduoption{showresults}{false}
+
+Lorem ipsum dolor sit amet: \resb{Wasserstoff}
+
+Lorem ipsum dolor sit amet: \resb[4cm][1cm]{Wasserstoff}[-2pt]
+\end{codefilecontent}
 \endcode
 
 \localeDE{
@@ -1490,7 +1567,7 @@ Verwandte Makros und Optionen:
 
 
 \localeDE{\subsection{Pseudo-A5-Druckvorlage und Folien}}
-%
+
 \localeDE{
 
 \Warning{Mechanismus zum A5-Druck wird komplett überarbeitet.}
@@ -1503,48 +1580,48 @@ Möchte man Folien für Overhead-Projektoren erstellen, sollten einige Eigenscha
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-transparency}
 \documentclass[transparency]{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
 
 
 \localeDE{\subsection{Notizen}}
-%
+
 \localeDE{
 Nachdem ein Arbeitsblatt verwendet oder eine Stunde abgehalten wurde, kann der Wunsch bestehen, Notizen auf betroffenen Dokumenten zu hinterlassen. So kann sich z.\,B. herausstellen, dass eine Aufgabe nicht verständlich gestellt war. Sollten resultierende Änderungen bei der Nachbereitung nicht direkt ins Dokument übernommen werden, können Sie als Notizen eingefügt werden. Standardmäßig werden Notizen durch Darstellung in farbiger serifenloser Schrift hervorgehoben und dargestellt. Einfache Textnotizen können durch das Makro \Macro\notet\ (engl. \emph{note} -- \emph{Notiz}) ergänzt werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
-\notet{2. Aufgabe: Aufgabenstellung nicht eindeutlich verständlich.}
-\end{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-notet}
+\notet{2. Aufgabe: Aufgabenstellung nicht eindeutig.}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Hat man in einem Arbeitsblatt Notizen ergänzt, möchte dieses jedoch noch einmal ohne diese Notizen erstellen, kann auf die Option \opt{shownotes} zurückgegriffen werden. Wird die Option nicht verändert, werden Notizen angezeigt. Unterdrückt werden Notizen durch den folgenden Aufruf:
 }
 
 \startcode{de}
-\begin{Verbatim}
-\documentclass[shownotes]{edu}
-\end{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-shownotes}
+\documentclass[shownotes=false]{edu}
+\end{codefilecontent*}
 \endcode
-%
+
 \localeDE{
 Insbesondere im Zusammenhang mit der Unterrichtsplanung (s.\,Abschnitt~\ref{sec:tut:unterrichtsplanung}) kann es hilfreich sein, horizontale Linien als Notizen einzufügen ("`Bis hier hin sind wir gekommen."'). Dies kann durch das Makro \Macro\notehr\ (engl. \emph{horizontal rule} -- \emph{horizontale Linie}) getätigt werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-notehr}
 Lorem ipsum dolor sit amet ...
 
 \notehr
 
 Lorem ipsum dolor sit amet ...
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Verwandte Makros und Optionen:
 \vspace{-0.25\baselineskip}
@@ -1575,11 +1652,11 @@ Zuerst sollen die SchülerInnen ihren Namen auf die Klassenarbeit schreiben. Ein
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-makeexamtitle-1}
 \makeexamtitle
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Das Makro verfügt über drei optionale Argumente. Mit dem ersten optionalen Argument kann der Text neben Mario verändet werden. Mit dem zweiten optionalen Argument kann man eine beliebige Grafikdatei spezifizieren, welche statt Mario eingesetzt wird. Hierbei müssen die Aspekte aus Abschnitt~\ref{sec:tut:grafik} berücksichtigt werden. Mithilfe des dritten und letzten optionalen Arguments kann die Höhe der selbst gewählten Graphik bestimmt werden. Standardmäßig ist diese \SI{2}{cm} hoch.
 
@@ -1589,11 +1666,11 @@ Im folgenden Beispiel wird die Graphik \texttt{image-example.jpg} in \SI{3}{cm} 
 }
 
 \startcode{de}
-\begin{Verbatim}
-\makeexamtitle[Viel Glück!][image-example.jpg][3cm]
-\end{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-makeexamtitle-2}
+\makeexamtitle[Viel Glueck!][image-example.jpg][3cm]
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
   An dieser Stelle sei noch ein Mal auf das Makro \Macro\group verwiesen, mit desen Hilfe man zwei Verseionen der Klassenarbeit unterscheiden und jeweils einer Gruppe (z.\,B. Gruppe A und B) zuweisen kann. Die Bezeichnung der Gruppe wird im Titel neben der Grafik positioniert.
 }
@@ -1626,7 +1703,7 @@ Bei Klassenarbeiten sollten die je Aufgabe erreichbaren VP aufgeführt werden. Z
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-points-1}
 \exe[5]{Erste Aufgabe}
 
 Erste Aufgabe insgesamt 5VP
@@ -1638,17 +1715,17 @@ Erste Unteraufgabe 2 VP
 \subexe[3]{Zweite Unteraufgabe}
 
 Erste Unteraufgabe 3 VP
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Sogar einzelnen Teilaufgaben (\env{multiexelist} oder \env{multiexearray}) können VP zugeteilt werden. Hierfür muss das Makro \Macro\points bedient werden. Normalerweise wird die Punktzahl hierbei direkt hinter den jeweiligen Inhalt der Teilaufgabe gesetzt, in der Sternvariante \Macro{\points*} wird sie hingegen an den rechten Rand der entsprechenden Zeile geschoben:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-points-2}
 \begin{multiexelist}
-  \item Erste Teilaufgabe \point{1}
+  \item Erste Teilaufgabe \points{1}
   \item Zweite Teilaufgabe \points*{2}
 \end{multiexelist}
 
@@ -1656,16 +1733,16 @@ Sogar einzelnen Teilaufgaben (\env{multiexelist} oder \env{multiexearray}) könn
   Erste Teilaufgabe \points{3}  & Zweite Teilaufgabe \points{4} \\
   Dritte Teilaufgabe \points*{5} \\
 \end{multiexearray}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Werden in einer Klassenarbeit die in Abschnitt~\ref{sec:tut:fragen} vorgestellten Fragen verwendet, kann auch diesen jeweils durch ein optionales Argument eine Punktzahl zugeteilt werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
-\exe[5]{Verständnisfragen mit insgesamt 5 VP}
+\begin{codefilecontent}{doc/tut-de-content-points-3}
+\exe[5]{Verstaendnisfragen mit insgesamt 5 VP}
 
 \quest[2]{Erste Frage mit 2 VP}
 
@@ -1674,22 +1751,22 @@ Werden in einer Klassenarbeit die in Abschnitt~\ref{sec:tut:fragen} vorgestellte
 \quest[3]{Zweite Frage mit 3 VP}
 
 \questtext{3}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Durch die Optionen \opt{exepointsachieved} und \opt{subexepointsachieved} kann neben den VP der jeweiligen Aufgabe ein Feld für die erreichten VP eingefügt werden:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent*}{doc/tut-de-content-exepointsachieved}
 \documentclass[
   exepointsachieved,
   subexepointsachieved
 ]{edu}
-\end{Verbatim}
+\end{codefilecontent*}
 \endcode
-%
+
 
 
 \localeDE{
@@ -1735,21 +1812,21 @@ Verwandte Makros und Optionen:
 }
 
 \startcode{de}
-\begin{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-makeexamres}
 \makeexamres{25}
-\end{Verbatim}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 Umfangreicher wird der Ergebnisbereich durch das Makro \Macro\makeexamrestable\ (engl. \emph{table} -- \emph{Tabelle}). Es erzeugt neben den aus \cs*{makeexamres} bekannten Feldern zusätzlich eine Tabelle, in der die je Aufgabe erreichten VP eingetragen werden können. Das Makro besitzt deshalb drei notwendige Argumente: Als erstes müssen die Nummern der Aufgaben (für gewöhnlich 1 bis $n$) angegeben werden. Anschließend die erreichbaren VP der jeweiligen Aufgaben (in gleichen Reihenfolge) und zum Schluss die Summe der insgesamt erreichbaren VP. Durch ein optionales Argument kann der SchülerInnenname ergänzt werden. Dies kann hilfreich sein, wenn die Ergebnisbereiche gesondert gedruckt werden sollen. Im folgenden Beispiel liegen die Aufgaben 1 bis 7 vor, für die 2, 4, 6, \dots, 14\,VP vergeben und somit ingsgesamt 56\,VP erreicht werden können. Der Ergebnisbereich soll für Horst Schlämmer personalisiert werden.
 }
 
 \startcode{de}
-\begin{Verbatim}
-\makeexamrestable[Horst Schlämmer]{1, 2, 3, 4, 5, 6, 7}{2, 4, 6, 8, 10, 12, 14}{56}
-\end{Verbatim}
+\begin{codefilecontent}{doc/tut-de-content-makeexamrestable}
+\makeexamrestable[Horst Schlaemmer]{1, 2, 3, 4, 5, 6, 7}{2, 4, 6, 8, 10, 12, 14}{56}
+\end{codefilecontent}
 \endcode
-%
+
 \localeDE{
 \Notice{Die durch \Macro\makeexamrestable erstellte Tabelle bietet Platz für maximal 10 Aufgaben.}
 }
@@ -8490,6 +8567,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
     }
   }
   
+  \setlength{\parfillskip}{0em}
   \vspace{\g_edu_solbeforeskip_dim}%
   \parskipreduce%
   {\g_edu_sollabelstyle_tl%
@@ -8514,6 +8592,8 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
   \nopagebreak\@afterheading
   \vspace{\g_edu_solafterskip_dim}%
   \parskipreduce%
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
   
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{section}{\thesolutioncounter\g_edu_solnumberseparator_tl~\l__edu_sollabeltext_tl #1}
@@ -8553,6 +8633,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
     }
   }
   
+  \setlength{\parfillskip}{0em}
   \vspace{\g_edu_subsolbeforeskip_dim}%
   \parskipreduce%
   {\g_edu_subsollabelstyle_tl%
@@ -8578,6 +8659,8 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
   \nopagebreak\@afterheading
   \vspace{\g_edu_subsolafterskip_dim}%
   \parskipreduce%
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
   
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{subsection}{\thesolutioncounter.\thesubsolutioncounter\g_edu_subsolnumberseparator_tl~\l__edu_subsollabeltext_tl #1}
