@@ -116,7 +116,8 @@
 \definecolor{envref}{RGB}{145,0,0}    % used by \env
 \definecolor{optref}{RGB}{145,0,0}    % used by \opt
 \definecolor{pkgref}{RGB}{145,0,0}    % used by \pkg
-\definecolor{coderule}{RGB}{145,0,0}  % used by fancyvrb and \pdfinput
+\definecolor{coderule}{RGB}{145,0,0}  % used by fancyvrb
+\definecolor{previewrule}{RGB}{140,140,140}  % used by \pdfinput
 
 
 % Multilanguage support
@@ -198,7 +199,7 @@
 	  \begin{minipage}{\linewidth}
 		  \setlength{\fboxsep}{1.5pt}
 		  \hspace*{0pt}\hfill
-		  \colorbox{coderule}{\textcolor{white}{
+		  \colorbox{previewrule}{\textcolor{white}{
 		    \scriptsize\texttt{PDF}}
 		  }
 		  \hspace*{-2\fboxrule}%\hspace*{-0.5em}
@@ -206,7 +207,7 @@
 		  \par
 		  \vspace*{-2.5\fboxrule}
 		  \setlength{\fboxsep}{5pt}
-		  \noindent\fcolorbox{coderule}{white}{
+		  \noindent\fcolorbox{previewrule}{white}{
 		    \makebox[\linewidth-2\fboxsep][l]{
   	  	  \includegraphics[width=#1]{#2.pdf}
   	  	}
@@ -757,7 +758,7 @@ Möchte man mehrere Optionen verwenden, werden diese jeweils durch ein Komma get
 \endcode
 
 \localeDE{
-Viele Optionen können außerdem über die Makros \Macro\edusetup und \Macro\eduoption innerhalb der Präambel (d.\,h. vor Begin von \env*{document}) manipuliert werden. \Macro\edusetup dient dem Ändern mehrerer Optionen, wobei die Wertzuweisungen jeweils durch ein Komma getrennt werden müssen. \Macro\eduoption hingegen ermöglicht nur das Setzen einer Option:
+Viele Optionen können außerdem über die Makros \Macro\edusetup und \Macro\eduoption innerhalb der Präambel (d.\,h. vor Begin von \env*{document}) manipuliert werden. \Macro\edusetup dient dem Ändern mehrerer Optionen, wobei die Wertzuweisungen jeweils durch ein Komma getrennt werden müssen. \Macro\eduoption hingegen ermöglicht nur das Setzen einer Option. Die folgenden Verwendungen der Makros sind beispielsweise äquivalent:
 }
 
 \startcode{de}
@@ -765,6 +766,7 @@ Viele Optionen können außerdem über die Makros \Macro\edusetup und \Macro\edu
 \edusetup{fontsize=12pt, footer=false}
 
 \eduoption{fontsize}{12pt}
+\eduoption{footer}{false}
 \end{codefilecontent*}
 \endcode
 
