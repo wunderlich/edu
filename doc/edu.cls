@@ -62,40 +62,74 @@
 \tl_new:N \g_edu_ttfont_tl
 
 \keys_define:nn {edu} {
-  rmfont .choice_code:n = {
-    \tl_gset:NV \g_edu_rmfont_tl \l_keys_choice_tl
-  },
-  rmfont .generate_choices:n = {  % option for choosing the roman font
+  rmfont .choices:nn = {
     computermodern,
     libertine,
     palatino
+  }
+  {
+    \tl_gset:NV \g_edu_rmfont_tl \l_keys_choice_tl
   },
   rmfont .initial:n = libertine
 }
 
+%\keys_define:nn {edu} {
+%  rmfont .choice_code:n = {
+%    \tl_gset:NV \g_edu_rmfont_tl \l_keys_choice_tl
+%  },
+%  rmfont .generate_choices:n = {  % option for choosing the roman font
+%    computermodern,
+%    libertine,
+%    palatino
+%  },
+%  rmfont .initial:n = libertine
+%}
+
 \keys_define:nn {edu} {
-  sffont .choice_code:n = {
-    \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
-  },
-  sffont .generate_choices:n = {  % option for choosing the sans serif font
+  sffont .choices:nn = {  % option for choosing the sans serif font
     computermodern,
     sourcesanspro,
     roboto,
     lato
+  }{
+    \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
   },
   sffont .initial:n = sourcesanspro
 }
 
+%\keys_define:nn {edu} {
+%  sffont .choice_code:n = {
+%    \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
+%  },
+%  sffont .generate_choices:n = {  % option for choosing the sans serif font
+%    computermodern,
+%    sourcesanspro,
+%    roboto,
+%    lato
+%  },
+%  sffont .initial:n = sourcesanspro
+%}
+
 \keys_define:nn {edu} {
-  ttfont .choice_code:n = {
-    \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
-  },
-  ttfont .generate_choices:n = {  % option for choosing the typewriter font
+  ttfont .choices:nn = {  % option for choosing the monospace font
     beramono,
     sourcecodepro
+  }{
+    \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
   },
   ttfont .initial:n = sourcecodepro
 }
+
+%\keys_define:nn {edu} {
+%  ttfont .choice_code:n = {
+%    \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
+%  },
+%  ttfont .generate_choices:n = {  % option for choosing the typewriter font
+%    beramono,
+%    sourcecodepro
+%  },
+%  ttfont .initial:n = sourcecodepro
+%}
 
 \ExplSyntaxOn
 \keys_define:nn {edu} {
@@ -794,13 +828,18 @@
 \tl_new:N \g_edu_exampointstabletype_tl
 
 \keys_define:nn {edu} {
-  exampointstabletype .choice_code:n = {
+  exampointstabletype .choices:nn = {
+    X, C
+  }{
     \tl_gset:NV \g_edu_exampointstabletype_tl \l_keys_choice_tl
   },
-  exampointstabletype .generate_choices:n = {
-    X,
-    C
-  },
+%  exampointstabletype .choice_code:n = {
+%    \tl_gset:NV \g_edu_exampointstabletype_tl \l_keys_choice_tl
+%  },
+%  exampointstabletype .generate_choices:n = {
+%    X,
+%    C
+%  },
   exampointstabletype .initial:n = X,
   exampointssecondmark .bool_gset:N = \g_edu_exampointssecondmark_bool,    % Print secondary mark
   exampointssecondmark .initial:n = true,
@@ -954,13 +993,19 @@
 \tl_new:N \g_edu_struktexqtree_tl
 
 \keys_define:nn {edu} {
-  struktexqtree .choice_code:n = {
-    \tl_gset:NV \g_edu_struktexqtree_tl \l_keys_choice_tl
-  },
-  struktexqtree .generate_choices:n = {  % option for choosing package
+  struktexqtree .choices:nn = {
     struktex,
     tikz-qtree
+  }{
+    \tl_gset:NV \g_edu_struktexqtree_tl \l_keys_choice_tl
   },
+%  struktexqtree .choice_code:n = {
+%    \tl_gset:NV \g_edu_struktexqtree_tl \l_keys_choice_tl
+%  },
+%  struktexqtree .generate_choices:n = {  % option for choosing package
+%    struktex,
+%    tikz-qtree
+%  },
   struktexqtree .initial:n = struktex
 }
 
