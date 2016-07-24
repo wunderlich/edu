@@ -1099,7 +1099,7 @@
 \AtEndPreamble{
   \RequirePackage[os=win]{menukeys}
   \renewmenumacro{\menu}[>]{angularmenus}
-  \renewmenumacro{\keys}{angularkeys}
+  \renewmenumacro{\keys}[+]{angularkeys}
 }
 
 \tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
@@ -2848,6 +2848,7 @@
 }
 
 \ExplSyntaxOff  % Important! \usetikzlibrary doesn't work within \ExplSyntax*.
+\usetikzlibrary{angles}
 \usetikzlibrary{calc}
 \usetikzlibrary{fadings}
 \usetikzlibrary{patterns}
@@ -2890,6 +2891,8 @@
   }
   \fp_set:Nn \g_edu_tikzscale_fp {1.0}%
 }
+
+\tikzset{cross/.style={cross out, draw=black, fill=none, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={2pt}}
 
 \DeclareDocumentCommand{\pdfgrid} { s o m O{0.445\linewidth} } {
   \IfBooleanTF {#1} {

@@ -3928,7 +3928,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \AtEndPreamble{
   \RequirePackage[os=win]{menukeys}
   \renewmenumacro{\menu}[>]{angularmenus}
-  \renewmenumacro{\keys}{angularkeys}
+  \renewmenumacro{\keys}[+]{angularkeys}
 }
 
 \tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
@@ -6510,6 +6510,7 @@ Definition der verwendeten Farben:
 Laden zusätzlicher \pkg{tikz}-Bibliotheken:
 \begin{MacroCode}{class}
 \ExplSyntaxOff  % Important! \usetikzlibrary doesn't work within \ExplSyntax*.
+\usetikzlibrary{angles}
 \usetikzlibrary{calc}
 \usetikzlibrary{fadings}
 \usetikzlibrary{patterns}  
@@ -6598,6 +6599,15 @@ Zum Laden von PGF-Dateien mit TikZ-Code aus dem Ordner/Pfad \cs{g_edu_tikzpath} 
 \end{MacroCode}
 \end{macro}
 \end{macro}
+
+
+\begin{option}{cross (TikZ node style)}
+Mithilfe des Node-Styles \opt{cross} kann ein Node in Form eines Kreuzes erstellt werden. Optional kann durch \texttt{cross=<scale>} die Größe skaliert werden. Durch \texttt{rotate=<angle>} kann es rotiert werden.
+\begin{MacroCode}{class}
+\tikzset{cross/.style={cross out, draw=black, fill=none, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={2pt}}
+
+\end{MacroCode}
+\end{option}
 
 
 \subsubsection{PDF-Raster}
