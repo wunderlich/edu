@@ -1,9 +1,9 @@
 TEXMFHOME ?= $(shell kpsewhich -var-value TEXMFHOME)
 TEXMFMAIN ?= $(shell kpsewhich -var-value TEXMFMAIN)
 
-.PHONY: all clean distclean install dist test clean-test # targets which should always be created
+.PHONY: all clean clean-test cls dist distclean examples install test tutorials # targets not associated with file
 
-all: edu.pdf examples clean
+all: edu.pdf examples tutorials clean
 
 clean:
 	rm -f *.gl? *.glsdefs *.id? *.aux
