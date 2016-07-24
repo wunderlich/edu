@@ -21,27 +21,32 @@ cls: edu.cls
 
 %.cls: %.tex
 	pdflatex -interaction=nonstopmode -halt-on-error $<
-
-%.pdf: %.tex %.cls
-	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"
-	makeglossaries $*
-	biber $*
-	make -C doc/
-	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"
-	makeglossaries $*
-	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{$<}"
-	mv $*.pdf $*-de.pdf
-	pdflatex -interaction=nonstopmode -halt-on-error $<
-	makeglossaries $*
-	biber $*
-	pdflatex -interaction=nonstopmode -halt-on-error $<
-	makeglossaries $*
-	pdflatex -interaction=nonstopmode -halt-on-error $<
-
-previews:
+	
+edu.pdf: edu-tut.tex edu.tex
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
 	make -C doc/
+	makeglossaries edu
+	biber edu
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+	makeglossaries edu
+	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+	mv edu.pdf edu-de.pdf
+	pdflatex -interaction=nonstopmode -halt-on-error edu.tex
+	makeglossaries edu
+	biber edu
+	pdflatex -interaction=nonstopmode -halt-on-error edu.tex
+	makeglossaries edu
+	pdflatex -interaction=nonstopmode -halt-on-error edu.tex
+
+edu-tut.tex:
+	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+	make -C doc/
+	# pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+
+previews: edu-tut.tex
+	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
+	make -C doc/
+	# pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
 
 examples: edu-example-*.pdf
 

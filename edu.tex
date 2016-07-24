@@ -1687,6 +1687,7 @@ Durch diese Optionen kann die Farbgestaltung von Listings bestimmt werden: Zeile
 
 \section{Implementation}
 
+
 \subsection{Basic Packages}
 
 Die folgenden Packages werden zur Erstellung und Bearbeitung der Optionen verwendet:
@@ -1699,6 +1700,7 @@ Die folgenden Packages werden zur Erstellung und Bearbeitung der Optionen verwen
 
 \end{MacroCode}
 
+
 \subsection{Messages}
 
 Messages for future use:
@@ -1707,6 +1709,7 @@ Messages for future use:
 \msg_new:nnn {edu} {option-dep-enable} {If\ you\ enable\ the\ option\ #1,\ you\ have\ to\ enable\ the\ following\ option(s):\ #2.}
 
 \end{MacroCode}
+
 
 \subsection{Variants}
 
@@ -1720,6 +1723,18 @@ Messages for future use:
 \cs_generate_variant:Nn \tl_if_eq:nnTF { v }
 
 \end{MacroCode}
+
+
+\subsection{Temporary variables}
+
+\begin{macro*}{\g_edu_temp_dim}
+Variables for temporary usage.
+\begin{MacroCode}{class}
+\dim_new:N \g_edu_temp_dim
+
+\end{MacroCode}
+\end{macro*}
+
 
 
 
@@ -9222,6 +9237,7 @@ The numbers of exercises and the associated maximum points are defined as a comm
 		  \end{minipage}
 	  }
 	}
+  \setlength{\fboxsep}{3pt}
 }
 
 \end{MacroCode}
@@ -9270,6 +9286,7 @@ Typesets a reduced box for entering the results of an exam (acchieved points, ma
 	    \end{minipage}
 	  }
 	}
+  \setlength{\fboxsep}{3pt}	
 }
 
 \end{MacroCode}

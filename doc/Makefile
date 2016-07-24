@@ -10,7 +10,7 @@ all: $(EXAMPLESPDF) clean
 
 %.pdf: ../edu-tut.tex
 	cp ../edu.cls ./
-	pdflatex -interaction=nonstopmode -halt-on-error -jobname=$(basename $<) "\providecommand\docfile{$<}\input{edu-doc-template-content.tex}"
+	pdflatex -interaction=nonstopmode -halt-on-error -jobname=$(basename $@) "\providecommand\docfile{$(basename $@).tex}\input{edu-doc-template-content.tex}"
 
 clean:
 	rm -f *.gl? *.glsdefs *.id? *.aux

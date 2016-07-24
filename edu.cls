@@ -37,6 +37,8 @@
 \cs_generate_variant:Nn \tl_if_eq:nnF { v }
 \cs_generate_variant:Nn \tl_if_eq:nnTF { v }
 
+\dim_new:N \g_edu_temp_dim
+
 \cs_new:Npn \__edu_keys_initial:n #1 {
   \AtBeginDocument{
     \keys_set:nn {edu} {#1}
@@ -4818,6 +4820,7 @@
   \end{minipage}
   }
 }
+  \setlength{\fboxsep}{3pt}
 }
 
 \NewDocumentCommand \makeexamres { s m } {
@@ -4860,6 +4863,7 @@
     \end{minipage}
   }
 }
+  \setlength{\fboxsep}{3pt}
 }
 
 \AtBeginDocument{
