@@ -1044,6 +1044,7 @@
 \RequirePackage{setspace}
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
+\RequirePackage{textcomp}
 \RequirePackage[nobottomtitles*]{titlesec}
 \RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
@@ -5514,10 +5515,12 @@
 }
 
 \lstset{%
-  style=lststyle
+  style=lststyle,
+  upquote=true
 }
 
-% Support for Umlaute
+% Support for Umlaute, dollar-symbol
+% Prevent ligatures
 \lstset{literate=%
     {Ö}{{\"O}}1
     {Ä}{{\"A}}1
@@ -5526,6 +5529,12 @@
     {ü}{{\"u}}1
     {ä}{{\"a}}1
     {ö}{{\"o}}1
+    {ff}{{f{}f}}2
+    {fi}{{f{}i}}2
+    {fl}{{f{}l}}2
+    {ffi}{{f{}f{}i}}3
+    {ffl}{{f{}f{}l}}3
+    {\$}{{\$}}1
 }
 
 \newlength{\templength}

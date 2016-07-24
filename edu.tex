@@ -465,9 +465,6 @@
 \usepackage[scaled=0.8]{beramono}
 
 
-\begin{document}
-
-
 % Change & version info
 \version{0.5}
 \changes{0.5}{%
@@ -476,15 +473,16 @@
 }
 
 % Metadata
-\package[ctan=edu,vcs=https://github.com/wunderlich]{edu}
+\package[ctan=edu,vcs=https://github.com/wunderlich/edu]{edu}
 
 \localeEN{\title{The \textbf{\thepackage} document class}}%
 \localeDE{\title{Die \textbf{\thepackage} Dokumentenklasse}}%
 
-
-
 \author{Daniel Wunderlich}
 \email{code@wu-web.de}
+
+
+\begin{document}
 
 % First page
 \maketitle
@@ -606,6 +604,7 @@ sourcesanspro*\\
 struktex\\
 subfig\\
 tabularx\\
+textcomp\\
 thmtools\\
 tikz\\
 tikzsymbols\\
@@ -5020,6 +5019,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{setspace}
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
+\RequirePackage{textcomp}
 \RequirePackage[nobottomtitles*]{titlesec}
 \RequirePackage[normalem]{ulem}
 \RequirePackage{xspace}
@@ -11542,10 +11542,12 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
 }
 
 \lstset{%
-  style=lststyle
+  style=lststyle,
+  upquote=true
 }
 
-% Support for Umlaute
+% Support for Umlaute, dollar-symbol
+% Prevent ligatures
 \lstset{literate=%
     {Ö}{{\"O}}1
     {Ä}{{\"A}}1
@@ -11554,6 +11556,12 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
     {ü}{{\"u}}1
     {ä}{{\"a}}1
     {ö}{{\"o}}1
+    {ff}{{f{}f}}2
+    {fi}{{f{}i}}2
+    {fl}{{f{}l}}2
+    {ffi}{{f{}f{}i}}3
+    {ffl}{{f{}f{}l}}3
+    {\$}{{\$}}1
 }
 
 \end{MacroCode}
