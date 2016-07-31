@@ -38,11 +38,6 @@ edu.pdf: edu-tut.tex edu.tex
 	makeglossaries edu
 	pdflatex -interaction=nonstopmode -halt-on-error edu.tex
 
-edu-tut.tex:
-	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
-	make -C doc/
-	# pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
-
 previews: edu-tut.tex
 	pdflatex -interaction=nonstopmode -halt-on-error "\providecommand\locale{de}\input{edu.tex}"
 	make -C doc/
