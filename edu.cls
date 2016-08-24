@@ -654,6 +654,14 @@
   resultboxheight .initial:n = 0.65cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
+  resultlabel .bool_gset:N = \g_edu_resultlabel_bool,
+  resultlabel .initial:n = true,
+  resultlabellabel .tl_gset:N = \g_edu_resultlabellabel_tl,
+  resultlabellabel .initial:n = $\star$,
+  resultlabelstyle .tl_gset:N = \g_edu_resultlabelstyle_tl,
+  resultlabelstyle .initial:n = \LARGE,
+  resultlabelfg .tl_gset:N = \g_edu_resultlabelfg_tl,
+  resultlabelfg .initial:n = black,
 }
 
 \keys_define:nn {edu} {
@@ -2039,7 +2047,6 @@
 
 \IfBooleanTF{#1} {
 
-
 \setlength{\parfillskip}{0em}
   \par
   \vspace{0.75ex}
@@ -2052,8 +2059,8 @@
   \hfill%
   \tl_if_empty:NF \g_edu_short_tl {
     \group_begin:
-      \setlength{\fboxsep}{0.25em}
       \g_edu_shortstyle_tl%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{\g_edu_shortbg_tl}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
       }%
@@ -2062,13 +2069,23 @@
   \tl_if_empty:NF \g_edu_group_tl {
     \group_begin:
       \hspace{0.5em}
-      \setlength{\fboxsep}{0.25em}
       \g_edu_groupstyle_tl%
+        \setlength{\fboxsep}{0.25em}
       \colorbox{\g_edu_groupbg_tl}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_group_tl}%
       }%
     \group_end:
   }
+  \bool_if:nT {
+      \bool_if_p:N \g_edu_showresults_bool &&
+      \bool_if_p:N \g_edu_resultlabel_bool
+    }{
+      \group_begin:
+        \hspace{0.4em}
+        \g_edu_resultlabelstyle_tl%
+        \textcolor{\g_edu_resultlabelfg_tl}{\g_edu_resultlabellabel_tl}%
+      \group_end:
+    }
   \mbox{}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
@@ -2367,28 +2384,39 @@
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
-      ]\hspace{1em}
+      ]
+      \normalsize\quad
     }
   }
 
   \tl_put_right:Nn \l__edu_footertextr_tl {
-    \setlength{\fboxsep}{0.25em}
 
     \tl_if_empty:NF \g_edu_short_tl {
       \g_edu_shortstyle_tl\small%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }
 
     \tl_if_empty:NF \g_edu_group_tl {
-      \hspace{0.5em}
+      \hspace{0.25em}
       \g_edu_groupstyle_tl\small%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
       }%
     }
-    \quad
+
+    \bool_if:nT {
+      \bool_if_p:N \g_edu_showresults_bool &&
+      \bool_if_p:N \g_edu_resultlabel_bool
+    }{
+      \hspace{0.4em}
+      \Large%
+      \textcolor{black}{\g_edu_resultlabellabel_tl}%
+    }
+    \normalsize\quad
   }
 
   \bool_if:NT \g_edu_pagecount_bool {
