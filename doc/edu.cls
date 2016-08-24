@@ -243,6 +243,14 @@
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
   versionstyle .initial:n = \small\sffamily,
+  timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
+  timestamptime .initial:n = true,
+  timestamptimeseparator .tl_gset:N = \g_edu_timestamptimeseparator_tl,
+  timestamptimeseparator .initial:n = -,
+  timestampdateseparator .tl_gset:N = \g_edu_timestampdateseparator_tl,
+  timestampdateseparator .initial:n = -,
+  timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
+  timestampdatetimeseparator .initial:n = -,
 }
 
 \keys_define:nn {edu} {
@@ -633,7 +641,7 @@
   showresults .bool_gset:N = \g_edu_showresults_bool,
   showresults .initial:n = false,
   resultfg .tl_gset:N = \g_edu_resultfg_tl,
-  resultfg .initial:n = gray,
+  resultfg .initial:n = wuRed,
   resultrule .dim_gset:N = \g_edu_resultrule_dim,
   resultrule .initial:n = 0.4pt,
   resultrulelength .dim_gset:N = \g_edu_resultrulelength_dim,
@@ -1099,7 +1107,7 @@
 \AtEndPreamble{
   \RequirePackage[os=win]{menukeys}
   \renewmenumacro{\menu}[>]{angularmenus}
-  \renewmenumacro{\keys}{angularkeys}
+  \renewmenumacro{\keys}[+]{angularkeys}
 }
 
 \tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
@@ -1462,17 +1470,25 @@
 }
 
 \newdateformat{timestampdateformat}{
-  \THEYEAR\twodigit{\THEMONTH}\twodigit{\THEDAY}
+  \twodigit{\THEYEAR}
+  \g_edu_timestampdateseparator_tl\twodigit{\THEMONTH}
+  \g_edu_timestampdateseparator_tl\twodigit{\THEDAY}
 }
 
 \newtimeformat{timestamptimeformat}{
-  \twodigit{\THEHOUR}\twodigit{\THEMINUTE}\twodigit{\THESECOND}
+  \twodigit{\THEHOUR}
+  \g_edu_timestamptimeseparator_tl\twodigit{\THEMINUTE}
+  \g_edu_timestamptimeseparator_tl\twodigit{\THESECOND}
 }
 
 \DeclareDocumentCommand \timestamp {  } {
   \timestampdateformat
   \settimeformat{timestamptimeformat}
-  \today\currenttime
+  \today
+  \bool_if:NTF \g_edu_timestamptime_bool {
+    \g_edu_timestampdatetimeseparator_tl
+    \currenttime
+  }
   \ddmmyydate
 }
 
@@ -2309,17 +2325,24 @@
     }
   }
 
+  \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
+  \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
+
+
+  \tl_new:N \l__edu_footertextr_tl
+
   \bool_if:nT {
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      \quad(
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      \scriptsize
+      [
     }
   }
 
   \tl_if_empty:NF \g_edu_versionshort_tl {
-    \tl_put_right:Nn \l__edu_footertextl_tl {
+    \tl_put_right:Nn \l__edu_footertextr_tl {
       \g_edu_versionshort_tl
     }
   }
@@ -2328,13 +2351,13 @@
     !\tl_if_empty_p:N \g_edu_versionshort_tl &&
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
+    \tl_put_right:Nn \l__edu_footertextr_tl {
       ,~
     }
   }
 
   \bool_if:NT \g_edu_timestampfooter_bool {
-    \tl_put_right:Nn \l__edu_footertextl_tl {
+    \tl_put_right:Nn \l__edu_footertextr_tl {
       \timestamp
     }
   }
@@ -2343,16 +2366,11 @@
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      )
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      ]\hspace{1em}
     }
   }
 
-  \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
-  \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
-
-
-  \tl_new:N \l__edu_footertextr_tl
   \tl_put_right:Nn \l__edu_footertextr_tl {
     \setlength{\fboxsep}{0.25em}
 
@@ -2848,6 +2866,7 @@
 }
 
 \ExplSyntaxOff  % Important! \usetikzlibrary doesn't work within \ExplSyntax*.
+\usetikzlibrary{angles}
 \usetikzlibrary{calc}
 \usetikzlibrary{fadings}
 \usetikzlibrary{patterns}
@@ -2890,6 +2909,8 @@
   }
   \fp_set:Nn \g_edu_tikzscale_fp {1.0}%
 }
+
+\tikzset{cross/.style={cross out, draw=black, fill=none, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt}, cross/.default={2pt}}
 
 \DeclareDocumentCommand{\pdfgrid} { s o m O{0.445\linewidth} } {
   \IfBooleanTF {#1} {

@@ -2080,6 +2080,10 @@ These options affect to lists and arrays:
 \begin{option}{timestampstyle}
 \begin{option}{titlestyle}
 \begin{option}{versionstyle}
+\begin{option}{timestamptime}
+\begin{option}{timestamptimeseparator}
+\begin{option}{timestampdateseparator}
+\begin{option}{timestampdatetimeseparator}
 Styles of metadata:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
@@ -2109,9 +2113,21 @@ Styles of metadata:
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
   versionstyle .initial:n = \small\sffamily,
+  timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
+  timestamptime .initial:n = true,
+  timestamptimeseparator .tl_gset:N = \g_edu_timestamptimeseparator_tl,
+  timestamptimeseparator .initial:n = -,
+  timestampdateseparator .tl_gset:N = \g_edu_timestampdateseparator_tl,
+  timestampdateseparator .initial:n = -,
+  timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
+  timestampdatetimeseparator .initial:n = -,
 }
 
 \end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -2981,7 +2997,7 @@ Options for typesetting results:
   showresults .bool_gset:N = \g_edu_showresults_bool,
   showresults .initial:n = false,
   resultfg .tl_gset:N = \g_edu_resultfg_tl,
-  resultfg .initial:n = gray,
+  resultfg .initial:n = wuRed,
   resultrule .dim_gset:N = \g_edu_resultrule_dim,
   resultrule .initial:n = 0.4pt,
   resultrulelength .dim_gset:N = \g_edu_resultrulelength_dim,
@@ -4491,11 +4507,15 @@ Defining the default date format D(D).M(M).YYYY.
 Defining a date and time format for typesetting a timestamp.
 \begin{MacroCode}{class}
 \newdateformat{timestampdateformat}{
-  \THEYEAR\twodigit{\THEMONTH}\twodigit{\THEDAY}
+  \twodigit{\THEYEAR}
+  \g_edu_timestampdateseparator_tl\twodigit{\THEMONTH}
+  \g_edu_timestampdateseparator_tl\twodigit{\THEDAY}
 }
 
 \newtimeformat{timestamptimeformat}{
-  \twodigit{\THEHOUR}\twodigit{\THEMINUTE}\twodigit{\THESECOND}
+  \twodigit{\THEHOUR}
+  \g_edu_timestamptimeseparator_tl\twodigit{\THEMINUTE}
+  \g_edu_timestamptimeseparator_tl\twodigit{\THESECOND}
 }
 
 \end{MacroCode}
@@ -4503,12 +4523,16 @@ Defining a date and time format for typesetting a timestamp.
 \end{macro*}
 
 \begin{macro*}{\timestamp}
-This command typesets a timestamp in the format YYYYMMDDHHMMSS.
+This command typesets a timestamp. The default format is YYYY-MM-DD-HH-MM-SS.
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \timestamp {  } {
   \timestampdateformat
   \settimeformat{timestamptimeformat}
-  \today\currenttime
+  \today
+  \bool_if:NTF \g_edu_timestamptime_bool {
+    \g_edu_timestampdatetimeseparator_tl
+    \currenttime
+  }
   \ddmmyydate
 }
 
@@ -5647,45 +5671,6 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
     }
   }
   
-  \bool_if:nT {
-    !\tl_if_empty_p:N \g_edu_versionshort_tl || 
-    \bool_if_p:N \g_edu_timestampfooter_bool
-  }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      \quad(
-    }
-  }
-  
-  \tl_if_empty:NF \g_edu_versionshort_tl {
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      \g_edu_versionshort_tl
-    }
-  }
-  
-  \bool_if:nT {
-    !\tl_if_empty_p:N \g_edu_versionshort_tl && 
-    \bool_if_p:N \g_edu_timestampfooter_bool
-  }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      ,~
-    }
-  }
-  
-  \bool_if:NT \g_edu_timestampfooter_bool {
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      \timestamp
-    }
-  }
-  
-  \bool_if:nT {
-    !\tl_if_empty_p:N \g_edu_versionshort_tl || 
-    \bool_if_p:N \g_edu_timestampfooter_bool
-  }{
-    \tl_put_right:Nn \l__edu_footertextl_tl {
-      )
-    }
-  }
-  
   \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
   \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
 
@@ -5697,6 +5682,47 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
 \begin{MacroCode}{class}
   
   \tl_new:N \l__edu_footertextr_tl
+  
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl ||
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      \scriptsize
+      [
+    }
+  }
+
+  \tl_if_empty:NF \g_edu_versionshort_tl {
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      \g_edu_versionshort_tl
+    }
+  }
+
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl &&
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      ,~
+    }
+  }
+
+  \bool_if:NT \g_edu_timestampfooter_bool {
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      \timestamp
+    }
+  }
+
+  \bool_if:nT {
+    !\tl_if_empty_p:N \g_edu_versionshort_tl ||
+    \bool_if_p:N \g_edu_timestampfooter_bool
+  }{
+    \tl_put_right:Nn \l__edu_footertextr_tl {
+      ]\hspace{1em}
+    }
+  }
+  
   \tl_put_right:Nn \l__edu_footertextr_tl {
     \setlength{\fboxsep}{0.25em}
     
