@@ -950,6 +950,10 @@
   thmdefinitionlabel .initial:n = Definition,
   thmdefitheolabel .tl_gset:N = \g_edu_thmdefitheolabel_tl,
   thmdefitheolabel .initial:n = Definition/Satz,
+  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
+  thmtheoremlabel .initial:n = Satz,
+  thmcalcrulelabel .tl_gset:N = \g_edu_thmcalcrulelabel_tl,
+  thmcalcrulelabel .initial:n = Regel,
   thmexamplelabel .tl_gset:N = \g_edu_thmexamplelabel_tl,
   thmexamplelabel .initial:n = Beispiel,
   thmexampleexelabel .tl_gset:N = \g_edu_thmexampleexelabel_tl,
@@ -960,8 +964,6 @@
   thmremarklabel .initial:n = Bemerkung,
   thmsolutionlabel .tl_gset:N = \g_edu_thmsolutionlabel_tl,
   thmsolutionlabel .initial:n = L\"osung,
-  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
-  thmtheoremlabel .initial:n = Satz,
 }
 
 \keys_define:nn {edu} {
@@ -5000,9 +5002,10 @@
 
 \seq_new:N \g__edu_thmimp_seq
 
-\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
 \seq_gput_right:Nn \g__edu_thmimp_seq {definition}
 \seq_gput_right:Nn \g__edu_thmimp_seq {defitheo}
+\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
+\seq_gput_right:Nn \g__edu_thmimp_seq {calcrule}
 
 \seq_new:N \g__edu_thmunimp_seq
 

@@ -1659,12 +1659,13 @@ Durch diese Optionen kann die Formatierung unwichtiger Theoreme bestimmt werden:
 \localeDE{
 \Option{thmdefinitionlabel}\WithValues{\meta{Name}}\AndDefault{Definition}
 \Option{thmdefitheolabel}\WithValues{\meta{Name}}\AndDefault{Definition/Satz}
+\Option{thmtheoremlabel}\WithValues{\meta{Name}}\AndDefault{Satz}
+\Option{thmcalcrulelabel}\WithValues{\meta{Name}}\AndDefault{Regel}
 \Option{thmexamplelabel}\WithValues{\meta{Name}}\AndDefault{Beispiel}
 \Option{thmexampleexelabel}\WithValues{\meta{Name}}\AndDefault{Beispielaufgabe}
 \Option{thmhintlabel}\WithValues{\meta{Name}}\AndDefault{Hinweis}
 \Option{thmremarklabel}\WithValues{\meta{Name}}\AndDefault{Bemerkung}
 \Option{thmsolutionlabel}\WithValues{\meta{Name}}\AndDefault{L\"osung}
-\Option{thmtheoremlabel}\WithValues{\meta{Name}}\AndDefault{Satz}
 Durch diese Optionen können die Beschriftungen der vordefinierten Theoreme angegeben werden.
 }
 
@@ -3656,12 +3657,13 @@ Style of unimportant theorems:
 
 \begin{option}{thmdefinitionlabel}
 \begin{option}{thmdefitheolabel}
+\begin{option}{thmtheoremlabel}
+\begin{option}{thmcalcrulelabel}
 \begin{option}{thmexamplelabel}
 \begin{option}{thmexampleexelabel}
 \begin{option}{thmhintlabel}
 \begin{option}{thmremarklabel}
 \begin{option}{thmsolutionlabel}
-\begin{option}{thmtheoremlabel}
 Labels of theorems:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
@@ -3669,6 +3671,10 @@ Labels of theorems:
   thmdefinitionlabel .initial:n = Definition,
   thmdefitheolabel .tl_gset:N = \g_edu_thmdefitheolabel_tl,
   thmdefitheolabel .initial:n = Definition/Satz,
+  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
+  thmtheoremlabel .initial:n = Satz,
+  thmcalcrulelabel .tl_gset:N = \g_edu_thmcalcrulelabel_tl,
+  thmcalcrulelabel .initial:n = Regel,
   thmexamplelabel .tl_gset:N = \g_edu_thmexamplelabel_tl,
   thmexamplelabel .initial:n = Beispiel,
   thmexampleexelabel .tl_gset:N = \g_edu_thmexampleexelabel_tl,
@@ -3679,11 +3685,10 @@ Labels of theorems:
   thmremarklabel .initial:n = Bemerkung,
   thmsolutionlabel .tl_gset:N = \g_edu_thmsolutionlabel_tl,
   thmsolutionlabel .initial:n = L\"osung,
-  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
-  thmtheoremlabel .initial:n = Satz,
 }
 
 \end{MacroCode}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -3698,7 +3703,7 @@ Labels of theorems:
 \begin{option}{linepsupport}
 \begin{option}{linepdir}
 \begin{option}{lineppar}
-Labels of theorems:
+TODO
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   linepname .tl_gset:N = \g_edu_linepname_tl,    % Line in parametrical form with vector variable: Name
@@ -3724,7 +3729,7 @@ Labels of theorems:
 \begin{option}{planepdirii}
 \begin{option}{planeppari}
 \begin{option}{planepparii}
-Labels of theorems:
+TODO
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   planepname .tl_gset:N = \g_edu_planepname_tl,    % Plane in parametrical form with vector variable: Name
@@ -3753,7 +3758,7 @@ Labels of theorems:
 \begin{option}{planenvarname}
 \begin{option}{planenvarsupport}
 \begin{option}{planenvarnormal}
-Labels of theorems:
+TODO
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   planenvarname .tl_gset:N = \g_edu_planenvarname_tl,    % Plane in normal form with vector variable: Name
@@ -9524,9 +9529,10 @@ Zuerst werden benötigte Längen definiert. After that, sequences with the diffe
 
 \seq_new:N \g__edu_thmimp_seq
 
-\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
 \seq_gput_right:Nn \g__edu_thmimp_seq {definition}
 \seq_gput_right:Nn \g__edu_thmimp_seq {defitheo}
+\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
+\seq_gput_right:Nn \g__edu_thmimp_seq {calcrule}
 
 \seq_new:N \g__edu_thmunimp_seq
 
@@ -9542,7 +9548,7 @@ Zuerst werden benötigte Längen definiert. After that, sequences with the diffe
 \end{macro}
 \end{macro}
 
-Nun werden die Theoremstyles definiert. For this purpose, two control sequences \cs{__edu_theoremstyleimp:n} and \cs{__edu_theoremstyleimp:n} are defined, which take an argument for numbered theorems (\texttt{yes} or \texttt{no}).
+Now, the theorem styles are defined. For this purpose, two control sequences \cs{__edu_theoremstyleimp:n} and \cs{__edu_theoremstyleimp:n} are defined, which take an argument for numbered theorems (\texttt{yes} or \texttt{no}).
 
 Depending on the options \opt{theoremstyleimp} and \opt{theoremstyleunimp} the theoremstyles are declared.
 
@@ -9590,14 +9596,15 @@ Depending on the options \opt{theoremstyleimp} and \opt{theoremstyleunimp} the t
 \end{macro}
 
 
+\begin{environment}{definition}[1]{[<definition name>]}
+\begin{environment}{defitheo}[1]{[<definition/theorem name>]}
 \begin{environment}{theorem}[1]{[<theorem name>]}
-\begin{environment}{definition}[1]{[<theorem name>]}
-\begin{environment}{defitheo}[1]{[<theorem name>]}
-\begin{environment}{example}[1]{[<theorem name>]}
-\begin{environment}{exampleexe}[1]{[<theorem name>]}
-\begin{environment}{hint}[1]{[<theorem name>]}
-\begin{environment}{remark}[1]{[<theorem name>]}
-\begin{environment}{solution}[1]{[<theorem name>]}
+\begin{environment}{calcrule}[1]{[<calculation rule name>]}
+\begin{environment}{example}[1]{[<example name>]}
+\begin{environment}{exampleexe}[1]{[<example exercise name>]}
+\begin{environment}{hint}[1]{[<hint name>]}
+\begin{environment}{remark}[1]{[<remark name>]}
+\begin{environment}{solution}[1]{[<solution name>]}
 Dann werden die Theoremumgebungen definiert. Zuerst die Standard-Umgebungen vom \pkg{amsthm}:
 
 \begin{MacroCode}{class}
@@ -9612,6 +9619,7 @@ Dann werden die Theoremumgebungen definiert. Zuerst die Standard-Umgebungen vom 
 }
 
 \end{MacroCode}
+\end{environment}
 \end{environment}
 \end{environment}
 \end{environment}
@@ -9708,14 +9716,15 @@ After that, the control sequences are called for all names within \cs{__edu_thmi
 
 
 
+\begin{environment}{definitionfthm}[1]{[<definition name>]}
+\begin{environment}{defitheofthm}[1]{[<definition/theorem name>]}
 \begin{environment}{theoremfthm}[1]{[<theorem name>]}
-\begin{environment}{definitionfthm}[1]{[<theorem name>]}
-\begin{environment}{defitheofthm}[1]{[<theorem name>]}
-\begin{environment}{examplefthm}[1]{[<theorem name>]}
-\begin{environment}{exampleexefthm}[1]{[<theorem name>]}
-\begin{environment}{hintfthm}[1]{[<theorem name>]}
-\begin{environment}{remarkfthm}[1]{[<theorem name>]}
-\begin{environment}{solutionfthm}[1]{[<theorem name>]}
+\begin{environment}{calcrulefthm}[1]{[<calculation rule name>]}
+\begin{environment}{examplefthm}[1]{[<example name>]}
+\begin{environment}{exampleexefthm}[1]{[<example exercise name>]}
+\begin{environment}{hintfthm}[1]{[<hint name>]}
+\begin{environment}{remarkfthm}[1]{[<remark name>]}
+\begin{environment}{solutionfthm}[1]{[<solution name>]}
 Now, the user commands are declared separately, to manipulate the spacing arount the theorems.
 \begin{MacroCode}{class}
 
@@ -9764,32 +9773,36 @@ Now, the user commands are declared separately, to manipulate the spacing arount
 \end{environment}
 \end{environment}
 \end{environment}
+\end{environment}
 
 
+\begin{environment}{definitionbs}[1]{[<definition name>]}
+\begin{environment}{definitionbm}[1]{[<definition name>]}
+\begin{environment}{definitionbl}[1]{[<definition name>]}
+\begin{environment}{defitheobs}[1]{[<definition/theorem name>]}
+\begin{environment}{defitheobm}[1]{[<definition/theorem name>]}
+\begin{environment}{defitheobl}[1]{[<definition/theorem name>]}
 \begin{environment}{theorembs}[1]{[<theorem name>]}
 \begin{environment}{theorembm}[1]{[<theorem name>]}
 \begin{environment}{theorembl}[1]{[<theorem name>]}
-\begin{environment}{definitionbs}[1]{[<theorem name>]}
-\begin{environment}{definitionbm}[1]{[<theorem name>]}
-\begin{environment}{definitionbl}[1]{[<theorem name>]}
-\begin{environment}{defitheobs}[1]{[<theorem name>]}
-\begin{environment}{defitheobm}[1]{[<theorem name>]}
-\begin{environment}{defitheobl}[1]{[<theorem name>]}
-\begin{environment}{examplebs}[1]{[<theorem name>]}
-\begin{environment}{examplebm}[1]{[<theorem name>]}
-\begin{environment}{examplebl}[1]{[<theorem name>]}
-\begin{environment}{exampleexebs}[1]{[<theorem name>]}
-\begin{environment}{exampleexebm}[1]{[<theorem name>]}
-\begin{environment}{exampleexebl}[1]{[<theorem name>]}
-\begin{environment}{hintbs}[1]{[<theorem name>]}
-\begin{environment}{hintbm}[1]{[<theorem name>]}
-\begin{environment}{hintbl}[1]{[<theorem name>]}
-\begin{environment}{remarkbs}[1]{[<theorem name>]}
-\begin{environment}{remarkbm}[1]{[<theorem name>]}
-\begin{environment}{remarkbl}[1]{[<theorem name>]}
-\begin{environment}{solutionbs}[1]{[<theorem name>]}
-\begin{environment}{solutionbm}[1]{[<theorem name>]}
-\begin{environment}{solutionbl}[1]{[<theorem name>]}
+\begin{environment}{calcrulebs}[1]{[<calculation rule name>]}
+\begin{environment}{calcrulebm}[1]{[<calculation rule name>]}
+\begin{environment}{calcrulebl}[1]{[<calculation rule name>]}
+\begin{environment}{examplebs}[1]{[<example name>]}
+\begin{environment}{examplebm}[1]{[<example name>]}
+\begin{environment}{examplebl}[1]{[<example name>]}
+\begin{environment}{exampleexebs}[1]{[<example exercise name>]}
+\begin{environment}{exampleexebm}[1]{[<example exercise name>]}
+\begin{environment}{exampleexebl}[1]{[<example exercise name>]}
+\begin{environment}{hintbs}[1]{[<hint name>]}
+\begin{environment}{hintbm}[1]{[<hint name>]}
+\begin{environment}{hintbl}[1]{[<hint name>]}
+\begin{environment}{remarkbs}[1]{[<remark name>]}
+\begin{environment}{remarkbm}[1]{[<remark name>]}
+\begin{environment}{remarkbl}[1]{[<remark name>]}
+\begin{environment}{solutionbs}[1]{[<solution name>]}
+\begin{environment}{solutionbm}[1]{[<solution name>]}
+\begin{environment}{solutionbl}[1]{[<solution name>]}
 Es folgen die Theoremugebungen durch \pkg{thmbox} in allen Varianten. Seltsamerweise muss der Wert von \cs{thmbox@leftmargin} neu gesetzt werden, ansonsten kommt es zu Komplikationen bei \texttt{parskip=true}:
 \begin{MacroCode}{class}
 \bool_if:NT \g_edu_thmbox_bool {
@@ -9857,6 +9870,9 @@ Es folgen die Theoremugebungen durch \pkg{thmbox} in allen Varianten. Seltsamerw
 }%
 
 \end{MacroCode}
+\end{environment}
+\end{environment}
+\end{environment}
 \end{environment}
 \end{environment}
 \end{environment}

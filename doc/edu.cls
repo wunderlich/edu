@@ -1,7 +1,7 @@
 %% This is file `edu.cls', generated from `edu.tex' (key `class').
 %% edu Documentclass for typesetting educational documents
 %%
-%% Copyright (C) 2013 by Daniel Wunderlich <code@wu-web.de>
+%% Copyright (C) 2012-2016 by Daniel Wunderlich <code@wu-web.de>
 %%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -654,6 +654,14 @@
   resultboxheight .initial:n = 0.65cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
+  resultlabel .bool_gset:N = \g_edu_resultlabel_bool,
+  resultlabel .initial:n = true,
+  resultlabellabel .tl_gset:N = \g_edu_resultlabellabel_tl,
+  resultlabellabel .initial:n = $\star$,
+  resultlabelstyle .tl_gset:N = \g_edu_resultlabelstyle_tl,
+  resultlabelstyle .initial:n = \LARGE,
+  resultlabelfg .tl_gset:N = \g_edu_resultlabelfg_tl,
+  resultlabelfg .initial:n = black,
 }
 
 \keys_define:nn {edu} {
@@ -942,6 +950,10 @@
   thmdefinitionlabel .initial:n = Definition,
   thmdefitheolabel .tl_gset:N = \g_edu_thmdefitheolabel_tl,
   thmdefitheolabel .initial:n = Definition/Satz,
+  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
+  thmtheoremlabel .initial:n = Satz,
+  thmcalcrulelabel .tl_gset:N = \g_edu_thmcalcrulelabel_tl,
+  thmcalcrulelabel .initial:n = Regel,
   thmexamplelabel .tl_gset:N = \g_edu_thmexamplelabel_tl,
   thmexamplelabel .initial:n = Beispiel,
   thmexampleexelabel .tl_gset:N = \g_edu_thmexampleexelabel_tl,
@@ -952,8 +964,6 @@
   thmremarklabel .initial:n = Bemerkung,
   thmsolutionlabel .tl_gset:N = \g_edu_thmsolutionlabel_tl,
   thmsolutionlabel .initial:n = L\"osung,
-  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
-  thmtheoremlabel .initial:n = Satz,
 }
 
 \keys_define:nn {edu} {
@@ -2039,7 +2049,6 @@
 
 \IfBooleanTF{#1} {
 
-
 \setlength{\parfillskip}{0em}
   \par
   \vspace{0.75ex}
@@ -2052,8 +2061,8 @@
   \hfill%
   \tl_if_empty:NF \g_edu_short_tl {
     \group_begin:
-      \setlength{\fboxsep}{0.25em}
       \g_edu_shortstyle_tl%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{\g_edu_shortbg_tl}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
       }%
@@ -2062,13 +2071,23 @@
   \tl_if_empty:NF \g_edu_group_tl {
     \group_begin:
       \hspace{0.5em}
-      \setlength{\fboxsep}{0.25em}
       \g_edu_groupstyle_tl%
+        \setlength{\fboxsep}{0.25em}
       \colorbox{\g_edu_groupbg_tl}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_group_tl}%
       }%
     \group_end:
   }
+  \bool_if:nT {
+      \bool_if_p:N \g_edu_showresults_bool &&
+      \bool_if_p:N \g_edu_resultlabel_bool
+    }{
+      \group_begin:
+        \hspace{0.4em}
+        \g_edu_resultlabelstyle_tl%
+        \textcolor{\g_edu_resultlabelfg_tl}{\g_edu_resultlabellabel_tl}%
+      \group_end:
+    }
   \mbox{}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
@@ -2367,28 +2386,39 @@
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
-      ]\hspace{1em}
+      ]
+      \normalsize\quad
     }
   }
 
   \tl_put_right:Nn \l__edu_footertextr_tl {
-    \setlength{\fboxsep}{0.25em}
 
     \tl_if_empty:NF \g_edu_short_tl {
       \g_edu_shortstyle_tl\small%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }
 
     \tl_if_empty:NF \g_edu_group_tl {
-      \hspace{0.5em}
+      \hspace{0.25em}
       \g_edu_groupstyle_tl\small%
+      \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
       }%
     }
-    \quad
+
+    \bool_if:nT {
+      \bool_if_p:N \g_edu_showresults_bool &&
+      \bool_if_p:N \g_edu_resultlabel_bool
+    }{
+      \hspace{0.4em}
+      \Large%
+      \textcolor{black}{\g_edu_resultlabellabel_tl}%
+    }
+    \normalsize\quad
   }
 
   \bool_if:NT \g_edu_pagecount_bool {
@@ -4972,9 +5002,10 @@
 
 \seq_new:N \g__edu_thmimp_seq
 
-\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
 \seq_gput_right:Nn \g__edu_thmimp_seq {definition}
 \seq_gput_right:Nn \g__edu_thmimp_seq {defitheo}
+\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
+\seq_gput_right:Nn \g__edu_thmimp_seq {calcrule}
 
 \seq_new:N \g__edu_thmunimp_seq
 
