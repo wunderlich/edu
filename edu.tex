@@ -622,6 +622,7 @@ tikz-qtree\\
 titlesec\\
 stmaryrd\\
 ulem\\
+verse*\\
 xcolor\\
 xlop\\
 xparse\\
@@ -1696,7 +1697,7 @@ Durch diese Optionen kann die Farbgestaltung von Listings bestimmt werden: Zeile
 
 \Implementation\ExplHack
 
-\section{Implementation}
+\section{Implementierung}
 
 
 \subsection{Basic Packages}
@@ -1778,8 +1779,8 @@ Da die Zuweisung initialer Werte in relativen Einheiten (em, ex etc.) bei \cs*{k
 
 Im Folgenden werden die Optionen nach Kategorie deklariert.
 
-\subsubsection{Media Types}
 
+\subsubsection{Media Types}
 
 \begin{option}{twoup}
 \begin{option}{glue}
@@ -3799,11 +3800,9 @@ Options of listings:
 
 \subsubsection{Kompatibilität}
 
-Some important packages are incompatible. These options give the opportunity to choose between them.
+Some important packages are incompatible. These options give the opportunity to load or choose between them.
 
-\begin{option}{lstnumberfg}
-\begin{option}{lstkeywordfg}
-\begin{option}{lstrulefg}
+\begin{option}{struktexqtree}
 Options of listings:
 \begin{MacroCode}{class}
 \tl_new:N \g_edu_struktexqtree_tl
@@ -3827,7 +3826,17 @@ Options of listings:
 
 \end{MacroCode}
 \end{option}
-\end{option}
+
+
+\begin{option}{usepackageverse}
+The package \pkg{verse} needs to be loaded before \pkg{hyperref}. This can be done with the following option.
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  usepackageverse .bool_gset:N = \g_edu_usepackage_verse_bool,    % option for loading package 'verse'
+  usepackageverse .initial:n = false,
+}
+
+\end{MacroCode}
 \end{option}
 
 
@@ -3904,6 +3913,11 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 
 \bool_if:NT \g_edu_transparency_bool {
   \RequirePackage[none]{hyphenat}
+}
+
+% verse Package needs to be loaded before hyperref.
+\bool_if:NT \g_edu_usepackage_verse_bool {
+  \RequirePackage{verse}
 }
 
 \end{MacroCode}

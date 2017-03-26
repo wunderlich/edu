@@ -1029,6 +1029,11 @@
   struktexqtree .initial:n = struktex
 }
 
+\keys_define:nn {edu} {
+  usepackageverse .bool_gset:N = \g_edu_usepackage_verse_bool,    % option for loading package 'verse'
+  usepackageverse .initial:n = false,
+}
+
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{scrartcl}%
 }
@@ -1071,6 +1076,11 @@
 
 \bool_if:NT \g_edu_transparency_bool {
   \RequirePackage[none]{hyphenat}
+}
+
+% verse Package needs to be loaded before hyperref.
+\bool_if:NT \g_edu_usepackage_verse_bool {
+  \RequirePackage{verse}
 }
 
 \RequirePackage{graphicx}
