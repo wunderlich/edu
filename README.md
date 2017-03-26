@@ -6,7 +6,7 @@ LaTeX document class for documents at educational institutions.
 License
 -------
 
-Copyright (C) 2012-2016 by Daniel Wunderlich <code@wu-web.de>
+Copyright (C) 2012-2017 by Daniel Wunderlich <code@wu-web.de>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3
