@@ -1,7 +1,7 @@
 %% This is file `edu.cls', generated from `edu.tex' (key `class').
 %% edu Documentclass for typesetting educational documents
 %%
-%% Copyright (C) 2012-2016 by Daniel Wunderlich <code@wu-web.de>
+%% Copyright (C) 2012-2018 by Daniel Wunderlich <code@wu-web.de>
 %%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -821,22 +821,22 @@
 
 \keys_define:nn {edu} {
   examtitlefieldilabel .tl_gset:N = \g_edu_examtitlefieldilabel_tl,
-  examtitlefieldilabel .initial:n = Nr.,
+  examtitlefieldilabel .initial:n = Nachname,
   examtitlefieldiilabel .tl_gset:N = \g_edu_examtitlefieldiilabel_tl,
-  examtitlefieldiilabel .initial:n = Nachname,
+  examtitlefieldiilabel .initial:n = Vorname,
   examtitlefieldiiilabel .tl_gset:N = \g_edu_examtitlefieldiiilabel_tl,
-  examtitlefieldiiilabel .initial:n = Vorname,
+  examtitlefieldiiilabel .initial:n = ,
 }
 
 \keys_define:nn {edu} {
   examtitlefieldsep .dim_gset:N = \g_edu_examtitlefieldsep_dim,
   examtitlefieldsep .initial:n = 0.75cm,
   examtitlefieldiwidth .dim_gset:N = \g_edu_examtitlefieldiwidth_dim,
-  examtitlefieldiwidth .initial:n = 1cm,
+  examtitlefieldiwidth .initial:n = 5.5cm,
   examtitlefieldiiwidth .dim_gset:N = \g_edu_examtitlefieldiiwidth_dim,
-  examtitlefieldiiwidth .initial:n = 5cm,
+  examtitlefieldiiwidth .initial:n = 5.5cm,
   examtitlefieldiiiwidth .dim_gset:N = \g_edu_examtitlefieldiiiwidth_dim,
-  examtitlefieldiiiwidth .initial:n = 5cm,
+  examtitlefieldiiiwidth .initial:n = 0cm,
   examtitlegraphicsscale .fp_gset:N = \g_edu_examtitlegraphicsscale_fp,
   examtitlegraphicsscale .initial:n = 0.075,
   examtitlegraphicsheight .dim_gset:N = \g_edu_examtitlegraphicsheight_dim,
@@ -893,7 +893,7 @@
 
 \keys_define:nn {edu} {
   exampointstablewidth .tl_gset:N = \g_edu_exampointstablewidth_tl,
-  exampointstablewidth .initial:n = 0.65\linewidth,
+  exampointstablewidth .initial:n = 0.625\linewidth,
 }
 
 %\__edu_keys_initial:n {exampointstablewidth = 0.625\linewidth}
@@ -1029,6 +1029,11 @@
   struktexqtree .initial:n = struktex
 }
 
+\keys_define:nn {edu} {
+  usepackageverse .bool_gset:N = \g_edu_usepackage_verse_bool,    % option for loading package 'verse'
+  usepackageverse .initial:n = false,
+}
+
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{scrartcl}%
 }
@@ -1071,6 +1076,11 @@
 
 \bool_if:NT \g_edu_transparency_bool {
   \RequirePackage[none]{hyphenat}
+}
+
+% verse Package needs to be loaded before hyperref.
+\bool_if:NT \g_edu_usepackage_verse_bool {
+  \RequirePackage{verse}
 }
 
 \RequirePackage{graphicx}
@@ -4849,7 +4859,7 @@
     \exampointstable{#3}{#4}{#5}
   \end{minipage}
   \hfill
-  \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl-\fboxsep}
+  \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl}
   \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
   \hspace{0.35cm} \large \g_edu_exampointsaveragelabel_tl
 

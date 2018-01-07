@@ -103,4 +103,4 @@ edu.tar.gz: edu.tds.zip edu.tex edu.pdf
 	tar -czf $@ edu edu.tds.zip
 	rm -rf edu
 
-dist: skdoc.tar.gz
+dist: edu.tar.gz
