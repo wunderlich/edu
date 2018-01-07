@@ -2523,6 +2523,8 @@
 
 \DeclareDocumentCommand \dh { } {d.\,h.\xspace}
 \DeclareDocumentCommand \Dh { } {D.\,h.\xspace}
+\DeclareDocumentCommand \luv { } {l.\,u.\,v.\xspace}
+\DeclareDocumentCommand \Luv { } {L.\,u.\,v.\xspace}
 \DeclareDocumentCommand \so { } {s.\,o.\xspace}
 \DeclareDocumentCommand \So { } {S.\,o.\xspace}
 \DeclareDocumentCommand \su { } {s.\,u.\xspace}
@@ -3835,7 +3837,8 @@
   \IfBooleanT{#1} {
    \hspace*{0pt}\hfill\hspace{0.5em}%
 }
-  ~\nolinebreak%
+  \nolinebreak%
+  \ensuremath{\;
   \text{%
     \g_edu_multiexepointsstyle_tl%
     \color{\g_edu_multiexepointsfg_tl}%
@@ -3843,6 +3846,7 @@
       #2\g_edu_multiexepointslabel_tl%
     \g_edu_multiexepointsright_tl%
    }%
+   }
 }
 
 \DeclareDocumentCommand \res { +O{} +m} {%

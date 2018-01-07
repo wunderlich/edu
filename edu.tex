@@ -5966,6 +5966,8 @@ Häufig genutzte Einheiten werden definiert:
 
 \begin{macro}{\dh}
 \begin{macro}{\Dh}
+\begin{macro}{\luv}
+\begin{macro}{\Luv}
 \begin{macro}{\so}
 \begin{macro}{\So}
 \begin{macro}{\su}
@@ -5980,6 +5982,8 @@ Deutsche Abkürzungen:
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \dh { } {d.\,h.\xspace}
 \DeclareDocumentCommand \Dh { } {D.\,h.\xspace}
+\DeclareDocumentCommand \luv { } {l.\,u.\,v.\xspace}
+\DeclareDocumentCommand \Luv { } {L.\,u.\,v.\xspace}
 \DeclareDocumentCommand \so { } {s.\,o.\xspace}
 \DeclareDocumentCommand \So { } {S.\,o.\xspace}
 \DeclareDocumentCommand \su { } {s.\,u.\xspace}
@@ -5992,6 +5996,8 @@ Deutsche Abkürzungen:
 \DeclareDocumentCommand \ZB { } {Z.\,B.\xspace}
 
 \end{MacroCode}
+\end{macro}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
@@ -7747,14 +7753,16 @@ Setzt die Punktzahl der aktuellen Teilaufgabe zusammen. Die Sternvariante setzt 
   \IfBooleanT{#1} {
 	   \hspace*{0pt}\hfill\hspace{0.5em}%
 	}
-  ~\nolinebreak%  
-  \text{%
-    \g_edu_multiexepointsstyle_tl%
-    \color{\g_edu_multiexepointsfg_tl}%
-    \g_edu_multiexepointsleft_tl%
-      #2\g_edu_multiexepointslabel_tl%
-    \g_edu_multiexepointsright_tl%
-   }%
+  \nolinebreak%  
+  \ensuremath{\;
+	  \text{%
+	    \g_edu_multiexepointsstyle_tl%
+	    \color{\g_edu_multiexepointsfg_tl}%
+	    \g_edu_multiexepointsleft_tl%
+	      #2\g_edu_multiexepointslabel_tl%
+	    \g_edu_multiexepointsright_tl%
+	   }%
+   }
 }
 
 \end{MacroCode}
