@@ -654,14 +654,16 @@
   resultboxheight .initial:n = 0.65cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
-  resultlabel .bool_gset:N = \g_edu_resultlabel_bool,
-  resultlabel .initial:n = true,
-  resultlabellabel .tl_gset:N = \g_edu_resultlabellabel_tl,
-  resultlabellabel .initial:n = $\star$,
-  resultlabelstyle .tl_gset:N = \g_edu_resultlabelstyle_tl,
-  resultlabelstyle .initial:n = \LARGE,
-  resultlabelfg .tl_gset:N = \g_edu_resultlabelfg_tl,
-  resultlabelfg .initial:n = black,
+  resulttitlelabel .bool_gset:N = \g_edu_resulttitlelabel_bool,
+  resulttitlelabel .initial:n = true,
+  resulttitlelabellabel .tl_gset:N = \g_edu_resulttitlelabellabel_tl,
+  resulttitlelabellabel .initial:n = $\star$,
+  resulttitlelabelstyle .tl_gset:N = \g_edu_resulttitlelabelstyle_tl,
+  resulttitlelabelstyle .initial:n = \LARGE,
+  resulttitlelabelfg .tl_gset:N = \g_edu_resulttitlelabelfg_tl,
+  resulttitlelabelfg .initial:n = black,
+  resultlistinglabel .tl_gset:N = \g_edu_resultlistinglabel_tl,
+  resultlistinglabel .initial:n = L\"osung,
 }
 
 \keys_define:nn {edu} {
@@ -1121,6 +1123,12 @@
 
 
 \RequirePackage{listings}
+\RequirePackage{xsim}
+
+% Hack, because xsim also defines a solution environment. Can be removed,
+% when xsimverb can be used standalone again.
+\let\solution\relax
+\let\endsolution\relax
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
@@ -2090,12 +2098,12 @@
   }
   \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
-      \bool_if_p:N \g_edu_resultlabel_bool
+      \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \group_begin:
         \hspace{0.4em}
-        \g_edu_resultlabelstyle_tl%
-        \textcolor{\g_edu_resultlabelfg_tl}{\g_edu_resultlabellabel_tl}%
+        \g_edu_resulttitlelabelstyle_tl%
+        \textcolor{\g_edu_resulttitlelabelfg_tl}{\g_edu_resulttitlelabellabel_tl}%
       \group_end:
     }
   \mbox{}
@@ -2422,11 +2430,11 @@
 
     \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
-      \bool_if_p:N \g_edu_resultlabel_bool
+      \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \hspace{0.4em}
       \Large%
-      \textcolor{black}{\g_edu_resultlabellabel_tl}%
+      \textcolor{black}{\g_edu_resulttitlelabellabel_tl}%
     }
     \normalsize\quad
   }
@@ -5580,6 +5588,28 @@
   prebreak={\,\,\Pisymbol{psy}{191}}
 }
 
+\lstdefinestyle{lstresstyle}{%
+  aboveskip=0.75\baselineskip,
+  belowskip=\g_edu_lstbelowskip,
+  basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+  keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
+  numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
+  rulecolor=\color{\g_edu_resultfg_tl}
+}
+
+\tl_if_empty:NF \g_edu_resultlistinglabel_tl {
+\lstdefinestyle{lstresstyle}{%
+    aboveskip=0.25\baselineskip,
+    belowskip=\g_edu_lstbelowskip,
+    basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+    keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
+  numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
+    rulecolor=\color{\g_edu_resultfg_tl},
+  title=\color{\g_edu_resultfg_tl}\sffamily\g_edu_resultlistinglabel_tl,
+  captionpos=t
+}
+}
+
 \lstset{%
   style=lststyle,
   upquote=true
@@ -5598,6 +5628,20 @@
     {\$}{{\$}}1
 }
 
+\NewDocumentEnvironment{reslstlisting}{}{%
+    % Adds temporary filename at first line:
+    %\XSIMsetfilebegin{\@percentchar\space file `\jobname.tmp'}
+
+    % Adds 'bye bye' at last line:
+    %\XSIMsetfileend{\@percentchar\space bye bye}
+    \XSIMfilewritestart{\jobname.tmp}
+}{
+    \XSIMfilewritestop
+    \bool_if:NT \g_edu_showresults_bool
+        {
+            \lstinputlisting[style=lstresstyle]{\jobname.tmp}
+        }
+}
 \newlength{\templength}
 \newcommand{\tempcommand}{}
 \newcounter{tempcounter}
