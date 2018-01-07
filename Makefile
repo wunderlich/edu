@@ -80,8 +80,8 @@ install-global: all
 edu.tds.zip: edu.tex edu.pdf edu.cls
 	mkdir -p edu/tex/latex/edu
 	cp edu.cls edu/tex/latex/edu/edu.cls
-	cp edu.cls edu/tex/latex/edu/edu-styles-wu.sty
-	cp edu.cls edu/tex/latex/edu/edu-colors-wu.sty
+	cp edu-styles-wu.sty edu/tex/latex/edu/edu-styles-wu.sty
+	cp edu-colors-wu.sty edu/tex/latex/edu/edu-colors-wu.sty
 	mkdir -p edu/doc/latex/edu
 	cp edu.pdf edu/doc/latex/edu/edu.pdf
 	cp edu-de.pdf edu/doc/latex/edu/edu-de.pdf
@@ -94,8 +94,8 @@ edu.tds.zip: edu.tex edu.pdf edu.cls
 edu.tar.gz: edu.tds.zip edu.tex edu.pdf
 	mkdir -p edu
 	cp edu.tex edu/edu.tex
-	cp edu.cls edu/edu-styles-wu.sty
-	cp edu.cls edu/edu-colors-wu.sty
+	cp edu-styles-wu.sty edu/edu-styles-wu.sty
+	cp edu-colors-wu.sty edu/edu-colors-wu.sty
 	cp edu.pdf edu/edu.pdf
 	cp edu-de.pdf edu/edu-de.pdf
 	cp README edu/README
