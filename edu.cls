@@ -1670,6 +1670,35 @@
 
 %    \end{macrocode}
 
+\DeclareDocumentCommand \itemm { } {\item[\bfseries\texttt{\textminus}]}
+\DeclareDocumentCommand \itemn { } {\item[\bfseries\texttt{\textasciitilde}]}
+\DeclareDocumentCommand \itemp { } {\item[\bfseries\texttt{+}]}
+
+\DeclareDocumentCommand \itemb { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembcheck { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+      \raisebox{.3ex}{\hspace{0.1em}$\checkmark$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembblack { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\blacksquare$}%
+    }%
+  }}]%
+}
+
 \newcolumntype{C}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
 
 \bool_new:N \__edu_multiexebonus_bool
@@ -4364,6 +4393,11 @@
   }%
 }
 
+\DeclareDocumentCommand \noteitem { m } {%
+  \bool_if:NT \g_edu_shownotes_bool {
+    \item{\g_edu_notetstyle_tl\textcolor{\g_edu_notetfg_tl}{#1}}%
+  }
+}
 \int_new:N \g__edu_ttminutesum_int
 \int_gset:Nn \g__edu_ttminutesum_int {0}
 

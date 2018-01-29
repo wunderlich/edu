@@ -1457,7 +1457,7 @@ Mit dieser Option können vertikale Abstände vor und nach Fragen angegeben werd
 
 \localeDE{
 \Option{shownotes}\WithValues{true, false}\AndDefault{true}
-Mit dieser Option können Notizen (\cs*{notet}, \cs*{notehr}) eingeblendet werden.
+Mit dieser Option können Notizen (\cs*{notet}, \cs*{notehr}, \cs*{noteitem}) eingeblendet werden.
 }
 \medskip
 
@@ -4811,6 +4811,56 @@ Liste ohne oberen und unteren Abstand. Geeignet für Aufzählungen in Tabellen. 
 
 \end{MacroCode}
 \end{environment}
+
+\begin{macro}{\itemm}
+\begin{macro}{\itemn}
+\begin{macro}{\itemp}
+Aufzählungszeichen mit Minus-, Tilde- und Plus-Symbol.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \itemm { } {\item[\bfseries\texttt{\textminus}]}
+\DeclareDocumentCommand \itemn { } {\item[\bfseries\texttt{\textasciitilde}]}
+\DeclareDocumentCommand \itemp { } {\item[\bfseries\texttt{+}]}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+
+\begin{macro}{\itemb}
+\begin{macro}{\itembcheck}
+\begin{macro}{\itembblack}
+Aufzählungszeichen mit Boxen (leere Box, abgehakte Box und gefüllte Box).
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \itemb { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembcheck { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+      \raisebox{.3ex}{\hspace{0.1em}$\checkmark$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembblack { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\blacksquare$}%
+    }%
+  }}]%
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+
 
 
 \subsubsection{Tabellen}
@@ -8587,6 +8637,17 @@ Horizontale Linie zur Markierung.
   }%
 }
 
+\end{MacroCode}
+\end{macro}
+
+\begin{macro}{\noteitem}[1]{<text>}
+Notizen in Listen:
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \noteitem { m } {%
+  \bool_if:NT \g_edu_shownotes_bool {
+    \item{\g_edu_notetstyle_tl\textcolor{\g_edu_notetfg_tl}{#1}}%
+  }
+}
 \end{MacroCode}
 \end{macro}
 
