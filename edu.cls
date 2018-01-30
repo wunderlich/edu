@@ -241,6 +241,8 @@
   timestampstyle .initial:n = \small\sffamily,
   titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
+  titlenumbersep .initial:n = 0.5em,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
   versionstyle .initial:n = \small\sffamily,
   timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
@@ -251,6 +253,10 @@
   timestampdateseparator .initial:n = -,
   timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
   timestampdatetimeseparator .initial:n = -,
+}
+
+\__edu_keys_initial:n {
+  titlenumbersep = 0.5em
 }
 
 \keys_define:nn {edu} {
@@ -1269,6 +1275,7 @@
 \tl_new:N \g_edu_subject_tl
 \tl_new:N \g_edu_subtitle_tl
 \tl_new:N \g_edu_title_tl
+\tl_new:N \g_edu_titlenumber_tl
 \tl_new:N \g_edu_version_tl
 
 
@@ -1375,12 +1382,15 @@
   }
 }
 
-\DeclareDocumentCommand \title {o m} {
+\DeclareDocumentCommand \title {o m o} {
   \tl_gset:Nn \g_edu_title_tl {#2}
   \IfNoValueTF{#1} {
     \tl_gset:Nn \g_edu_titleshort_tl {#2}
   }{
     \tl_gset:Nn \g_edu_titleshort_tl {#1}
+  }
+  \IfValueT{#3} {
+    \tl_gset:Nn \g_edu_titlenumber_tl {#3}
   }
 }
 
@@ -1479,6 +1489,10 @@
   }{
     \g_edu_title_tl\xspace
   }
+}
+
+\DeclareDocumentCommand \printtitlenumber {  } {
+  \g_edu_titlenumber_tl\xspace
 }
 
 \DeclareDocumentCommand \printversion { s } {
@@ -2105,7 +2119,14 @@
   \group_begin:
     \g_edu_titlestyle_tl%
     \color{\g_edu_titlefg_tl}%
-    \noindent\g_edu_title_tl%
+    \noindent
+    \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+      \settowidth{\g_edu_temp_dim}{\g_edu_titlenumber_tl}
+      \addtolength{\g_edu_temp_dim}{\g_edu_titlenumbersep_dim}
+      \setlength{\global\g_edu_temp_dim}{\g_edu_temp_dim}
+    }
+    \g_edu_title_tl%
   \group_end:
   \hfill%
   \tl_if_empty:NF \g_edu_short_tl {
@@ -2145,7 +2166,12 @@
     \parskipreduce
     \group_begin:
       \g_edu_subtitlestyle_tl
-      \color{\g_edu_titlefg_tl}\noindent\g_edu_subtitle_tl\par
+      \color{\g_edu_titlefg_tl}
+      \noindent
+    \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \hspace*{\g_edu_temp_dim}
+    }
+      \g_edu_subtitle_tl\par
     \group_end:
   }
 
@@ -2159,7 +2185,12 @@
 \tl_if_empty:NF \g_edu_title_tl {
   \tl_put_right:Nn \g__edu_titletext_tl {
     \group_begin:
-      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl} \noindent \g_edu_title_tl
+      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl}
+      \noindent
+      \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+    }
+      \g_edu_title_tl
     \group_end:
     \par\parskipreduce
   }

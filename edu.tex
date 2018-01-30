@@ -2091,6 +2091,7 @@ These options affect to lists and arrays:
 \begin{option}{subjectstyle}
 \begin{option}{timestampstyle}
 \begin{option}{titlestyle}
+\begin{option}{titlenumbersep}
 \begin{option}{versionstyle}
 \begin{option}{timestamptime}
 \begin{option}{timestamptimeseparator}
@@ -2123,6 +2124,8 @@ Styles of metadata:
   timestampstyle .initial:n = \small\sffamily,
   titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
+  titlenumbersep .initial:n = 0.5em,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
   versionstyle .initial:n = \small\sffamily,
   timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
@@ -2135,7 +2138,12 @@ Styles of metadata:
   timestampdatetimeseparator .initial:n = -,
 }
 
+\__edu_keys_initial:n {
+  titlenumbersep = 0.5em
+}
+
 \end{MacroCode}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -4185,6 +4193,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro*}{\g_edu_subject_tl}
 \begin{macro*}{\g_edu_subtitle_tl}
 \begin{macro*}{\g_edu_title_tl}
+\begin{macro*}{\g_edu_titlenumber_tl}
 \begin{macro*}{\g_edu_version_tl}
 \begin{MacroCode}{class}
 
@@ -4199,9 +4208,11 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \tl_new:N \g_edu_subject_tl
 \tl_new:N \g_edu_subtitle_tl
 \tl_new:N \g_edu_title_tl
+\tl_new:N \g_edu_titlenumber_tl
 \tl_new:N \g_edu_version_tl
 
 \end{MacroCode}
+\end{macro*}
 \end{macro*}
 \end{macro*}
 \end{macro*}
@@ -4267,7 +4278,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro}{\short}[2]{[<short short>]}{<short>}
 \begin{macro}{\subject}[2]{[<subject short>]}{<subject>}
 \begin{macro}{\subtitle}[2]{[<subtitle short>]}{<subtitle>}
-\begin{macro}{\title}[2]{[<title short>]}{<title>}
+\begin{macro}{\title}[3]{[<title short>]}{<title>}{<number>}
 \begin{macro}{\version}[2]{[<version short>]}{<version>}
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \author {o m} {
@@ -4360,12 +4371,15 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
   }
 }
 
-\DeclareDocumentCommand \title {o m} {
+\DeclareDocumentCommand \title {o m o} {
   \tl_gset:Nn \g_edu_title_tl {#2}
   \IfNoValueTF{#1} {
     \tl_gset:Nn \g_edu_titleshort_tl {#2}
   }{
     \tl_gset:Nn \g_edu_titleshort_tl {#1}
+  }
+  \IfValueT{#3} {
+    \tl_gset:Nn \g_edu_titlenumber_tl {#3}
   }
 }
 
@@ -4415,6 +4429,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 \begin{macro}{\printsubtitle*}
 \begin{macro}{\printtitle}
 \begin{macro}{\printtitle*}
+\begin{macro}{\printtitlenumber}
 \begin{macro}{\printversion}
 \begin{macro}{\printversion*}
 \begin{MacroCode}{class}
@@ -4506,6 +4521,10 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
   }
 }
 
+\DeclareDocumentCommand \printtitlenumber {  } {
+  \g_edu_titlenumber_tl\xspace
+}
+
 \DeclareDocumentCommand \printversion { s } {
   \IfBooleanTF{#1} {
     \g_edu_versionshort_tl\xspace
@@ -4515,6 +4534,7 @@ Bei Verwendung der Option \opt{twuop} wird die Schriftgröße des gesamten Dokum
 }
 
 \end{MacroCode}
+\end{macro}
 \end{macro}
 \end{macro}
 \end{macro}
@@ -5459,7 +5479,14 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 	  \group_begin:
 	    \g_edu_titlestyle_tl%
 	    \color{\g_edu_titlefg_tl}%
-	    \noindent\g_edu_title_tl%
+	    \noindent
+	    \tl_if_empty:NF \g_edu_titlenumber_tl {
+	      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+	      \settowidth{\g_edu_temp_dim}{\g_edu_titlenumber_tl}
+	      \addtolength{\g_edu_temp_dim}{\g_edu_titlenumbersep_dim}
+	      \setlength{\global\g_edu_temp_dim}{\g_edu_temp_dim}
+	    }
+	    \g_edu_title_tl%
 	  \group_end:
 	  \hfill%
 	  \tl_if_empty:NF \g_edu_short_tl {
@@ -5499,7 +5526,12 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 	    \parskipreduce
 	    \group_begin:
 	      \g_edu_subtitlestyle_tl
-	      \color{\g_edu_titlefg_tl}\noindent\g_edu_subtitle_tl\par
+	      \color{\g_edu_titlefg_tl}
+	      \noindent
+		    \tl_if_empty:NF \g_edu_titlenumber_tl {
+		      \hspace*{\g_edu_temp_dim}
+		    }
+	      \g_edu_subtitle_tl\par
 	    \group_end:
 	  }
 		
@@ -5513,7 +5545,12 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 		\tl_if_empty:NF \g_edu_title_tl {
 		  \tl_put_right:Nn \g__edu_titletext_tl {
 		    \group_begin:
-		      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl} \noindent \g_edu_title_tl
+		      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl}
+		      \noindent
+		      \tl_if_empty:NF \g_edu_titlenumber_tl {
+			      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+			    }
+		      \g_edu_title_tl
 		    \group_end:
 		    \par\parskipreduce
 		  }
