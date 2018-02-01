@@ -3004,6 +3004,7 @@ Skips before and after (sub-)solutions:
 \subsubsection{Lösungen in Aufgaben}
 
 \begin{option}{showresults}
+\begin{option}{resultresetmultiexe}
 \begin{option}{resultfg}
 \begin{option}{resultrule}
 \begin{option}{resultrulelength}
@@ -3020,6 +3021,8 @@ Options for typesetting results:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   showresults .bool_gset:N = \g_edu_showresults_bool,
+  showresults .initial:n = false,
+  resultresetmultiexe .bool_gset:N = \g_edu_resultresetmultiexe_bool,
   showresults .initial:n = false,
   resultfg .tl_gset:N = \g_edu_resultfg_tl,
   resultfg .initial:n = wuRed,
@@ -3048,6 +3051,7 @@ Options for typesetting results:
 }
 
 \end{MacroCode}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -7866,6 +7870,9 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an.
       \color{\g_edu_resultfg_tl} #2%
     \group_end:
   }{#1}%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \end{MacroCode}
@@ -7881,6 +7888,9 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \end{MacroCode}
@@ -7897,6 +7907,9 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \end{MacroCode}

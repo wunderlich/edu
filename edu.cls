@@ -646,6 +646,8 @@
 \keys_define:nn {edu} {
   showresults .bool_gset:N = \g_edu_showresults_bool,
   showresults .initial:n = false,
+  resultresetmultiexe .bool_gset:N = \g_edu_resultresetmultiexe_bool,
+  showresults .initial:n = false,
   resultfg .tl_gset:N = \g_edu_resultfg_tl,
   resultfg .initial:n = wuRed,
   resultrule .dim_gset:N = \g_edu_resultrule_dim,
@@ -3915,6 +3917,9 @@
       \color{\g_edu_resultfg_tl} #2%
     \group_end:
   }{#1}%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
@@ -3923,6 +3928,9 @@
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
@@ -3932,6 +3940,9 @@
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentEnvironment {multiexelist} { s O{0.5\baselineskip} } {
