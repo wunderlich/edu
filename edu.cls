@@ -465,6 +465,10 @@
   exebg .initial:n = white,
   exepointsfg .tl_gset:N = \g_edu_exepointsfg_tl,
   exepointsfg .initial:n = black,
+  execalcfg .tl_gset:N = \g_edu_execalcfg_tl,
+  execalcfg .initial:n = lightgray,
+  exedifffg .tl_gset:N = \g_edu_exedifffg_tl,
+  exedifffg .initial:n = lightgray,
 }
 
 \keys_define:nn {edu} {
@@ -970,6 +974,7 @@
 \RequirePackage[inline]{enumitem}
 \RequirePackage{eurosym}                                           % Euro-Sign
 \RequirePackage{expdlist}
+\RequirePackage{fontawesome}
 \RequirePackage{geometry}
 \RequirePackage[notcomma, notperiod, notquote, notquery]{hanging}  % Hanging indention of multiexe
 \RequirePackage{lastpage}                                          % Number of pages with
@@ -3377,7 +3382,7 @@
 \DeclareDocumentCommand \rstsubexe { } {\setcounter{subexercisecounter}{0}}
 \DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
 
-\DeclareDocumentCommand \exe { s o m }{
+\DeclareDocumentCommand \exe { s o m o }{
   \refstepcounter{exercisecounter}
 
   \tl_clear:N \l__edu_exelabeltext_tl
@@ -3425,7 +3430,50 @@
   \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
-  {\g_edu_exelabelstyle_tl%
+  {
+    \g_edu_exelabelstyle_tl%
+    \tl_if_empty:nF {#4} {
+      \hspace*{-3em}
+      \makebox[2.5em][r]{
+        \tl_if_in:nnT {#4} {c} {
+          \color{\g_edu_execalcfg_tl}
+          \raisebox{0.15ex}{\scalebox{0.7}{\faCalculator}}
+        }
+        \tl_if_in:nnT {#4} {e} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {m} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 0.5);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {h} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+      }
+      \hspace{0.5em}
+    }
     \setlength{\fboxsep}{0.125em}%
     \raisebox{0.2ex}{%
       \colorbox{\g_edu_exenumberbg_tl}{%
