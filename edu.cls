@@ -3427,7 +3427,7 @@
     }
   }
 
-  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
+  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parskip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
   {
