@@ -7123,7 +7123,7 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
   \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
-  {
+  \tl_set:Nn \l__edu_exepreamble_tl {
     \g_edu_exelabelstyle_tl%
     \tl_if_empty:nF {#4} {
       \hspace*{-3em}
@@ -7184,18 +7184,46 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
     \colorbox{\g_edu_exelabelbg_tl}{%
       \textcolor{\g_edu_exelabelfg_tl}{\l__edu_exelabeltext_tl}%
     }%
-  }%
-  {
-    \colorbox{\g_edu_exebg_tl}{%
-      \textcolor{\g_edu_exefg_tl}{\g_edu_exestyle_tl #3}%
-    }%
-  }%
-  \hfill%
-  {\g_edu_exepointsstyle_tl%
+  }%  
+  \tl_set:Nn \l__edu_exeending_tl{\g_edu_exepointsstyle_tl%
     \textcolor{\g_edu_exepointsfg_tl}{%
       \l__edu_exepoints_tl%
     }%
-  }%
+  }%% Calculate Exercixe-Text-Width 	
+  \newlength{\l__edu_exenegtextwidth_tl}
+  \setlength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\l__edu_exepreamble_tl}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\l__edu_exeending_tl}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\qquad}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{-\textwidth} 	
+	% Write Exercise
+  {
+    % Write Preamble
+    {
+      \l__edu_exepreamble_tl
+    }
+    % Write Exercise Text in Minipage
+    {
+      \colorbox{\g_edu_exebg_tl}{
+        \textcolor{\g_edu_exefg_tl}{
+          \g_edu_exestyle_tl
+            \begin{minipage}[t]{-\l__edu_exenegtextwidth_tl}
+              #3
+            \end{minipage}
+        }
+      }
+    }
+    \hfill
+    % Write Ending
+    {
+      \l__edu_exeending_tl
+    }
+  }
   \nopagebreak\@afterheading%
   \vspace{\g_edu_exeafterskip_dim}%
   \parskipreduce%

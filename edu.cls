@@ -3383,207 +3383,167 @@
 \DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
 
 \DeclareDocumentCommand \exe { s o m o }{
-	% Step Counter for the Exercises	
-	\refstepcounter{exercisecounter}
-	
-	% Unknown 	
-	\tl_clear:N \l__edu_exelabeltext_tl
+  \refstepcounter{exercisecounter}
 
-	% Create Pointsbracet and save it in \l__edu_exepoints_tl
-	\IfNoValueTF {#2} {
-		\tl_clear:N \l__edu_exepoints_tl
-	}{
-		\bool_if:NTF \g_edu_exepointsachieved_bool {
-			\tl_set:Nn \l__edu_exepoints_tl {
-				\g_edu_exepointsleft_tl
-				\hspace{\g_edu_exepointsachievedspace_dim}
-				\g_edu_exepointsachievedsep_tl
-				#2\g_edu_exepointslabel_tl
-				\g_edu_exepointsright_tl
-			}
-  		}{
-			\tl_set:Nn \l__edu_exepoints_tl {
-				\g_edu_exepointsleft_tl
-				#2\g_edu_exepointslabel_tl
-				\g_edu_exepointsright_tl
-			}
-		}
-	}
-	
-	% Create Exerciselabel and save it in \l__edu_exelabeltext_tl
-	\tl_if_empty:nTF {#3} {
-		\tl_if_empty:NTF \g_edu_exelabel_tl {
-			\tl_clear:N \l__edu_exelabeltext_tl
-		}{
-			\tl_set:Nn \l__edu_exelabeltext_tl {
-				\hspace{0.1em}\g_edu_exelabel_tl
-			}
-		}
-	}{
-		\tl_if_empty:NTF \g_edu_exelabel_tl {
-			\tl_set:Nn \l__edu_exelabeltext_tl {
-				\hspace{0.3em}
-			}
-		}{
-			\tl_set:Nn \l__edu_exelabeltext_tl {
-				\hspace{0.1em}\g_edu_exelabel_tl{:}\hspace{0.3em}
-			}
-		}
-	}
-	
-	\setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
-	
-	\vspace{\g_edu_exebeforeskip_dim}%
-	\parskipreduce%
-	% Create Preamble for Exercise
-	\tl_set:Nn \l__edu_exepreamble_tl {
-		\g_edu_exelabelstyle_tl%
-		\tl_if_empty:nF {#4} {
-			\hspace*{-3em}
-			\makebox[2.5em][r]{
-				% Draw Calculator if value is set				
-				\tl_if_in:nnT {#4} {c} {
-					\color{\g_edu_execalcfg_tl}
-					\raisebox{0.15ex}{\scalebox{0.7}{\faCalculator}}
-				}
-				% Draw empty square if Difficulty is set to Easy
-				\tl_if_in:nnT {#4} {e} {
-					\hspace{0.25em}
-					\raisebox{-0.05ex}{
-						\resizebox{!}{0.6\baselineskip}{
-							\tikz{
-								\draw[
-									line~width=1ex,
-									\@usetl{edu}{exedifffg}{tl}
-								] (0, 0) rectangle (1, 1);
-							}
-						}
-					}
-				}
-				% Draw half-full square if Difficulty is set to Medium
-				\tl_if_in:nnT {#4} {m} {
-					\hspace{0.25em}
-					\raisebox{-0.05ex}{
-						\resizebox{!}{0.6\baselineskip}{
-							\tikz{
-								\fill[
-									\@usetl{edu}{exedifffg}{tl}
-								] (0, 0) rectangle (1, 0.5);
-								\draw[
-									line~width=1ex,
-									\@usetl{edu}{exedifffg}{tl}
-								] (0, 0) rectangle (1, 1);
-							}
-						}
-					}
-				}
-				% Draw full square if Difficluty is set to Hard
-				\tl_if_in:nnT {#4} {h} {
-					\hspace{0.25em}
-					\raisebox{-0.05ex}{
-						\resizebox{!}{0.6\baselineskip}{
-							\tikz{
-								\fill[
-									\@usetl{edu}{exedifffg}{tl}
-								] (0, 0) rectangle (1, 1);
-								\draw[
-									line~width=1ex,
-									\@usetl{edu}{exedifffg}{tl}
-								] (0, 0) rectangle (1, 1);
-							}
-						}
-					}
-				}
-			}
-			\hspace{0.5em}
-		}
-		% Draw Exercisenumber and Optional-Star
-		\setlength{\fboxsep}{0.125em}
-		\raisebox{0.2ex}{
-			\colorbox{\g_edu_exenumberbg_tl}{
-				\textcolor{\g_edu_exenumberfg_tl}{
-					\g_edu_exenumberstyle_tl
-					\theexercisecounter
-					\g_edu_exenumberseparator_tl
-						\IfBooleanT{#1} {
-							\raisebox{0.15ex}{
-								$\star$
-						}
-					}
-				}
-			}
-		}
-		% Draw Exercise Label
-		\hspace{0.1em}
-		\colorbox{\g_edu_exelabelbg_tl}{
-			\textcolor{\g_edu_exelabelfg_tl}{
-				\l__edu_exelabeltext_tl
-			}
-		}
-	}
-	
-	% Create Ending
-	\tl_set:Nn \l__edu_exeending_tl {
-		\g_edu_exepointsstyle_tl%
-		\textcolor{\g_edu_exepointsfg_tl}{%
-			\l__edu_exepoints_tl%
-		}%
- 	}%
- 	
-	% Calculate Exercixe-Text-Width 	
-	\newlength{\l__edu_exenegtextwidth_tl}
-	\setlength{\l__edu_exenegtextwidth_tl}{
-		\widthof{\l__edu_exepreamble_tl}
-	}
-	%%%%%%\setlength{\l__edu_temp}{\widthof{\l__edu_exeending_tl}}
-	\addtolength{\l__edu_exenegtextwidth_tl}{
-		\widthof{\l__edu_exeending_tl}
-	}
-	\addtolength{\l__edu_exenegtextwidth_tl}{
-		\widthof{\qquad}
-	}
-	\addtolength{\l__edu_exenegtextwidth_tl}{-\textwidth} 	
- 	
-	% Write Exercise
-	{
-		% Write Preamble
-		{
-			\l__edu_exepreamble_tl
-		}
-		% Write Exercise Text in Minipage
-		{
-			\colorbox{\g_edu_exebg_tl}{
-				\textcolor{\g_edu_exefg_tl}{
-					\g_edu_exestyle_tl
-					\begin{minipage}[t]{-\l__edu_exenegtextwidth_tl}
-						#3
-					\end{minipage}
-				}
-			}
-		}
-		\hfill
-		% Write Ending
-		{
-			\l__edu_exeending_tl
-		}
-	}
-	
-	\nopagebreak\@afterheading%	
-	\vspace{\g_edu_exeafterskip_dim}%	
-	\parskipreduce%	
-	\par % Wichtig, damit \setlength{\parfillskip}{0em} wirkt (s. o.).	
-	\setlength{\parfillskip}{1em plus 1fil}
+  \tl_clear:N \l__edu_exelabeltext_tl
 
-	\bool_if:NT \g_edu_exetoc_bool {
-		\addcontentsline{toc}{section}{
-			\theexercisecounter
-			\g_edu_exenumberseparator_tl~
-			\l__edu_exelabeltext_tl #3
-		}
-	}
-	\setcounter{subexercisecounter}{0}
-	\setcounter{multiexecounter}{0}
-	\setcounter{question}{0}
+  \IfNoValueTF {#2} {
+    \tl_clear:N \l__edu_exepoints_tl
+  }{
+    \bool_if:NTF \g_edu_exepointsachieved_bool {
+    \tl_set:Nn \l__edu_exepoints_tl {
+      \g_edu_exepointsleft_tl
+        \hspace{\g_edu_exepointsachievedspace_dim}
+        \g_edu_exepointsachievedsep_tl
+        #2\g_edu_exepointslabel_tl
+      \g_edu_exepointsright_tl
+    }
+  }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+      \g_edu_exepointsleft_tl
+        #2\g_edu_exepointslabel_tl
+      \g_edu_exepointsright_tl
+    }
+  }
+  }
+
+  \tl_if_empty:nTF {#3} {
+    \tl_if_empty:NTF \g_edu_exelabel_tl {
+      \tl_clear:N \l__edu_exelabeltext_tl
+    }{
+      \tl_set:Nn \l__edu_exelabeltext_tl {
+        \hspace{0.1em}\g_edu_exelabel_tl
+      }
+    }
+  }{
+    \tl_if_empty:NTF \g_edu_exelabel_tl {
+      \tl_set:Nn \l__edu_exelabeltext_tl {
+        \hspace{0.3em}
+      }
+    }{
+      \tl_set:Nn \l__edu_exelabeltext_tl {
+        \hspace{0.1em}\g_edu_exelabel_tl{:}\hspace{0.3em}
+      }
+    }
+  }
+
+  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
+  \vspace{\g_edu_exebeforeskip_dim}%
+  \parskipreduce%
+  \tl_set:Nn \l__edu_exepreamble_tl {
+    \g_edu_exelabelstyle_tl%
+    \tl_if_empty:nF {#4} {
+      \hspace*{-3em}
+      \makebox[2.5em][r]{
+        \tl_if_in:nnT {#4} {c} {
+          \color{\g_edu_execalcfg_tl}
+          \raisebox{0.15ex}{\scalebox{0.7}{\faCalculator}}
+        }
+        \tl_if_in:nnT {#4} {e} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {m} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 0.5);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {h} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+      }
+      \hspace{0.5em}
+    }
+    \setlength{\fboxsep}{0.125em}%
+    \raisebox{0.2ex}{%
+      \colorbox{\g_edu_exenumberbg_tl}{%
+        \textcolor{\g_edu_exenumberfg_tl}{%
+          \g_edu_exenumberstyle_tl\theexercisecounter\g_edu_exenumberseparator_tl%
+          \IfBooleanT{#1} {
+          \raisebox{0.15ex}{%
+            $\star$
+          }
+          }
+        }%
+      }%
+    }%
+    \hspace{0.1em}%
+    \colorbox{\g_edu_exelabelbg_tl}{%
+      \textcolor{\g_edu_exelabelfg_tl}{\l__edu_exelabeltext_tl}%
+    }%
+  }%
+  \tl_set:Nn \l__edu_exeending_tl{\g_edu_exepointsstyle_tl%
+    \textcolor{\g_edu_exepointsfg_tl}{%
+      \l__edu_exepoints_tl%
+    }%
+  }%% Calculate Exercixe-Text-Width
+  \newlength{\l__edu_exenegtextwidth_tl}
+  \setlength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\l__edu_exepreamble_tl}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\l__edu_exeending_tl}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{
+    \widthof{\qquad}
+  }
+  \addtolength{\l__edu_exenegtextwidth_tl}{-\textwidth}
+% Write Exercise
+  {
+    % Write Preamble
+    {
+      \l__edu_exepreamble_tl
+    }
+    % Write Exercise Text in Minipage
+    {
+      \colorbox{\g_edu_exebg_tl}{
+        \textcolor{\g_edu_exefg_tl}{
+          \g_edu_exestyle_tl
+            \begin{minipage}[t]{-\l__edu_exenegtextwidth_tl}
+              #3
+            \end{minipage}
+        }
+      }
+    }
+    \hfill
+    % Write Ending
+    {
+      \l__edu_exeending_tl
+    }
+  }
+  \nopagebreak\@afterheading%
+  \vspace{\g_edu_exeafterskip_dim}%
+  \parskipreduce%
+  \par % Wichtig, damit \setlength{\parfillskip}{0em} wirkt (s. o.).
+  \setlength{\parfillskip}{1em plus 1fil}
+
+  \bool_if:NT \g_edu_exetoc_bool {
+  \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #3}
+  }
+
+  \setcounter{subexercisecounter}{0}
+  \setcounter{multiexecounter}{0}
+  \setcounter{question}{0}
 }
 
 \DeclareDocumentCommand \subexe { s o m }{
