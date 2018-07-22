@@ -1,0 +1,39 @@
+\begin{macro}{\multiexelabel}
+\begin{macro}{\multiexelabelboxed}
+Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstaben mit anschließender Klammer (a), b),\dots) und erhöhen den Counter um Eins. \cs{multiexelabelboxed} setzt die Buchstaben zusätzlich rechtsbündig in eine Box.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \multiexelabel { s } {%
+  \stepcounter{multiexecounter}%
+  {\g_edu_multiexenumberstyle_tl%
+    \textcolor{\g_edu_multiexenumberfg_tl}{%
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }  
+      \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl%
+    }%
+  }
+}
+
+\DeclareDocumentCommand \multiexelabelboxed { s } {%
+  \stepcounter{multiexecounter}%    War \refstepcounter. Dies erzeugt vertikalen Abstand.
+  \setlength{\fboxsep}{0pt}%
+  \makebox[\g__edu_listlabelwidth_dim][r]{%
+    \g_edu_multiexenumberstyle_tl%
+    \textcolor{\g_edu_multiexenumberfg_tl}{%
+      \IfBooleanT{#1} {
+        \raisebox{0.1ex} {
+          {\footnotesize$\star$}\hspace{0.75pt}
+        }
+      }   
+      \g_edu_multiexenumberleft_tl\alph{multiexecounter}   
+      \g_edu_multiexenumberright_tl
+    }%
+  }%
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+

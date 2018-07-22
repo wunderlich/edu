@@ -1,0 +1,80 @@
+\begin{option}{authorstyle}
+\begin{option}{classstyle}
+\begin{option}{datestyle}
+\begin{option}{emailstyle}
+\begin{option}{fieldstyle}
+\begin{option}{groupstyle}
+\begin{option}{licensestyle}
+\begin{option}{shortstyle}
+\begin{option}{subjectstyle}
+\begin{option}{timestampstyle}
+\begin{option}{titlestyle}
+\begin{option}{titlenumbersep}
+\begin{option}{versionstyle}
+\begin{option}{timestamptime}
+\begin{option}{timestamptimeseparator}
+\begin{option}{timestampdateseparator}
+\begin{option}{timestampdatetimeseparator}
+Styles of metadata:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  authorstyle .tl_gset:N = \g_edu_authorstyle_tl,
+  authorstyle .initial:n = \large\sffamily\scshape,
+  classstyle .tl_gset:N = \g_edu_classstyle_tl,
+  classstyle .initial:n = \large\sffamily,
+  datestyle .tl_gset:N = \g_edu_datestyle_tl,
+  datestyle .initial:n = \small\sffamily,
+  emailstyle .tl_gset:N = \g_edu_emailstyle_tl,
+  emailstyle .initial:n = \footnotesize\sffamily,
+  fieldstyle .tl_gset:N = \g_edu_fieldstyle_tl,
+  fieldstyle .initial:n = \large\sffamily,
+  groupstyle .tl_gset:N = \g_edu_groupstyle_tl,
+  groupstyle .initial:n = \Large\sffamily\bfseries,
+  licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
+  licensestyle .initial:n = \small\sffamily,
+  shortstyle .tl_gset:N = \g_edu_shortstyle_tl,
+  shortstyle .initial:n = \Large\sffamily\bfseries,
+  subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
+  subjectstyle .initial:n = \large\sffamily,
+  subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
+  subtitlestyle .initial:n = \Large\sffamily\bfseries,
+  timestampstyle .tl_gset:N = \g_edu_timestampstyle_tl,
+  timestampstyle .initial:n = \small\sffamily,
+  titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
+  titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
+  titlenumbersep .initial:n = 0.5em,
+  versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
+  versionstyle .initial:n = \small\sffamily,
+  timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
+  timestamptime .initial:n = true,
+  timestamptimeseparator .tl_gset:N = \g_edu_timestamptimeseparator_tl,
+  timestamptimeseparator .initial:n = -,
+  timestampdateseparator .tl_gset:N = \g_edu_timestampdateseparator_tl,
+  timestampdateseparator .initial:n = -,
+  timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
+  timestampdatetimeseparator .initial:n = -,
+}
+
+\__edu_keys_initial:n {
+  titlenumbersep = 0.5em
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}

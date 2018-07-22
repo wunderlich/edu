@@ -1,0 +1,99 @@
+\begin{macro}{\subexe}[2]{[<number points>]}{<title>}
+\begin{macro}{\subexe*}[2]{[<number points>]}{<title>}
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \subexe { s o m }{
+  \refstepcounter{subexercisecounter}
+  
+  \tl_clear:N \l__edu_subexelabeltext_tl
+  
+  \IfNoValueTF {#2} {
+    \tl_clear:N \l__edu_exepoints_tl
+  }{
+    \bool_if:NTF \g_edu_subexepointsachieved_bool {
+	    \tl_set:Nn \l__edu_exepoints_tl {
+	      \g_edu_subexepointsleft_tl
+	        \hspace{\g_edu_subexepointsachievedspace_dim}
+	        \g_edu_subexepointsachievedsep_tl
+	        #2\g_edu_subexepointslabel_tl
+	      \g_edu_subexepointsright_tl
+	    }
+	  }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+	      \g_edu_subexepointsleft_tl
+	        #2\g_edu_subexepointslabel_tl
+	      \g_edu_subexepointsright_tl
+	    }
+	  }
+  }
+
+  \tl_if_empty:nTF {#3} {
+    \tl_if_empty:NTF \g_edu_subexelabel_tl {
+      \tl_clear:N \l__edu_subexelabeltext_tl
+    }{
+      \tl_set:Nn \l__edu_subexelabeltext_tl {
+        \hspace{0.1em}\g_edu_subexelabel_tl
+      }
+    }
+  }{
+    \tl_if_empty:NTF \g_edu_subexelabel_tl {
+      \tl_set:Nn \l__edu_subexelabeltext_tl {
+        \hspace{0.3em}
+      }
+    }{
+      \tl_set:Nn \l__edu_subexelabeltext_tl {
+        \hspace{0.1em}\g_edu_subexelabel_tl{:}\hspace{0.3em}
+      }
+    }
+  }
+    
+  \setlength{\parfillskip}{0em}
+  \vspace{\g_edu_subexebeforeskip_dim}%
+  \parskipreduce%
+  {\g_edu_subexelabelstyle_tl%
+    \setlength{\fboxsep}{0.125em}
+    \raisebox{0.2ex}{%
+      \colorbox{\g_edu_subexenumberbg_tl}{%
+        \textcolor{\g_edu_subexenumberfg_tl}{%
+          \g_edu_subexenumberstyle_tl%
+          \thesubexercisecounter%
+          \g_edu_subexenumberseparator_tl%
+          \IfBooleanT{#1} {
+	          \raisebox{0.15ex}{%
+	            \,$\star$
+	          }
+          }
+        }%
+      }%
+    }%
+    \colorbox{\g_edu_subexelabelbg_tl}{%
+      \textcolor{\g_edu_subexelabelfg_tl}{\l__edu_subexelabeltext_tl}%
+    }%
+  }%
+  {%
+    \colorbox{\g_edu_subexebg_tl}{%
+      \textcolor{\g_edu_subexefg_tl}{\g_edu_subexestyle_tl #3}%
+    }%
+  }%
+  \hfill%
+  {\g_edu_subexepointsstyle_tl%
+    \textcolor{\g_edu_subexepointsfg_tl}{%
+      \l__edu_exepoints_tl%
+    }%
+  }%
+  \nopagebreak\@afterheading
+  \vspace{\g_edu_subexeafterskip_dim}%
+  \parskipreduce%
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
+  
+  \bool_if:NT \g_edu_exetoc_bool {
+  \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #3}
+  }
+  
+  \setcounter{multiexecounter}{0}
+  \setcounter{question}{0}
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}

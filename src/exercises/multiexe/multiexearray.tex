@@ -1,0 +1,20 @@
+\begin{MacroCode}{class}
+\DeclareDocumentEnvironment {multiexearray} { s O{0.25\baselineskip} m } {
+  \IfBooleanTF {#1} {
+	  \arraysetup[#2]{m}
+    \noindent\tabularx{\textwidth}{*{#3}{E}}
+	}{%
+	  \arraysetup[#2]{}
+	  \noindent\tabularx{\textwidth}{*{#3}{e}}%
+  }
+}{
+  \endtabularx
+  \arraycleanup
+}
+
+% Hack, because xparse doesn't generate starred environments:
+\cs_new:cpn {multiexearray*} {\multiexearray*}
+\cs_new_eq:cN {endmultiexearray*} \endmultiexearray
+
+\end{MacroCode}
+\end{environment}

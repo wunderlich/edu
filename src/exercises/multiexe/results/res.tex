@@ -1,0 +1,16 @@
+\begin{macro}{\res}[2]{[<alternative text>]}{<text>}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \res { +O{} +m} {%
+  \bool_if:NTF \g_edu_showresults_bool {
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #2%
+    \group_end:
+  }{#1}%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\end{MacroCode}
+\end{macro}

@@ -1,0 +1,34 @@
+\begin{option}{listarraysep}
+\begin{option}{listarraymargin}
+These options affect to lists and arrays:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
+  listarraymargin .dim_gset:N = \g_edu_listarraymargin_dim,
+}
+
+\__edu_keys_initial:n {listarraysep = 0.5em}
+\__edu_keys_initial:n {listarraymargin = 0.5em}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+
+\begin{option}{itemizefg}
+\begin{option}{enumeratefg}
+\begin{option}{descriptionfg}
+Options of lists:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  itemizefg .tl_gset:N = \g_edu_itemizefg_tl,          % Color of itemize-labels
+  itemizefg .initial:n = black,
+  enumeratefg .tl_gset:N = \g_edu_enumeratefg_tl,      % Color of enumerate-labels
+  enumeratefg .initial:n = black,
+  descriptionfg .tl_gset:N = \g_edu_descriptionfg_tl,  % Color of description-labels
+  descriptionfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}

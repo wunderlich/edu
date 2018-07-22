@@ -1,0 +1,10 @@
+\begin{macro}{\bonus}
+Setzt die \emph{nächste} Teilaufgabe als Zusatzaufgabe (Bonusaufgabe, "`Sternchenaufgabe"'). Muss vor dem Wechsel zur nächsten Aufgabe (also vor \texttt{\&}) aufgerufen werden!
+\begin{MacroCode}{class}
+\DeclareExpandableDocumentCommand \bonus { } {
+  \bool_gset_true:N \__edu_multiexebonus_bool
+}
+
+\end{MacroCode}
+\end{macro}
+

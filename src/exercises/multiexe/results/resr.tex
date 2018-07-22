@@ -1,0 +1,16 @@
+\begin{macro}{\resr}[3]{[<rule length>]}{<text>}{[<vertical offset>]}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#2}%
+  }{%
+    \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\end{MacroCode}
+\end{macro}

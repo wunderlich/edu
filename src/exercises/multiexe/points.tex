@@ -1,0 +1,23 @@
+\begin{macro}{\points}
+\begin{macro}{\points*}
+Setzt die Punktzahl der aktuellen Teilaufgabe zusammen. Die Sternvariante setzt die Punktzahl am rechten Rand der aktuellen Zeile.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \points { s m } {%
+  \IfBooleanT{#1} {
+	   \hspace*{0pt}\hfill\hspace{0.5em}%
+	}
+  \nolinebreak%  
+  \ensuremath{\;
+	  \text{%
+	    \g_edu_multiexepointsstyle_tl%
+	    \color{\g_edu_multiexepointsfg_tl}%
+	    \g_edu_multiexepointsleft_tl%
+	      #2\g_edu_multiexepointslabel_tl%
+	    \g_edu_multiexepointsright_tl%
+	   }%
+   }
+}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}

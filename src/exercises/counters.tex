@@ -1,0 +1,52 @@
+
+Zum Zählen der Aufgabennummern werden zuerst Zähler definiert. Anschließend Hilfs-Makros erstellt, welche im späteren Verlauf zur Anzeige der Punkte und zum Zusammensetzen der Überschriften dienen.
+
+\begin{macro}{\l__edu_exepoints_tl}
+\begin{macro}{\l__edu_exelabeltext_tl}
+\begin{macro}{\l__edu_subexelabeltext_tl}
+\begin{MacroCode}{class}
+\newcounter{exercisecounter}
+\newcounter{subexercisecounter}[exercisecounter]
+\newcounter{multiexecounter}
+
+\renewcommand{\thesubexercisecounter}{\theexercisecounter.\arabic{subexercisecounter}}
+
+\tl_new:N \l__edu_exepoints_tl        % For optional number points
+\tl_new:N \l__edu_exelabeltext_tl     % Concatenation of the exercise-label
+\tl_new:N \l__edu_subexelabeltext_tl  % Concatenation of the subexercise-label
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+
+\begin{macro}{\l__edu_sollabeltext_tl}
+\begin{macro}{\l__edu_subsollabeltext_tl}
+\begin{MacroCode}{class}
+\newcounter{solutioncounter}
+\newcounter{subsolutioncounter}[solutioncounter]
+\newcounter{multisolcounter}
+
+\renewcommand{\thesubsolutioncounter}{\thesolutioncounter.\arabic{subsolutioncounter}}
+
+\tl_new:N \l__edu_sollabeltext_tl     % Concatenation of the exercise-label
+\tl_new:N \l__edu_subsollabeltext_tl  % Concatenation of the subexercise-label
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+
+\begin{macro}{\rstexe}
+\begin{macro}{\rstsubexe}
+\begin{macro}{\rstmultiexe}
+Mit den folgenden Makros können Counter für Aufgaben manuell zurückgesetzt werden:
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \rstexe { } {\setcounter{exercisecounter}{0}}
+\DeclareDocumentCommand \rstsubexe { } {\setcounter{subexercisecounter}{0}}
+\DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+

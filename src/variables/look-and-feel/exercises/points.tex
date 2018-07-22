@@ -1,0 +1,83 @@
+\begin{option}{exepointslabel}
+\begin{option}{subexepointslabel}
+\begin{option}{multiexepointslabel}
+Labels of points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exepointslabel .tl_gset:N = \g_edu_exepointslabel_tl,
+  exepointslabel .initial:n = \,P,
+  subexepointslabel .tl_gset:N = \g_edu_subexepointslabel_tl,
+  subexepointslabel .initial:n = \,P,
+  multiexepointslabel .tl_gset:N = \g_edu_multiexepointslabel_tl,
+  multiexepointslabel .initial:n =,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{exepointsleft}
+\begin{option}{exepointsright}
+\begin{option}{subexepointsleft}
+\begin{option}{subexepointsright}
+\begin{option}{multiexepointsleft}
+\begin{option}{multiexepointsright}
+Delimiter of points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exepointsleft .tl_gset:N = \g_edu_exepointsleft_tl,
+  exepointsleft .initial:n = [,
+  exepointsright .tl_gset:N = \g_edu_exepointsright_tl,
+  exepointsright .initial:n = ],
+  subexepointsleft .tl_gset:N = \g_edu_subexepointsleft_tl,
+  subexepointsleft .initial:n = [,
+  subexepointsright .tl_gset:N = \g_edu_subexepointsright_tl,
+  subexepointsright .initial:n = ],
+  multiexepointsleft .tl_gset:N = \g_edu_multiexepointsleft_tl,
+  multiexepointsleft .initial:n = [,
+  multiexepointsright .tl_gset:N = \g_edu_multiexepointsright_tl,
+  multiexepointsright .initial:n = ],
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{exepointsachieved}
+\begin{option}{subexepointsachieved}
+\begin{option}{exepointsachievedspace}
+\begin{option}{subexepointsachievedspace}
+\begin{option}{exepointsachievedsep}
+\begin{option}{subexepointsachievedsep}
+Achieved points:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exepointsachieved .bool_gset:N = \g_edu_exepointsachieved_bool,
+  exepointsachieved .initial:n = false,
+  subexepointsachieved .bool_gset:N = \g_edu_subexepointsachieved_bool,
+  subexepointsachieved .initial:n = false,
+  exepointsachievedspace .dim_gset:N = \g_edu_exepointsachievedspace_dim,
+  exepointsachievedspace .initial:n = 0.6cm,
+  subexepointsachievedspace .dim_gset:N = \g_edu_subexepointsachievedspace_dim,
+  subexepointsachievedspace .initial:n = 0.6cm,
+  exepointsachievedsep .tl_gset:N = \g_edu_exepointsachievedsep_tl,
+  exepointsachievedsep .initial:n = /\,,
+  subexepointsachievedsep .tl_gset:N = \g_edu_subexepointsachievedsep_tl,
+  subexepointsachievedsep .initial:n = /\,,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+

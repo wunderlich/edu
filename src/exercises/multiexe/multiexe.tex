@@ -1,0 +1,13 @@
+\begin{macro}{\multiexe}
+Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstaben mit anschließender Klammer (a), b),\dots) und erhöhen den Counter um Eins. \cs{multiexelabelboxed} setzt die Buchstaben zusätzlich rechtsbündig in eine Box.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \multiexe { s } {%
+  \IfBooleanTF{#1} {
+    \multiexelabel*\xspace
+  }{
+    \multiexelabel\xspace
+  }
+}
+
+\end{MacroCode}
+\end{macro}

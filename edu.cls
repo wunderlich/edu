@@ -214,6 +214,44 @@
 }
 
 \keys_define:nn {edu} {
+  partnumbersize .tl_gset:N = \g_edu_partnumbersize_tl,              % Size of part numbers
+  partnumbersize .initial:n = \Large,
+  sectionnumbersize .tl_gset:N = \g_edu_sectionnumbersize_tl,        % Size of section numbers
+  sectionnumbersize .initial:n = \normalsize,
+  subsectionnumbersize .tl_gset:N = \g_edu_subsectionnumbersize_tl,  % Size of subsection numbers
+  subsectionnumbersize .initial:n = \footnotesize,
+  subsubsectionnumbersize .tl_gset:N = \g_edu_subsubsectionnumbersize_tl,  % Size of subsubsection numbers
+  subsubsectionnumbersize .initial:n = \scriptsize,
+}
+
+\keys_define:nn {edu} {
+  partnumberfg .tl_gset:N = \g_edu_partnumberfg_tl,             % Foreground color of part numbers
+  partnumberfg .initial:n = white,
+  partnumberbg .tl_gset:N = \g_edu_partnumberbg_tl,             % Background color of part numbers
+  partnumberbg .initial:n = black,
+  partfg .tl_gset:N = \g_edu_partfg_tl,                         % Foreground color of parts
+  partfg .initial:n = black,
+  sectionnumberfg .tl_gset:N = \g_edu_sectionnumberfg_tl,       % Foreground color of section numbers
+  sectionnumberfg .initial:n = white,
+  sectionnumberbg .tl_gset:N = \g_edu_sectionnumberbg_tl,       % Background color of section numbers
+  sectionnumberbg .initial:n = black,
+  sectionfg .tl_gset:N = \g_edu_sectionfg_tl,                   % Foreground color of sections
+  sectionfg .initial:n = black,
+  subsectionnumberfg .tl_gset:N = \g_edu_subsectionnumberfg_tl, % Foreground color of subsection numbers
+  subsectionnumberfg .initial:n = white,
+  subsectionnumberbg .tl_gset:N = \g_edu_subsectionnumberbg_tl, % Background color of subsection numbers
+  subsectionnumberbg .initial:n = black,
+  subsectionfg .tl_gset:N = \g_edu_subsectionfg_tl,             % Foreground color of subsection
+  subsectionfg .initial:n = black,
+  subsubsectionnumberfg .tl_gset:N = \g_edu_subsubsectionnumberfg_tl, % Foreground color of subsubsection numbers
+  subsubsectionnumberfg .initial:n = white,
+  subsubsectionnumberbg .tl_gset:N = \g_edu_subsubsectionnumberbg_tl, % Background color of subsection numbers
+  subsubsectionnumberbg .initial:n = black,
+  subsubsectionfg .tl_gset:N = \g_edu_subsubsectionfg_tl,             % Foreground color of subsubsection
+  subsubsectionfg .initial:n = black,
+}
+
+\keys_define:nn {edu} {
   listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
   listarraymargin .dim_gset:N = \g_edu_listarraymargin_dim,
 }
@@ -222,46 +260,12 @@
 \__edu_keys_initial:n {listarraymargin = 0.5em}
 
 \keys_define:nn {edu} {
-  authorstyle .tl_gset:N = \g_edu_authorstyle_tl,
-  authorstyle .initial:n = \large\sffamily\scshape,
-  classstyle .tl_gset:N = \g_edu_classstyle_tl,
-  classstyle .initial:n = \large\sffamily,
-  datestyle .tl_gset:N = \g_edu_datestyle_tl,
-  datestyle .initial:n = \small\sffamily,
-  emailstyle .tl_gset:N = \g_edu_emailstyle_tl,
-  emailstyle .initial:n = \footnotesize\sffamily,
-  fieldstyle .tl_gset:N = \g_edu_fieldstyle_tl,
-  fieldstyle .initial:n = \large\sffamily,
-  groupstyle .tl_gset:N = \g_edu_groupstyle_tl,
-  groupstyle .initial:n = \Large\sffamily\bfseries,
-  licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
-  licensestyle .initial:n = \small\sffamily,
-  shortstyle .tl_gset:N = \g_edu_shortstyle_tl,
-  shortstyle .initial:n = \Large\sffamily\bfseries,
-  subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
-  subjectstyle .initial:n = \large\sffamily,
-  subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
-  subtitlestyle .initial:n = \Large\sffamily\bfseries,
-  timestampstyle .tl_gset:N = \g_edu_timestampstyle_tl,
-  timestampstyle .initial:n = \small\sffamily,
-  titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
-  titlestyle .initial:n = \LARGE\sffamily\bfseries,
-  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
-  titlenumbersep .initial:n = 0.5em,
-  versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
-  versionstyle .initial:n = \small\sffamily,
-  timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
-  timestamptime .initial:n = true,
-  timestamptimeseparator .tl_gset:N = \g_edu_timestamptimeseparator_tl,
-  timestamptimeseparator .initial:n = -,
-  timestampdateseparator .tl_gset:N = \g_edu_timestampdateseparator_tl,
-  timestampdateseparator .initial:n = -,
-  timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
-  timestampdatetimeseparator .initial:n = -,
-}
-
-\__edu_keys_initial:n {
-  titlenumbersep = 0.5em
+  itemizefg .tl_gset:N = \g_edu_itemizefg_tl,          % Color of itemize-labels
+  itemizefg .initial:n = black,
+  enumeratefg .tl_gset:N = \g_edu_enumeratefg_tl,      % Color of enumerate-labels
+  enumeratefg .initial:n = black,
+  descriptionfg .tl_gset:N = \g_edu_descriptionfg_tl,  % Color of description-labels
+  descriptionfg .initial:n = black,
 }
 
 \keys_define:nn {edu} {
@@ -304,59 +308,8 @@
 }
 
 \keys_define:nn {edu} {
-  itemizefg .tl_gset:N = \g_edu_itemizefg_tl,          % Color of itemize-labels
-  itemizefg .initial:n = black,
-  enumeratefg .tl_gset:N = \g_edu_enumeratefg_tl,      % Color of enumerate-labels
-  enumeratefg .initial:n = black,
-  descriptionfg .tl_gset:N = \g_edu_descriptionfg_tl,  % Color of description-labels
-  descriptionfg .initial:n = black,
-}
-
-\keys_define:nn {edu} {
-  partnumbersize .tl_gset:N = \g_edu_partnumbersize_tl,              % Size of part numbers
-  partnumbersize .initial:n = \Large,
-  sectionnumbersize .tl_gset:N = \g_edu_sectionnumbersize_tl,        % Size of section numbers
-  sectionnumbersize .initial:n = \normalsize,
-  subsectionnumbersize .tl_gset:N = \g_edu_subsectionnumbersize_tl,  % Size of subsection numbers
-  subsectionnumbersize .initial:n = \footnotesize,
-  subsubsectionnumbersize .tl_gset:N = \g_edu_subsubsectionnumbersize_tl,  % Size of subsubsection numbers
-  subsubsectionnumbersize .initial:n = \scriptsize,
-}
-
-\keys_define:nn {edu} {
-  partnumberfg .tl_gset:N = \g_edu_partnumberfg_tl,             % Foreground color of part numbers
-  partnumberfg .initial:n = white,
-  partnumberbg .tl_gset:N = \g_edu_partnumberbg_tl,             % Background color of part numbers
-  partnumberbg .initial:n = black,
-  partfg .tl_gset:N = \g_edu_partfg_tl,                         % Foreground color of parts
-  partfg .initial:n = black,
-  sectionnumberfg .tl_gset:N = \g_edu_sectionnumberfg_tl,       % Foreground color of section numbers
-  sectionnumberfg .initial:n = white,
-  sectionnumberbg .tl_gset:N = \g_edu_sectionnumberbg_tl,       % Background color of section numbers
-  sectionnumberbg .initial:n = black,
-  sectionfg .tl_gset:N = \g_edu_sectionfg_tl,                   % Foreground color of sections
-  sectionfg .initial:n = black,
-  subsectionnumberfg .tl_gset:N = \g_edu_subsectionnumberfg_tl, % Foreground color of subsection numbers
-  subsectionnumberfg .initial:n = white,
-  subsectionnumberbg .tl_gset:N = \g_edu_subsectionnumberbg_tl, % Background color of subsection numbers
-  subsectionnumberbg .initial:n = black,
-  subsectionfg .tl_gset:N = \g_edu_subsectionfg_tl,             % Foreground color of subsection
-  subsectionfg .initial:n = black,
-  subsubsectionnumberfg .tl_gset:N = \g_edu_subsubsectionnumberfg_tl, % Foreground color of subsubsection numbers
-  subsubsectionnumberfg .initial:n = white,
-  subsubsectionnumberbg .tl_gset:N = \g_edu_subsubsectionnumberbg_tl, % Background color of subsection numbers
-  subsubsectionnumberbg .initial:n = black,
-  subsubsectionfg .tl_gset:N = \g_edu_subsubsectionfg_tl,             % Foreground color of subsubsection
-  subsubsectionfg .initial:n = black,
-}
-
-\keys_define:nn {edu} {
-  colorlinks .bool_gset:N = \g_edu_colorlinks_bool,
-  colorlinks .initial:n = true,
-  linkfg .tl_gset:N = \g_edu_linkfg_tl,
-  linkfg .initial:n = black,
-  linkborderfg .tl_gset:N = \g_edu_linkborderfg_tl,
-  linkborderfg .initial:n = {1~0~0},
+  exetoc .bool_gset:N = \g_edu_exetoc_bool,  % Add (sub)exercises and (sub)solutions to toc?
+  exetoc .initial:n = false,
 }
 
 \keys_define:nn {edu} {
@@ -382,59 +335,6 @@
   seeleft .initial:n = (,
   seeright .tl_gset:N = \g_edu_seeright_tl,                  % Right delimiter of 'see'
   seeright .initial:n = ),
-}
-
-\keys_define:nn {edu} {
-  pglabel .tl_gset:N = \g_edu_pglabel_tl,  % Label of page in 'pgno'
-  pglabel .initial:n = S.,
-  nolabel .tl_gset:N = \g_edu_nolabel_tl,  % Label of number in 'pgno'
-  nolabel .initial:n = Nr.,
-}
-
-\keys_define:nn {edu} {
-  ptolabel .tl_gset:N = \g_edu_ptolabel_tl,
-  ptolabel .initial:n = Bitte~wenden\hspace*{0.25em},
-  ptolabelstyle .tl_gset:N = \g_edu_ptolabelstyle_tl,
-  ptolabelstyle .initial:n = \scriptsize\sffamily,
-  ptosymbol .tl_gset:N = \g_ptosymbol_tl,
-  ptosymbol .initial:n = $\blacktriangleright$,
-  ptosymbolstyle .tl_gset:N = \g_ptosymbolstyle_tl,
-  ptosymbolstyle .initial:n = \small\sffamily,
-}
-
-\keys_define:nn {edu} {
-  cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
-  cemphfg .initial:n = wuSemiDarkRed,
-}
-
-\keys_define:nn {edu} {
-  ccscale .fp_gset:N = \g_edu_ccscale_fp,    % Scaling Creative Commons Icons
-  ccscale .initial:n = 1.5,
-  actionfg .tl_gset:N = \g_edu_actionfg_tl,  % Color of action-symbol
-  actionfg .initial:n = black,
-  speechfg .tl_gset:N = \g_edu_speechfg_tl,  % Color of speech-symbol
-  speechfg .initial:n = black,
-}
-
-\keys_define:nn {edu} {
-  colortheme .tl_gset:N = \g_edu_colortheme_tl, % Color zheme
-  colortheme .initial:n =,
-  styletheme .tl_gset:N = \g_edu_styletheme_tl, % Style theme
-  styletheme .initial:n =,
-}
-
-\keys_define:nn {edu} {
-  graphicspath .tl_gset:N = \g_edu_graphicspath_tl,  % Path to graphics
-  graphicspath .initial:n = img/,
-  tikzpath .tl_gset:N = \g_edu_tikzpath_tl,          % Path to pgf-files (for tikz)
-  tikzpath .initial:n = tikz/,
-}
-
-\keys_define:nn {edu} {
-  exelabel .tl_gset:N = \g_edu_exelabel_tl,
-  exelabel .initial:n = Aufgabe,
-  subexelabel .tl_gset:N = \g_edu_subexelabel_tl,
-  subexelabel .initial:n =,
 }
 
 \keys_define:nn {edu} {
@@ -577,6 +477,102 @@
   subexeafterskip = 0.5ex,
   arraybeforeskip = 0.5\baselineskip,
   arrayafterskip= 0.5\baselineskip
+}
+
+\keys_define:nn {edu} {
+  exelabel .tl_gset:N = \g_edu_exelabel_tl,
+  exelabel .initial:n = Aufgabe,
+  subexelabel .tl_gset:N = \g_edu_subexelabel_tl,
+  subexelabel .initial:n =,
+}
+
+\keys_define:nn {edu} {
+  authorstyle .tl_gset:N = \g_edu_authorstyle_tl,
+  authorstyle .initial:n = \large\sffamily\scshape,
+  classstyle .tl_gset:N = \g_edu_classstyle_tl,
+  classstyle .initial:n = \large\sffamily,
+  datestyle .tl_gset:N = \g_edu_datestyle_tl,
+  datestyle .initial:n = \small\sffamily,
+  emailstyle .tl_gset:N = \g_edu_emailstyle_tl,
+  emailstyle .initial:n = \footnotesize\sffamily,
+  fieldstyle .tl_gset:N = \g_edu_fieldstyle_tl,
+  fieldstyle .initial:n = \large\sffamily,
+  groupstyle .tl_gset:N = \g_edu_groupstyle_tl,
+  groupstyle .initial:n = \Large\sffamily\bfseries,
+  licensestyle .tl_gset:N = \g_edu_licensestyle_tl,
+  licensestyle .initial:n = \small\sffamily,
+  shortstyle .tl_gset:N = \g_edu_shortstyle_tl,
+  shortstyle .initial:n = \Large\sffamily\bfseries,
+  subjectstyle .tl_gset:N = \g_edu_subjectstyle_tl,
+  subjectstyle .initial:n = \large\sffamily,
+  subtitlestyle .tl_gset:N = \g_edu_subtitlestyle_tl,
+  subtitlestyle .initial:n = \Large\sffamily\bfseries,
+  timestampstyle .tl_gset:N = \g_edu_timestampstyle_tl,
+  timestampstyle .initial:n = \small\sffamily,
+  titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
+  titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
+  titlenumbersep .initial:n = 0.5em,
+  versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
+  versionstyle .initial:n = \small\sffamily,
+  timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
+  timestamptime .initial:n = true,
+  timestamptimeseparator .tl_gset:N = \g_edu_timestamptimeseparator_tl,
+  timestamptimeseparator .initial:n = -,
+  timestampdateseparator .tl_gset:N = \g_edu_timestampdateseparator_tl,
+  timestampdateseparator .initial:n = -,
+  timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
+  timestampdatetimeseparator .initial:n = -,
+}
+
+\__edu_keys_initial:n {
+  titlenumbersep = 0.5em
+}
+
+\keys_define:nn {edu} {
+  pglabel .tl_gset:N = \g_edu_pglabel_tl,  % Label of page in 'pgno'
+  pglabel .initial:n = S.,
+  nolabel .tl_gset:N = \g_edu_nolabel_tl,  % Label of number in 'pgno'
+  nolabel .initial:n = Nr.,
+}
+
+\keys_define:nn {edu} {
+  ptolabel .tl_gset:N = \g_edu_ptolabel_tl,
+  ptolabel .initial:n = Bitte~wenden\hspace*{0.25em},
+  ptolabelstyle .tl_gset:N = \g_edu_ptolabelstyle_tl,
+  ptolabelstyle .initial:n = \scriptsize\sffamily,
+  ptosymbol .tl_gset:N = \g_ptosymbol_tl,
+  ptosymbol .initial:n = $\blacktriangleright$,
+  ptosymbolstyle .tl_gset:N = \g_ptosymbolstyle_tl,
+  ptosymbolstyle .initial:n = \small\sffamily,
+}
+
+\keys_define:nn {edu} {
+  cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
+  cemphfg .initial:n = wuSemiDarkRed,
+}
+
+\keys_define:nn {edu} {
+  ccscale .fp_gset:N = \g_edu_ccscale_fp,    % Scaling Creative Commons Icons
+  ccscale .initial:n = 1.5,
+  actionfg .tl_gset:N = \g_edu_actionfg_tl,  % Color of action-symbol
+  actionfg .initial:n = black,
+  speechfg .tl_gset:N = \g_edu_speechfg_tl,  % Color of speech-symbol
+  speechfg .initial:n = black,
+}
+
+\keys_define:nn {edu} {
+  colortheme .tl_gset:N = \g_edu_colortheme_tl, % Color zheme
+  colortheme .initial:n =,
+  styletheme .tl_gset:N = \g_edu_styletheme_tl, % Style theme
+  styletheme .initial:n =,
+}
+
+\keys_define:nn {edu} {
+  graphicspath .tl_gset:N = \g_edu_graphicspath_tl,  % Path to graphics
+  graphicspath .initial:n = img/,
+  tikzpath .tl_gset:N = \g_edu_tikzpath_tl,          % Path to pgf-files (for tikz)
+  tikzpath .initial:n = tikz/,
 }
 
 \keys_define:nn {edu} {
@@ -3808,22 +3804,6 @@
   }{
     \multiexelabel\xspace
   }
-}
-
-\DeclareDocumentCommand \points { s m } {%
-  \IfBooleanT{#1} {
-   \hspace*{0pt}\hfill\hspace{0.5em}%
-}
-  \nolinebreak%
-  \ensuremath{\;
-  \text{%
-    \g_edu_multiexepointsstyle_tl%
-    \color{\g_edu_multiexepointsfg_tl}%
-    \g_edu_multiexepointsleft_tl%
-      #2\g_edu_multiexepointslabel_tl%
-    \g_edu_multiexepointsright_tl%
-   }%
-   }
 }
 
 \DeclareDocumentCommand \res { +O{} +m} {%

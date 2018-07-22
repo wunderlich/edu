@@ -1,0 +1,30 @@
+\begin{option}{headerrulewidth}
+\begin{option}{footer}
+\begin{option}{pagecount}
+\begin{option}{footskip}
+\begin{option}{twoupfootskip}
+\begin{option}{timestampfooter}
+Options of header and footer:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  headerrulewidth .dim_gset:N = \g_edu_headerrulewidth_dim,  % Width of header rule
+  headerrulewidth .initial:n = 0.5pt,
+  footer .bool_gset:N = \g_edu_footer_bool,                   % Enable/disable footer
+  footer .initial:n = true,
+  pagecount .bool_gset:N = \g_edu_pagecount_bool,             % Enable/disable pagecount at footer
+  pagecount .initial:n = true,
+  footskip .dim_gset:N = \g_edu_footskip_dim,                % Skip to first baseline of  footer
+  footskip .initial:n = 1cm,
+  twoupfootskip .dim_gset:N = \g_edu_twoupfootskip_dim,      % Skip to first baseline of  footer in twoup-mode
+  twoupfootskip .initial:n = 0.75cm,
+  timestampfooter .bool_gset:N = \g_edu_timestampfooter_bool,
+  timestampfooter .initial:n = false,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}

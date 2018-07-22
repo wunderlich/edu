@@ -1,0 +1,26 @@
+\begin{environment}{multiexelist}[1]{[<itemsep>]}
+\begin{environment}{multiexelist*}[1]{[<itemsep>]}
+Der einspaltige Satz von Teilaufgaben geschieht mithilfe einer angepassten Liste. Die normale Variante sollte verwendet werden, wenn vor den Teilaufgaben Fließtext steht. Folgen die Teilaufgaben direkt auf eine Aufgabenüberschrift (\cs{exe}, \cs{subexe}, \dots), sollte die Sternvariante verwendet werden, da hierbei der obere Abstand angepasst werden muss.
+\begin{MacroCode}{class}
+\DeclareDocumentEnvironment {multiexelist} { s O{0.5\baselineskip} } {
+  \parskipreduce
+  \IfBooleanT {#1} {
+    \bool_if:NTF \g_edu_parskip_bool {
+      \vspace{0.125\baselineskip}
+    }{
+      \vspace{-0.375\baselineskip}
+    }
+  }
+  \begin{edulist}[#2]{\multiexelabelboxed}
+}{
+  \end{edulist}
+  \parskipreduce
+}
+
+% Hack, because xparse doesn't generate starred environments:
+\cs_new:cpn {multiexelist*} {\multiexelist*}
+\cs_new_eq:cN {endmultiexelist*} \endmultiexelist
+
+\end{MacroCode}
+\end{environment}
+\end{environment}

@@ -1,0 +1,66 @@
+\begin{macro}{\sol}[1]{<title>}
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \sol { m }{
+  \refstepcounter{solutioncounter}
+  
+  \tl_clear:N \l__edu_sollabeltext_tl
+
+  \tl_if_empty:nTF {#1} {
+    \tl_if_empty:NTF \g_edu_sollabel_tl {
+      \tl_clear:N \l__edu_sollabeltext_tl
+    }{
+      \tl_set:Nn \l__edu_sollabeltext_tl {
+        \hspace{0.1em}\g_edu_sollabel_tl
+      }
+    }
+  }{
+    \tl_if_empty:NTF \g_edu_sollabel_tl {
+      \tl_set:Nn \l__edu_sollabeltext_tl {
+        \hspace{0.3em}
+      }
+    }{
+      \tl_set:Nn \l__edu_sollabeltext_tl {
+        \hspace{0.1em}\g_edu_sollabel_tl{:}\hspace{0.3em}
+      }
+    }
+  }
+  
+  \setlength{\parfillskip}{0em}
+  \vspace{\g_edu_solbeforeskip_dim}%
+  \parskipreduce%
+  {\g_edu_sollabelstyle_tl%
+    \setlength{\fboxsep}{0.125em}%
+    \raisebox{0.2ex}{%
+      \colorbox{\g_edu_solnumberbg_tl}{%
+        \textcolor{\g_edu_solnumberfg_tl}{%
+          \g_edu_solnumberstyle_tl\thesolutioncounter\g_edu_solnumberseparator_tl%
+        }%
+      }%
+    }%
+    \hspace{0.1em}%
+    \colorbox{\g_edu_sollabelbg_tl}{%
+      \textcolor{\g_edu_sollabelfg_tl}{\l__edu_sollabeltext_tl}%
+    }%
+  }%
+  {%
+    \colorbox{\g_edu_solbg_tl}{%
+      \textcolor{\g_edu_solfg_tl}{\g_edu_solstyle_tl #1}%
+    }%
+  }%
+  \nopagebreak\@afterheading
+  \vspace{\g_edu_solafterskip_dim}%
+  \parskipreduce%
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
+  
+  \bool_if:NT \g_edu_exetoc_bool {
+  \addcontentsline{toc}{section}{\thesolutioncounter\g_edu_solnumberseparator_tl~\l__edu_sollabeltext_tl #1}
+  }
+    
+  \setcounter{subsolutioncounter}{0} 
+  \setcounter{multiexecounter}{0}
+}
+
+\end{MacroCode}
+\end{macro}
+

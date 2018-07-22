@@ -1,0 +1,17 @@
+\begin{macro}{\resb}[4]{[<box width>]}{[<box height>]}{<text>}{[<vertical offset>]}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#3}%
+  }{%
+    \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
+    \hspace{5pt}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\end{MacroCode}
+\end{macro}

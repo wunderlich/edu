@@ -1,0 +1,34 @@
+\begin{option}{exebeforeskip}
+\begin{option}{exeafterskip}
+\begin{option}{subexebeforeskip}
+\begin{option}{subexeafterskip}
+\begin{option}{arraybeforeskip}
+\begin{option}{arrayafterskip}
+Skips before and after (sub-)exercises:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  exebeforeskip .dim_gset:N = \g_edu_exebeforeskip_dim,
+  exeafterskip .dim_gset:N = \g_edu_exeafterskip_dim,
+  subexebeforeskip .dim_gset:N = \g_edu_subexebeforeskip_dim,
+  subexeafterskip .dim_gset:N = \g_edu_subexeafterskip_dim,
+  arraybeforeskip .dim_gset:N = \g_edu_arraybeforeskip_dim,
+  arrayafterskip .dim_gset:N = \g_edu_arrayafterskip_dim,
+}
+
+\__edu_keys_initial:n {
+  exebeforeskip = 2.25ex,
+  exeafterskip = 0.5ex,
+  subexebeforeskip = 1.5ex,
+  subexeafterskip = 0.5ex,
+  arraybeforeskip = 0.5\baselineskip,
+  arrayafterskip= 0.5\baselineskip
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+

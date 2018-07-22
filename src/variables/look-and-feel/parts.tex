@@ -1,0 +1,81 @@
+\begin{option}{parts}
+Set part as topmost structure.
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
+  parts .initial:n = false
+}						
+
+\end{MacroCode}
+\end{option}
+
+\begin{option}{partnumbersize}
+\begin{option}{sectionnumbersize}
+\begin{option}{subsectionnumbersize}
+Sizes of sections:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  partnumbersize .tl_gset:N = \g_edu_partnumbersize_tl,              % Size of part numbers
+  partnumbersize .initial:n = \Large,
+  sectionnumbersize .tl_gset:N = \g_edu_sectionnumbersize_tl,        % Size of section numbers
+  sectionnumbersize .initial:n = \normalsize,
+  subsectionnumbersize .tl_gset:N = \g_edu_subsectionnumbersize_tl,  % Size of subsection numbers
+  subsectionnumbersize .initial:n = \footnotesize,
+  subsubsectionnumbersize .tl_gset:N = \g_edu_subsubsectionnumbersize_tl,  % Size of subsubsection numbers
+  subsubsectionnumbersize .initial:n = \scriptsize,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+
+
+\begin{option}{partnumberfg}
+\begin{option}{partnumberbg}
+\begin{option}{partfg}
+\begin{option}{sectionnumberfg}
+\begin{option}{sectionnumberbg}
+\begin{option}{sectionfg}
+\begin{option}{subsectionnumberfg}
+\begin{option}{subsectionnumberbg}
+\begin{option}{subsectionfg}
+Styles of sections:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  partnumberfg .tl_gset:N = \g_edu_partnumberfg_tl,             % Foreground color of part numbers
+  partnumberfg .initial:n = white,
+  partnumberbg .tl_gset:N = \g_edu_partnumberbg_tl,             % Background color of part numbers
+  partnumberbg .initial:n = black,
+  partfg .tl_gset:N = \g_edu_partfg_tl,                         % Foreground color of parts
+  partfg .initial:n = black,
+  sectionnumberfg .tl_gset:N = \g_edu_sectionnumberfg_tl,       % Foreground color of section numbers
+  sectionnumberfg .initial:n = white,
+  sectionnumberbg .tl_gset:N = \g_edu_sectionnumberbg_tl,       % Background color of section numbers
+  sectionnumberbg .initial:n = black,
+  sectionfg .tl_gset:N = \g_edu_sectionfg_tl,                   % Foreground color of sections
+  sectionfg .initial:n = black,
+  subsectionnumberfg .tl_gset:N = \g_edu_subsectionnumberfg_tl, % Foreground color of subsection numbers
+  subsectionnumberfg .initial:n = white,
+  subsectionnumberbg .tl_gset:N = \g_edu_subsectionnumberbg_tl, % Background color of subsection numbers
+  subsectionnumberbg .initial:n = black,
+  subsectionfg .tl_gset:N = \g_edu_subsectionfg_tl,             % Foreground color of subsection
+  subsectionfg .initial:n = black,
+  subsubsectionnumberfg .tl_gset:N = \g_edu_subsubsectionnumberfg_tl, % Foreground color of subsubsection numbers
+  subsubsectionnumberfg .initial:n = white,
+  subsubsectionnumberbg .tl_gset:N = \g_edu_subsubsectionnumberbg_tl, % Background color of subsection numbers
+  subsubsectionnumberbg .initial:n = black,
+  subsubsectionfg .tl_gset:N = \g_edu_subsubsectionfg_tl,             % Foreground color of subsubsection
+  subsubsectionfg .initial:n = black,
+}
+
+\end{MacroCode}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}
+\end{option}

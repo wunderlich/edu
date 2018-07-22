@@ -1,0 +1,15 @@
+\begin{macro}{\item*}
+Innerhalb einer Teilaufgaben-Liste können Zusatzaufgaben (Bonusaufgaben oder "`Sternchenaufgaben"') mithilfe dieser neu definierten Sternvariante von \Macro\item erstellt werden.
+\begin{MacroCode}{class}
+\let\itemorig\item
+
+\DeclareDocumentCommand \item { s } {%
+  \IfBooleanTF{#1} {
+    \itemorig[\multiexelabelboxed*]
+  }{
+    \itemorig
+  }
+}
+
+\end{MacroCode}
+\end{macro}
