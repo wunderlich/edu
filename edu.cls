@@ -3378,6 +3378,7 @@
 \DeclareDocumentCommand \rstsubexe { } {\setcounter{subexercisecounter}{0}}
 \DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
 
+\newlength{\l__edu_exenegtextwidth_tl}
 \DeclareDocumentCommand \exe { s o m o }{
   \refstepcounter{exercisecounter}
 
@@ -3493,7 +3494,6 @@
       \l__edu_exepoints_tl%
     }%
   }%% Calculate Exercixe-Text-Width
-  \newlength{\l__edu_exenegtextwidth_tl}
   \setlength{\l__edu_exenegtextwidth_tl}{
     \widthof{\l__edu_exepreamble_tl}
   }
