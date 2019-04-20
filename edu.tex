@@ -7125,7 +7125,7 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
   \parskipreduce%
   {
     \g_edu_exelabelstyle_tl%
-    \tl_if_empty:nF {#4} {
+    \IfNoValueF {#4} {
       \hspace*{-3em}
       \makebox[2.5em][r]{
         \tl_if_in:nnT {#4} {c} {

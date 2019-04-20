@@ -211,7 +211,7 @@
 \keys_define:nn {edu} {
   parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
   parts .initial:n = false
-}
+} 
 
 \keys_define:nn {edu} {
   listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
@@ -2195,7 +2195,7 @@
   \setpar
 }
 
-\bool_if:NF \g_edu_parindent_bool {
+\bool_if:NF \g_edu_parindent_bool { 
 \tl_gput_right:Nn \quotation {
   \noindent\ignorespaces
 }
@@ -3432,7 +3432,7 @@
   \parskipreduce%
   {
     \g_edu_exelabelstyle_tl%
-    \tl_if_empty:nF {#4} {
+    \IfNoValueF {#4} {
       \hspace*{-3em}
       \makebox[2.5em][r]{
         \tl_if_in:nnT {#4} {c} {
@@ -4846,9 +4846,9 @@
   \medskip
   \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
   }
+   
 
-
-  \bool_if:NT \g_edu_exampointssignature_bool {
+  \bool_if:NT \g_edu_exampointssignature_bool { 
     \par
     \mdseries\footnotesize
     \vspace{0.75cm}
@@ -4885,13 +4885,13 @@
   }
     \end{minipage}
     \begin{minipage}{0.45\linewidth-\fboxsep}
-  \bool_if:NTF \g_edu_exampointssignature_bool {
+  \bool_if:NTF \g_edu_exampointssignature_bool { 
     \vspace{1cm}
         \mdseries\footnotesize
         \rule{7cm}{0.4pt}\\
      \g_edu_exampointssignaturelabel_tl
    }{
-   \bool_if:NT \g_edu_exampointssecondmark_bool {
+   \bool_if:NT \g_edu_exampointssecondmark_bool { 
      \par
     \large\bfseries
   \medskip
@@ -4901,7 +4901,7 @@
     \end{minipage}
   }
 }
-  \setlength{\fboxsep}{3pt}
+  \setlength{\fboxsep}{3pt} 
 }
 
 \dim_new:N \g_edu_lstbelowskip
