@@ -820,7 +820,7 @@ Lorem ipsum dolor sit amet ...
 \endcode
 
 \localeDE{
-Es kann hilfreich sein, auf erwartete Ergebnisse durch eine Linie oder eine Box hinzuweisen. Zu diesem Zweck können die Makros \Macro\resr\ (engl. \emph{rule} -- \emph{Linie}) und \Macro\resb\ (engl. \emph{box} -- \emph{Box}) verwendet werden. Beide verhalten sich grundsätzlich wie \cs{res}, zeigen die Ergebnisse also nur an, wenn \opt{showresults} gesetzt ist. Werden die Ergebnisse nicht angezeigt, erzeugt ersteres jedoch eine vertikale Linie, letztes einen rechteckigen Rahmen.
+Es kann hilfreich sein, auf erwartete Ergebnisse durch eine Linie oder eine Box hinzuweisen. Zu diesem Zweck können die Makros \Macro\resr\ (engl. \emph{rule} -- \emph{Linie}),  \Macro\resrfill\ und \Macro\resb\ (engl. \emph{box} -- \emph{Box}) verwendet werden. Diese verhalten sich grundsätzlich wie \cs{res}, zeigen die Ergebnisse also nur an, wenn \opt{showresults} gesetzt ist. Werden die Ergebnisse nicht angezeigt, erzeugen die ersten beiden jedoch eine vertikale Linie, letztes einen rechteckigen Rahmen.
 
 Die Linie von \Macro\resr ist standardmäßig \SI{2}{cm} lang und befindet sich \SI{4}{pt} unterhalb der Grundlinie der Zeile. Durch zwei optionale Argumente können diese Eigenschaften manipuliert werden. Im folgenden Beispiel lautet das Ergebnis jeweils "`Sonett"', die Linie ist im zweiten Fall \SI{5}{cm} lang und befindet sich auf der Grundlinie (ist also um \SI{0}{cm} verschoben):
 }
@@ -832,6 +832,23 @@ Die Linie von \Macro\resr ist standardmäßig \SI{2}{cm} lang und befindet sich 
 Lorem ipsum dolor sit amet: \resr{Sonett}
 
 Lorem ipsum dolor sit amet: \resr[5cm]{Sonett}[0cm]
+\end{codefilecontent}
+\endcode
+
+\localeDE{
+Die Linie von \Macro\resrfill erstreckt sich bis zum Ende der aktuellen Zeile und befindet sich \SI{4}{pt} unterhalb der Grundlinie der Zeile, wobei sich dieser Versatz durch ein Optionales Argument verändern lässt. Hinter dem Makro sollte innerhalb einer Zeile kein Text mehr gesetzt werden, da es sonst du Darstellungsfehlern kommen kann.
+Im folgenden Beispiel lautet das Ergebnis jeweils "`Loriot"', die Linie befindet sich im zweiten Fall auf der Grundlinie (ist also um \SI{0}{cm} verschoben):
+}
+
+\startcode{de}
+\begin{codefilecontent}{doc/tut-de-content-resrfill}
+\eduoption{showresults}{false}
+
+Lorem ipsum dolor sit amet: \resrfill{Sonett}
+
+Lorem ipsum dolor sit amet: \resrfill{Sonett}[0cm]
+
+Lorem ipsum dolor sit amet.
 \end{codefilecontent}
 \endcode
 

@@ -45,8 +45,15 @@
   }
 }
 
-\DeclareExpandableDocumentCommand \@usetl { m m } {
-  \tl_use:c {g_edu_#1_#2}
+\DeclareExpandableDocumentCommand \@usetl { m m m } {
+  \tl_use:c {g_#1_#2_#3}
+}
+
+\keys_define:nn {edu} {
+  edumath .bool_gset:N = \g_edu_edumath_bool,           % use edumath package
+  edumath .initial:n = false,
+  edumathoptions .tl_gset:N = \g_edu_edumathoptions_tl,
+  edumathoptions .initial:n = commasep,
 }
 
 \keys_define:nn {edu} {
@@ -137,8 +144,6 @@
 \keys_define:nn {edu} {
   sfdefault .bool_gset:N = \g_edu_sfdefault_bool,          % sans-serif als familydefault
   sfdefault .initial:n = false,
-  sfmath .bool_gset:N = \g_edu_sfmath_bool,                % sans-serif als math font
-  sfmath .initial:n = false,
 }
 
 
@@ -206,7 +211,7 @@
 \keys_define:nn {edu} {
   parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
   parts .initial:n = false
-}
+} 
 
 \keys_define:nn {edu} {
   listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
@@ -241,6 +246,8 @@
   timestampstyle .initial:n = \small\sffamily,
   titlestyle .tl_gset:N = \g_edu_titlestyle_tl,
   titlestyle .initial:n = \LARGE\sffamily\bfseries,
+  titlenumbersep .dim_gset:N = \g_edu_titlenumbersep_dim,
+  titlenumbersep .initial:n = 0.5em,
   versionstyle .tl_gset:N = \g_edu_versionstyle_tl,
   versionstyle .initial:n = \small\sffamily,
   timestamptime .bool_gset:N = \g_edu_timestamptime_bool,
@@ -251,6 +258,10 @@
   timestampdateseparator .initial:n = -,
   timestampdatetimeseparator .tl_gset:N = \g_edu_timestampdatetimeseparator_tl,
   timestampdatetimeseparator .initial:n = -,
+}
+
+\__edu_keys_initial:n {
+  titlenumbersep = 0.5em
 }
 
 \keys_define:nn {edu} {
@@ -454,6 +465,10 @@
   exebg .initial:n = white,
   exepointsfg .tl_gset:N = \g_edu_exepointsfg_tl,
   exepointsfg .initial:n = black,
+  execalcfg .tl_gset:N = \g_edu_execalcfg_tl,
+  execalcfg .initial:n = lightgray,
+  exedifffg .tl_gset:N = \g_edu_exedifffg_tl,
+  exedifffg .initial:n = lightgray,
 }
 
 \keys_define:nn {edu} {
@@ -640,6 +655,8 @@
 \keys_define:nn {edu} {
   showresults .bool_gset:N = \g_edu_showresults_bool,
   showresults .initial:n = false,
+  resultresetmultiexe .bool_gset:N = \g_edu_resultresetmultiexe_bool,
+  showresults .initial:n = false,
   resultfg .tl_gset:N = \g_edu_resultfg_tl,
   resultfg .initial:n = wuRed,
   resultrule .dim_gset:N = \g_edu_resultrule_dim,
@@ -654,14 +671,16 @@
   resultboxheight .initial:n = 0.65cm,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
-  resultlabel .bool_gset:N = \g_edu_resultlabel_bool,
-  resultlabel .initial:n = true,
-  resultlabellabel .tl_gset:N = \g_edu_resultlabellabel_tl,
-  resultlabellabel .initial:n = $\star$,
-  resultlabelstyle .tl_gset:N = \g_edu_resultlabelstyle_tl,
-  resultlabelstyle .initial:n = \LARGE,
-  resultlabelfg .tl_gset:N = \g_edu_resultlabelfg_tl,
-  resultlabelfg .initial:n = black,
+  resulttitlelabel .bool_gset:N = \g_edu_resulttitlelabel_bool,
+  resulttitlelabel .initial:n = true,
+  resulttitlelabellabel .tl_gset:N = \g_edu_resulttitlelabellabel_tl,
+  resulttitlelabellabel .initial:n = $\star$,
+  resulttitlelabelstyle .tl_gset:N = \g_edu_resulttitlelabelstyle_tl,
+  resulttitlelabelstyle .initial:n = \LARGE,
+  resulttitlelabelfg .tl_gset:N = \g_edu_resulttitlelabelfg_tl,
+  resulttitlelabelfg .initial:n = black,
+  resultlistinglabel .tl_gset:N = \g_edu_resultlistinglabel_tl,
+  resultlistinglabel .initial:n = L\"osung,
 }
 
 \keys_define:nn {edu} {
@@ -899,115 +918,14 @@
 %\__edu_keys_initial:n {exampointstablewidth = 0.625\linewidth}
 
 \keys_define:nn {edu} {
-  commasep .bool_gset:N = \g_edu_commasep_bool,    % Comma as separator
-  commasep .initial:n = true,
-  amsoptions .tl_gset:N = \g_edu_amsoptions_tl,  % Pass options to amsmath-package
-  amsoptions .initial:n = intlimits,
-}
-
-\keys_define:nn {edu} {
-  amsthm .bool_gset:N = \g_edu_amsthm_bool,                      % Predefine amsthm theorems
-  amsthm .initial:n = true,
-  framedthm .bool_gset:N = \g_edu_framedthm_bool,                % Predefine thmbox theorems
-  framedthm .initial:n = true,
-  thmbox .bool_gset:N = \g_edu_thmbox_bool,                      % Predefine framed theorems
-  thmbox .initial:n = false,
-  thmimpnumbered .bool_gset:N = \g_edu_thmimpnumbered_bool,      % Number important theorems
-  thmimpnumbered .initial:n = false,
-  thmunimpnumbered .bool_gset:N = \g_edu_thmunimpnumbered_bool,  % Number unimportant theorems
-  thmunimpnumbered .initial:n = false,
-}
-
-\keys_define:nn {edu} {
-  thmlabelfg .tl_gset:N = \g_edu_thmlabelfg_tl,        % Color of theorem labels
-  thmlabelfg .initial:n = black,
-  thmframefg .tl_gset:N = \g_edu_thmframefg_tl,        % Color of framed theorem frame.
-  thmframefg .initial:n = wuDarkerGray,
-  thmframebg .tl_gset:N = \g_edu_thmframebg_tl,        % Color of framed theorem background.
-  thmframebg .initial:n = wuLightGray,
-}
-
-\keys_define:nn {edu} {
-  thmimplabelstyle .tl_gset:N = \g_edu_thmimplabelstyle_tl,  % Style of heads
-  thmimplabelstyle .initial:n = \sffamily\bfseries,
-  thmimpnotestyle .tl_gset:N = \g_edu_thmimpnotestyle_tl,  % Style of notes
-  thmimpnotestyle .initial:n = \sffamily\bfseries,
-  thmimpbodystyle .tl_gset:N = \g_edu_thmimpbodystyle_tl,  % Style of bodies
-  thmimpbodystyle .initial:n =,
-}
-
-\keys_define:nn {edu} {
-  thmunimplabelstyle .tl_gset:N = \g_edu_thmunimplabelstyle_tl,  % Style of heads
-  thmunimplabelstyle .initial:n = \sffamily\bfseries,
-  thmunimpnotestyle .tl_gset:N = \g_edu_thmunimpnotestyle_tl,  % Style of notes
-  thmunimpnotestyle .initial:n = \sffamily,
-  thmunimpbodystyle .tl_gset:N = \g_edu_thmunimpbodystyle_tl,  % Style of bodies
-  thmunimpbodystyle .initial:n =,
-}
-
-\keys_define:nn {edu} {
-  thmdefinitionlabel .tl_gset:N = \g_edu_thmdefinitionlabel_tl,
-  thmdefinitionlabel .initial:n = Definition,
-  thmdefitheolabel .tl_gset:N = \g_edu_thmdefitheolabel_tl,
-  thmdefitheolabel .initial:n = Definition/Satz,
-  thmtheoremlabel .tl_gset:N = \g_edu_thmtheoremlabel_tl,
-  thmtheoremlabel .initial:n = Satz,
-  thmcalcrulelabel .tl_gset:N = \g_edu_thmcalcrulelabel_tl,
-  thmcalcrulelabel .initial:n = Regel,
-  thmexamplelabel .tl_gset:N = \g_edu_thmexamplelabel_tl,
-  thmexamplelabel .initial:n = Beispiel,
-  thmexampleexelabel .tl_gset:N = \g_edu_thmexampleexelabel_tl,
-  thmexampleexelabel .initial:n = Beispielaufgabe,
-  thmhintlabel .tl_gset:N = \g_edu_thmhintlabel_tl,
-  thmhintlabel .initial:n = Hinweis,
-  thmremarklabel .tl_gset:N = \g_edu_thmremarklabel_tl,
-  thmremarklabel .initial:n = Bemerkung,
-  thmsolutionlabel .tl_gset:N = \g_edu_thmsolutionlabel_tl,
-  thmsolutionlabel .initial:n = L\"osung,
-}
-
-\keys_define:nn {edu} {
-  linepname .tl_gset:N = \g_edu_linepname_tl,    % Line in parametrical form with vector variable: Name
-  linepname .initial:n = g,
-  linepsupport .tl_gset:N = \g_edu_linepsupport_tl,    % Line in parametrical form with vector variable: Support vector
-  linepsupport .initial:n = p,
-  linepdir .tl_gset:N = \g_edu_linepdir_tl,    % Line in parametrical form with vector variable: Directional vector
-  linepdir .initial:n = u,
-  lineppar .tl_gset:N = \g_edu_lineppar_tl,    % Line in parametrical form with vector variable: Parameter 1
-  lineppar .initial:n = r,
-}
-
-\keys_define:nn {edu} {
-  planepname .tl_gset:N = \g_edu_planepname_tl,    % Plane in parametrical form with vector variable: Name
-  planepname .initial:n = E,
-  planepsupport .tl_gset:N = \g_edu_planepsupport_tl,    % Plane in parametrical form with vector variable: Support vector
-  planepsupport .initial:n = p,
-  planepdiri .tl_gset:N = \g_edu_planepdiri_tl,    % Plane in parametrical form with vector variable: Directional vector 1
-  planepdiri .initial:n = u,
-  planepdirii .tl_gset:N = \g_edu_planepdirii_tl,    % Plane in parametrical form with vector variable: Directional vector 2
-  planepdirii .initial:n = v,
-  planeppari .tl_gset:N = \g_edu_planeppari_tl,    % Plane in parametrical form with vector variable: Parameter 1
-  planeppari .initial:n = r,
-  planepparii .tl_gset:N = \g_edu_planepparii_tl,    % Plane in parametrical form with vector variable: Parameter 2
-  planepparii .initial:n = s,
-}
-
-\keys_define:nn {edu} {
-  planenvarname .tl_gset:N = \g_edu_planenvarname_tl,    % Plane in normal form with vector variable: Name
-  planenvarname .initial:n = E,
-  planenvarsupport .tl_gset:N = \g_edu_planenvarsupport_tl,    % Plane in normal form with vector variable: Support vector
-  planenvarsupport .initial:n = p,
-  planenvarnormal .tl_gset:N = \g_edu_planenvarnormal_tl,    % Plane in normal form with vector variable: Normal vector
-  planenvarnormal .initial:n = n,
-}
-
-\keys_define:nn {edu} {
   lstnumberfg .tl_gset:N = \g_edu_lstnumberfg_tl,
   lstnumberfg .initial:n = black,
   lstkeywordfg .tl_gset:N = \g_edu_lstkeywordfg_tl,
   lstkeywordfg .initial:n = black,
   lstrulefg .tl_gset:N = \g_edu_lstrulefg_tl,
   lstrulefg .initial:n = gray,
+  lstkeywordsprocessing .bool_gset:N = \g_edu_lstkeywordsprocessing_bool,
+  lstkeywordsprocessing .initial:n = true,
 }
 
 \tl_new:N \g_edu_struktexqtree_tl
@@ -1056,6 +974,7 @@
 \RequirePackage[inline]{enumitem}
 \RequirePackage{eurosym}                                           % Euro-Sign
 \RequirePackage{expdlist}
+\RequirePackage{fontawesome}
 \RequirePackage{geometry}
 \RequirePackage[notcomma, notperiod, notquote, notquery]{hanging}  % Hanging indention of multiexe
 \RequirePackage{lastpage}                                          % Number of pages with
@@ -1108,19 +1027,8 @@
 
 
 
-\RequirePackage[\g_edu_amsoptions_tl]{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{amsthm}
-\RequirePackage{cancel}
-\RequirePackage{esvect}
-\RequirePackage{gauss}
-\RequirePackage{polynom}
-\RequirePackage{thmtools}
-\RequirePackage[only, lightning]{stmaryrd}
-\RequirePackage{xlop}
-
-
 \RequirePackage{listings}
+\RequirePackage{xsimverb}
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
@@ -1130,9 +1038,10 @@
   \renewmenumacro{\keys}[+]{angularkeys}
 }
 
-\tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
-  \RequirePackage{struktex}
-}
+% Temporary deactivate struktex as it overwrites libertine as math font.
+%\tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
+%  \RequirePackage{struktex}
+%}
 
 \RequirePackage{bibgerm}
 \RequirePackage{hyperref}
@@ -1142,7 +1051,9 @@
 \thickmuskip=5mu
 }
 
-\tl_const:Nx \c_colon_tl { \token_to_str:N : }
+\tl_if_exist:NF \c_colon_tl {
+  \tl_const:Nx \c_colon_tl { \token_to_str:N : }
+}
 
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
@@ -1151,11 +1062,12 @@
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
 \tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
   \RequirePackage[rm]{libertine}
-  \RequirePackage[libertine, varbb]{newtxmath}
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
 }
 
 \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
-  \RequirePackage{mathpazo}
+  \RequirePackage{palatino}
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
 }
 }
 
@@ -1181,61 +1093,6 @@
 
 \bool_if:NT \g_edu_sfdefault_bool {
   \renewcommand{\familydefault}{\sfdefault}
-  \keys_set:nn {edu} {sfmath = true}
-}
-
-\bool_if:NT \g_edu_sfmath_bool {
-
-  \RequirePackage[]{sansmath}                   % Default sans serif font as math font
-  \sansmath
-
-  \usepackage[bb=pazo, bbscaled=0.9]{mathalfa}  % Load blackboard font of palation
-
-  % Load small and large greek letters of Iwona as there are
-  % not many other sans serif greek letters
-\DeclareSymbolFont{Greekletters}{OT1}{iwona}{m}{n}
-\DeclareSymbolFont{greekletters}{OML}{iwona}{m}{it}
-
-\DeclareMathSymbol{\Delta}{\mathord}{Greekletters}{"01}
-\DeclareMathSymbol{\Theta}{\mathord}{Greekletters}{"02}
-\DeclareMathSymbol{\Lambda}{\mathord}{Greekletters}{"03}
-\DeclareMathSymbol{\Xi}{\mathord}{Greekletters}{"04}
-\DeclareMathSymbol{\Pi}{\mathord}{Greekletters}{"05}
-\DeclareMathSymbol{\Sigma}{\mathord}{Greekletters}{"06}
-\DeclareMathSymbol{\Upsilon}{\mathord}{Greekletters}{"07}
-\DeclareMathSymbol{\Phi}{\mathord}{Greekletters}{"08}
-\DeclareMathSymbol{\Psi}{\mathord}{Greekletters}{"09}
-\DeclareMathSymbol{\Omega}{\mathord}{Greekletters}{"0A}
-
-\DeclareMathSymbol{\alpha}{\mathord}{greekletters}{"0B}
-\DeclareMathSymbol{\beta}{\mathord}{greekletters}{"0C}
-\DeclareMathSymbol{\gamma}{\mathord}{greekletters}{"0D}
-\DeclareMathSymbol{\delta}{\mathord}{greekletters}{"0E}
-\DeclareMathSymbol{\epsilon}{\mathord}{greekletters}{"0F}
-\DeclareMathSymbol{\zeta}{\mathord}{greekletters}{"10}
-\DeclareMathSymbol{\eta}{\mathord}{greekletters}{"11}
-\DeclareMathSymbol{\theta}{\mathord}{greekletters}{"12}
-\DeclareMathSymbol{\iota}{\mathord}{greekletters}{"13}
-\DeclareMathSymbol{\kappa}{\mathord}{greekletters}{"14}
-\DeclareMathSymbol{\lambda}{\mathord}{greekletters}{"15}
-\DeclareMathSymbol{\mu}{\mathord}{greekletters}{"16}
-\DeclareMathSymbol{\nu}{\mathord}{greekletters}{"17}
-\DeclareMathSymbol{\xi}{\mathord}{greekletters}{"18}
-\DeclareMathSymbol{\pi}{\mathord}{greekletters}{"19}
-\DeclareMathSymbol{\rho}{\mathord}{greekletters}{"1A}
-\DeclareMathSymbol{\sigma}{\mathord}{greekletters}{"1B}
-\DeclareMathSymbol{\tau}{\mathord}{greekletters}{"1C}
-\DeclareMathSymbol{\upsilon}{\mathord}{greekletters}{"1D}
-\DeclareMathSymbol{\phi}{\mathord}{greekletters}{"1E}
-\DeclareMathSymbol{\chi}{\mathord}{greekletters}{"1F}
-\DeclareMathSymbol{\psi}{\mathord}{greekletters}{"20}
-\DeclareMathSymbol{\omega}{\mathord}{greekletters}{"21}
-\DeclareMathSymbol{\varepsilon}{\mathord}{greekletters}{"22}
-\DeclareMathSymbol{\vartheta}{\mathord}{greekletters}{"23}
-\DeclareMathSymbol{\varpi}{\mathord}{greekletters}{"24}
-\DeclareMathSymbol{\varrho}{\mathord}{greekletters}{"25}
-\DeclareMathSymbol{\varsigma}{\mathord}{greekletters}{"26}
-\DeclareMathSymbol{\varphi}{\mathord}{greekletters}{"27}
 }
 
 
@@ -1259,6 +1116,7 @@
 \tl_new:N \g_edu_subject_tl
 \tl_new:N \g_edu_subtitle_tl
 \tl_new:N \g_edu_title_tl
+\tl_new:N \g_edu_titlenumber_tl
 \tl_new:N \g_edu_version_tl
 
 
@@ -1365,12 +1223,15 @@
   }
 }
 
-\DeclareDocumentCommand \title {o m} {
+\DeclareDocumentCommand \title {o m o} {
   \tl_gset:Nn \g_edu_title_tl {#2}
   \IfNoValueTF{#1} {
     \tl_gset:Nn \g_edu_titleshort_tl {#2}
   }{
     \tl_gset:Nn \g_edu_titleshort_tl {#1}
+  }
+  \IfValueT{#3} {
+    \tl_gset:Nn \g_edu_titlenumber_tl {#3}
   }
 }
 
@@ -1469,6 +1330,10 @@
   }{
     \g_edu_title_tl\xspace
   }
+}
+
+\DeclareDocumentCommand \printtitlenumber {  } {
+  \g_edu_titlenumber_tl\xspace
 }
 
 \DeclareDocumentCommand \printversion { s } {
@@ -1659,6 +1524,35 @@
 %  \makeatother
 
 %    \end{macrocode}
+
+\DeclareDocumentCommand \itemm { } {\item[\bfseries\texttt{\textminus}]}
+\DeclareDocumentCommand \itemn { } {\item[\bfseries\texttt{\textasciitilde}]}
+\DeclareDocumentCommand \itemp { } {\item[\bfseries\texttt{+}]}
+
+\DeclareDocumentCommand \itemb { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembcheck { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\square$}%
+      \raisebox{.3ex}{\hspace{0.1em}$\checkmark$}%
+    }%
+  }}]%
+}
+
+\DeclareDocumentCommand \itembblack { } {
+  \item[{\lapbox[\width]{0.325em}{%
+    \makebox[0.9em][l]{%
+      \makebox[0pt][l]{$\blacksquare$}%
+    }%
+  }}]%
+}
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
 
@@ -2066,7 +1960,14 @@
   \group_begin:
     \g_edu_titlestyle_tl%
     \color{\g_edu_titlefg_tl}%
-    \noindent\g_edu_title_tl%
+    \noindent
+    \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+      \settowidth{\g_edu_temp_dim}{\g_edu_titlenumber_tl}
+      \addtolength{\g_edu_temp_dim}{\g_edu_titlenumbersep_dim}
+      \setlength{\global\g_edu_temp_dim}{\g_edu_temp_dim}
+    }
+    \g_edu_title_tl%
   \group_end:
   \hfill%
   \tl_if_empty:NF \g_edu_short_tl {
@@ -2090,12 +1991,12 @@
   }
   \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
-      \bool_if_p:N \g_edu_resultlabel_bool
+      \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \group_begin:
         \hspace{0.4em}
-        \g_edu_resultlabelstyle_tl%
-        \textcolor{\g_edu_resultlabelfg_tl}{\g_edu_resultlabellabel_tl}%
+        \g_edu_resulttitlelabelstyle_tl%
+        \textcolor{\g_edu_resulttitlelabelfg_tl}{\g_edu_resulttitlelabellabel_tl}%
       \group_end:
     }
   \mbox{}
@@ -2106,7 +2007,12 @@
     \parskipreduce
     \group_begin:
       \g_edu_subtitlestyle_tl
-      \color{\g_edu_titlefg_tl}\noindent\g_edu_subtitle_tl\par
+      \color{\g_edu_titlefg_tl}
+      \noindent
+    \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \hspace*{\g_edu_temp_dim}
+    }
+      \g_edu_subtitle_tl\par
     \group_end:
   }
 
@@ -2120,7 +2026,12 @@
 \tl_if_empty:NF \g_edu_title_tl {
   \tl_put_right:Nn \g__edu_titletext_tl {
     \group_begin:
-      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl} \noindent \g_edu_title_tl
+      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl}
+      \noindent
+      \tl_if_empty:NF \g_edu_titlenumber_tl {
+      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+    }
+      \g_edu_title_tl
     \group_end:
     \par\parskipreduce
   }
@@ -2279,7 +2190,7 @@
   \setpar
 }
 
-\bool_if:NF \g_edu_parindent_bool {
+\bool_if:NF \g_edu_parindent_bool { 
 \tl_gput_right:Nn \quotation {
   \noindent\ignorespaces
 }
@@ -2422,11 +2333,11 @@
 
     \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
-      \bool_if_p:N \g_edu_resultlabel_bool
+      \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \hspace{0.4em}
       \Large%
-      \textcolor{black}{\g_edu_resultlabellabel_tl}%
+      \textcolor{black}{\g_edu_resulttitlelabellabel_tl}%
     }
     \normalsize\quad
   }
@@ -2513,6 +2424,8 @@
 
 \DeclareDocumentCommand \dh { } {d.\,h.\xspace}
 \DeclareDocumentCommand \Dh { } {D.\,h.\xspace}
+\DeclareDocumentCommand \luv { } {l.\,u.\,v.\xspace}
+\DeclareDocumentCommand \Luv { } {L.\,u.\,v.\xspace}
 \DeclareDocumentCommand \so { } {s.\,o.\xspace}
 \DeclareDocumentCommand \So { } {S.\,o.\xspace}
 \DeclareDocumentCommand \su { } {s.\,u.\xspace}
@@ -2861,7 +2774,7 @@
 \DeclareDocumentCommand \action { } {%
   \raisebox{0.5ex}{%
     \resizebox{1em}{!}{%
-      \tikz \draw[\@usetl{actionfg}{tl}, ->, line width=2.5pt] (0,0) .. controls (0.1, 0.1) ..  (0.5,0);%
+      \tikz \draw[\@usetl{edu}{actionfg}{tl}, ->, line width=2.5pt] (0,0) .. controls (0.1, 0.1) ..  (0.5,0);%
     }%
   }\xspace%
 }
@@ -2869,7 +2782,7 @@
 \DeclareDocumentCommand \speech { }{%
   \raisebox{0.5ex}{%
     \resizebox{1em}{\heightof{L}}{%
-      \tikz \node[\@usetl{speechfg}{tl}, draw, fill, ellipse callout, callout relative pointer={(0.25,-0.25)}, callout pointer arc=40, xscale=-1] {\phantom{aa}};%
+      \tikz \node[\@usetl{edu}{speechfg}{tl}, draw, fill, ellipse callout, callout relative pointer={(0.25,-0.25)}, callout pointer arc=40, xscale=-1] {\phantom{aa}};%
     }%
   }\xspace%
 }
@@ -3464,7 +3377,7 @@
 \DeclareDocumentCommand \rstsubexe { } {\setcounter{subexercisecounter}{0}}
 \DeclareDocumentCommand \rstmultiexe { } {\setcounter{multiexecounter}{0}}
 
-\DeclareDocumentCommand \exe { s o m }{
+\DeclareDocumentCommand \exe { s o m o }{
   \refstepcounter{exercisecounter}
 
   \tl_clear:N \l__edu_exelabeltext_tl
@@ -3512,7 +3425,50 @@
   \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
-  {\g_edu_exelabelstyle_tl%
+  {
+    \g_edu_exelabelstyle_tl%
+    \IfNoValueF {#4} {
+      \hspace*{-3em}
+      \makebox[2.5em][r]{
+        \tl_if_in:nnT {#4} {c} {
+          \color{\g_edu_execalcfg_tl}
+          \raisebox{0.15ex}{\scalebox{0.7}{\faCalculator}}
+        }
+        \tl_if_in:nnT {#4} {e} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {m} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 0.5);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+        \tl_if_in:nnT {#4} {h} {
+          \hspace{0.25em}
+          \raisebox{-0.05ex}{
+          \resizebox{!}{0.6\baselineskip}{
+            \tikz{
+              \fill[\@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+              \draw[line~width=1ex, \@usetl{edu}{exedifffg}{tl}] (0, 0) rectangle (1, 1);
+            }
+          }
+          }
+        }
+      }
+      \hspace{0.5em}
+    }
     \setlength{\fboxsep}{0.125em}%
     \raisebox{0.2ex}{%
       \colorbox{\g_edu_exenumberbg_tl}{%
@@ -3825,7 +3781,8 @@
   \IfBooleanT{#1} {
    \hspace*{0pt}\hfill\hspace{0.5em}%
 }
-  ~\nolinebreak%
+  \nolinebreak%
+  \ensuremath{\;
   \text{%
     \g_edu_multiexepointsstyle_tl%
     \color{\g_edu_multiexepointsfg_tl}%
@@ -3833,6 +3790,7 @@
       #2\g_edu_multiexepointslabel_tl%
     \g_edu_multiexepointsright_tl%
    }%
+   }
 }
 
 \DeclareDocumentCommand \res { +O{} +m} {%
@@ -3841,6 +3799,9 @@
       \color{\g_edu_resultfg_tl} #2%
     \group_end:
   }{#1}%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
@@ -3849,6 +3810,20 @@
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#1}%
+  }{%
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
@@ -3858,6 +3833,9 @@
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
   }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
 }
 
 \DeclareDocumentEnvironment {multiexelist} { s O{0.5\baselineskip} } {
@@ -4350,6 +4328,11 @@
   }%
 }
 
+\DeclareDocumentCommand \noteitem { m } {%
+  \bool_if:NT \g_edu_shownotes_bool {
+    \item{\g_edu_notetstyle_tl\textcolor{\g_edu_notetfg_tl}{#1}}%
+  }
+}
 \int_new:N \g__edu_ttminutesum_int
 \int_gset:Nn \g__edu_ttminutesum_int {0}
 
@@ -4869,9 +4852,9 @@
   \medskip
   \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
   }
+   
 
-
-  \bool_if:NT \g_edu_exampointssignature_bool {
+  \bool_if:NT \g_edu_exampointssignature_bool { 
     \par
     \mdseries\footnotesize
     \vspace{0.75cm}
@@ -4908,13 +4891,13 @@
   }
     \end{minipage}
     \begin{minipage}{0.45\linewidth-\fboxsep}
-  \bool_if:NTF \g_edu_exampointssignature_bool {
+  \bool_if:NTF \g_edu_exampointssignature_bool { 
     \vspace{1cm}
         \mdseries\footnotesize
         \rule{7cm}{0.4pt}\\
      \g_edu_exampointssignaturelabel_tl
    }{
-   \bool_if:NT \g_edu_exampointssecondmark_bool {
+   \bool_if:NT \g_edu_exampointssecondmark_bool { 
      \par
     \large\bfseries
   \medskip
@@ -4924,621 +4907,8 @@
     \end{minipage}
   }
 }
-  \setlength{\fboxsep}{3pt}
+  \setlength{\fboxsep}{3pt} 
 }
-
-\AtBeginDocument{
-  \setlength{\abovedisplayskip}{1.2ex plus 0.2ex minus 0.1ex}
-  \setlength{\abovedisplayshortskip}{1ex plus 0.2ex minus 0.2ex}
-  \setlength{\belowdisplayskip}{1.2ex plus 0.2ex minus 0.1ex}
-  \setlength{\belowdisplayshortskip}{1ex plus 0.2ex minus 0.2ex}
-}
-
-\bool_if:NT \g_edu_commasep_bool {
-  \RequirePackage{icomma}
-}
-
-
-\DeclareDocumentEnvironment {aligntr} { s } {
-  \IfBooleanTF {#1} {
-    \csname alignat*\endcsname{2}
-  }{
-    \alignat{2}
-  }
-}{
-  \IfBooleanTF {#1} {
-  \csname endalignat*\endcsname
-  }{
-  \endalignat
-  }
-}
-
-% Hack, because xparse doesn't generate starred environments:
-\cs_new:cpn {aligntr*} {\aligntr*}
-\cs_new_eq:cN {endaligntr*} \endaligntr
-
-\DeclareDocumentCommand \tr { } {&& \mid}
-
-\tl_if_eq:VnT \g_edu_struktexqtree_tl {tikz-qtree} {
-\tikzset{
-  edge~from~parent/.style={
-    draw,
-    edge~from~parent~path={
-        (\tikzparentnode.north) -| (\tikzchildnode)
-    }
-  }
-}
-
-\tikzset{
-  bet/.style = {
-    grow'=up,
-    every~internal~node/.style={
-        draw,
-        circle,
-        inner~sep=0pt,
-        minimum~size=2ex
-    }
-  },
-  betr/.style={
-    draw=none,
-    inner~sep=0pt
-  },
-  bete/.style={
-    draw,
-    rectangle,
-    inner~sep=2pt
-  }
-}
-
-\tikzset{
-  level~distance=3.5ex,
-  sibling~distance=2ex,
-  frontier/.style={distance from root=10.5ex}
-}
-}
-
-\bool_if:nT {
-  \bool_if_p:N \g_edu_thmbox_bool &&
-  (!\bool_if_p:N \g_edu_thmimpnumbered_bool || !\bool_if_p:N \g_edu_thmunimpnumbered_bool)
-} {
-  \msg_error:nnnn {edu} {option-dep-enable} {`thmbox'} {`thmimpnumbered', `thmunimpnumbered'}
-}
-
-\skip_new:N \g__edu_thmafterskip_skip
-\skip_new:N \g__edu_thmbeforeskip_skip
-
-\skip_gset:Nn \g__edu_thmafterskip_skip {0.5\baselineskip-0.5\parskip}
-\skip_gset:Nn \g__edu_thmbeforeskip_skip {0.5\baselineskip}
-
-\seq_new:N \g__edu_thmimp_seq
-
-\seq_gput_right:Nn \g__edu_thmimp_seq {definition}
-\seq_gput_right:Nn \g__edu_thmimp_seq {defitheo}
-\seq_gput_right:Nn \g__edu_thmimp_seq {theorem}
-\seq_gput_right:Nn \g__edu_thmimp_seq {calcrule}
-
-\seq_new:N \g__edu_thmunimp_seq
-
-\seq_gput_right:Nn \g__edu_thmunimp_seq {example}
-\seq_gput_right:Nn \g__edu_thmunimp_seq {exampleexe}
-\seq_gput_right:Nn \g__edu_thmunimp_seq {hint}
-\seq_gput_right:Nn \g__edu_thmunimp_seq {remark}
-\seq_gput_right:Nn \g__edu_thmunimp_seq {solution}
-
-\cs_new:Npn \edu_theoremstyleimp:n #1 {
-\declaretheoremstyle[%
-  spaceabove=\g__edu_thmbeforeskip_skip, spacebelow=\g__edu_thmafterskip_skip,
-  headfont=\g_edu_thmimplabelstyle_tl\color{\g_edu_thmlabelfg_tl},
-  notefont=\g_edu_thmimpnotestyle_tl, notebraces={\!:\hspace{0.5em}}{},
-  bodyfont=\g_edu_thmimpbodystyle_tl,
-  headpunct={},
-  postheadspace=0.75em,
-  numbered=#1
-]{important}
-}
-
-\cs_new:Npn \edu_theoremstyleunimp:n #1 {
-\declaretheoremstyle[%
-  spaceabove=\g__edu_thmbeforeskip_skip, spacebelow=\g__edu_thmafterskip_skip,
-  headfont=\g_edu_thmunimplabelstyle_tl\color{\g_edu_thmlabelfg_tl},
-  notefont=\g_edu_thmunimpnotestyle_tl, notebraces={\hspace{0.2em}(}{)},
-  bodyfont=\g_edu_thmunimpbodystyle_tl,
-  headpunct={:},
-  postheadspace=0.25em,
-  numbered=#1
-]{unimportant}
-}
-
-\bool_if:NTF \g_edu_thmimpnumbered_bool {
-  \edu_theoremstyleimp:n {yes}
-}{
-  \edu_theoremstyleimp:n {no}
-}
-
-\bool_if:NTF \g_edu_thmunimpnumbered_bool {
-  \edu_theoremstyleunimp:n {yes}
-}{
-  \edu_theoremstyleunimp:n {no}
-}
-
-\bool_if:NT \g_edu_amsthm_bool {
-  \seq_map_inline:Nn \g__edu_thmimp_seq {
-    \declaretheorem[style=important, name=\use:c {g_edu_thm #1 label_tl}]{#1}
-  }
-
-  \seq_map_inline:Nn \g__edu_thmunimp_seq {
-    \declaretheorem[style=unimportant, name=\use:c {g_edu_thm #1 label_tl}]{#1}
-  }
-}
-
-
-\bool_if:NT \g_edu_framedthm_bool {
-
-  \cs_new:Npn \edu_framedthmimp:nx #1 #2 {
-    \declaretheorem[%
-    style=important,
-    name=\use:c {g_edu_thm #1 label_tl},
-    #2
-    shaded={%
-      bgcolor=\g_edu_thmframebg_tl,%
-      textwidth=\linewidth-1em-2pt,%
-      margin=0.5em,%
-      leftmargin=0em,%
-      rightmargin=0em,%
-      rulecolor=\g_edu_thmframefg_tl,%
-      rulewidth=1pt
-    },
-    preheadhook=,
-    postheadhook={%
-      \setpar%
-      \bool_if:NT \g_edu_parskip_bool {
-        \vspace{-0.8\parskip}%
-      }
-    }
-    ]{#1fthm}
-  }
-
-  \cs_new:Npn \edu_framedthmunimp:nx #1 #2 {
-    \declaretheorem[%
-    style=unimportant,
-    name=\use:c {g_edu_thm #1 label_tl},
-    #2
-    shaded={%
-      bgcolor=\g_edu_thmframebg_tl,%
-      textwidth=\linewidth-1em-2pt,%
-      margin=0.5em,%
-      leftmargin=0em,%
-      rightmargin=0em,%
-      rulecolor=\g_edu_thmframefg_tl,%
-      rulewidth=1pt
-    },
-    preheadhook=,
-    postheadhook={%
-      \setpar%
-      \bool_if:NT \g_edu_parskip_bool {
-        \vspace{-0.8\parskip}%
-      }
-    }
-    ]{#1fthm}
-  }
-
-
-  \seq_map_inline:Nn \g__edu_thmimp_seq {
-
-    \bool_if:NTF \g_edu_thmimpnumbered_bool {
-      \edu_framedthmimp:nx {#1}{sharenumber=#1,}
-    }{
-      \edu_framedthmimp:nx {#1}{}
-    }
-  }
-
-  \seq_map_inline:Nn \g__edu_thmunimp_seq {
-
-    \bool_if:NTF \g_edu_thmunimpnumbered_bool {
-      \edu_framedthmunimp:nx {#1}{sharenumber=#1,}
-    }{
-      \edu_framedthmunimp:nx {#1}{}
-    }
-  }
-}
-
-
-\bool_if:NT \g_edu_framedthm_bool {
-  \seq_map_inline:Nn \g__edu_thmimp_seq {
-
-   \DeclareDocumentEnvironment {\use:n {#1 f}} { o } {
-      \vspace{-0.3\baselineskip}%
-      \vspace{0.5\parskip}%
-      \IfNoValueTF {##1} {
-        \begin{\use:n {#1 fthm}}%
-      }{
-        \begin{\use:n {#1 fthm}}[##1]
-      }
-    }{
-      \end{\use:n {#1 fthm}}%
-      \vspace{-0.3\baselineskip}%
-      \vspace{0.5\parskip}%
-    }
-  }
-
-  \seq_map_inline:Nn \g__edu_thmunimp_seq {
-
-    \DeclareDocumentEnvironment {\use:n {#1 f}} { o } {
-      \vspace{-0.3\baselineskip}%
-      \vspace{0.5\parskip}%
-      \IfNoValueTF {##1} {
-        \begin{\use:n {#1 fthm}}%
-      }{
-        \begin{\use:n {#1 fthm}}[##1]
-      }
-    }{
-      \end{\use:n {#1 fthm}}%
-      \vspace{-0.3\baselineskip}%
-      \vspace{0.5\parskip}%
-    }
-  }
-}
-
-\bool_if:NT \g_edu_thmbox_bool {
-
-  \seq_map_inline:Nn \g__edu_thmimp_seq {
-  \declaretheorem[%
-    style=important,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=S,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bs}
-
-  \declaretheorem[%
-    style=important,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=M,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bm}
-
-  \declaretheorem[%
-    style=important,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=L,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bl}
-  }
-
-  \seq_map_inline:Nn \g__edu_thmunimp_seq {
- \declaretheorem[%
-    style=unimportant,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=S,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bs}
-
- \declaretheorem[%
-    style=unimportant,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=M,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bm}
-
- \declaretheorem[%
-    style=unimportant,
-    name=\use:c {g_edu_thm #1 label_tl},
-    sharenumber=#1,
-    thmbox=L,
-    postheadhook=\setpar\hspace{-0.5em},
-    postfoothook=\setpar\parskipreduce
-  ]{#1bl}
-  }
-
-  \setlength{\thmbox@leftmargin}{1.5em}
-
-}%
-
-\DeclareDocumentCommand \N { } {\ensuremath{\mathbb{N}}}
-\DeclareDocumentCommand \Z { } {\ensuremath{\mathbb{Z}}}
-\DeclareDocumentCommand \Q { } {\ensuremath{\mathbb{Q}}}
-\DeclareDocumentCommand \R { } {\ensuremath{\mathbb{R}}}
-\DeclareDocumentCommand \I { } {\ensuremath{\mathbb{I}}}
-\DeclareDocumentCommand \C { } {\ensuremath{\mathbb{C}}}
-\DeclareDocumentCommand \L { } {\ensuremath{\mathbb{L}}}
-
-\DeclareDocumentCommand \vec { m } {\vv{#1}}
-
-\DeclareDocumentCommand \vect { m } {\begin{pmatrix} #1 \end{pmatrix}}
-
-\DeclareDocumentCommand \rowswapfromlabel { m } {#1}
-\DeclareDocumentCommand \rowswaptolabel { m } {#1}
-
-\DeclareDocumentEnvironment {gmatrix*} { O{2pt} } {%
-  \setlength{\arraycolsep}{#1}
-  \begin{gmatrix}%
-}{%
-  \end{gmatrix}
-}
-
-\DeclareDocumentEnvironment {gmatrixp*} { O{4pt} } {%
-  \setlength{\arraycolsep}{#1}
-  \begin{gmatrix}[p]%
-}{%
-  \end{gmatrix}
-}
-
-\DeclareDocumentEnvironment {gmatrixv*} { O{4pt} } {%
-  \setlength{\arraycolsep}{#1}
-  \begin{gmatrix}[v]%
-}{%
-  \end{gmatrix}
-}
-
-\DeclareDocumentCommand \mvsep { } {
-  % From localghost@golatex
-  \hspace{0.25em}\kern-\tabcolsep\vrule height\arraystretch\ht\strutbox depth\arraystretch\dp\strutbox\kern-\tabcolsep\hspace{0.25em}
-}
-
-\opset{voperation=top}                % Vertikale Ausrichtung der Rechnung
-\opset{voperator=bottom}              % Rechenzeichen in unterer Zeile
-\opset{carrysub=true}                      % Übertrag bei Subtraktion
-\opset{decimalsepsymbol={,}}          % Dezimaltrenner
-\opset{shiftintermediarysymbol=0}     % Mult: Nullen zum Auffüllen
-\opset{displayshiftintermediary=all}  % Mult: Zeilen mit Nullen auffüllen
-\opset{displayintermediary=all}       % Mult: Auch Nullzeilen anzeigen
-\opset{shiftdecimalsep=divisor}       % Div: Nur Nachkommastellen des Divisiors beseitigen
-
-\polyset{style=C, div=:}
-
-\DeclareDocumentCommand \qtext { m } {\ensuremath{\quad\text{#1}\quad}}
-\DeclareDocumentCommand \qqtext { m } {\ensuremath{\qquad\text{#1}\qquad}}
-
-\DeclareDocumentCommand \qund {  } {\qtext{und}}
-\DeclareDocumentCommand \qqund {  } {\qqtext{und}}
-
-\DeclareDocumentCommand \qoder {  } {\qtext{oder}}
-\DeclareDocumentCommand \qqoder {  } {\qqtext{oder}}
-
-\DeclareDocumentCommand \qmath { m } {\ensuremath{\quad #1 \quad}}
-\DeclareDocumentCommand \qqmath { m } {\ensuremath{\qquad #1 \qquad}}
-
-\DeclareDocumentCommand \qRightarrow {  } {\qmath{\Rightarrow}}
-\DeclareDocumentCommand \qrightarrow {  } {\qmath{\rightarrow}}
-\DeclareDocumentCommand \qLeftarrow {  } {\qmath{\Leftarrow}}
-\DeclareDocumentCommand \qleftarrow {  } {\qmath{\lefttarrow}}
-\DeclareDocumentCommand \qLeftrightarrow {  } {\qmath{\Leftrightarrow}}
-\DeclareDocumentCommand \qleftrightarrow {  } {\qmath{\leftrightarrow}}
-
-\DeclareDocumentCommand \qqRightarrow {  } {\qqmath{\Rightarrow}}
-\DeclareDocumentCommand \qqrightarrow {  } {\qqmath{\rightarrow}}
-\DeclareDocumentCommand \qqLeftarrow {  } {\qqmath{\Leftarrow}}
-\DeclareDocumentCommand \qqleftarrow {  } {\qqmath{\lefttarrow}}
-\DeclareDocumentCommand \qqLeftrightarrow {  } {\qqmath{\Leftrightarrow}}
-\DeclareDocumentCommand \qqleftrightarrow {  } {\qqmath{\leftrightarrow}}
-
-\DeclareDocumentCommand \abs { s m } {
-  \IfBooleanTF{#1} {
-    \ensuremath{\lvert #2 \rvert}
-  }{
-    \ensuremath{\left| #2 \right|}
-  }
-}
-
-\DeclareDocumentCommand \absvec { s m } {
-  \IfBooleanTF{#1} {
-    \ensuremath{\abs*{\vec{#2}}}
-  }{
-    \ensuremath{\abs{\vec{#2}}}
-  }
-}
-
-\DeclareDocumentCommand \norm { s m } {
-  \IfBooleanTF{#1} {
-    \ensuremath{\lVert #2 \rVert}
-  }{
-    \ensuremath{\abs*{\vec{#2}}}
-  }
-}
-
-\DeclareDocumentCommand \normvec { s m } {
-  \IfBooleanTF{#1} {
-    \ensuremath{\norm*{\vec{#2}}}
-  }{
-    \ensuremath{\norm{\vec{#2}}}
-  }
-
-}
-
-\DeclareDocumentCommand \qe { m m } {
-  \ensuremath -\frac{#1}{2} \pm \sqrt{\left(\frac{#1}{2}\right)^2 - #2}
-}
-
-\DeclareDocumentCommand \qevar { m m } {
-  \ensuremath #1 \pm \sqrt{#2}
-}
-
-\DeclareDocumentCommand \linepvar { s O{\g_edu_linepname_tl} O{\g_edu_linepsupport_tl} O{\g_edu_linepdir_tl} O{\g_edu_lineppar_tl} } {
-  \tl_if_empty:nF {#2} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-    \vec{x} = #3 + #5 #4
-  }{
-    \vec{x} = \vec{#3} + #5 \vec{#4}
-  }
-}
-
-\DeclareDocumentCommand \linepvec { s O{\g_edu_linepname_tl} O{\g_edu_linepsupport_tl} O{\g_edu_linepdir_tl} O{\g_edu_lineppar_tl} } {
-  \tl_if_empty:nF {#1} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-    \vec{x} =
-    \vect{
-      #3 \c_math_subscript_token 1 \\
-  #3 \c_math_subscript_token 2 \\
-  #3 \c_math_subscript_token 3
-    } +
-    #5
-    \vect{
-      #4 \c_math_subscript_token 1 \\
-  #4 \c_math_subscript_token 2 \\
-  #4 \c_math_subscript_token 3
-    }
-}{
-  \vec{x} = \vect{#3} + #5 \vect{#4}
-}
-}
-
-\DeclareDocumentCommand \planepvar { s O{\g_edu_planepname_tl} O{\g_edu_planepsupport_tl} O{\g_edu_planepdiri_tl} O{\g_edu_planepdirii_tl} O{\g_edu_planeppari_tl} O{\g_edu_planepparii_tl} } {
-  \tl_if_empty:nF {#2} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-    \vec{x} = #3 + #6 #4 + #7 #5
-  }{
-    \vec{x} = \vec{#3} + #6 \vec{#4} + #7 \vec{#5}
-  }
-}
-
-\DeclareDocumentCommand \planepvec { s O{\g_edu_planepname_tl} O{\g_edu_planepsupport_tl} O{\g_edu_planepdiri_tl} O{\g_edu_planepdirii_tl} O{\g_edu_planeppari_tl} O{\g_edu_planepparii_tl} } {
-  \tl_if_empty:nF {#1} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-    \vec{x} =
-    \vect{
-      #3 \c_math_subscript_token 1 \\
-  #3 \c_math_subscript_token 2 \\
-  #3 \c_math_subscript_token 3
-    } +
-    #6
-    \vect{
-      #4 \c_math_subscript_token 1 \\
-  #4 \c_math_subscript_token 2 \\
-  #4 \c_math_subscript_token 3
-    } +
-    #7
-    \vect{
-      #5 \c_math_subscript_token 1 \\
-  #5 \c_math_subscript_token 2 \\
-  #5 \c_math_subscript_token 3
-    }
-}{
-  \vec{x} = \vect{#3} + #6 \vect{#4} + #7 \vect{#5}
-}
-}
-
-\DeclareDocumentCommand \planenvar { s O{\g_edu_planenvarname_tl} O{\g_edu_planenvarsupport_tl} O{\g_edu_planenvarnormal_tl} } {
-  \tl_if_empty:nF {#2} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-    \left( \vec{x} - #3 \right) \cdot #4 = 0
-  }{
-    \left( \vec{x} - \vec{#3} \right) \cdot \vec{#4} = 0
-  }
-}
-
-\DeclareDocumentCommand \planenvec { s O{\g_edu_planenvarname_tl} O{\g_edu_planenvarsupport_tl} O{\g_edu_planenvarnormal_tl} } {
-  \tl_if_empty:nF {#1} {
-    #2:
-  }
-  \ensuremath
-  \IfBooleanTF {#1} {
-  \left[
-    \vec{x} -
-  \vect{
-    #3 \c_math_subscript_token 1 \\
-    #3 \c_math_subscript_token 2 \\
-    #3 \c_math_subscript_token 3
-    }
-  \right] \cdot
-  \vect{
-    #4 \c_math_subscript_token 1 \\
-    #4 \c_math_subscript_token 2 \\
-    #4 \c_math_subscript_token 3
-  } = 0
-}{
-  \left[ \vec{x} - \vect{#3} \right] \cdot \vect{#4} = 0
-}
-}
-
-\DeclareDocumentCommand \planfigurLines { m } {
-
-  \tl_clear:N \__edu_planfigur_temp
-
-  \tl_if_in:nnT {#1} {a} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw (b) -- (c);}
-  }
-
-  \tl_if_in:nnT {#1} {b} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (c);}
-  }
-
-  \tl_if_in:nnT {#1} {c} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw (a) -- (b);}
-  }
-
-  \tl_use:N \__edu_planfigur_temp
-}
-
-\DeclareExpandableDocumentCommand \planfigurAngles { m } {
-  \tl_if_in:nnT {#1} {a} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(a) + (0 \c_colon_tl 0.7)$) arc (0 \c_colon_tl 40 \c_colon_tl 0.7) ($(a) + (20 \c_colon_tl 0.5)$) node {$\alpha$};}
-  }
-  \tl_if_in:nnT {#1} {b} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(b) + (120 \c_colon_tl 0.7)$) arc (120 \c_colon_tl 180 \c_colon_tl 0.7) ($(b) + (150 \c_colon_tl 0.45)$) node {$\beta$};}
-  }
-  \tl_if_in:nnT {#1} {c} {
-    \tl_put_right:Nn \__edu_planfigur_temp {\draw ($(c) + (220 \c_colon_tl 0.7)$) arc (220 \c_colon_tl 300 \c_colon_tl 0.7) ($(c) + (263 \c_colon_tl 0.4)$) node {$\gamma$};}
-  }
-
-  \tl_use:N \__edu_planfigur_temp
-}
-
-\ExplSyntaxOff
-
-\DeclareDocumentCommand \planfigur { O{1.0} m m } {
-  \begin{tikzpicture}[scale=#1, line join=round, thick]
-
-    \coordinate (a) at (0,0);
-    \coordinate (b) at (3,0);
-    \coordinate (c) at (2.02, 1.7);
-
-    \draw (a) -- node[below] {$c$} (b) -- node[above right] {$a$} (c) -- node[above left] {$b$} (a) -- cycle;
-
-    \draw (a) node[left] {$A$};
-    \draw (b) node[right] {$B$};
-    \draw (c) node[above] {$C$};
-
-    \begin{scope}[color=red, fill=red!25, very thick]
-      \planfigurLines{#2}
-      \planfigurAngles{#3}
-    \end{scope}
-
-\end{tikzpicture}
-}
-\ExplSyntaxOn
-
-\DeclareDocumentCommand \corr {  } {\ensuremath{\mathrel{\hat{=}}}}
-\DeclareDocumentCommand \ds {  } {\ensuremath{\displaystyle}}
-\DeclareDocumentCommand \der {  } {\ensuremath{\ \mathrm{d}}}
-\DeclareDocumentCommand \i {  } {\ensuremath{\mathrm{i}}}
-\DeclareDocumentCommand \minusp {  } {\ensuremath{\hphantom{-}}}
-\DeclareDocumentCommand \sep {  } {\,\vert\,}
-\DeclareDocumentCommand \solset { m } {\ensuremath \mathbb{L} = \left\lbrace #1 \right\rbrace}
-\DeclareDocumentCommand \textlightning {  } {\ensuremath{\lightning}}
 
 \dim_new:N \g_edu_lstbelowskip
 \dim_gset:Nn \g_edu_lstbelowskip {0.2\baselineskip-0.5\parskip}
@@ -5580,6 +4950,28 @@
   prebreak={\,\,\Pisymbol{psy}{191}}
 }
 
+\lstdefinestyle{lstresstyle}{%
+  aboveskip=0.75\baselineskip,
+  belowskip=\g_edu_lstbelowskip,
+  basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+  keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
+  numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
+  rulecolor=\color{\g_edu_resultfg_tl}
+}
+
+\tl_if_empty:NF \g_edu_resultlistinglabel_tl {
+\lstdefinestyle{lstresstyle}{%
+    aboveskip=0.25\baselineskip,
+    belowskip=\g_edu_lstbelowskip,
+    basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+    keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
+  numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
+    rulecolor=\color{\g_edu_resultfg_tl},
+  title=\color{\g_edu_resultfg_tl}\sffamily\g_edu_resultlistinglabel_tl,
+  captionpos=t
+}
+}
+
 \lstset{%
   style=lststyle,
   upquote=true
@@ -5595,17 +4987,51 @@
     {ü}{{\"u}}1
     {ä}{{\"a}}1
     {ö}{{\"o}}1
-    {ff}{{f{}f}}2
-    {fi}{{f{}i}}2
-    {fl}{{f{}l}}2
-    {ffi}{{f{}f{}i}}3
-    {ffl}{{f{}f{}l}}3
     {\$}{{\$}}1
 }
 
-\newlength{\templength}
-\newcommand{\tempcommand}{}
-\newcounter{tempcounter}
+\tl_if_empty:NF \g_edu_lstkeywordsprocessing_bool {
+\lstset{%
+  morekeywords={abs, acos, alpha, ambient, ambientLight, append, applyMatrix, arc, Array, arrayCopy, ArrayList, asin, atan, atan2, background, beginCamera, beginRaw, beginRecord, beginShape, bezier, bezierDetail, bezierPoint, bezierTangent, bezierVertex, binary, blend, blendColor, blue, boolean, boolean, box, break, brightness, BufferedReader, byte, byte, camera, case, catch, ceil, char, char, class, color, color, colorMode, concat, constrain, continue, copy, cos, createFont, createGraphics, createImage, createInput, createOutput, createReader, createWriter, cursor, curve, curveDetail, curvePoint, curveTangent, curveTightness, curveVertex, day, default, degrees, delay, directionalLight, dist, double, draw, ellipse, ellipseMode, else, emissive, endCamera, endRaw, endRecord, endShape, exit, exp, expand, extends, false, fill, filter, final, float, float, floor, focused, for, frameCount, frameRate, frameRate, frustum, get, green, HALF_PI, HashMap, height, hex, hint, hour, hue, if, image, imageMode, implements, import, int, int, join, key, keyCode, keyPressed, keyPressed, keyReleased, keyTyped, lerp, lerpColor, lightFalloff, lights, lightSpecular, line, link, loadBytes, loadFont, loadImage, loadPixels, loadShape, loadStrings, log, long, loop, mag, map, match, matchAll, max, millis, min, minute, modelX, modelY, modelZ, month, mouseButton, mouseClicked, mouseDragged, mouseMoved, mousePressed, mousePressed, mouseReleased, mouseX, mouseY, new, nf, nfc, nfp, nfs, noCursor, noFill, noise, noiseDetail, noiseSeed, noLights, noLoop, norm, normal, noSmooth, noStroke, noTint, null, Object, online, open, ortho, param, perspective, PFont, PGraphics, PI, PImage, pixels[], pmouseX, pmouseY, point, pointLight, popMatrix, popStyle, pow, print, printArray, printCamera, println, printMatrix, printProjection, PrintWriter, private, PShape, public, pushMatrix, pushStyle, PVector, quad, QUARTER_PI, radians, random, randomSeed, rect, rectMode, red, redraw, requestImage, resetMatrix, return, reverse, rotate, rotateX, rotateY, rotateZ, round, saturation, save, saveBytes, saveFrame, saveStream, saveStrings, scale, screen, screenX, screenY, screenZ, second, selectFolder, selectInput, selectOutput, set, setup, shape, shapeMode, shearX, shearY, shininess, shorten, sin, size, smooth, sort, specular, sphere, sphereDetail, splice, split, splitTokens, spotLight, sq, sqrt, static, status, str, String, stroke, strokeCap, strokeJoin, strokeWeight, subset, super, switch, tan, text, textAlign, textAscent, textDescent, textFont, textLeading, textMode, textSize, texture, textureMode, textWidth, this, tint, translate, triangle, trim, true, try, TWO_PI, unbinary, unhex, updatePixels, vertex, void, while, width, XMLElement, year}
+}
+}
+
+\NewDocumentEnvironment{reslstlisting}{}{
+    \XSIMfilewritestart{\jobname.tmp}
+}{
+    \XSIMfilewritestop
+    \bool_if:NT \g_edu_showresults_bool
+        {
+            \lstinputlisting[style=lstresstyle]{\jobname.tmp}
+        }
+}
+
+\bool_if:NT \g_edu_edumath_bool {
+
+  \RequirePackage[\g_edu_edumathoptions_tl]{edumath}
+}
+
+
+\bool_if:NT \g_edu_edumath_bool {
+  \AtBeginDocument{
+    \setlength{\abovedisplayskip}{1.2ex plus 0.2ex minus 0.1ex}
+    \setlength{\abovedisplayshortskip}{1ex plus 0.2ex minus 0.2ex}
+    \setlength{\belowdisplayskip}{1.2ex plus 0.2ex minus 0.1ex}
+    \setlength{\belowdisplayshortskip}{1ex plus 0.2ex minus 0.2ex}
+  }
+}
+
+\tl_if_exist:NF \templength {
+  \newlength{\templength}
+}
+
+\tl_if_exist:NF \tempcommand {
+  \newcommand{\tempcommand}{}
+}
+
+\ifx\c@tempcounter\undefined
+  \newcounter{tempcounter}
+\fi
 
 \ExplSyntaxOff
 

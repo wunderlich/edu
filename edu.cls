@@ -417,6 +417,13 @@
 }
 
 \keys_define:nn {edu} {
+  ruleh .dim_gset:N = \g_edu_ruleh_dim,
+  ruleh .initial:n = 0.4pt,
+  rulehvoffset .dim_gset:N = \g_edu_rulehvoffset_dim,
+  rulehvoffset .initial:n = -4pt,
+}
+
+\keys_define:nn {edu} {
   colortheme .tl_gset:N = \g_edu_colortheme_tl, % Color zheme
   colortheme .initial:n =,
   styletheme .tl_gset:N = \g_edu_styletheme_tl, % Style theme
@@ -1028,12 +1035,7 @@
 
 
 \RequirePackage{listings}
-\RequirePackage{xsim}
-
-% Hack, because xsim also defines a solution environment. Can be removed,
-% when xsimverb can be used standalone again.
-\let\solution\relax
-\let\endsolution\relax
+\RequirePackage{xsimverb}
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
@@ -1692,6 +1694,14 @@
   \bool_if:NF \g_edu_parskip_bool {
     \vspace{0.5\baselineskip}
   }
+}
+
+\DeclareDocumentCommand \ruleh { O{\g_edu_rulehvoffset_dim} m } {
+  \rule[-\g_edu_ruleh_dim+#1]{#2}{\g_edu_ruleh_dim}
+}
+
+\DeclareDocumentCommand \rulehfill { O{\g_edu_rulehvoffset_dim} } {
+  \leavevmode\leaders\hbox{\rule[-\g_edu_ruleh_dim+#1]{1pt}{\g_edu_ruleh_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
 }
 
 \tl_new:N \l__edu_citetext_tl
@@ -3820,6 +3830,17 @@
   }
 }
 
+\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#1}%
+  }{%
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
 \DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
     \textcolor{\g_edu_resultfg_tl}{#3}%
@@ -4990,12 +5011,7 @@
 }
 }
 
-\NewDocumentEnvironment{reslstlisting}{}{%
-    % Adds temporary filename at first line:
-    %\XSIMsetfilebegin{\@percentchar\space file `\jobname.tmp'}
-
-    % Adds 'bye bye' at last line:
-    %\XSIMsetfileend{\@percentchar\space bye bye}
+\NewDocumentEnvironment{reslstlisting}{}{
     \XSIMfilewritestart{\jobname.tmp}
 }{
     \XSIMfilewritestop

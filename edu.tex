@@ -2421,6 +2421,23 @@ Various options of symbols:
 \end{option}
 
 
+
+\subsubsection{Linien}
+
+\begin{option}{cemphfg}
+Rule options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  ruleh .dim_gset:N = \g_edu_ruleh_dim,
+  ruleh .initial:n = 0.4pt,
+  rulehvoffset .dim_gset:N = \g_edu_rulehvoffset_dim,
+  rulehvoffset .initial:n = -4pt,
+}
+
+\end{MacroCode}
+\end{option}
+
+
 \subsubsection{Themes}
 
 \begin{option}{colortheme}
@@ -3698,12 +3715,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 
 \begin{MacroCode}{class}
 \RequirePackage{listings}
-\RequirePackage{xsim}
-
-% Hack, because xsim also defines a solution environment. Can be removed, 
-% when xsimverb can be used standalone again.
-\let\solution\relax
-\let\endsolution\relax
+\RequirePackage{xsimverb}
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an 
 % option clash with newtxmath/amsmath, which could not be fixed.
@@ -4691,7 +4703,7 @@ Deaktivieren der wichtigsten Parameter und Erzeugung des Abstands nach Tabellen 
 \end{macro}
 
 
-\subsubsection{Sonstige Kommandos/Umgebungen}
+\subsubsection{Boxen und Linien}
 
 \begin{macro}{\fpbox}[2]{[<width>]}{<content>}
 Umrahmte Box mit variabler Breite (standardmäßig \cs{linewidth}).
@@ -4731,6 +4743,30 @@ Umrahmte, abgesetzte ("`display"') leere Box. Breite und Höhe können optional 
 
 \end{MacroCode}
 \end{macro}
+
+\begin{macro}{\ruleh}[2]{[<vertical offset>]}{<length>}
+Häufig werden horizontale Linien gebraucht, welche mit diesem Makro erstellt werden können. Die Länge der Linie muss spezifiziert werden.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \ruleh { O{\g_edu_rulehvoffset_dim} m } {
+  \rule[-\g_edu_ruleh_dim+#1]{#2}{\g_edu_ruleh_dim}
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\rulehfill}[1]{[<vertical offset>]}
+Soll eine horizontale Linie erstellt werden, welche sich bis zum Ende der aktuellen Zeile erstreckt, kann dies durch dieses Makro umgesetzt werden.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \rulehfill { O{\g_edu_rulehvoffset_dim} } {
+  \leavevmode\leaders\hbox{\rule[-\g_edu_ruleh_dim+#1]{1pt}{\g_edu_ruleh_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\subsubsection{Sonstige Kommandos/Umgebungen}
 
 \begin{macro}{\__edu_moveright:n}[1]{<token list>}
 \begin{environment}{citequote}[3]{[<author>]}{[<key>]}{[<reference>]}
@@ -7585,6 +7621,26 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
 \end{macro}
 
 
+\begin{macro}{\resrfill}[2]{<text>}{[<vertical offset>]}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie angezeigt, die sich bis ans Ende der Zeite erstreckt.
+
+\emph{Achtung}: Innerhalb einer Zeile sollte nach diesem Makro kein Text mehr gesetzt werden, da es ansonsten zu Darstellungsfehlern kommen kann.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \textcolor{\g_edu_resultfg_tl}{#1}%
+  }{%
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
 \begin{macro}{\resb}[4]{[<box width>]}{[<box height>]}{<text>}{[<vertical offset>]}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
 \begin{MacroCode}{class}
@@ -9318,12 +9374,7 @@ Defining an environment for displaying listings as a result. It uses the package
 
 \begin{environment}{reslstlisting}
 \begin{MacroCode}{class}
-\NewDocumentEnvironment{reslstlisting}{}{%
-    % Adds temporary filename at first line:
-    %\XSIMsetfilebegin{\@percentchar\space file `\jobname.tmp'}
-    
-    % Adds 'bye bye' at last line:
-    %\XSIMsetfileend{\@percentchar\space bye bye}
+\NewDocumentEnvironment{reslstlisting}{}{
     \XSIMfilewritestart{\jobname.tmp}
 }{
     \XSIMfilewritestop
