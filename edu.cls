@@ -296,6 +296,8 @@
   twoupfootskip .initial:n = 0.75cm,
   timestampfooter .bool_gset:N = \g_edu_timestampfooter_bool,
   timestampfooter .initial:n = false,
+  transparencyfooter .bool_gset:N = \g_edu_transparencyfooter_bool,  % Enable/disable footer in transparency mode
+  transparencyfooter .initial:n = true,
 }
 
 \keys_define:nn {edu} {
@@ -1064,6 +1066,7 @@
 
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, sfmath}
 }
 
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
@@ -1768,8 +1771,11 @@
     \setlength{\footskip}{0pt}
   }
 
-  \bool_if:NT \g_edu_transparency_bool {
+  \bool_if:nT {\g_edu_transparency_bool && !\g_edu_transparencyfooter_bool} {
     \keys_set:nn {edu}{footer=false}
+  }
+
+  \bool_if:NT \g_edu_transparency_bool {
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
       left=\g_edu_transparencyleft_dim, right=\g_edu_transparencyright_dim%
@@ -2238,6 +2244,10 @@
 
   \tl_new:N \l__edu_footertextl_tl
 
+  \tl_put_right:Nn \l__edu_footertextl_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
+
   \tl_if_empty:NF \g_edu_licenseshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_licenseshort_tl\hspace{0.6em}
@@ -2286,13 +2296,16 @@
 
   \tl_new:N \l__edu_footertextr_tl
 
+  \tl_put_right:Nn \l__edu_footertextr_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
+
   \bool_if:nT {
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
-      \scriptsize
-      [
+      [\fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{3}}}{\g_edu_fontsize_dim}\selectfont
     }
   }
 
@@ -2322,15 +2335,17 @@
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
       ]
-      \normalsize\quad
+      \quad
     }
   }
 
   \tl_put_right:Nn \l__edu_footertextr_tl {
 
     \tl_if_empty:NF \g_edu_short_tl {
-      \g_edu_shortstyle_tl\small%
+      \g_edu_shortstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
@@ -2339,7 +2354,8 @@
 
     \tl_if_empty:NF \g_edu_group_tl {
       \hspace{0.25em}
-      \g_edu_groupstyle_tl\small%
+      \g_edu_groupstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
@@ -2351,16 +2367,20 @@
       \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \hspace{0.4em}
-      \Large%
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim + \fp_to_dim:n{4}}}{\g_edu_fontsize_dim}\selectfont%
       \textcolor{black}{\g_edu_resulttitlelabellabel_tl}%
     }
-    \normalsize\quad
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont\quad
   }
 
   \bool_if:NT \g_edu_pagecount_bool {
-    \rofoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \rofoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
-    \lefoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \lefoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
     \lefoot[]{\l__edu_footertextr_tl\pagemark}                    % gerade links
@@ -2373,11 +2393,11 @@
   \rohead[]{}  % ungerade rechts
 
   \setkomafont{pagenumber}{
-    \small\normalfont\sffamily
+    \normalfont\sffamily
   }
 
   \setkomafont{pagefoot}{
-    \footnotesize\normalfont\sffamily
+    \normalfont\sffamily
   }
   }{ % \bool_if:NT \g_edu_footer_bool
     \pagestyle{empty}
@@ -3808,10 +3828,10 @@
    }
 }
 
-\DeclareDocumentCommand \res { +O{} +m} {%
+\DeclareDocumentCommand \res { +O{} +m } {
   \bool_if:NTF \g_edu_showresults_bool {
     \group_begin:
-      \color{\g_edu_resultfg_tl} #2%
+      \color{\g_edu_resultfg_tl} #2
     \group_end:
   }{#1}%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
@@ -3819,9 +3839,11 @@
   }
 }
 
-\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#2}%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#2
+    \group_end:%
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
@@ -3830,9 +3852,11 @@
   }
 }
 
-\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resrfill { +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#1}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #1
+    \group_end:
   }{%
     \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
   }%
@@ -3841,9 +3865,11 @@
   }
 }
 
-\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} +m !O{\g_edu_resultboxvoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#3}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #3
+    \group_end:
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}

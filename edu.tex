@@ -2131,6 +2131,7 @@ Options of title:
 \begin{option}{footskip}
 \begin{option}{twoupfootskip}
 \begin{option}{timestampfooter}
+\begin{option}{transparencyfooter}
 Options of header and footer:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
@@ -2146,9 +2147,12 @@ Options of header and footer:
   twoupfootskip .initial:n = 0.75cm,
   timestampfooter .bool_gset:N = \g_edu_timestampfooter_bool,
   timestampfooter .initial:n = false,
+  transparencyfooter .bool_gset:N = \g_edu_transparencyfooter_bool,  % Enable/disable footer in transparency mode
+  transparencyfooter .initial:n = true,
 }
 
 \end{MacroCode}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -3765,11 +3769,12 @@ Define a token list which can be used as a colon in \textsf{TikZ} within \cs*{\E
 
 \subsection{Schriften}
 
-Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schrift verwendet:
+Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schrift verwendet. Außerdem muss das Package \pkg{edumath} mit serifenloser Schrift geladen werden.
 
 \begin{MacroCode}{class}
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, sfmath}
 }
 
 \end{MacroCode}
@@ -4847,8 +4852,11 @@ Makro zum aktualisieren der Seitenränder, falls eine der Optionen \opt{top} etc
     \setlength{\footskip}{0pt}
   }
   
-  \bool_if:NT \g_edu_transparency_bool {
+  \bool_if:nT {\g_edu_transparency_bool && !\g_edu_transparencyfooter_bool} {
     \keys_set:nn {edu}{footer=false}
+  }
+  
+  \bool_if:NT \g_edu_transparency_bool {
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
       left=\g_edu_transparencyleft_dim, right=\g_edu_transparencyright_dim%
@@ -5466,6 +5474,10 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
 \begin{macro*}{\l__edu_footertextl_tl}
 \begin{MacroCode}{class}
   \tl_new:N \l__edu_footertextl_tl
+    
+  \tl_put_right:Nn \l__edu_footertextl_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
   
   \tl_if_empty:NF \g_edu_licenseshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
@@ -5521,13 +5533,16 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
   
   \tl_new:N \l__edu_footertextr_tl
   
+  \tl_put_right:Nn \l__edu_footertextr_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
+  
   \bool_if:nT {
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
-      \scriptsize
-      [
+      [\fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{3}}}{\g_edu_fontsize_dim}\selectfont
     }
   }
 
@@ -5557,15 +5572,17 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
       ]
-      \normalsize\quad
+      \quad
     }
   }
   
   \tl_put_right:Nn \l__edu_footertextr_tl {
     
     \tl_if_empty:NF \g_edu_short_tl {
-      \g_edu_shortstyle_tl\small%
+      \g_edu_shortstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
@@ -5574,7 +5591,8 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
     
     \tl_if_empty:NF \g_edu_group_tl {
       \hspace{0.25em}
-      \g_edu_groupstyle_tl\small%
+      \g_edu_groupstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
@@ -5586,16 +5604,20 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
       \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \hspace{0.4em}
-      \Large%
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim + \fp_to_dim:n{4}}}{\g_edu_fontsize_dim}\selectfont%
       \textcolor{black}{\g_edu_resulttitlelabellabel_tl}%
     }
-    \normalsize\quad
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont\quad
   }
   
   \bool_if:NT \g_edu_pagecount_bool {
-    \rofoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \rofoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
-    \lefoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \lefoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont      
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
     \lefoot[]{\l__edu_footertextr_tl\pagemark}                    % gerade links
@@ -5618,11 +5640,11 @@ Kopfzeilen bleiben leer:
 Die Formatierung von \cs{pagemark} und der Fußzeile wird durch \pkg{scrheadings} vorgenommen und muss gesondert vorgenommen werden:
 \begin{MacroCode}{class}
   \setkomafont{pagenumber}{
-    \small\normalfont\sffamily
+    \normalfont\sffamily
   }
 
   \setkomafont{pagefoot}{
-    \footnotesize\normalfont\sffamily
+    \normalfont\sffamily
   }
   }{ % \bool_if:NT \g_edu_footer_bool
     \pagestyle{empty}
@@ -7588,10 +7610,10 @@ Setzt die Punktzahl der aktuellen Teilaufgabe zusammen. Die Sternvariante setzt 
 \begin{macro}{\res}[2]{[<alternative text>]}{<text>}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \res { +O{} +m} {%
+\DeclareDocumentCommand \res { +O{} +m } {
   \bool_if:NTF \g_edu_showresults_bool {
     \group_begin:
-      \color{\g_edu_resultfg_tl} #2%
+      \color{\g_edu_resultfg_tl} #2
     \group_end:
   }{#1}%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
@@ -7606,9 +7628,11 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an.
 \begin{macro}{\resr}[3]{[<rule length>]}{<text>}{[<vertical offset>]}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#2}%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#2
+    \group_end:%
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
@@ -7626,9 +7650,11 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
 
 \emph{Achtung}: Innerhalb einer Zeile sollte nach diesem Makro kein Text mehr gesetzt werden, da es ansonsten zu Darstellungsfehlern kommen kann.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resrfill { +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#1}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #1
+    \group_end:
   }{%
     \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
   }%
@@ -7644,9 +7670,11 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
 \begin{macro}{\resb}[4]{[<box width>]}{[<box height>]}{<text>}{[<vertical offset>]}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} +m !O{\g_edu_resultboxvoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#3}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #3
+    \group_end:
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
