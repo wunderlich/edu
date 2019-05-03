@@ -1107,11 +1107,10 @@
 
 
 \AtBeginDocument{
-  \bool_if:NTF \g_edu_twoup_bool {
-    \KOMAoptions{fontsize=\dim_use:N \g_edu_twoupfontsize_dim}
-  }{
-  \KOMAoptions{fontsize=\dim_use:N \g_edu_fontsize_dim}
+  \bool_if:NT \g_edu_twoup_bool {
+    \keys_set:nn {edu} {fontsize = \tl_use:N \g_edu_twoupfontsize_dim}
   }
+  \KOMAoptions{fontsize=\dim_use:N \g_edu_fontsize_dim}
 }
 
 
