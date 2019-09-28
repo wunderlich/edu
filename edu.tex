@@ -1116,7 +1116,7 @@ Das Makro \cs{cemph} zeichnet Text durch farbigen Satz in \cs*{emph} aus. Die ve
 \localeDE{\subsubsection{Themes}}
 
 \localeDE{
-\Option{colorthemes}\WithValues{\meta{Themename}}\AndDefault{}
+\Option{colortheme}\WithValues{\meta{Themename}}\AndDefault{}
 Mithilfe dieser Option kann ein Colortheme geladen werden.
 }
 \medskip
@@ -5583,7 +5583,7 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
       \g_edu_shortstyle_tl
       \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
-      \colorbox{black}{%
+      \colorbox{\g_edu_shortbg_tl}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }

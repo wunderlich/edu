@@ -2346,7 +2346,7 @@
       \g_edu_shortstyle_tl
       \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
-      \colorbox{black}{%
+      \colorbox{\g_edu_shortbg_tl}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }
