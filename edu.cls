@@ -1037,7 +1037,13 @@
 
 
 \RequirePackage{listings}
-\RequirePackage{xsimverb}
+\RequirePackage{xsim}
+
+% Hack, because xsim also defines a solution environment. Can be removed,
+% when xsimverb can be used standalone again.
+\let\solution\relax
+\let\endsolution\relax
+
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
