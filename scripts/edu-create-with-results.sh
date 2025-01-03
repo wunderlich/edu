@@ -19,7 +19,9 @@ sed -i 's/\\begin{document}/\\begin{document}\\eduoption{showresults}{true}/' $f
 
 pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp1
 pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp1
+pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp1
 
+pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp2
 pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp2
 pdflatex -shell-escape -interaction=nonstopmode $filenamesrctmp2
 

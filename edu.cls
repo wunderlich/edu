@@ -1,7 +1,7 @@
 %% This is file `edu.cls', generated from `edu.tex' (key `class').
 %% edu Documentclass for typesetting educational documents
 %%
-%% Copyright (C) 2012-2018 by Daniel Wunderlich <code@wu-web.de>
+%% Copyright (C) 2012-2024 by Daniel Wunderlich <code@wu-web.de>
 %%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -211,7 +211,7 @@
 \keys_define:nn {edu} {
   parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
   parts .initial:n = false
-} 
+}
 
 \keys_define:nn {edu} {
   listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
@@ -408,6 +408,14 @@
   cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
   cemphfg .initial:n = wuSemiDarkRed,
 }
+
+\keys_define:nn {edu} {
+  gendersymbol .tl_gset:N = \g_edu_gendersymbol_tl,
+  gendersymbol .initial:n = \textasteriskcentered,
+  genderraise .dim_gset:N = \g_edu_genderraise_dim,
+}
+
+\__edu_keys_initial:n {genderraise = 0ex}
 
 \keys_define:nn {edu} {
   ccscale .fp_gset:N = \g_edu_ccscale_fp,    % Scaling Creative Commons Icons
@@ -678,6 +686,10 @@
   resultboxwidth .initial:n = 2cm,
   resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
   resultboxheight .initial:n = 0.65cm,
+  resultgridheight .dim_gset:N = \g_edu_resultgridheight_dim,
+  resultgridheight .initial:n = 3cm,
+  resultgridfg .tl_gset:N = \g_edu_resultgridfg_tl,
+  resultgridfg .initial:n = wuDarkGray,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
   resulttitlelabel .bool_gset:N = \g_edu_resulttitlelabel_bool,
@@ -993,9 +1005,9 @@
 \RequirePackage{pifont}
 \RequirePackage[newcommands]{ragged2e}
 \RequirePackage{rotating}
-\RequirePackage{scrpage2}
+\RequirePackage{scrlayer-scrpage}
 \RequirePackage{setspace}
-\RequirePackage{siunitx}
+\RequirePackage{siunitx}[=v2]
 \RequirePackage{tabularx}
 \RequirePackage{textcomp}
 \RequirePackage[nobottomtitles*]{titlesec}
@@ -1063,7 +1075,7 @@
 
 \AtBeginEnvironment{center}{
   \medmuskip=4mu
-\thickmuskip=5mu
+  \thickmuskip=5mu
 }
 
 \tl_if_exist:NF \c_colon_tl {
@@ -1076,15 +1088,15 @@
 }
 
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
-\tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
-  \RequirePackage[rm]{libertine}
-  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
-}
+  \tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
+    \RequirePackage[rm]{libertine}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
+  }
 
-\tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
-  \RequirePackage{palatino}
-  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
-}
+  \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
+    \RequirePackage{palatino}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
+  }
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {lato} {
@@ -1530,7 +1542,6 @@
     parsep=0.25\baselineskip,
   ]
 }{%
-  \vspace{-\baselineskip}
   \end{itemize}
 }
 
@@ -2216,7 +2227,7 @@
   \setpar
 }
 
-\bool_if:NF \g_edu_parindent_bool { 
+\bool_if:NF \g_edu_parindent_bool {
 \tl_gput_right:Nn \quotation {
   \noindent\ignorespaces
 }
@@ -2428,6 +2439,10 @@
 \DeclareDocumentCommand \textRightarrow { } {$\Rightarrow$\xspace}
 
 \DeclareUnicodeCharacter{20AC}{\euro}
+
+\DeclareDocumentCommand \gend { O{\g_edu_genderraise_dim} } {
+  \raisebox{#1}{\g_edu_gendersymbol_tl}
+}
 
 \DeclareExpandableDocumentCommand \headrule { } {
   \midrule[\heavyrulewidth]
@@ -2928,7 +2943,7 @@
 \cs_new_protected:Npn \edu_create_grid_include:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -2950,13 +2965,13 @@
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \cs_new_protected:Npn \edu_create_grid_exclude:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -2978,7 +2993,7 @@
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \definecolor{marioBrown}{HTML}{8F581F}
@@ -3462,7 +3477,7 @@
     }
   }
 
-  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
+  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parskip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
   {
@@ -3857,13 +3872,25 @@
   }
 }
 
-\DeclareDocumentCommand \resrfill { +m !O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resrfill { O{1} O{0.75cm} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
     \group_begin:
-      \color{\g_edu_resultfg_tl} #1
+      \color{\g_edu_resultfg_tl} #3
     \group_end:
   }{%
-    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+
+    \prg_replicate:nn {#1 - 1} {
+
+      \bool_if:nT { \int_compare_p:n { #1 > 1 } } {
+        \par
+        \vspace{-\baselineskip}
+        \parskipreduce
+        \vspace{#2}
+      }
+
+      \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    }
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
@@ -3878,6 +3905,22 @@
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\DeclareDocumentCommand \resg { O{\g_edu_resultgridheight_dim} O{\linewidth} +m } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#3
+    \group_end:%
+  }{%
+    \tikz \draw[step=0.5, color=\g_edu_resultgridfg_tl] (0,0) grid +(
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #2 } { 0.5cm }) * 0.5 },
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #1 } { 0.5cm }) * 0.5 }
+    );
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
@@ -4165,6 +4208,7 @@
   \dim_gset:Nn \g__edu_coltwo_dim {\linewidth - \g__edu_colone_dim - \columnsep}
 %
   \parskipreduce
+  \vspace{0.475\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\dim_use:N\g__edu_colone_dim}%
   \setpar
   \parskipreduce
@@ -4173,6 +4217,7 @@
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \vspace{1.5\multicolsep}
+  \vspace{-0.05\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \parskipreduce
 }
 
@@ -4180,9 +4225,11 @@
 \DeclareDocumentEnvironment {cols2*} { O{0.5\linewidth} } {%
   \tl_gset:Nn \g__edu_colalign_tl {c}
   \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+  \vspace{-0.04\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \begin{cols2}[#1]
 }{%
   \end{cols2}%
+  \vspace{0.025\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \tl_gset:Nn \g__edu_colalign_tl {t}
 }
 
@@ -4197,9 +4244,11 @@
 %
   \parskipreduce
   \vspace{-0.15\baselineskip}
+  \vspace{0.6\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {c}
     \vspace{1.2\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+    \vspace{0.145\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\g__edu_colone_dim}%
   \setpar
@@ -4210,6 +4259,7 @@
   \setlength{\parfillskip}{1em plus 1fil}
   \parskipreduce
   \vspace{0.75\baselineskip}
+  \vspace{-0.065\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {t}
   }
@@ -4290,6 +4340,9 @@
   }{
     \end{cols2}
   }
+  \IfBooleanF {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -4351,6 +4404,9 @@
     \end{cols2*}
   }{
     \end{cols2}
+  }
+  \IfBooleanT {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
 }
 

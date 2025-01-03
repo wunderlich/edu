@@ -1,7 +1,7 @@
 %% This is file `edu.cls', generated from `edu.tex' (key `class').
 %% edu Documentclass for typesetting educational documents
 %%
-%% Copyright (C) 2012-2018 by Daniel Wunderlich <code@wu-web.de>
+%% Copyright (C) 2012-2024 by Daniel Wunderlich <code@wu-web.de>
 %%
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -211,7 +211,7 @@
 \keys_define:nn {edu} {
   parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
   parts .initial:n = false
-} 
+}
 
 \keys_define:nn {edu} {
   listarraysep .dim_gset:N = \g_edu_listarraysep_dim,
@@ -296,6 +296,8 @@
   twoupfootskip .initial:n = 0.75cm,
   timestampfooter .bool_gset:N = \g_edu_timestampfooter_bool,
   timestampfooter .initial:n = false,
+  transparencyfooter .bool_gset:N = \g_edu_transparencyfooter_bool,  % Enable/disable footer in transparency mode
+  transparencyfooter .initial:n = true,
 }
 
 \keys_define:nn {edu} {
@@ -408,12 +410,27 @@
 }
 
 \keys_define:nn {edu} {
+  gendersymbol .tl_gset:N = \g_edu_gendersymbol_tl,
+  gendersymbol .initial:n = \textasteriskcentered,
+  genderraise .dim_gset:N = \g_edu_genderraise_dim,
+}
+
+\__edu_keys_initial:n {genderraise = 0ex}
+
+\keys_define:nn {edu} {
   ccscale .fp_gset:N = \g_edu_ccscale_fp,    % Scaling Creative Commons Icons
   ccscale .initial:n = 1.5,
   actionfg .tl_gset:N = \g_edu_actionfg_tl,  % Color of action-symbol
   actionfg .initial:n = black,
   speechfg .tl_gset:N = \g_edu_speechfg_tl,  % Color of speech-symbol
   speechfg .initial:n = black,
+}
+
+\keys_define:nn {edu} {
+  ruleh .dim_gset:N = \g_edu_ruleh_dim,
+  ruleh .initial:n = 0.4pt,
+  rulehvoffset .dim_gset:N = \g_edu_rulehvoffset_dim,
+  rulehvoffset .initial:n = -4pt,
 }
 
 \keys_define:nn {edu} {
@@ -669,6 +686,10 @@
   resultboxwidth .initial:n = 2cm,
   resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
   resultboxheight .initial:n = 0.65cm,
+  resultgridheight .dim_gset:N = \g_edu_resultgridheight_dim,
+  resultgridheight .initial:n = 3cm,
+  resultgridfg .tl_gset:N = \g_edu_resultgridfg_tl,
+  resultgridfg .initial:n = wuDarkGray,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
   resulttitlelabel .bool_gset:N = \g_edu_resulttitlelabel_bool,
@@ -984,9 +1005,9 @@
 \RequirePackage{pifont}
 \RequirePackage[newcommands]{ragged2e}
 \RequirePackage{rotating}
-\RequirePackage{scrpage2}
+\RequirePackage{scrlayer-scrpage}
 \RequirePackage{setspace}
-\RequirePackage{siunitx}
+\RequirePackage{siunitx}[=v2]
 \RequirePackage{tabularx}
 \RequirePackage{textcomp}
 \RequirePackage[nobottomtitles*]{titlesec}
@@ -1028,7 +1049,13 @@
 
 
 \RequirePackage{listings}
-\RequirePackage{xsimverb}
+\RequirePackage{xsim}
+
+% Hack, because xsim also defines a solution environment. Can be removed,
+% when xsimverb can be used standalone again.
+\let\solution\relax
+\let\endsolution\relax
+
 
 % menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
@@ -1048,7 +1075,7 @@
 
 \AtBeginEnvironment{center}{
   \medmuskip=4mu
-\thickmuskip=5mu
+  \thickmuskip=5mu
 }
 
 \tl_if_exist:NF \c_colon_tl {
@@ -1057,18 +1084,19 @@
 
 \bool_if:NT \g_edu_transparency_bool {
   \keys_set:nn {edu} {sfdefault = true}
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, sfmath}
 }
 
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
-\tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
-  \RequirePackage[rm]{libertine}
-  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
-}
+  \tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
+    \RequirePackage[rm]{libertine}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
+  }
 
-\tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
-  \RequirePackage{palatino}
-  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
-}
+  \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
+    \RequirePackage{palatino}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
+  }
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {lato} {
@@ -1097,11 +1125,10 @@
 
 
 \AtBeginDocument{
-  \bool_if:NTF \g_edu_twoup_bool {
-    \KOMAoptions{fontsize=\dim_use:N \g_edu_twoupfontsize_dim}
-  }{
-  \KOMAoptions{fontsize=\dim_use:N \g_edu_fontsize_dim}
+  \bool_if:NT \g_edu_twoup_bool {
+    \keys_set:nn {edu} {fontsize = \tl_use:N \g_edu_twoupfontsize_dim}
   }
+  \KOMAoptions{fontsize=\dim_use:N \g_edu_fontsize_dim}
 }
 
 
@@ -1515,7 +1542,6 @@
     parsep=0.25\baselineskip,
   ]
 }{%
-  \vspace{-\baselineskip}
   \end{itemize}
 }
 
@@ -1689,6 +1715,14 @@
   }
 }
 
+\DeclareDocumentCommand \ruleh { O{\g_edu_rulehvoffset_dim} m } {
+  \rule[-\g_edu_ruleh_dim+#1]{#2}{\g_edu_ruleh_dim}
+}
+
+\DeclareDocumentCommand \rulehfill { O{\g_edu_rulehvoffset_dim} } {
+  \leavevmode\leaders\hbox{\rule[-\g_edu_ruleh_dim+#1]{1pt}{\g_edu_ruleh_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+}
+
 \tl_new:N \l__edu_citetext_tl
 
 % Adapted from TeXbook
@@ -1753,8 +1787,11 @@
     \setlength{\footskip}{0pt}
   }
 
-  \bool_if:NT \g_edu_transparency_bool {
+  \bool_if:nT {\g_edu_transparency_bool && !\g_edu_transparencyfooter_bool} {
     \keys_set:nn {edu}{footer=false}
+  }
+
+  \bool_if:NT \g_edu_transparency_bool {
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
       left=\g_edu_transparencyleft_dim, right=\g_edu_transparencyright_dim%
@@ -2190,7 +2227,7 @@
   \setpar
 }
 
-\bool_if:NF \g_edu_parindent_bool { 
+\bool_if:NF \g_edu_parindent_bool {
 \tl_gput_right:Nn \quotation {
   \noindent\ignorespaces
 }
@@ -2222,6 +2259,10 @@
   \bool_if:NT \g_edu_footer_bool {
 
   \tl_new:N \l__edu_footertextl_tl
+
+  \tl_put_right:Nn \l__edu_footertextl_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
 
   \tl_if_empty:NF \g_edu_licenseshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
@@ -2271,13 +2312,16 @@
 
   \tl_new:N \l__edu_footertextr_tl
 
+  \tl_put_right:Nn \l__edu_footertextr_tl {
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
+  }
+
   \bool_if:nT {
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
-      \scriptsize
-      [
+      [\fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{3}}}{\g_edu_fontsize_dim}\selectfont
     }
   }
 
@@ -2307,24 +2351,27 @@
     \bool_if_p:N \g_edu_timestampfooter_bool
   }{
     \tl_put_right:Nn \l__edu_footertextr_tl {
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
       ]
-      \normalsize\quad
+      \quad
     }
   }
 
   \tl_put_right:Nn \l__edu_footertextr_tl {
 
     \tl_if_empty:NF \g_edu_short_tl {
-      \g_edu_shortstyle_tl\small%
+      \g_edu_shortstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
-      \colorbox{black}{%
+      \colorbox{\g_edu_shortbg_tl}{%
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }
 
     \tl_if_empty:NF \g_edu_group_tl {
       \hspace{0.25em}
-      \g_edu_groupstyle_tl\small%
+      \g_edu_groupstyle_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
       \setlength{\fboxsep}{0.25em}
       \colorbox{black}{%
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
@@ -2336,16 +2383,20 @@
       \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
       \hspace{0.4em}
-      \Large%
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim + \fp_to_dim:n{4}}}{\g_edu_fontsize_dim}\selectfont%
       \textcolor{black}{\g_edu_resulttitlelabellabel_tl}%
     }
-    \normalsize\quad
+    \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont\quad
   }
 
   \bool_if:NT \g_edu_pagecount_bool {
-    \rofoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \rofoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
-    \lefoot[]{\l__edu_footertextr_tl\small\normalfont\sffamily%
+    \lefoot[]{\l__edu_footertextr_tl
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
+      \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
     \lefoot[]{\l__edu_footertextr_tl\pagemark}                    % gerade links
@@ -2358,11 +2409,11 @@
   \rohead[]{}  % ungerade rechts
 
   \setkomafont{pagenumber}{
-    \small\normalfont\sffamily
+    \normalfont\sffamily
   }
 
   \setkomafont{pagefoot}{
-    \footnotesize\normalfont\sffamily
+    \normalfont\sffamily
   }
   }{ % \bool_if:NT \g_edu_footer_bool
     \pagestyle{empty}
@@ -2388,6 +2439,10 @@
 \DeclareDocumentCommand \textRightarrow { } {$\Rightarrow$\xspace}
 
 \DeclareUnicodeCharacter{20AC}{\euro}
+
+\DeclareDocumentCommand \gend { O{\g_edu_genderraise_dim} } {
+  \raisebox{#1}{\g_edu_gendersymbol_tl}
+}
 
 \DeclareExpandableDocumentCommand \headrule { } {
   \midrule[\heavyrulewidth]
@@ -2888,7 +2943,7 @@
 \cs_new_protected:Npn \edu_create_grid_include:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -2910,13 +2965,13 @@
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \cs_new_protected:Npn \edu_create_grid_exclude:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -2938,7 +2993,7 @@
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \definecolor{marioBrown}{HTML}{8F581F}
@@ -3422,7 +3477,7 @@
     }
   }
 
-  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
+  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parskip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
   {
@@ -3793,10 +3848,10 @@
    }
 }
 
-\DeclareDocumentCommand \res { +O{} +m} {%
+\DeclareDocumentCommand \res { +O{} +m } {
   \bool_if:NTF \g_edu_showresults_bool {
     \group_begin:
-      \color{\g_edu_resultfg_tl} #2%
+      \color{\g_edu_resultfg_tl} #2
     \group_end:
   }{#1}%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
@@ -3804,9 +3859,11 @@
   }
 }
 
-\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resr { O{\g_edu_resultrulelength_dim} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#2}%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#2
+    \group_end:%
   }{%
     \rule[-\g_edu_resultrule_dim+#3]{#1}{\g_edu_resultrule_dim}%
   }%
@@ -3815,23 +3872,55 @@
   }
 }
 
-\DeclareDocumentCommand \resrfill { m O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resrfill { O{1} O{0.75cm} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#1}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #3
+    \group_end:
   }{%
-    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+
+    \prg_replicate:nn {#1 - 1} {
+
+      \bool_if:nT { \int_compare_p:n { #1 > 1 } } {
+        \par
+        \vspace{-\baselineskip}
+        \parskipreduce
+        \vspace{#2}
+      }
+
+      \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    }
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
   }
 }
 
-\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} m O{\g_edu_resultboxvoffset_dim} } {%
+\DeclareDocumentCommand \resb { O{\g_edu_resultboxwidth_dim} O{\g_edu_resultboxheight_dim} +m !O{\g_edu_resultboxvoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
-    \textcolor{\g_edu_resultfg_tl}{#3}%
+    \group_begin:
+      \color{\g_edu_resultfg_tl} #3
+    \group_end:
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\DeclareDocumentCommand \resg { O{\g_edu_resultgridheight_dim} O{\linewidth} +m } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#3
+    \group_end:%
+  }{%
+    \tikz \draw[step=0.5, color=\g_edu_resultgridfg_tl] (0,0) grid +(
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #2 } { 0.5cm }) * 0.5 },
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #1 } { 0.5cm }) * 0.5 }
+    );
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
@@ -4119,6 +4208,7 @@
   \dim_gset:Nn \g__edu_coltwo_dim {\linewidth - \g__edu_colone_dim - \columnsep}
 %
   \parskipreduce
+  \vspace{0.475\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\dim_use:N\g__edu_colone_dim}%
   \setpar
   \parskipreduce
@@ -4127,6 +4217,7 @@
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \vspace{1.5\multicolsep}
+  \vspace{-0.05\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \parskipreduce
 }
 
@@ -4134,9 +4225,11 @@
 \DeclareDocumentEnvironment {cols2*} { O{0.5\linewidth} } {%
   \tl_gset:Nn \g__edu_colalign_tl {c}
   \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+  \vspace{-0.04\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \begin{cols2}[#1]
 }{%
   \end{cols2}%
+  \vspace{0.025\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \tl_gset:Nn \g__edu_colalign_tl {t}
 }
 
@@ -4151,9 +4244,11 @@
 %
   \parskipreduce
   \vspace{-0.15\baselineskip}
+  \vspace{0.6\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {c}
     \vspace{1.2\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+    \vspace{0.145\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\g__edu_colone_dim}%
   \setpar
@@ -4164,6 +4259,7 @@
   \setlength{\parfillskip}{1em plus 1fil}
   \parskipreduce
   \vspace{0.75\baselineskip}
+  \vspace{-0.065\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {t}
   }
@@ -4244,6 +4340,9 @@
   }{
     \end{cols2}
   }
+  \IfBooleanF {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -4305,6 +4404,9 @@
     \end{cols2*}
   }{
     \end{cols2}
+  }
+  \IfBooleanT {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
 }
 

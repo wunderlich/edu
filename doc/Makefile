@@ -13,11 +13,11 @@ all: $(EXAMPLESPDF) clean
 	pdflatex -interaction=nonstopmode -halt-on-error -jobname=$(basename $@) "\providecommand\docfile{$(basename $@).tex}\input{edu-doc-template-content.tex}"
 
 clean:
-	rm -f *.gl? *.glsdefs *.id? *.aux
+	rm -f *.gl? *.glsdefs *.id? *.ist *.aux
 	rm -f *.bbl *.bcf *.bib *.blg *.xdy
 	rm -f *.fls *.log *.out *.run.xml *.toc
 	rm -f *.cod *.gnuplot *.table
-	rm -f *.log *.synctex *.tmp
+	rm -f *.log *.synctex *.tmp *.xsim
 
 distclean: clean
 	rm -f tut-*.tex *.cls *.pdf *.clo *.tar.gz *.tds.zip

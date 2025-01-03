@@ -1,6 +1,6 @@
 %% edu Documentclass for typesetting educational documents
-%%
-%% Copyright (C) 2012-2018 by Daniel Wunderlich <code@wu-web.de>
+%% 
+%% Copyright (C) 2012-2024 by Daniel Wunderlich <code@wu-web.de>
 %% 
 %% This work may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -20,9 +20,11 @@
 %%  * edu-colors-wu.sty
 %%  * edu.pdf
 %%  * edu-de.pdf
-\documentclass{skdoc}
+\RequirePackage{scrlfile}
+\ReplacePackage{scrpage2}{scrlayer-scrpage}
+\documentclass{include/skdoc}
 
-\usepackage[T1]{fontenc} 
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
 \usepackage{amsmath}
@@ -51,7 +53,7 @@
 \usepackage{hyperref}
 
 \let\SI\relax
-\usepackage{siunitx}
+\usepackage{siunitx}[=v2]
 \DeclareSIUnit\point{pt}
 \usepackage{hologo,booktabs,xcoffins,calc}
 \usepackage[style=authoryear]{biblatex}
@@ -76,6 +78,7 @@
 
 % Font
 \usepackage{sourcesanspro}
+\usepackage[libertine]{newtxmath}
 
 % Fontsize
 \KOMAoption{fontsize}{10}
@@ -595,7 +598,7 @@ pdflscape\\
 roboto*\\
 rotating\\
 ragged2e\\
-scrpage2\\
+scrlayer-scrpage\\
 setspace\\
 siunitx\\
 sourcecodepro*\\
@@ -1660,7 +1663,7 @@ Variables for temporary usage.
 \subsubsection{Patches}
 
 \begin{macro}{\__edu_keys_initial:n}[1]{<key = value list>}
-Da die Zuweisung initialer Werte in relativen Einheiten (em, ex etc.) bei \cs*{key}-Option durch \cs*{.initial} nicht funktioniert, werden diese mithilfe dieses Hilsmakros am Dokumentenanfang zugewiesen.
+Da die Zuweisung initialer Werte in relativen Einheiten (em, ex etc.) bei \cs*{key}-Option durch \cs*{.initial} nicht funktioniert, werden diese mithilfe dieses Hilfsmakros am Dokumentenanfang zugewiesen.
 \begin{MacroCode}{class}
 \cs_new:Npn \__edu_keys_initial:n #1 {
   \AtBeginDocument{
@@ -1953,7 +1956,7 @@ Options for fonts:
   gluebottom .initial:n = 20mm,
   glueleft .dim_gset:N = \g_edu_glueleft_dim,      % Left margin at glue
   glueleft .initial:n = 15mm,
-}  
+}
 
 \end{MacroCode}
 \end{option}
@@ -1970,7 +1973,7 @@ Set part as topmost structure.
 \keys_define:nn {edu} {
   parts .bool_gset:N = \g_edu_parts_bool,  % Set part as topmost structure element
   parts .initial:n = false
-}						
+}
 
 \end{MacroCode}
 \end{option}
@@ -2398,6 +2401,24 @@ Formatting options:
   cemphfg .tl_gset:N = \g_edu_cemphfg_tl,  % Color of cemph
   cemphfg .initial:n = wuSemiDarkRed,
 }
+
+\end{MacroCode}
+\end{option}
+
+
+
+\subsubsection{Geschlechtergerechte Sprache}
+
+\begin{option}{cemphfg}
+Gender-neutral language options:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {
+  gendersymbol .tl_gset:N = \g_edu_gendersymbol_tl,
+  gendersymbol .initial:n = \textasteriskcentered,  
+  genderraise .dim_gset:N = \g_edu_genderraise_dim,
+}
+
+\__edu_keys_initial:n {genderraise = 0ex}
 
 \end{MacroCode}
 \end{option}
@@ -2958,6 +2979,8 @@ Skips before and after (sub-)solutions:
 \begin{option}{resultrulevoffset}
 \begin{option}{resultboxwidth}
 \begin{option}{resultboxheight}
+\begin{option}{resultgridheight}
+\begin{option}{resultgridfg}
 \begin{option}{resultrulevoffset}
 \begin{option}{resulttitlelabel}
 \begin{option}{resulttitlelabellabel}
@@ -2982,7 +3005,11 @@ Options for typesetting results:
   resultboxwidth .dim_gset:N = \g_edu_resultboxwidth_dim,
   resultboxwidth .initial:n = 2cm,
   resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
-  resultboxheight .initial:n = 0.65cm,
+  resultboxheight .initial:n = 0.65cm,  
+  resultgridheight .dim_gset:N = \g_edu_resultgridheight_dim,
+  resultgridheight .initial:n = 3cm,
+  resultgridfg .tl_gset:N = \g_edu_resultgridfg_tl,
+  resultgridfg .initial:n = wuDarkGray,
   resultrulevoffset .dim_gset:N = \g_edu_resultboxvoffset_dim,
   resultrulevoffset .initial:n = -5pt,
   resulttitlelabel .bool_gset:N = \g_edu_resulttitlelabel_bool,
@@ -2998,6 +3025,8 @@ Options for typesetting results:
 }
 
 \end{MacroCode}
+\end{option}
+\end{option}
 \end{option}
 \end{option}
 \end{option}
@@ -3631,16 +3660,16 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{fontawesome}
 \RequirePackage{geometry}
 \RequirePackage[notcomma, notperiod, notquote, notquery]{hanging}  % Hanging indention of multiexe
-\RequirePackage{lastpage}                                          % Number of pages with 
+\RequirePackage{lastpage}                                          % Number of pages with
 \RequirePackage{multicol}
 \RequirePackage{multirow}
 \RequirePackage{pdflscape}
 \RequirePackage{pifont}
 \RequirePackage[newcommands]{ragged2e}
 \RequirePackage{rotating}
-\RequirePackage{scrpage2}
+\RequirePackage{scrlayer-scrpage}
 \RequirePackage{setspace}
-\RequirePackage{siunitx}
+\RequirePackage{siunitx}[=v2]
 \RequirePackage{tabularx}
 \RequirePackage{textcomp}
 \RequirePackage[nobottomtitles*]{titlesec}
@@ -3757,7 +3786,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \begin{MacroCode}{class}
 \AtBeginEnvironment{center}{
   \medmuskip=4mu
-	\thickmuskip=5mu
+  \thickmuskip=5mu
 }
 
 \end{MacroCode}
@@ -3791,15 +3820,15 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 
 \begin{MacroCode}{class}
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
-	\tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
-	  \RequirePackage[rm]{libertine}
-	  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
-	}
-	
-	\tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
-	  \RequirePackage{palatino}
-	  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
-	}
+  \tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
+    \RequirePackage[rm]{libertine}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
+  }
+  
+  \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
+    \RequirePackage{palatino}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
+  }
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {lato} {
@@ -4490,7 +4519,6 @@ Liste ohne oberen und unteren Abstand. Geeignet für Aufzählungen in Tabellen. 
     parsep=0.25\baselineskip,
   ]
 }{%
-  \vspace{-\baselineskip}
   \end{itemize}
 }
 
@@ -4729,7 +4757,7 @@ Umrahmte Box mit variabler Breite (standardmäßig \cs{linewidth}).
 Umrahmte leere Box zur Verwendung im Fließtext ("`inline"'). Breite, Höhe und vertikale Verschiebung können optional verändert werden.
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \ibox { O{2cm} O{0.65cm} O{-5pt} } {%
-  \tikz[baseline=-#3] \draw (0,0) rectangle (#1, #2); 
+  \tikz[baseline=-#3] \draw (0,0) rectangle (#1, #2);
   \hspace{5pt}
 }
 
@@ -5135,7 +5163,7 @@ Bei der Verwendung von Parts als höchste Gliederungsebene wird die Überschrift
 
 Die Farbe und Schriftgröße von Parts im Inhaltsverzeichnis wird vergrößert.
 \begin{MacroCode}{class}
-\addtokomafont{partentry}{%  
+\addtokomafont{partentry}{%
   \color{wuDarkRed}\Large
 }
 
@@ -5426,7 +5454,7 @@ Die Absatzauszeichnung muss für den Abstract gesondert angewendet werden:
   \setpar
 }
 
-\bool_if:NF \g_edu_parindent_bool {	
+\bool_if:NF \g_edu_parindent_bool {
 	\tl_gput_right:Nn \quotation {
 	  \noindent\ignorespaces
 	}
@@ -5479,7 +5507,7 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
 \begin{macro*}{\l__edu_footertextl_tl}
 \begin{MacroCode}{class}
   \tl_new:N \l__edu_footertextl_tl
-    
+  
   \tl_put_right:Nn \l__edu_footertextl_tl {
     \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
   }
@@ -5706,6 +5734,16 @@ Das Eurozeichen der Tastatur als \cs{euro}-Makro auffassen, dass mithilfe des Pa
 
 \end{MacroCode}
 
+
+\subsubsection{Geschlechtergerechte Sprache}
+
+Geschlechtergerechte Sprache kann mithilfe dieses Makros und dem zugehörigen Symbol umgesetzt werden. Standardmäßig wird hierfür ein sog.~Gendersternchen durch \cs{textasteriskcentered} verwendet. Optional kann die Höhe des Symbols angepasst werden, was – je nach Schriftart – sinnvoll sein kann.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \gend { O{\g_edu_genderraise_dim} } {
+  \raisebox{#1}{\g_edu_gendersymbol_tl}
+}
+
+\end{MacroCode}
 
 
 \begin{macro}{\headrule}
@@ -6371,11 +6409,11 @@ Definition der verwendeten Farben:
 \definecolor{wuSemiDarkRed}{HTML}{a00000}
 \definecolor{wuRed}{HTML}{F22222}
 
-\definecolor{wuDarkerGray}{RGB}{75, 75, 75}  
-\definecolor{wuDarkGray}{RGB}{160, 160, 160}  
-\definecolor{wuGray}{RGB}{210, 210, 210}  
-\definecolor{wuLightGray}{RGB}{227, 227, 227}  
-\definecolor{wuLighterGray}{RGB}{235, 235, 235}  
+\definecolor{wuDarkerGray}{RGB}{75, 75, 75}
+\definecolor{wuDarkGray}{RGB}{160, 160, 160}
+\definecolor{wuGray}{RGB}{210, 210, 210}
+\definecolor{wuLightGray}{RGB}{227, 227, 227}
+\definecolor{wuLighterGray}{RGB}{235, 235, 235}
 
 \definecolor{wuBlue}{HTML}{3851FF}
 \definecolor{wuGreen}{HTML}{009E0A}
@@ -6392,7 +6430,7 @@ Definition der verwendeten Farben:
 
 \begin{MacroCode}{class}
 \AtBeginDocument{
-  \graphicspath{\g_edu_graphicspath_tl}  
+  \graphicspath{\g_edu_graphicspath_tl}
 }
 
 \end{MacroCode}
@@ -6422,8 +6460,8 @@ Laden zusätzlicher \pkg{tikz}-Bibliotheken:
 \usetikzlibrary{angles}
 \usetikzlibrary{calc}
 \usetikzlibrary{fadings}
-\usetikzlibrary{patterns}  
-\usetikzlibrary{positioning}  
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
 \usetikzlibrary{shapes.callouts}
 
 \end{MacroCode}
@@ -6564,7 +6602,7 @@ Counters for creating the grid.
 \cs_new_protected:Npn \edu_create_grid_include:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-	\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -6586,13 +6624,13 @@ Counters for creating the grid.
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-	\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \cs_new_protected:Npn \edu_create_grid_exclude:nnn #1 #2 #3 {
 
   \setlength{\parfillskip}{0em}
-	\par
+  \par
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
@@ -6614,7 +6652,7 @@ Counters for creating the grid.
       \int_incr:N \l_edu_loop_count_int
   }
   \par
-	\setlength{\parfillskip}{1em plus 1fil}
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \end{MacroCode}
@@ -7182,8 +7220,8 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
       }
     }
   }
-    
-  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parkip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
+  
+  \setlength{\parfillskip}{0em} % Damit Punktzahl bei parskip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
   {
@@ -7325,7 +7363,7 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
       }
     }
   }
-    
+  
   \setlength{\parfillskip}{0em}
   \vspace{\g_edu_subexebeforeskip_dim}%
   \parskipreduce%
@@ -7529,7 +7567,7 @@ Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstabe
         \raisebox{0.1ex} {
           {\footnotesize$\star$}\hspace{0.75pt}
         }
-      }  
+      }
       \g_edu_multiexenumberleft_tl\alph{multiexecounter}\g_edu_multiexenumberright_tl%
     }%
   }
@@ -7545,8 +7583,8 @@ Diese Makros liefern die aktuelle Nummerierung der Teilaufgabe in Kleinbuchstabe
         \raisebox{0.1ex} {
           {\footnotesize$\star$}\hspace{0.75pt}
         }
-      }   
-      \g_edu_multiexenumberleft_tl\alph{multiexecounter}   
+      }
+      \g_edu_multiexenumberleft_tl\alph{multiexecounter}
       \g_edu_multiexenumberright_tl
     }%
   }%
@@ -7650,18 +7688,32 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
 \end{macro}
 
 
-\begin{macro}{\resrfill}[2]{<text>}{[<vertical offset>]}
+\begin{macro}{\resrfill}[4]{[<number lines>]}{[<lineskip>]}{<text>}{[<vertical offset>]}
 Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie angezeigt, die sich bis ans Ende der Zeite erstreckt.
 
 \emph{Achtung}: Innerhalb einer Zeile sollte nach diesem Makro kein Text mehr gesetzt werden, da es ansonsten zu Darstellungsfehlern kommen kann.
+
+Durch die optionalen Argumente können auch mehrere horizontale Linien erzeugt und deren Abstand spezifiziert werden.
 \begin{MacroCode}{class}
-\DeclareDocumentCommand \resrfill { +m !O{\g_edu_resultrulevoffset_dim} } {%
+\DeclareDocumentCommand \resrfill { O{1} O{0.75cm} +m !O{\g_edu_resultrulevoffset_dim} } {%
   \bool_if:NTF \g_edu_showresults_bool {%
     \group_begin:
-      \color{\g_edu_resultfg_tl} #1
+      \color{\g_edu_resultfg_tl} #3
     \group_end:
   }{%
-    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#2]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    
+    \prg_replicate:nn {#1 - 1} {
+    
+      \bool_if:nT { \int_compare_p:n { #1 > 1 } } {
+        \par
+        \vspace{-\baselineskip}
+        \parskipreduce
+        \vspace{#2}
+      }
+    
+      \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
+    }
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
@@ -7683,6 +7735,29 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
   }{%
     \tikz[baseline=-#4] \draw (0,0) rectangle (#1, #2);
     \hspace{5pt}
+  }%
+  \bool_if:NT \g_edu_resultresetmultiexe_bool {
+    \rstmultiexe
+  }
+}
+
+\end{MacroCode}
+\end{macro}
+
+
+\begin{macro}{\resg}[3]{[<grid height>]}{[<grid width>]}{<text>}
+Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wird ein horizontale Linie beliebiger Länge angezeigt.
+\begin{MacroCode}{class}
+\DeclareDocumentCommand \resg { O{\g_edu_resultgridheight_dim} O{\linewidth} +m } {%
+  \bool_if:NTF \g_edu_showresults_bool {%
+    \group_begin:%
+      \color{\g_edu_resultfg_tl}#3
+    \group_end:%
+  }{%  
+    \tikz \draw[step=0.5, color=\g_edu_resultgridfg_tl] (0,0) grid +(
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #2 } { 0.5cm }) * 0.5 }, 
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #1 } { 0.5cm }) * 0.5 }
+    );
   }%
   \bool_if:NT \g_edu_resultresetmultiexe_bool {
     \rstmultiexe
@@ -8183,11 +8258,12 @@ Die Sternvariante wird explizit deklariert, da der verwendete Hack hier nicht fu
 \begin{MacroCode}{class}
 \DeclareDocumentEnvironment {cols2} { O{0.5\linewidth} } {%
   \par
-  \setlength{\parfillskip}{0em}  
+  \setlength{\parfillskip}{0em}
   \dim_gset:Nn \g__edu_colone_dim {#1 - 0.5\columnsep}
   \dim_gset:Nn \g__edu_coltwo_dim {\linewidth - \g__edu_colone_dim - \columnsep}
 %
-  \parskipreduce
+  \parskipreduce  
+  \vspace{0.475\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\dim_use:N\g__edu_colone_dim}%
   \setpar
   \parskipreduce
@@ -8196,6 +8272,7 @@ Die Sternvariante wird explizit deklariert, da der verwendete Hack hier nicht fu
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \vspace{1.5\multicolsep}
+  \vspace{-0.05\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \parskipreduce
 }
 
@@ -8203,9 +8280,11 @@ Die Sternvariante wird explizit deklariert, da der verwendete Hack hier nicht fu
 \DeclareDocumentEnvironment {cols2*} { O{0.5\linewidth} } {%
   \tl_gset:Nn \g__edu_colalign_tl {c}
   \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+  \vspace{-0.04\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \begin{cols2}[#1]
 }{%
   \end{cols2}%
+  \vspace{0.025\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \tl_gset:Nn \g__edu_colalign_tl {t}
 }
 
@@ -8229,9 +8308,11 @@ Abkürzendes Makro für mehrspaltiges Layout. Die Sternvariante zentriert die be
 %
   \parskipreduce
   \vspace{-0.15\baselineskip}
+  \vspace{0.6\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {c}
     \vspace{1.2\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+    \vspace{0.145\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\g__edu_colone_dim}%
   \setpar
@@ -8242,9 +8323,10 @@ Abkürzendes Makro für mehrspaltiges Layout. Die Sternvariante zentriert die be
   \setlength{\parfillskip}{1em plus 1fil}
   \parskipreduce
   \vspace{0.75\baselineskip}
+  \vspace{-0.065\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {t}
-  }  
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -8351,6 +8433,9 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
   }{
     \end{cols2}
   }
+  \IfBooleanF {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  }
 }
 
 % Hack, because xparse doesn't generate starred environments:
@@ -8424,6 +8509,9 @@ zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{ti
     \end{cols2*}
   }{
     \end{cols2}
+  }
+  \IfBooleanT {#1} {
+    \vspace{0.175\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
 }
 
@@ -8525,7 +8613,7 @@ Die Uhrzeit zur Beginn der jeweiligen Phase soll berechnet werden.
 \begin{macro}{\edu_ttentrytime:}
 Mit diesem Makro kann die aktuelle Uhrzeit im Format hh:mm ausgegeben werden. Als Einheit wird die Option \opt{ttentrytimelabel} verwendet.
 \begin{MacroCode}{class}
-\cs_new:Npn \edu_ttentrytime: {  
+\cs_new:Npn \edu_ttentrytime: {
   \int_compare:nNnTF {\g__edu_tthour_int} < {10} {
     0\int_to_arabic:n {\g__edu_tthour_int}
   }{
@@ -8651,7 +8739,7 @@ Die Sternvariante setzt die Tabelle im Querformat. Die Breiten der Spalten werde
   
   \bool_if:NT \g_edu_ttendtime_bool {
     \edu_ttentrytime: \\ \bottomrule
-  }  
+  }
 
   \end{tabularx}
   \IfBooleanT {#1} {
@@ -9319,22 +9407,22 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
 \lstdefinestyle{lststyle}{%
   aboveskip=0.75\baselineskip,
   belowskip=\g_edu_lstbelowskip,
-  language=Java, 
-  basicstyle=\ttfamily\footnotesize, 
-  keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries, 
-  stringstyle=\emph, 
+  language=Java,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries,
+  stringstyle=\emph,
   numberstyle=\color{\g_edu_lstnumberfg_tl}\ttfamily\scriptsize,
-  numbers=left, 
-  numbersep=8pt, 
-  frame=trbl, 
+  numbers=left,
+  numbersep=8pt,
+  frame=trbl,
   framesep=0pt,
   framexleftmargin=2pt,
   framexrightmargin=2pt,
   framerule=0.7pt,
   rulecolor=\color{\g_edu_lstrulefg_tl},
-  captionpos=b, 
-  tabsize=2, 
-  showstringspaces=false, 
+  captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   xleftmargin=2.5em,
   xrightmargin=0cm,
   breaklines=true,
@@ -9345,10 +9433,10 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
 }
 
 \lstdefinestyle{lstistyle}{%
-  language=Java, 
-  basicstyle=\ttfamily, 
-  keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries, 
-  stringstyle=\emph, 
+  language=Java,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries,
+  stringstyle=\emph,
   breaklines=true,
   prebreak={\,\,\Pisymbol{psy}{191}}
 }

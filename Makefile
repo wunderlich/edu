@@ -6,11 +6,11 @@ TEXMFMAIN ?= $(shell kpsewhich -var-value TEXMFMAIN)
 all: edu.pdf examples tutorials clean
 
 clean:
-	rm -f *.gl? *.glsdefs *.id? *.aux
+	rm -f *.gl? *.glsdefs *.id? *.ist *.aux
 	rm -f *.bbl *.bcf *.bib *.blg *.xdy
 	rm -f *.fls *.log *.out *.run.xml *.toc
 	rm -f *.cod *.gnuplot *.table
-	rm -f *.log *.synctex *.tmp
+	rm -f *.log *.synctex *.tmp *.xsim
 	make -C doc/ clean
 
 distclean: clean

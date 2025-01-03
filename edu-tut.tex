@@ -844,11 +844,27 @@ Im folgenden Beispiel lautet das Ergebnis jeweils "`Loriot"', die Linie befindet
 \begin{codefilecontent}{doc/tut-de-content-resrfill}
 \eduoption{showresults}{false}
 
-Lorem ipsum dolor sit amet: \resrfill{Sonett}
+Lorem ipsum dolor sit amet: \resrfill{Loriot}
 
-Lorem ipsum dolor sit amet: \resrfill{Sonett}[0cm]
+Lorem ipsum dolor sit amet: \resrfill{Loriot}[0cm]
 
 Lorem ipsum dolor sit amet.
+\end{codefilecontent}
+\endcode
+
+\localeDE{
+Durch ein weiteres optionales Argument ermöglicht es \Macro\resrfill, mehrere horizontale Linien zu erzeugen. Die erste Linie füllt die aktuelle Zeile, die folgenden Linien jeweils ganze Zeilen. Der Abstand der Linien – standardmäßig \SI{0,75}{cm} – kann über ein zusätzliches optionales Argument angegeben werden.
+
+Im folgenden Beispiel lautet das Ergebnis jeweils "`Lampukistan"', wobei zuerst 2 Linien im Abstand von \SI{0,75}{cm} (Standard) und im zweiten Fall drei Zeilen im Abstand von \SI{0,5}{cm} erzeugt werden:
+}
+
+\startcode{de}
+\begin{codefilecontent}{doc/tut-de-content-resrfill-multiple-lines}
+\eduoption{showresults}{false}
+
+Lorem ipsum dolor sit amet: \resrfill[2]{Lampukistan}
+
+Lorem ipsum dolor sit amet: \resrfill[3][0.5cm]{Lampukistan}
 \end{codefilecontent}
 \endcode
 
@@ -863,6 +879,22 @@ Die Box von \Macro\resb ist standardmäßig \SI{2}{cm} breit, \SI{0,65}{cm} hoch
 Lorem ipsum dolor sit amet: \resb{Wasserstoff}
 
 Lorem ipsum dolor sit amet: \resb[4cm][1cm]{Wasserstoff}[-2pt]
+\end{codefilecontent}
+\endcode
+
+Für Rechnungen u.\,Ä. können mithilfe von \Macro\resg Raster (engl. \emph{grid} – Raster) erzeugt werden. Breite und Höhe des Rasters ist jeweils immer ein Vielfaches von \SI{0.5}{cm}, wobei abgerundet wird (z.\,B. \SI{2.9}{cm} → \SI{2.5}{cm}). Standardmäßig ist es so breit, dass es die aktuelle Zeile (\cs{linewidth}) maximal ausfüllt und \SI{3}{cm} hoch. Durch die Option \opt{resultgridheight} kann diese Standardhöhe global angepasst werden. Die graue Farbe kann durch \opt{resultgridfg} angepasst werden. Außerdem können Höhe und Breite individuell bei jedem Aufruf durch zwei optionale Argumente spezifiziert werden.
+
+\startcode{de}
+\begin{codefilecontent}{doc/tut-de-content-resg}
+\eduoption{showresults}{false}
+
+Lorem ipsum dolor sit amet: 
+
+\resg{Krawehl, Krawehl!}
+
+Lorem ipsum dolor sit amet: 
+
+\resg[1.6cm][5cm]{Krawehl, Krawehl!}
 \end{codefilecontent}
 \endcode
 
