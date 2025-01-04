@@ -57,6 +57,11 @@
 }
 
 \keys_define:nn {edu} {
+  imakeidx .bool_gset:N = \g_edu_imakeidx_bool,           % use imakeidx package
+  imakeidx .initial:n = false,
+}
+
+\keys_define:nn {edu} {
   twoup .bool_gset:N = \g_edu_twoup_bool,                 % Print at A5-paper
   twoup .initial:n = false,
   glue .bool_gset:N = \g_edu_glue_bool,                   % Additional margin for gluing sheet into exercise book
@@ -1037,13 +1042,13 @@
 \RequirePackage{tikzsymbols}
 
 \AtEndPreamble{
-\tl_if_empty:NF \g_edu_colortheme_tl {
-  \RequirePackage{edu-colors-\g_edu_colortheme_tl}
-}
+  \tl_if_empty:NF \g_edu_colortheme_tl {
+    \RequirePackage{edu-colors-\g_edu_colortheme_tl}
+  }
 
-\tl_if_empty:NF \g_edu_styletheme_tl {
-  \RequirePackage{edu-styles-\g_edu_styletheme_tl}
-}
+  \tl_if_empty:NF \g_edu_styletheme_tl {
+    \RequirePackage{edu-styles-\g_edu_styletheme_tl}
+  }
 }
 
 
@@ -1069,6 +1074,10 @@
 %\tl_if_eq:VnT \g_edu_struktexqtree_tl {struktex} {
 %  \RequirePackage{struktex}
 %}
+
+\bool_if:NT \g_edu_imakeidx_bool {
+  \RequirePackage{imakeidx}
+}
 
 \RequirePackage{bibgerm}
 \RequirePackage{hyperref}
@@ -1411,35 +1420,35 @@
 
 \AtEndPreamble{
 
-\tl_if_empty:NF \g_edu_subtitle_tl {
-  \tl_gput_right:Nn \g__edu_pdftitletemp_tl {
-    \ --~\g_edu_subtitle_tl
+  \tl_if_empty:NF \g_edu_subtitle_tl {
+    \tl_gput_right:Nn \g__edu_pdftitletemp_tl {
+      \ --~\g_edu_subtitle_tl
+    }
   }
-}
 
-\tl_if_empty:NF \g_edu_subject_tl {
-  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
-    \g_edu_subject_tl
+  \tl_if_empty:NF \g_edu_subject_tl {
+    \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+      \g_edu_subject_tl
+    }
   }
-}
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
-  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
-    :~
+  \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
+    \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+      :~
+    }
   }
-}
 
-\tl_if_empty:NF \g_edu_field_tl {
-  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
-    \g_edu_field_tl
+  \tl_if_empty:NF \g_edu_field_tl {
+    \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+      \g_edu_field_tl
+    }
   }
-}
 
-\tl_if_empty:NF \g_edu_class_tl {
-  \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
-    \ (\g_edu_class_tl)
+  \tl_if_empty:NF \g_edu_class_tl {
+    \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
+      \ (\g_edu_class_tl)
+    }
   }
-}
 
   \hypersetup{
     breaklinks=false,
@@ -1482,29 +1491,29 @@
   \dim_gset:Nn \g__edu_listlabelwidth_dim {1.2em}
 }
 
-\setlist{%
-  partopsep=0ex,
-  topsep=0.5\baselineskip - \parskip,
-  itemsep=0.5\baselineskip - \parskip,
-  parsep=\parskip,
-  labelsep=\g__edu_listsep_dim,
-  leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
-}
+  \setlist{%
+    partopsep=0ex,
+    topsep=0.5\baselineskip - \parskip,
+    itemsep=0.5\baselineskip - \parskip,
+    parsep=\parskip,
+    labelsep=\g__edu_listsep_dim,
+    leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
+  }
 
-\setlist[2, 3, 4, 5]{
-  topsep=0.5\baselineskip - \parskip,
-  leftmargin=1em,
-}
+  \setlist[2, 3, 4, 5]{
+    topsep=0.5\baselineskip - \parskip,
+    leftmargin=1em,
+  }
 
-\setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
-\setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
-\setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
+  \setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
+  \setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
+  \setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
 
-\setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
-\setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
-\setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
+  \setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
+  \setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
+  \setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
 
-\setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
+  \setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
 
 \newenvironment{edulist}[2][0.5\baselineskip]{
   \dim_gset:Nn \g__edu_listarraysep_dim {\g_edu_listarraysep_dim}
@@ -1744,17 +1753,17 @@
     \bool_if:nT {!\tl_if_empty_p:n {#1} || !\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
       \tl_clear:N \l__edu_citetext_tl
       \upshape
-    \tl_if_empty:nF {#1} {
-      \tl_put_right:Nn \l__edu_citetext_tl {\textsc{#1}\xspace}
-    }
+      \tl_if_empty:nF {#1} {
+        \tl_put_right:Nn \l__edu_citetext_tl {\textsc{#1}\xspace}
+      }
       \bool_if:nT {!\tl_if_empty_p:n {#2} || !\tl_if_empty_p:n {#3}} {
-    \tl_if_empty:nTF {#3} {
-      \tl_put_right:Nn \l__edu_citetext_tl {\cite{#2}}
-    }{
-      \tl_put_right:Nn \l__edu_citetext_tl {\cite[#3]{#2}}
-    }
-    }
-    \__edu_moveright:n \l__edu_citetext_tl
+        \tl_if_empty:nTF {#3} {
+          \tl_put_right:Nn \l__edu_citetext_tl {\cite{#2}}
+        }{
+          \tl_put_right:Nn \l__edu_citetext_tl {\cite[#3]{#2}}
+        }
+      }
+      \__edu_moveright:n \l__edu_citetext_tl
     }
     \end{em}
   \end{addmargin}
@@ -1988,45 +1997,45 @@
 
 \DeclareDocumentCommand \maketitle {s} {
 
-\IfBooleanTF{#1} {
+  \IfBooleanTF{#1} {
 
-\setlength{\parfillskip}{0em}
-  \par
-  \vspace{0.75ex}
-  \parskipreduce
-  \group_begin:
-    \g_edu_titlestyle_tl%
-    \color{\g_edu_titlefg_tl}%
-    \noindent
-    \tl_if_empty:NF \g_edu_titlenumber_tl {
-      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
-      \settowidth{\g_edu_temp_dim}{\g_edu_titlenumber_tl}
-      \addtolength{\g_edu_temp_dim}{\g_edu_titlenumbersep_dim}
-      \setlength{\global\g_edu_temp_dim}{\g_edu_temp_dim}
-    }
-    \g_edu_title_tl%
-  \group_end:
-  \hfill%
-  \tl_if_empty:NF \g_edu_short_tl {
+    \setlength{\parfillskip}{0em}
+    \par
+    \vspace{0.75ex}
+    \parskipreduce
     \group_begin:
-      \g_edu_shortstyle_tl%
-      \setlength{\fboxsep}{0.25em}
-      \colorbox{\g_edu_shortbg_tl}{%
-        \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
-      }%
+      \g_edu_titlestyle_tl%
+      \color{\g_edu_titlefg_tl}%
+      \noindent
+      \tl_if_empty:NF \g_edu_titlenumber_tl {
+        \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+        \settowidth{\g_edu_temp_dim}{\g_edu_titlenumber_tl}
+        \addtolength{\g_edu_temp_dim}{\g_edu_titlenumbersep_dim}
+        \setlength{\global\g_edu_temp_dim}{\g_edu_temp_dim}
+      }
+      \g_edu_title_tl%
     \group_end:
-  }
-  \tl_if_empty:NF \g_edu_group_tl {
-    \group_begin:
-      \hspace{0.5em}
-      \g_edu_groupstyle_tl%
+    \hfill%
+    \tl_if_empty:NF \g_edu_short_tl {
+      \group_begin:
+        \g_edu_shortstyle_tl%
         \setlength{\fboxsep}{0.25em}
-      \colorbox{\g_edu_groupbg_tl}{%
-        \textcolor{\g_edu_groupfg_tl}{\g_edu_group_tl}%
-      }%
-    \group_end:
-  }
-  \bool_if:nT {
+        \colorbox{\g_edu_shortbg_tl}{%
+          \textcolor{\g_edu_shortfg_tl}{\g_edu_short_tl}%
+        }%
+      \group_end:
+    }
+    \tl_if_empty:NF \g_edu_group_tl {
+      \group_begin:
+        \hspace{0.5em}
+        \g_edu_groupstyle_tl%
+        \setlength{\fboxsep}{0.25em}
+        \colorbox{\g_edu_groupbg_tl}{%
+          \textcolor{\g_edu_groupfg_tl}{\g_edu_group_tl}%
+        }%
+      \group_end:
+    }
+    \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
       \bool_if_p:N \g_edu_resulttitlelabel_bool
     }{
@@ -2036,186 +2045,186 @@
         \textcolor{\g_edu_resulttitlelabelfg_tl}{\g_edu_resulttitlelabellabel_tl}%
       \group_end:
     }
-  \mbox{}
-  \par
-  \setlength{\parfillskip}{1em plus 1fil}
+    \mbox{}
+    \par
+    \setlength{\parfillskip}{1em plus 1fil}
 
-  \tl_if_empty:NF \g_edu_subtitle_tl {
-    \parskipreduce
-    \group_begin:
-      \g_edu_subtitlestyle_tl
-      \color{\g_edu_titlefg_tl}
-      \noindent
-    \tl_if_empty:NF \g_edu_titlenumber_tl {
-      \hspace*{\g_edu_temp_dim}
+    \tl_if_empty:NF \g_edu_subtitle_tl {
+      \parskipreduce
+      \group_begin:
+        \g_edu_subtitlestyle_tl
+        \color{\g_edu_titlefg_tl}
+        \noindent
+        \tl_if_empty:NF \g_edu_titlenumber_tl {
+          \hspace*{\g_edu_temp_dim}
+        }
+        \g_edu_subtitle_tl\par
+      \group_end:
     }
-      \g_edu_subtitle_tl\par
-    \group_end:
-  }
 
-  \bool_if:NT \g_edu_transparency_bool {
-    \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
-    \RaggedRight
-    \tolerance=10000
-  }
-
-}{ % star
-\tl_if_empty:NF \g_edu_title_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl}
-      \noindent
-      \tl_if_empty:NF \g_edu_titlenumber_tl {
-      \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+    \bool_if:NT \g_edu_transparency_bool {
+      \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+      \RaggedRight
+      \tolerance=10000
     }
-      \g_edu_title_tl
-    \group_end:
-    \par\parskipreduce
-  }
-}
 
-\tl_if_empty:NF \g_edu_subtitle_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \vspace{1ex}
-    \group_begin:
-      \g_edu_subtitlestyle_tl \color{\g_edu_titlefg_tl} \noindent \g_edu_subtitle_tl
-    \group_end:
-    \par\parskipreduce
-  }
-}
+  }{ % star
+    \tl_if_empty:NF \g_edu_title_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_titlestyle_tl \color{\g_edu_titlefg_tl}
+          \noindent
+          \tl_if_empty:NF \g_edu_titlenumber_tl {
+            \g_edu_titlenumber_tl \hspace{\g_edu_titlenumbersep_dim}
+          }
+          \g_edu_title_tl
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl || !\tl_if_empty_p:N \g_edu_class_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \vspace{4ex}
-  }
-}
+    \tl_if_empty:NF \g_edu_subtitle_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \vspace{1ex}
+        \group_begin:
+          \g_edu_subtitlestyle_tl \color{\g_edu_titlefg_tl} \noindent \g_edu_subtitle_tl
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-\tl_if_empty:NF \g_edu_subject_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_subjectstyle_tl \noindent \g_edu_subject_tl
-    \group_end:
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl || !\tl_if_empty_p:N \g_edu_class_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \vspace{4ex}
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \g_edu_subjectstyle_tl :~
-  }
-}
+    \tl_if_empty:NF \g_edu_subject_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_subjectstyle_tl \noindent \g_edu_subject_tl
+        \group_end:
+      }
+    }
 
-\tl_if_empty:NF \g_edu_field_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_fieldstyle_tl \noindent \g_edu_field_tl
-    \group_end:
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \g_edu_subjectstyle_tl :~
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \par\parskipreduce
-  }
-}
+    \tl_if_empty:NF \g_edu_field_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_fieldstyle_tl \noindent \g_edu_field_tl
+        \group_end:
+      }
+    }
 
-\tl_if_empty:NF \g_edu_class_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_classstyle_tl \noindent \g_edu_class_tl
-    \group_end:
-      \par\parskipreduce
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \par\parskipreduce
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_author_tl || !\tl_if_empty_p:N \g_edu_email_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \vspace{3ex}
-  }
-}
+    \tl_if_empty:NF \g_edu_class_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_classstyle_tl \noindent \g_edu_class_tl
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-\tl_if_empty:NF \g_edu_author_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_authorstyle_tl \noindent \g_edu_author_tl
-    \group_end:
-      \par\parskipreduce
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_author_tl || !\tl_if_empty_p:N \g_edu_email_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \vspace{3ex}
+      }
+    }
 
-\tl_if_empty:NF \g_edu_email_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_emailstyle_tl \noindent \href{mailto:\g_edu_email_tl}{\nolinkurl{\g_edu_email_tl}}
-    \group_end:
-      \par\parskipreduce
-  }
-}
+    \tl_if_empty:NF \g_edu_author_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_authorstyle_tl \noindent \g_edu_author_tl
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl || \bool_if_p:N \g_edu_timestamptitle_bool || !\tl_if_empty_p:N \g_edu_license_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \vspace{4ex}
-  }
-}
+    \tl_if_empty:NF \g_edu_email_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_emailstyle_tl \noindent \href{mailto:\g_edu_email_tl}{\nolinkurl{\g_edu_email_tl}}
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-\tl_if_empty:NF \g_edu_date_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_datestyle_tl \noindent \g_edu_date_tl
-    \group_end:
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl || \bool_if_p:N \g_edu_timestamptitle_bool || !\tl_if_empty_p:N \g_edu_license_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \vspace{4ex}
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl && !\tl_if_empty_p:N \g_edu_version_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    ,~
-  }
-}
+    \tl_if_empty:NF \g_edu_date_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_datestyle_tl \noindent \g_edu_date_tl
+        \group_end:
+      }
+    }
 
-\tl_if_empty:NF \g_edu_version_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_versionstyle_tl \noindent \g_edu_version_tl
-    \group_end:
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl && !\tl_if_empty_p:N \g_edu_version_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        ,~
+      }
+    }
 
-\bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl} {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \par\parskipreduce
-  }
-}
+    \tl_if_empty:NF \g_edu_version_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_versionstyle_tl \noindent \g_edu_version_tl
+        \group_end:
+      }
+    }
 
-\bool_if:NT \g_edu_timestamptitle_bool {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_timestampstyle_tl\timestamp
-    \group_end:
-    \par\parskipreduce
-  }
-}
+    \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl} {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \par\parskipreduce
+      }
+    }
 
-\tl_if_empty:NF \g_edu_license_tl {
-  \tl_put_right:Nn \g__edu_titletext_tl {
-    \group_begin:
-      \g_edu_licensestyle_tl \noindent \g_edu_license_tl
-    \group_end:
-    \par\parskipreduce
-  }
-}
+    \bool_if:NT \g_edu_timestamptitle_bool {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_timestampstyle_tl\timestamp
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-  \vspace*{1cm}
-  \begin{center}
-    \g__edu_titletext_tl
-  \end{center}
+    \tl_if_empty:NF \g_edu_license_tl {
+      \tl_put_right:Nn \g__edu_titletext_tl {
+        \group_begin:
+          \g_edu_licensestyle_tl \noindent \g_edu_license_tl
+        \group_end:
+        \par\parskipreduce
+      }
+    }
 
-  \skip_vertical:N \g_edu_titleskip_skip
+    \vspace*{1cm}
+    \begin{center}
+      \g__edu_titletext_tl
+    \end{center}
 
-  \bool_if:NT \g_edu_transparency_bool {
-    \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
-    \RaggedRight
-    \tolerance=10000
-  }
-} % no star
+    \skip_vertical:N \g_edu_titleskip_skip
+
+    \bool_if:NT \g_edu_transparency_bool {
+      \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
+      \RaggedRight
+      \tolerance=10000
+    }
+  } % no star
 }
 
 \DeclareDocumentCommand \intro { } {
@@ -2228,9 +2237,9 @@
 }
 
 \bool_if:NF \g_edu_parindent_bool {
-\tl_gput_right:Nn \quotation {
-  \noindent\ignorespaces
-}
+  \tl_gput_right:Nn \quotation {
+    \noindent\ignorespaces
+  }
 }
 
 \AtEndEnvironment{abstract}{\vspace{3em}}
@@ -2252,9 +2261,9 @@
 
 \AtBeginDocument {
 
-\pagestyle{scrheadings}
-\clearscrheadings
-\clearscrheadfoot
+  \pagestyle{scrheadings}
+  \clearscrheadings
+  \clearscrheadfoot
 
   \bool_if:NT \g_edu_footer_bool {
 
@@ -2568,12 +2577,12 @@
 }
 
 \DeclareDocumentCommand \pto {  } {%
-\vfill
-\par
-\setlength{\parfillskip}{0pt}
-\hfill\fbox{\g_edu_ptolabelstyle_tl \g_edu_ptolabel_tl \g_ptosymbolstyle_tl \g_ptosymbol_tl}
-\par
-\setlength{\parfillskip}{1em plus 1fil}
+  \vfill
+  \par
+  \setlength{\parfillskip}{0pt}
+  \hfill\fbox{\g_edu_ptolabelstyle_tl \g_edu_ptolabel_tl \g_ptosymbolstyle_tl \g_ptosymbol_tl}
+  \par
+  \setlength{\parfillskip}{1em plus 1fil}
 }
 
 \cs_new:Npn \__edu_ccScale:n #1 {
@@ -3009,385 +3018,385 @@
 \definecolor{marioSkin}{HTML}{FFD0C0}
 
 \cs_new:Npn \edu_mariovictory_pixel: {
-\filldraw[marioRed1] (7, 27) rectangle ++(1, 1);
-\filldraw[marioRed1] (8, 27) rectangle ++(1, 1);
-\filldraw[marioRed1] (9, 27) rectangle ++(1, 1);
-\filldraw[marioRed1] (10, 27) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (7, 27)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (8, 27)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (9, 27)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (10, 27)  rectangle ++(1, 1);
 
-\filldraw[black]   (1, 26) rectangle ++(1, 1);
-\filldraw[black]   (2, 26) rectangle ++(1, 1);
-\filldraw[black]   (4, 26) rectangle ++(1, 1);
-\filldraw[black]   (5, 26) rectangle ++(1, 1);
-\filldraw[marioRed1]   (6, 26) rectangle ++(1, 1);
-\filldraw[marioRed3]   (7, 26) rectangle ++(1, 1);
-\filldraw[marioRed3]   (8, 26) rectangle ++(1, 1);
-\filldraw[marioRed3] (9, 26) rectangle ++(1, 1);
-\filldraw[marioRed3] (10, 26) rectangle ++(1, 1);
-\filldraw[marioRed1] (11, 26) rectangle ++(1, 1);
-\filldraw[marioRed1] (12, 26) rectangle ++(1, 1);
+  \filldraw[black]        (1, 26)    rectangle ++(1, 1);
+  \filldraw[black]        (2, 26)    rectangle ++(1, 1);
+  \filldraw[black]        (4, 26)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 26)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (6, 26)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (7, 26)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (8, 26)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (9, 26)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (10, 26)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (11, 26)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (12, 26)  rectangle ++(1, 1);
 
-\filldraw[black]   (1, 25) rectangle ++(1, 1);
-\filldraw[white]   (2, 25) rectangle ++(1, 1);
-\filldraw[black]   (3, 25) rectangle ++(1, 1);
-\filldraw[white]   (4, 25) rectangle ++(1, 1);
-\filldraw[black]   (5, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (6, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (7, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (8, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (9, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (10, 25) rectangle ++(1, 1);
-\filldraw[marioRed3] (11, 25) rectangle ++(1, 1);
-\filldraw[marioRed2] (12, 25) rectangle ++(1, 1);
-\filldraw[marioRed1] (13, 25) rectangle ++(1, 1);
+  \filldraw[black]        (1, 25)    rectangle ++(1, 1);
+  \filldraw[white]        (2, 25)    rectangle ++(1, 1);
+  \filldraw[black]        (3, 25)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 25)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 25)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (6, 25)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (7, 25)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (8, 25)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (9, 25)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (10, 25)  rectangle ++(1, 1);
+  \filldraw[marioRed3]    (11, 25)  rectangle ++(1, 1);
+  \filldraw[marioRed2]    (12, 25)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (13, 25)  rectangle ++(1, 1);
 
-\filldraw[black]   (2, 24) rectangle ++(1, 1);
-\filldraw[white]   (3, 24) rectangle ++(1, 1);
-\filldraw[white]   (4, 24) rectangle ++(1, 1);
-\filldraw[black]   (5, 24) rectangle ++(1, 1);
-\filldraw[black]   (6, 24) rectangle ++(1, 1);
-\filldraw[black]   (7, 24) rectangle ++(1, 1);
-\filldraw[black]   (8, 24) rectangle ++(1, 1);
-\filldraw[black]   (9, 24) rectangle ++(1, 1);
-\filldraw[black]   (10, 24) rectangle ++(1, 1);
-\filldraw[black]    (11, 24) rectangle ++(1, 1);
-\filldraw[marioRed3] (12, 24) rectangle ++(1, 1);
-\filldraw[marioRed2] (13, 24) rectangle ++(1, 1);
-\filldraw[marioRed1] (14, 24) rectangle ++(1, 1);
+  \filldraw[black]        (2, 24)    rectangle ++(1, 1);
+  \filldraw[white]        (3, 24)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (8, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (9, 24)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 24)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 24)  rectangle ++(1, 1);
+  \filldraw[marioRed3]    (12, 24)  rectangle ++(1, 1);
+  \filldraw[marioRed2]    (13, 24)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (14, 24)  rectangle ++(1, 1);
 
-\filldraw[black]    (1, 23) rectangle ++(1, 1);
-\filldraw[black]    (2, 23) rectangle ++(1, 1);
-\filldraw[black]    (3, 23) rectangle ++(1, 1);
-\filldraw[white]    (4, 23) rectangle ++(1, 1);
-\filldraw[black]    (5, 23) rectangle ++(1, 1);
-\filldraw[black]    (6, 23) rectangle ++(1, 1);
-\filldraw[black]    (7, 23) rectangle ++(1, 1);
-\filldraw[black]    (8, 23) rectangle ++(1, 1);
-\filldraw[black]    (9, 23) rectangle ++(1, 1);
-\filldraw[black]    (10, 23) rectangle ++(1, 1);
-\filldraw[black]    (11, 23) rectangle ++(1, 1);
-\filldraw[black]    (12, 23) rectangle ++(1, 1);
-\filldraw[marioRed2] (13, 23) rectangle ++(1, 1);
-\filldraw[marioRed1] (14, 23) rectangle ++(1, 1);
+  \filldraw[black]        (1, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (2, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (3, 23)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (8, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (9, 23)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 23)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 23)  rectangle ++(1, 1);
+  \filldraw[black]        (12, 23)  rectangle ++(1, 1);
+  \filldraw[marioRed2]    (13, 23)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (14, 23)  rectangle ++(1, 1);
 
-\filldraw[black]    (0, 22) rectangle ++(1, 1);
-\filldraw[white]    (1, 22) rectangle ++(1, 1);
-\filldraw[white]    (2, 22) rectangle ++(1, 1);
-\filldraw[black]    (3, 22) rectangle ++(1, 1);
-\filldraw[black]    (4, 22) rectangle ++(1, 1);
-\filldraw[black]    (5, 22) rectangle ++(1, 1);
-\filldraw[black]    (6, 22) rectangle ++(1, 1);
-\filldraw[black]    (7, 22) rectangle ++(1, 1);
-\filldraw[black]    (8, 22) rectangle ++(1, 1);
-\filldraw[black]    (9, 22) rectangle ++(1, 1);
-\filldraw[black]    (10, 22) rectangle ++(1, 1);
-\filldraw[black]    (11, 22) rectangle ++(1, 1);
-\filldraw[black]    (12, 22) rectangle ++(1, 1);
-\filldraw[black]    (13, 22) rectangle ++(1, 1);
-\filldraw[marioRed1] (14, 22) rectangle ++(1, 1);
+  \filldraw[black]        (0, 22)    rectangle ++(1, 1);
+  \filldraw[white]        (1, 22)    rectangle ++(1, 1);
+  \filldraw[white]        (2, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (3, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (4, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (8, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (9, 22)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 22)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 22)  rectangle ++(1, 1);
+  \filldraw[black]        (12, 22)  rectangle ++(1, 1);
+  \filldraw[black]        (13, 22)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (14, 22)  rectangle ++(1, 1);
 
-\filldraw[black]    (0, 21) rectangle ++(1, 1);
-\filldraw[white]    (1, 21) rectangle ++(1, 1);
-\filldraw[black]    (2, 21) rectangle ++(1, 1);
-\filldraw[white]    (3, 21) rectangle ++(1, 1);
-\filldraw[white]    (4, 21) rectangle ++(1, 1);
-\filldraw[black]    (5, 21) rectangle ++(1, 1);
-\filldraw[white]    (6, 21) rectangle ++(1, 1);
-\filldraw[white]    (7, 21) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 21) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 21) rectangle ++(1, 1);
-\filldraw[white]    (10, 21) rectangle ++(1, 1);
-\filldraw[white]    (11, 21) rectangle ++(1, 1);
-\filldraw[black]    (12, 21) rectangle ++(1, 1);
-\filldraw[black]    (13, 21) rectangle ++(1, 1);
-\filldraw[marioRed1] (14, 21) rectangle ++(1, 1);
+  \filldraw[black]        (0, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (1, 21)    rectangle ++(1, 1);
+  \filldraw[black]        (2, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (3, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 21)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (6, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (7, 21)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 21)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 21)    rectangle ++(1, 1);
+  \filldraw[white]        (10, 21)  rectangle ++(1, 1);
+  \filldraw[white]        (11, 21)  rectangle ++(1, 1);
+  \filldraw[black]        (12, 21)  rectangle ++(1, 1);
+  \filldraw[black]        (13, 21)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (14, 21)  rectangle ++(1, 1);
 
-\filldraw[black]    (0, 20) rectangle ++(1, 1);
-\filldraw[black]    (1, 20) rectangle ++(1, 1);
-\filldraw[black]    (2, 20) rectangle ++(1, 1);
-\filldraw[black]    (3, 20) rectangle ++(1, 1);
-\filldraw[white]    (4, 20) rectangle ++(1, 1);
-\filldraw[black]    (5, 20) rectangle ++(1, 1);
-\filldraw[white]    (6, 20) rectangle ++(1, 1);
-\filldraw[black]    (7, 20) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 20) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 20) rectangle ++(1, 1);
-\filldraw[black]    (10, 20) rectangle ++(1, 1);
-\filldraw[white]   (11, 20) rectangle ++(1, 1);
-\filldraw[marioSkin]   (12, 20) rectangle ++(1, 1);
-\filldraw[marioSkin]   (13, 20) rectangle ++(1, 1);
-\filldraw[black]   (14, 20) rectangle ++(1, 1);
-\filldraw[marioSkin] (15, 20) rectangle ++(1, 1);
+  \filldraw[black]        (0, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (1, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (2, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (3, 20)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 20)    rectangle ++(1, 1);
+  \filldraw[white]        (6, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 20)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 20)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 20)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 20)  rectangle ++(1, 1);
+  \filldraw[white]        (11, 20)  rectangle ++(1, 1);
+  \filldraw[marioSkin]     (12, 20)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (13, 20)  rectangle ++(1, 1);
+  \filldraw[black]        (14, 20)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (15, 20)  rectangle ++(1, 1);
 
-\filldraw[black]   (0, 19) rectangle ++(1, 1);
-\filldraw[white]   (1, 19) rectangle ++(1, 1);
-\filldraw[white]   (2, 19) rectangle ++(1, 1);
-\filldraw[white]    (3, 19) rectangle ++(1, 1);
-\filldraw[white]    (4, 19) rectangle ++(1, 1);
-\filldraw[black]    (5, 19) rectangle ++(1, 1);
-\filldraw[white]    (6, 19) rectangle ++(1, 1);
-\filldraw[black]    (7, 19) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 19) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 19) rectangle ++(1, 1);
-\filldraw[black]    (10, 19) rectangle ++(1, 1);
-\filldraw[white]    (11, 19) rectangle ++(1, 1);
-\filldraw[marioSkin] (12, 19) rectangle ++(1, 1);
-\filldraw[marioSkin] (13, 19) rectangle ++(1, 1);
-\filldraw[black]   (14, 19) rectangle ++(1, 1);
-\filldraw[marioSkin] (15, 19) rectangle ++(1, 1);
+  \filldraw[black]        (0, 19)    rectangle ++(1, 1);
+  \filldraw[white]        (1, 19)    rectangle ++(1, 1);
+  \filldraw[white]        (2, 19)    rectangle ++(1, 1);
+  \filldraw[white]        (3, 19)    rectangle ++(1, 1);
+  \filldraw[white]        (4, 19)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 19)    rectangle ++(1, 1);
+  \filldraw[white]        (6, 19)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 19)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 19)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 19)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 19)  rectangle ++(1, 1);
+  \filldraw[white]        (11, 19)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (12, 19)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (13, 19)  rectangle ++(1, 1);
+  \filldraw[black]        (14, 19)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (15, 19)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (1, 18) rectangle ++(1, 1);
-\filldraw[marioRed1] (2, 18) rectangle ++(1, 1);
-\filldraw[marioRed1] (3, 18) rectangle ++(1, 1);
-\filldraw[marioRed1] (4, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (5, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (6, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (7, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (10, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (11, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (12, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (13, 18) rectangle ++(1, 1);
-\filldraw[black]    (14, 18) rectangle ++(1, 1);
-\filldraw[marioSkin] (15, 18) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (1, 18)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (2, 18)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (3, 18)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (4, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (5, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (6, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (7, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 18)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (10, 18)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (11, 18)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (12, 18)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (13, 18)  rectangle ++(1, 1);
+  \filldraw[black]        (14, 18)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (15, 18)  rectangle ++(1, 1);
 
-\filldraw[marioRed1]   (1, 17) rectangle ++(1, 1);
-\filldraw[marioRed3] (2, 17) rectangle ++(1, 1);
-\filldraw[marioRed2] (3, 17) rectangle ++(1, 1);
-\filldraw[marioRed1] (4, 17) rectangle ++(1, 1);
-\filldraw[black]    (5, 17) rectangle ++(1, 1);
-\filldraw[black]    (6, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (7, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (10, 17) rectangle ++(1, 1);
-\filldraw[black]    (11, 17) rectangle ++(1, 1);
-\filldraw[black]    (12, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (13, 17) rectangle ++(1, 1);
-\filldraw[black]    (14, 17) rectangle ++(1, 1);
-\filldraw[marioSkin] (15, 17) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (1, 17)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (2, 17)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 17)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (4, 17)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 17)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 17)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (7, 17)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 17)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 17)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (10, 17)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 17)  rectangle ++(1, 1);
+  \filldraw[black]        (12, 17)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (13, 17)  rectangle ++(1, 1);
+  \filldraw[black]        (14, 17)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (15, 17)  rectangle ++(1, 1);
 
-\filldraw[marioRed1]   (1, 16) rectangle ++(1, 1);
-\filldraw[marioRed3] (2, 16) rectangle ++(1, 1);
-\filldraw[marioRed2] (3, 16) rectangle ++(1, 1);
-\filldraw[marioRed1] (4, 16) rectangle ++(1, 1);
-\filldraw[black]    (5, 16) rectangle ++(1, 1);
-\filldraw[black]    (6, 16) rectangle ++(1, 1);
-\filldraw[black]    (7, 16) rectangle ++(1, 1);
-\filldraw[black]    (8, 16) rectangle ++(1, 1);
-\filldraw[black]    (9, 16) rectangle ++(1, 1);
-\filldraw[black]    (10, 16) rectangle ++(1, 1);
-\filldraw[black]    (11, 16) rectangle ++(1, 1);
-\filldraw[black]    (12, 16) rectangle ++(1, 1);
-\filldraw[marioSkin] (13, 16) rectangle ++(1, 1);
-\filldraw[marioBrown] (14, 16) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (1, 16)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (2, 16)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 16)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (4, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (5, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (8, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (9, 16)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 16)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 16)  rectangle ++(1, 1);
+  \filldraw[black]        (12, 16)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (13, 16)  rectangle ++(1, 1);
+  \filldraw[marioBrown]    (14, 16)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (1, 15) rectangle ++(1, 1);
-\filldraw[marioRed3] (2, 15) rectangle ++(1, 1);
-\filldraw[marioRed2] (3, 15) rectangle ++(1, 1);
-\filldraw[marioRed1] (4, 15) rectangle ++(1, 1);
-\filldraw[marioSkin] (5, 15) rectangle ++(1, 1);
-\filldraw[black]    (6, 15) rectangle ++(1, 1);
-\filldraw[black]    (7, 15) rectangle ++(1, 1);
-\filldraw[black]    (8, 15) rectangle ++(1, 1);
-\filldraw[black]    (9, 15) rectangle ++(1, 1);
-\filldraw[black]    (10, 15) rectangle ++(1, 1);
-\filldraw[black]    (11, 15) rectangle ++(1, 1);
-\filldraw[marioSkin] (12, 15) rectangle ++(1, 1);
-\filldraw[marioBrown] (13, 15) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (1, 15)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (2, 15)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 15)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (4, 15)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (5, 15)    rectangle ++(1, 1);
+  \filldraw[black]        (6, 15)    rectangle ++(1, 1);
+  \filldraw[black]        (7, 15)    rectangle ++(1, 1);
+  \filldraw[black]        (8, 15)    rectangle ++(1, 1);
+  \filldraw[black]        (9, 15)    rectangle ++(1, 1);
+  \filldraw[black]        (10, 15)  rectangle ++(1, 1);
+  \filldraw[black]        (11, 15)  rectangle ++(1, 1);
+  \filldraw[marioSkin]    (12, 15)  rectangle ++(1, 1);
+  \filldraw[marioBrown]    (13, 15)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (1, 14) rectangle ++(1, 1);
-\filldraw[marioRed3] (2, 14) rectangle ++(1, 1);
-\filldraw[marioRed2] (3, 14) rectangle ++(1, 1);
-\filldraw[marioRed2] (4, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (5, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (6, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (7, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (8, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (9, 14) rectangle ++(1, 1);
-\filldraw[marioSkin] (10, 14) rectangle ++(1, 1);
-\filldraw[marioBrown] (11, 14) rectangle ++(1, 1);
-\filldraw[marioBrown] (12, 14) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (1, 14)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (2, 14)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 14)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (4, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (5, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (6, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (7, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (8, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (9, 14)    rectangle ++(1, 1);
+  \filldraw[marioSkin]    (10, 14)  rectangle ++(1, 1);
+  \filldraw[marioBrown]    (11, 14)  rectangle ++(1, 1);
+  \filldraw[marioBrown]    (12, 14)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (2, 13) rectangle ++(1, 1);
-\filldraw[marioRed3] (3, 13) rectangle ++(1, 1);
-\filldraw[marioRed2] (4, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (5, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (6, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (7, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (8, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (9, 13) rectangle ++(1, 1);
-\filldraw[marioBrown] (10, 13) rectangle ++(1, 1);
-\filldraw[marioRed3] (11, 13) rectangle ++(1, 1);
-\filldraw[marioRed1] (12, 13) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (2, 13)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (3, 13)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (4, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (5, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (6, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (7, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (8, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (9, 13)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (10, 13)  rectangle ++(1, 1);
+  \filldraw[marioRed3]    (11, 13)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (12, 13)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (2, 12) rectangle ++(1, 1);
-\filldraw[marioRed3] (3, 12) rectangle ++(1, 1);
-\filldraw[marioRed3] (4, 12) rectangle ++(1, 1);
-\filldraw[marioRed3] (5, 12) rectangle ++(1, 1);
-\filldraw[marioBlue2] (6, 12) rectangle ++(1, 1);
-\filldraw[marioBlue2] (7, 12) rectangle ++(1, 1);
-\filldraw[marioRed2] (8, 12) rectangle ++(1, 1);
-\filldraw[marioRed2] (9, 12) rectangle ++(1, 1);
-\filldraw[marioBlue2] (10, 12) rectangle ++(1, 1);
-\filldraw[marioBlue2] (11, 12) rectangle ++(1, 1);
-\filldraw[marioRed3] (12, 12) rectangle ++(1, 1);
-\filldraw[marioRed1] (13, 12) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (2, 12)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (3, 12)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (4, 12)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (5, 12)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (6, 12)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (7, 12)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (8, 12)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (9, 12)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (10, 12)  rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (11, 12)  rectangle ++(1, 1);
+  \filldraw[marioRed3]    (12, 12)  rectangle ++(1, 1);
+  \filldraw[marioRed1]    (13, 12)  rectangle ++(1, 1);
 
-\filldraw[marioRed1] (2, 11) rectangle ++(1, 1);
-\filldraw[marioRed2] (3, 11) rectangle ++(1, 1);
-\filldraw[marioRed3] (4, 11) rectangle ++(1, 1);
-\filldraw[marioRed3] (5, 11) rectangle ++(1, 1);
-\filldraw[marioBlue2] (6, 11) rectangle ++(1, 1);
-\filldraw[marioBlue3] (7, 11) rectangle ++(1, 1);
-\filldraw[marioRed1] (8, 11) rectangle ++(1, 1);
-\filldraw[marioRed1] (9, 11) rectangle ++(1, 1);
-\filldraw[marioBlue3] (10, 11) rectangle ++(1, 1);
-\filldraw[marioBlue2] (11, 11) rectangle ++(1, 1);
-\filldraw[marioRed2] (12, 11) rectangle ++(1, 1);
-\filldraw[black]   (13, 11) rectangle ++(1, 1);
-\filldraw[black]    (14, 11) rectangle ++(1, 1);
+  \filldraw[marioRed1]    (2, 11)    rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 11)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (4, 11)    rectangle ++(1, 1);
+  \filldraw[marioRed3]    (5, 11)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (6, 11)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (7, 11)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (8, 11)    rectangle ++(1, 1);
+  \filldraw[marioRed1]    (9, 11)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (10, 11)  rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (11, 11)  rectangle ++(1, 1);
+  \filldraw[marioRed2]    (12, 11)  rectangle ++(1, 1);
+  \filldraw[black]        (13, 11)  rectangle ++(1, 1);
+  \filldraw[black]        (14, 11)  rectangle ++(1, 1);
 
-\filldraw[marioRed2] (3, 10) rectangle ++(1, 1);
-\filldraw[marioBlue1] (4, 10) rectangle ++(1, 1);
-\filldraw[marioBlue2] (5, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (6, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (7, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (8, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (9, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (10, 10) rectangle ++(1, 1);
-\filldraw[marioBlue3] (11, 10) rectangle ++(1, 1);
-\filldraw[marioBlue2] (12, 10) rectangle ++(1, 1);
-\filldraw[white]   (13, 10) rectangle ++(1, 1);
-\filldraw[white]    (14, 10) rectangle ++(1, 1);
-\filldraw[black]    (15, 10) rectangle ++(1, 1);
+  \filldraw[marioRed2]    (3, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (4, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (5, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (6, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (7, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (8, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (9, 10)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (10, 10)  rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (11, 10)  rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (12, 10)  rectangle ++(1, 1);
+  \filldraw[white]        (13, 10)  rectangle ++(1, 1);
+  \filldraw[white]        (14, 10)  rectangle ++(1, 1);
+  \filldraw[black]        (15, 10)  rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (3, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (4, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (5, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (6, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (7, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (8, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (9, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (10, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (11, 9) rectangle ++(1, 1);
-\filldraw[marioBlue3] (12, 9) rectangle ++(1, 1);
-\filldraw[marioBlue1] (13, 9) rectangle ++(1, 1);
-\filldraw[white]    (14, 9) rectangle ++(1, 1);
-\filldraw[black]    (15, 9) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (3, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (4, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (5, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (6, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (7, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (8, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (9, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (10, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (11, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (12, 9)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (13, 9)    rectangle ++(1, 1);
+  \filldraw[white]        (14, 9)    rectangle ++(1, 1);
+  \filldraw[black]        (15, 9)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (3, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (4, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (5, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (6, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (7, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (8, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (9, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (10, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (11, 8) rectangle ++(1, 1);
-\filldraw[marioBlue3] (12, 8) rectangle ++(1, 1);
-\filldraw[marioBlue1] (13, 8) rectangle ++(1, 1);
-\filldraw[white]    (14, 8) rectangle ++(1, 1);
-\filldraw[black]    (15, 8) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (3, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (4, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (5, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (6, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (7, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (8, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (9, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (10, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (11, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (12, 8)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (13, 8)    rectangle ++(1, 1);
+  \filldraw[white]        (14, 8)    rectangle ++(1, 1);
+  \filldraw[black]        (15, 8)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (3, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (4, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (5, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (6, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (7, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (8, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (9, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (10, 7) rectangle ++(1, 1);
-\filldraw[marioBlue3] (11, 7) rectangle ++(1, 1);
-\filldraw[marioBlue2] (12, 7) rectangle ++(1, 1);
-\filldraw[marioBlue1] (13, 7) rectangle ++(1, 1);
-\filldraw[black]    (14, 7) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (3, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (4, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (5, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (6, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (7, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (8, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (9, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (10, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (11, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (12, 7)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (13, 7)    rectangle ++(1, 1);
+  \filldraw[black]        (14, 7)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (2, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (3, 6) rectangle ++(1, 1);
-\filldraw[marioBlue3] (4, 6) rectangle ++(1, 1);
-\filldraw[marioBlue3] (5, 6) rectangle ++(1, 1);
-\filldraw[marioBlue3] (6, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (7, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (8, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (9, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (10, 6) rectangle ++(1, 1);
-\filldraw[marioBlue3] (11, 6) rectangle ++(1, 1);
-\filldraw[marioBlue3] (12, 6) rectangle ++(1, 1);
-\filldraw[marioBlue2] (13, 6) rectangle ++(1, 1);
-\filldraw[marioBlue1] (14, 6) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (2, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (3, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (4, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (5, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (6, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (7, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (8, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (9, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (10, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (11, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (12, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (13, 6)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (14, 6)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (2, 5) rectangle ++(1, 1);
-\filldraw[marioBlue2] (3, 5) rectangle ++(1, 1);
-\filldraw[marioBlue3] (4, 5) rectangle ++(1, 1);
-\filldraw[marioBlue3] (5, 5) rectangle ++(1, 1);
-\filldraw[marioBlue2] (6, 5) rectangle ++(1, 1);
-\filldraw[marioBlue1] (7, 5) rectangle ++(1, 1);
-\filldraw[marioBlue1] (8, 5) rectangle ++(1, 1);
-\filldraw[marioBlue1] (9, 5) rectangle ++(1, 1);
-\filldraw[marioBlue1] (10, 5) rectangle ++(1, 1);
-\filldraw[marioBlue2] (11, 5) rectangle ++(1, 1);
-\filldraw[marioBlue3] (12, 5) rectangle ++(1, 1);
-\filldraw[marioBlue2] (13, 5) rectangle ++(1, 1);
-\filldraw[marioBlue1] (14, 5) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (2, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (3, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (4, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (5, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (6, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (7, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (8, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (9, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (10, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (11, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue3]    (12, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (13, 5)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (14, 5)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (2, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (3, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (4, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (5, 4) rectangle ++(1, 1);
-\filldraw[marioBlue1] (6, 4) rectangle ++(1, 1);
-\filldraw[marioBlue1] (10, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (11, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (12, 4) rectangle ++(1, 1);
-\filldraw[marioBlue2] (13, 4) rectangle ++(1, 1);
-\filldraw[marioBlue1] (14, 4) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (2, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (3, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (4, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (5, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (6, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (10, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (11, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (12, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue2]    (13, 4)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (14, 4)    rectangle ++(1, 1);
 
-\filldraw[marioBlue1] (2, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (3, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (4, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (5, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (10, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (11, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (12, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (13, 3) rectangle ++(1, 1);
-\filldraw[marioBlue1] (14, 3) rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (2, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (3, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (4, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (5, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (10, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (11, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (12, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (13, 3)    rectangle ++(1, 1);
+  \filldraw[marioBlue1]    (14, 3)    rectangle ++(1, 1);
 
-\filldraw[black]     (1, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (2, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (3, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (4, 2) rectangle ++(1, 1);
-\filldraw[black]     (5, 2) rectangle ++(1, 1);
-\filldraw[black]     (10, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (11, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (12, 2) rectangle ++(1, 1);
-\filldraw[marioBrown]  (13, 2) rectangle ++(1, 1);
-\filldraw[black]     (14, 2) rectangle ++(1, 1);
+  \filldraw[black]         (1, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (2, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (3, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (4, 2)    rectangle ++(1, 1);
+  \filldraw[black]         (5, 2)    rectangle ++(1, 1);
+  \filldraw[black]         (10, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (11, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (12, 2)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (13, 2)    rectangle ++(1, 1);
+  \filldraw[black]         (14, 2)    rectangle ++(1, 1);
 
-\filldraw[black]     (0, 1) rectangle ++(1, 1);
-\filldraw[marioBrown] (1, 1) rectangle ++(1, 1);
-\filldraw[marioBrown] (2, 1) rectangle ++(1, 1);
-\filldraw[marioBrown] (3, 1) rectangle ++(1, 1);
-\filldraw[marioBrown] (4, 1) rectangle ++(1, 1);
-\filldraw[black]     (5, 1) rectangle ++(1, 1);
-\filldraw[black]     (10, 1) rectangle ++(1, 1);
-\filldraw[marioBrown]  (11, 1) rectangle ++(1, 1);
-\filldraw[marioBrown]  (12, 1) rectangle ++(1, 1);
-\filldraw[marioBrown]  (13, 1) rectangle ++(1, 1);
-\filldraw[marioBrown]  (14, 1) rectangle ++(1, 1);
-\filldraw[black]     (15, 1) rectangle ++(1, 1);
+  \filldraw[black]         (0, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (1, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (2, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (3, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]    (4, 1)    rectangle ++(1, 1);
+  \filldraw[black]         (5, 1)    rectangle ++(1, 1);
+  \filldraw[black]         (10, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (11, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (12, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (13, 1)    rectangle ++(1, 1);
+  \filldraw[marioBrown]   (14, 1)    rectangle ++(1, 1);
+  \filldraw[black]         (15, 1)    rectangle ++(1, 1);
 
-\filldraw[black] (0, 0) rectangle ++(1, 1);
-\filldraw[black] (1, 0) rectangle ++(1, 1);
-\filldraw[black] (2, 0) rectangle ++(1, 1);
-\filldraw[black] (3, 0) rectangle ++(1, 1);
-\filldraw[black] (4, 0) rectangle ++(1, 1);
-\filldraw[black] (5, 0) rectangle ++(1, 1);
-\filldraw[black] (10, 0) rectangle ++(1, 1);
-\filldraw[black] (11, 0) rectangle ++(1, 1);
-\filldraw[black] (12, 0) rectangle ++(1, 1);
-\filldraw[black] (13, 0) rectangle ++(1, 1);
-\filldraw[black] (14, 0) rectangle ++(1, 1);
-\filldraw[black] (15, 0) rectangle ++(1, 1);
+  \filldraw[black]      (0, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (1, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (2, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (3, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (4, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (5, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (10, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (11, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (12, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (13, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (14, 0)    rectangle ++(1, 1);
+  \filldraw[black]      (15, 0)    rectangle ++(1, 1);
 }
 
 \DeclareDocumentCommand \mariovictory { O{} O{\fp_use:N \g_edu_examtitlegraphicsscale_fp} } {
@@ -3441,20 +3450,20 @@
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_exepointsachieved_bool {
-    \tl_set:Nn \l__edu_exepoints_tl {
-      \g_edu_exepointsleft_tl
-        \hspace{\g_edu_exepointsachievedspace_dim}
-        \g_edu_exepointsachievedsep_tl
-        #2\g_edu_exepointslabel_tl
-      \g_edu_exepointsright_tl
-    }
-  }{
       \tl_set:Nn \l__edu_exepoints_tl {
-      \g_edu_exepointsleft_tl
-        #2\g_edu_exepointslabel_tl
-      \g_edu_exepointsright_tl
+        \g_edu_exepointsleft_tl
+          \hspace{\g_edu_exepointsachievedspace_dim}
+          \g_edu_exepointsachievedsep_tl
+          #2\g_edu_exepointslabel_tl
+        \g_edu_exepointsright_tl
+      }
+    }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+        \g_edu_exepointsleft_tl
+          #2\g_edu_exepointslabel_tl
+        \g_edu_exepointsright_tl
+      }
     }
-  }
   }
 
   \tl_if_empty:nTF {#3} {
@@ -3530,9 +3539,9 @@
         \textcolor{\g_edu_exenumberfg_tl}{%
           \g_edu_exenumberstyle_tl\theexercisecounter\g_edu_exenumberseparator_tl%
           \IfBooleanT{#1} {
-          \raisebox{0.15ex}{%
-            $\star$
-          }
+            \raisebox{0.15ex}{%
+              $\star$
+            }
           }
         }%
       }%
@@ -3577,20 +3586,20 @@
     \tl_clear:N \l__edu_exepoints_tl
   }{
     \bool_if:NTF \g_edu_subexepointsachieved_bool {
-    \tl_set:Nn \l__edu_exepoints_tl {
-      \g_edu_subexepointsleft_tl
-        \hspace{\g_edu_subexepointsachievedspace_dim}
-        \g_edu_subexepointsachievedsep_tl
-        #2\g_edu_subexepointslabel_tl
-      \g_edu_subexepointsright_tl
-    }
-  }{
       \tl_set:Nn \l__edu_exepoints_tl {
-      \g_edu_subexepointsleft_tl
-        #2\g_edu_subexepointslabel_tl
-      \g_edu_subexepointsright_tl
+        \g_edu_subexepointsleft_tl
+          \hspace{\g_edu_subexepointsachievedspace_dim}
+          \g_edu_subexepointsachievedsep_tl
+          #2\g_edu_subexepointslabel_tl
+        \g_edu_subexepointsright_tl
+      }
+    }{
+      \tl_set:Nn \l__edu_exepoints_tl {
+        \g_edu_subexepointsleft_tl
+          #2\g_edu_subexepointslabel_tl
+        \g_edu_subexepointsright_tl
+      }
     }
-  }
   }
 
   \tl_if_empty:nTF {#3} {
@@ -3625,9 +3634,9 @@
           \thesubexercisecounter%
           \g_edu_subexenumberseparator_tl%
           \IfBooleanT{#1} {
-          \raisebox{0.15ex}{%
-            \,$\star$
-          }
+            \raisebox{0.15ex}{%
+              \,$\star$
+            }
           }
         }%
       }%
@@ -3834,17 +3843,17 @@
 
 \DeclareDocumentCommand \points { s m } {%
   \IfBooleanT{#1} {
-   \hspace*{0pt}\hfill\hspace{0.5em}%
-}
+     \hspace*{0pt}\hfill\hspace{0.5em}%
+  }
   \nolinebreak%
   \ensuremath{\;
-  \text{%
-    \g_edu_multiexepointsstyle_tl%
-    \color{\g_edu_multiexepointsfg_tl}%
-    \g_edu_multiexepointsleft_tl%
-      #2\g_edu_multiexepointslabel_tl%
-    \g_edu_multiexepointsright_tl%
-   }%
+    \text{%
+      \g_edu_multiexepointsstyle_tl%
+      \color{\g_edu_multiexepointsfg_tl}%
+      \g_edu_multiexepointsleft_tl%
+        #2\g_edu_multiexepointslabel_tl%
+      \g_edu_multiexepointsright_tl%
+     }%
    }
 }
 
@@ -3948,12 +3957,12 @@
 
 \DeclareDocumentEnvironment {multiexelisti} { s } {
   \IfBooleanTF {#1}{
-  \begin{edulisti}[%
-    label=\multiexelabel,%
-    format=\g_edu_multiexenumberstyle_tl,%
-    itemjoin={,\ },%
-  ]
-}{
+    \begin{edulisti}[%
+      label=\multiexelabel,%
+      format=\g_edu_multiexenumberstyle_tl,%
+      itemjoin={,\ },%
+    ]
+  }{
     \par
     \bool_if:NTF \g_edu_parskip_bool {
       \vspace{-0.25\baselineskip}
@@ -3961,13 +3970,13 @@
       \vspace{-0.175\baselineskip}
     }
     \begin{center}
-  \begin{edulisti}[%
-    label=\multiexelabel,%
-    format=\g_edu_multiexenumberstyle_tl,%
-    afterlabel=\hspace{\g_edu_listarraysep_dim},%
-    itemjoin=\qquad,%
-  ]
-}
+    \begin{edulisti}[%
+      label=\multiexelabel,%
+      format=\g_edu_multiexenumberstyle_tl,%
+      afterlabel=\hspace{\g_edu_listarraysep_dim},%
+      itemjoin=\qquad,%
+    ]
+  }
 }{
   \end{edulisti}
   \IfBooleanF {#1} {
@@ -3987,11 +3996,11 @@
 
 \DeclareDocumentEnvironment {multiexearray} { s O{0.25\baselineskip} m } {
   \IfBooleanTF {#1} {
-  \arraysetup[#2]{m}
+    \arraysetup[#2]{m}
     \noindent\tabularx{\textwidth}{*{#3}{E}}
-}{%
-  \arraysetup[#2]{}
-  \noindent\tabularx{\textwidth}{*{#3}{e}}%
+  }{%
+    \arraysetup[#2]{}
+    \noindent\tabularx{\textwidth}{*{#3}{e}}%
   }
 }{
   \endtabularx
@@ -4044,9 +4053,9 @@
     \g_edu_multiexenumberleft_tl
   }
   \int_compare:nNnTF {\value{multiexecounter}} > {0} {
-  \addtocounter{multiexecounter}{-1}
-  \alph{multiexecounter}
-  \addtocounter{multiexecounter}{1}
+    \addtocounter{multiexecounter}{-1}
+    \alph{multiexecounter}
+    \addtocounter{multiexecounter}{1}
   }{
     ??
   }
@@ -4289,11 +4298,11 @@
   \IfValueTF {#5} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#5}
   }{
-  \IfBooleanTF {#1} {
-    \tl_gset:Nn \g__edu_aligntemp_tl {l}
-  }{
-    \tl_gset:Nn \g__edu_aligntemp_tl {r}
-  }
+    \IfBooleanTF {#1} {
+      \tl_gset:Nn \g__edu_aligntemp_tl {l}
+    }{
+      \tl_gset:Nn \g__edu_aligntemp_tl {r}
+    }
   }
   \str_if_eq:nnTF {#6} {c} {
     \begin{cols2*}[#2]
@@ -4306,12 +4315,12 @@
       \hfill
     }
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-     \begin{center}
-  }
-    \includegraphics[#4]{#3}
+      \begin{center}
+    }
+      \includegraphics[#4]{#3}
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-    \end{center}
-  }
+      \end{center}
+    }
     \tl_if_in:NnT \g__edu_aligntemp_tl {l} {
       \hfill
     }
@@ -4320,17 +4329,17 @@
 }{%
   \IfBooleanF {#1} {
     \colbreak
-  \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
-    \setlength{\parfillskip}{0em}
+    \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
+      \setlength{\parfillskip}{0em}
       \hfill
     }
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-     \begin{center}
-  }
-    \includegraphics[#4]{#3}
+      \begin{center}
+    }
+      \includegraphics[#4]{#3}
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-    \end{center}
-  }
+      \end{center}
+    }
     \tl_if_in:NnT \g__edu_aligntemp_tl {l} {
       \hfill
     }
@@ -4355,11 +4364,11 @@
   \IfValueTF {#4} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#4}
   }{
-  \IfBooleanTF {#1} {
-    \tl_gset:Nn \g__edu_aligntemp_tl {l}
-  }{
-    \tl_gset:Nn \g__edu_aligntemp_tl {r}
-  }
+    \IfBooleanTF {#1} {
+      \tl_gset:Nn \g__edu_aligntemp_tl {l}
+    }{
+      \tl_gset:Nn \g__edu_aligntemp_tl {r}
+    }
   }
 
   \str_if_eq:nnTF {#5} {c} {
@@ -4372,12 +4381,12 @@
       \hfill
     }
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-     \begin{center}
-  }
-    \tikzinput{#3}
+      \begin{center}
+    }
+      \tikzinput{#3}
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-    \end{center}
-  }
+      \end{center}
+    }
     \tl_if_in:NnT \g__edu_aligntemp_tl {l} {
       \hfill
     }
@@ -4386,16 +4395,16 @@
 }{%
   \IfBooleanF {#1} {
     \colbreak
-  \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
+    \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
     }
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-     \begin{center}
-  }
-    \tikzinput{#3}
+      \begin{center}
+    }
+      \tikzinput{#3}
     \tl_if_in:NnT \g__edu_aligntemp_tl {c} {
-    \end{center}
-  }
+      \end{center}
+    }
     \tl_if_in:NnT \g__edu_aligntemp_tl {l} {
       \hfill
     }
@@ -4523,13 +4532,13 @@
       >{\RaggedRight}p{\g_edu_ttmediawidthlscape_dim}%
     }
   }{
-  \begin{tabularx}{\linewidth}{%
-    >{\RaggedRight}p{\g_edu_tttimewidth_dim}%
-    >{\RaggedRight}p{\g_edu_ttstagewidth_dim}%
-    >{\RaggedRight}X%
-    >{\RaggedRight}p{\g_edu_ttmethodwidth_dim}%
-    >{\RaggedRight}p{\g_edu_ttmediawidth_dim}%
-  }
+    \begin{tabularx}{\linewidth}{%
+      >{\RaggedRight}p{\g_edu_tttimewidth_dim}%
+      >{\RaggedRight}p{\g_edu_ttstagewidth_dim}%
+      >{\RaggedRight}X%
+      >{\RaggedRight}p{\g_edu_ttmethodwidth_dim}%
+      >{\RaggedRight}p{\g_edu_ttmediawidth_dim}%
+    }
   }
   \bool_if:NTF \g_edu_ttendtime_bool {
     \toprule
@@ -4761,31 +4770,31 @@
 
 \cs_new:Npn \edu_examtitlegraphicoverlay:nn #1 #2 {
   \tikz {
-    \node[inner~sep=0pt, outer~sep=0pt, anchor=north~east] (n) at (0, 0) {\strut};
-  \begin{pgfinterruptboundingbox}
-    \node[anchor=north~east, inner~sep=0pt, outer~sep=0pt] at (0, 0) {\includegraphics[height=#2]{#1}};
-\end{pgfinterruptboundingbox}
-}
+      \node[inner~sep=0pt, outer~sep=0pt, anchor=north~east] (n) at (0, 0) {\strut};
+    \begin{pgfinterruptboundingbox}
+      \node[anchor=north~east, inner~sep=0pt, outer~sep=0pt] at (0, 0) {\includegraphics[height=#2]{#1}};
+    \end{pgfinterruptboundingbox}
+  }
 }
 
 \cs_new:Npn \edu_mariovictory_shifted:nn #1 #2 {
-\tikz[scale=#2] {
-  \node[inner~sep=0pt,outer~sep=0pt,anchor=north~east] (n) at (0, 0){\strut};
+  \tikz[scale=#2] {
+    \node[inner~sep=0pt,outer~sep=0pt,anchor=north~east] (n) at (0, 0){\strut};
 
-  \setlength{\baselineskip}{2.5ex}
+    \setlength{\baselineskip}{2.5ex}
 
-  \begin{pgfinterruptboundingbox}
-\begin{scope}[xshift=-35cm, yshift=-27cm]
-    \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
-\edu_mariovictory_pixel:
-  \end{scope}
-\end{pgfinterruptboundingbox}
-}
+    \begin{pgfinterruptboundingbox}
+      \begin{scope}[xshift=-35cm, yshift=-27cm]
+      \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
+        \edu_mariovictory_pixel:
+      \end{scope}
+    \end{pgfinterruptboundingbox}
+  }
 }
 
 \DeclareDocumentCommand \makeexamtitle {s O{Viel\\ Erfolg!} O{mario-victory} O{\g_edu_examtitlegraphicsheight_dim}} {
 
-\setlength{\parfillskip}{0em}
+  \setlength{\parfillskip}{0em}
   \par
   \vspace{0.75ex}
   \parskipreduce
@@ -4797,12 +4806,12 @@
   \hfill%
   \group_begin:
     \tl_if_empty:nF {#3} {
-    \tl_if_eq:nnTF {#3} {mario-victory} {
-      \edu_mariovictory_shifted:nn {#2}{\fp_use:N \g_edu_examtitlegraphicsscale_fp}
-    }{
-      \edu_examtitlegraphicoverlay:nn{#3}{#4}
+      \tl_if_eq:nnTF {#3} {mario-victory} {
+        \edu_mariovictory_shifted:nn {#2}{\fp_use:N \g_edu_examtitlegraphicsscale_fp}
+      }{
+        \edu_examtitlegraphicoverlay:nn{#3}{#4}
+      }
     }
-  }
   \group_end:
   \tl_if_empty:NTF \g_edu_group_tl {
     \hspace*{1cm}
@@ -4836,46 +4845,46 @@
 
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiwidth_dim}{0.4pt}
-      \hspace*{\g_edu_examtitlefieldsep_dim} \=
-    }
+        \hspace*{\g_edu_examtitlefieldsep_dim} \=
+      }
 
       \tl_put_right:Nn \l__edu_tempii_tl {
         \g_edu_examtitlefieldilabel_tl \>
-    }
+      }
     }
 
     \tl_if_empty:NF \g_edu_examtitlefieldiilabel_tl {
 
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiiwidth_dim}{0.4pt}
-      \hspace*{\g_edu_examtitlefieldsep_dim} \=
-    }
+        \hspace*{\g_edu_examtitlefieldsep_dim} \=
+      }
 
       \tl_put_right:Nn \l__edu_tempii_tl {
         \g_edu_examtitlefieldiilabel_tl \>
-    }
+      }
     }
 
     \tl_if_empty:NF \g_edu_examtitlefieldiiilabel_tl {
 
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiiiwidth_dim}{0.4pt}
-      \hspace*{\g_edu_examtitlefieldsep_dim} \=
-    }
+        \hspace*{\g_edu_examtitlefieldsep_dim} \=
+      }
 
       \tl_put_right:Nn \l__edu_tempii_tl {
         \g_edu_examtitlefieldiiilabel_tl \>
-    }
+      }
     }
 
-  \setlength{\topsep}{-\parskip}
-  \setlength{\partopsep}{0pt}
-  \vspace{0.5cm}
-  \small\sffamily
-  \begin{tabbing}
-    \l__edu_tempi_tl \\[-0.5ex]
-    \l__edu_tempii_tl
-  \end{tabbing}
+    \setlength{\topsep}{-\parskip}
+    \setlength{\partopsep}{0pt}
+    \vspace{0.5cm}
+    \small\sffamily
+    \begin{tabbing}
+      \l__edu_tempi_tl \\[-0.5ex]
+      \l__edu_tempii_tl
+    \end{tabbing}
   \group_end:
 
   \addvspace{0.25\baselineskip}
@@ -4900,28 +4909,28 @@
   }
 
   \renewcommand{\arraystretch}{1.2}
-\group_begin:
-  \sffamily
-  \tl_if_eq:VnT \g_edu_exampointstabletype_tl {X} {
-    \begin{tabularx}{\linewidth}{|l||*{\clist_count:n {#1}}{>{\centering}X|}|C{0.75cm}|}
-      \hline
-    \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
-    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline\hline
-    \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
-    \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
-   \end{tabularx}
-  }
+  \group_begin:
+    \sffamily
+    \tl_if_eq:VnT \g_edu_exampointstabletype_tl {X} {
+      \begin{tabularx}{\linewidth}{|l||*{\clist_count:n {#1}}{>{\centering}X|}|C{0.75cm}|}
+        \hline
+        \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
+        \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline\hline
+        \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
+        \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
+      \end{tabularx}
+    }
 
-  \tl_if_eq:VnT \g_edu_exampointstabletype_tl {C} {
-    \begin{tabular}{|l|*{\clist_count:n {#1}}{C{1em}|}c|}
-      \hline
-    \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
-    \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
-    \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
-    \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
-    \end{tabular}
-  }
-\group_end:
+    \tl_if_eq:VnT \g_edu_exampointstabletype_tl {C} {
+      \begin{tabular}{|l|*{\clist_count:n {#1}}{C{1em}|}c|}
+        \hline
+        \multicolumn{\int_eval:n {\clist_count:n {#1}+2}}{|l|}{\textbf{\g_edu_exampointstablelabel_tl}} \\ \hline
+        \g_edu_exampointstableexelabel_tl & \l_tmpi_tl \g_edu_exampointstablesumlabel_tl \\ \hline
+        \g_edu_exampointstablemaxlabel_tl & \l_tmpii_tl  #3 \\ \hline
+        \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
+      \end{tabular}
+    }
+  \group_end:
 }
 
 \NewDocumentCommand \exampointstable { m m m } {
@@ -4931,85 +4940,85 @@
 \NewDocumentCommand \makeexamrestable { s o m m m } {
 
   \setlength{\fboxsep}{10pt}
-\fbox{
-  \parbox{\linewidth-2\fboxsep-2\fboxrule}{
-    \IfNoValueF {#2} {
-      \group_begin:
-        \Large\sffamily\bfseries #2
-      \group_end:
-      \medskip
+  \fbox{
+    \parbox{\linewidth-2\fboxsep-2\fboxrule}{
+      \IfNoValueF {#2} {
+        \group_begin:
+          \Large\sffamily\bfseries #2
+        \group_end:
+        \medskip
+      }
+      \par
+      \begin{minipage}{\g_edu_exampointstablewidth_tl-\fboxsep}
+        \exampointstable{#3}{#4}{#5}
+      \end{minipage}
+      \hfill
+      \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl}
+        \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
+        \hspace{0.35cm} \large \g_edu_exampointsaveragelabel_tl
+
+        \bool_if:NT \g_edu_exampointssecondmark_bool {
+          \par
+          \normalsize
+          \medskip
+          \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+        }
+
+
+        \bool_if:NT \g_edu_exampointssignature_bool {
+          \par
+          \mdseries\footnotesize
+          \vspace{0.75cm}
+          \rule{\linewidth}{0.4pt}\\
+          \g_edu_exampointssignaturelabel_tl
+        }
+      \end{minipage}
     }
-    \par
-  \begin{minipage}{\g_edu_exampointstablewidth_tl-\fboxsep}
-    \exampointstable{#3}{#4}{#5}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl}
-  \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
-  \hspace{0.35cm} \large \g_edu_exampointsaveragelabel_tl
-
-  \bool_if:NT \g_edu_exampointssecondmark_bool {
-  \par
-  \normalsize
-  \medskip
-  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
   }
-   
-
-  \bool_if:NT \g_edu_exampointssignature_bool { 
-    \par
-    \mdseries\footnotesize
-    \vspace{0.75cm}
-    \rule{\linewidth}{0.4pt}\\
-    \g_edu_exampointssignaturelabel_tl
-  }
-  \end{minipage}
-  }
-}
   \setlength{\fboxsep}{3pt}
 }
 
 \NewDocumentCommand \makeexamres { s m } {
   \setlength{\fboxsep}{10pt}
-\fbox{
-  \parbox{\linewidth-2\fboxsep-2\fboxrule}{
-    \sffamily\Large
-  \begin{minipage}{0.55\linewidth-\fboxsep}
-  \textbf{Punkte:}
-    \hspace{1.75cm} \g_edu_exampointsoflabel_tl\ #2
+  \fbox{
+    \parbox{\linewidth-2\fboxsep-2\fboxrule}{
+      \sffamily\Large
+      \begin{minipage}{0.55\linewidth-\fboxsep}
+        \textbf{Punkte:}
+        \hspace{1.75cm} \g_edu_exampointsoflabel_tl\ #2
 
-    \par
-    \vspace{0.5\baselineskip}
-    \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);}
-    \hspace{0.75cm} \textbf{\g_edu_exampointsaveragelabel_tl}
+        \par
+        \vspace{0.5\baselineskip}
+        \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);}
+        \hspace{0.75cm} \textbf{\g_edu_exampointsaveragelabel_tl}
 
-  \bool_if:nT {\g_edu_exampointssecondmark_bool
-    && \g_edu_exampointssignature_bool
-  }{
-  \par
-  \large\bfseries
-  \medskip
-  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+        \bool_if:nT {\g_edu_exampointssecondmark_bool
+          && \g_edu_exampointssignature_bool
+        }{
+          \par
+          \large\bfseries
+          \medskip
+          \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+        }
+      \end{minipage}
+      \begin{minipage}{0.45\linewidth-\fboxsep}
+        \bool_if:NTF \g_edu_exampointssignature_bool {
+          \vspace{1cm}
+          \mdseries\footnotesize
+          \rule{7cm}{0.4pt}\\
+          \g_edu_exampointssignaturelabel_tl
+        }{
+          \bool_if:NT \g_edu_exampointssecondmark_bool {
+            \par
+            \large\bfseries
+            \medskip
+            \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
+          }
+        }
+      \end{minipage}
+    }
   }
-    \end{minipage}
-    \begin{minipage}{0.45\linewidth-\fboxsep}
-  \bool_if:NTF \g_edu_exampointssignature_bool { 
-    \vspace{1cm}
-        \mdseries\footnotesize
-        \rule{7cm}{0.4pt}\\
-     \g_edu_exampointssignaturelabel_tl
-   }{
-   \bool_if:NT \g_edu_exampointssecondmark_bool { 
-     \par
-    \large\bfseries
-  \medskip
-  \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
-}
-   }
-    \end{minipage}
-  }
-}
-  \setlength{\fboxsep}{3pt} 
+  \setlength{\fboxsep}{3pt}
 }
 
 \dim_new:N \g_edu_lstbelowskip
@@ -5062,16 +5071,16 @@
 }
 
 \tl_if_empty:NF \g_edu_resultlistinglabel_tl {
-\lstdefinestyle{lstresstyle}{%
+  \lstdefinestyle{lstresstyle}{%
     aboveskip=0.25\baselineskip,
     belowskip=\g_edu_lstbelowskip,
     basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
     keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
   numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
     rulecolor=\color{\g_edu_resultfg_tl},
-  title=\color{\g_edu_resultfg_tl}\sffamily\g_edu_resultlistinglabel_tl,
-  captionpos=t
-}
+    title=\color{\g_edu_resultfg_tl}\sffamily\g_edu_resultlistinglabel_tl,
+    captionpos=t
+  }
 }
 
 \lstset{%
@@ -5093,9 +5102,9 @@
 }
 
 \tl_if_empty:NF \g_edu_lstkeywordsprocessing_bool {
-\lstset{%
-  morekeywords={abs, acos, alpha, ambient, ambientLight, append, applyMatrix, arc, Array, arrayCopy, ArrayList, asin, atan, atan2, background, beginCamera, beginRaw, beginRecord, beginShape, bezier, bezierDetail, bezierPoint, bezierTangent, bezierVertex, binary, blend, blendColor, blue, boolean, boolean, box, break, brightness, BufferedReader, byte, byte, camera, case, catch, ceil, char, char, class, color, color, colorMode, concat, constrain, continue, copy, cos, createFont, createGraphics, createImage, createInput, createOutput, createReader, createWriter, cursor, curve, curveDetail, curvePoint, curveTangent, curveTightness, curveVertex, day, default, degrees, delay, directionalLight, dist, double, draw, ellipse, ellipseMode, else, emissive, endCamera, endRaw, endRecord, endShape, exit, exp, expand, extends, false, fill, filter, final, float, float, floor, focused, for, frameCount, frameRate, frameRate, frustum, get, green, HALF_PI, HashMap, height, hex, hint, hour, hue, if, image, imageMode, implements, import, int, int, join, key, keyCode, keyPressed, keyPressed, keyReleased, keyTyped, lerp, lerpColor, lightFalloff, lights, lightSpecular, line, link, loadBytes, loadFont, loadImage, loadPixels, loadShape, loadStrings, log, long, loop, mag, map, match, matchAll, max, millis, min, minute, modelX, modelY, modelZ, month, mouseButton, mouseClicked, mouseDragged, mouseMoved, mousePressed, mousePressed, mouseReleased, mouseX, mouseY, new, nf, nfc, nfp, nfs, noCursor, noFill, noise, noiseDetail, noiseSeed, noLights, noLoop, norm, normal, noSmooth, noStroke, noTint, null, Object, online, open, ortho, param, perspective, PFont, PGraphics, PI, PImage, pixels[], pmouseX, pmouseY, point, pointLight, popMatrix, popStyle, pow, print, printArray, printCamera, println, printMatrix, printProjection, PrintWriter, private, PShape, public, pushMatrix, pushStyle, PVector, quad, QUARTER_PI, radians, random, randomSeed, rect, rectMode, red, redraw, requestImage, resetMatrix, return, reverse, rotate, rotateX, rotateY, rotateZ, round, saturation, save, saveBytes, saveFrame, saveStream, saveStrings, scale, screen, screenX, screenY, screenZ, second, selectFolder, selectInput, selectOutput, set, setup, shape, shapeMode, shearX, shearY, shininess, shorten, sin, size, smooth, sort, specular, sphere, sphereDetail, splice, split, splitTokens, spotLight, sq, sqrt, static, status, str, String, stroke, strokeCap, strokeJoin, strokeWeight, subset, super, switch, tan, text, textAlign, textAscent, textDescent, textFont, textLeading, textMode, textSize, texture, textureMode, textWidth, this, tint, translate, triangle, trim, true, try, TWO_PI, unbinary, unhex, updatePixels, vertex, void, while, width, XMLElement, year}
-}
+  \lstset{%
+    morekeywords={abs, acos, alpha, ambient, ambientLight, append, applyMatrix, arc, Array, arrayCopy, ArrayList, asin, atan, atan2, background, beginCamera, beginRaw, beginRecord, beginShape, bezier, bezierDetail, bezierPoint, bezierTangent, bezierVertex, binary, blend, blendColor, blue, boolean, boolean, box, break, brightness, BufferedReader, byte, byte, camera, case, catch, ceil, char, char, class, color, color, colorMode, concat, constrain, continue, copy, cos, createFont, createGraphics, createImage, createInput, createOutput, createReader, createWriter, cursor, curve, curveDetail, curvePoint, curveTangent, curveTightness, curveVertex, day, default, degrees, delay, directionalLight, dist, double, draw, ellipse, ellipseMode, else, emissive, endCamera, endRaw, endRecord, endShape, exit, exp, expand, extends, false, fill, filter, final, float, float, floor, focused, for, frameCount, frameRate, frameRate, frustum, get, green, HALF_PI, HashMap, height, hex, hint, hour, hue, if, image, imageMode, implements, import, int, int, join, key, keyCode, keyPressed, keyPressed, keyReleased, keyTyped, lerp, lerpColor, lightFalloff, lights, lightSpecular, line, link, loadBytes, loadFont, loadImage, loadPixels, loadShape, loadStrings, log, long, loop, mag, map, match, matchAll, max, millis, min, minute, modelX, modelY, modelZ, month, mouseButton, mouseClicked, mouseDragged, mouseMoved, mousePressed, mousePressed, mouseReleased, mouseX, mouseY, new, nf, nfc, nfp, nfs, noCursor, noFill, noise, noiseDetail, noiseSeed, noLights, noLoop, norm, normal, noSmooth, noStroke, noTint, null, Object, online, open, ortho, param, perspective, PFont, PGraphics, PI, PImage, pixels[], pmouseX, pmouseY, point, pointLight, popMatrix, popStyle, pow, print, printArray, printCamera, println, printMatrix, printProjection, PrintWriter, private, PShape, public, pushMatrix, pushStyle, PVector, quad, QUARTER_PI, radians, random, randomSeed, rect, rectMode, red, redraw, requestImage, resetMatrix, return, reverse, rotate, rotateX, rotateY, rotateZ, round, saturation, save, saveBytes, saveFrame, saveStream, saveStrings, scale, screen, screenX, screenY, screenZ, second, selectFolder, selectInput, selectOutput, set, setup, shape, shapeMode, shearX, shearY, shininess, shorten, sin, size, smooth, sort, specular, sphere, sphereDetail, splice, split, splitTokens, spotLight, sq, sqrt, static, status, str, String, stroke, strokeCap, strokeJoin, strokeWeight, subset, super, switch, tan, text, textAlign, textAscent, textDescent, textFont, textLeading, textMode, textSize, texture, textureMode, textWidth, this, tint, translate, triangle, trim, true, try, TWO_PI, unbinary, unhex, updatePixels, vertex, void, while, width, XMLElement, year}
+  }
 }
 
 \NewDocumentEnvironment{reslstlisting}{}{
@@ -5109,7 +5118,6 @@
 }
 
 \bool_if:NT \g_edu_edumath_bool {
-
   \RequirePackage[\g_edu_edumathoptions_tl]{edumath}
 }
 
