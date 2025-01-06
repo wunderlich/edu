@@ -79,6 +79,7 @@
   rmfont .choices:nn = {
     computermodern,
     libertine,
+    noto,
     palatino
   }
   {
@@ -102,9 +103,10 @@
 \keys_define:nn {edu} {
   sffont .choices:nn = {  % option for choosing the sans serif font
     computermodern,
-    sourcesanspro,
+    lato,
+    noto,
     roboto,
-    lato
+    sourcesanspro
   }{
     \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
   },
@@ -127,6 +129,7 @@
 \keys_define:nn {edu} {
   ttfont .choices:nn = {  % option for choosing the monospace font
     beramono,
+    noto,
     sourcecodepro
   }{
     \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
@@ -1101,6 +1104,10 @@
     \RequirePackage[rm]{libertine}
     \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
   }
+  \tl_if_eq:VnT \g_edu_rmfont_tl {noto} {
+    \RequirePackage[scaled=0.85]{noto-serif}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=noto}
+  }
 
   \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
     \RequirePackage{palatino}
@@ -1110,6 +1117,10 @@
 
 \tl_if_eq:VnT \g_edu_sffont_tl {lato} {
   \RequirePackage[defaultsans]{lato}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {noto} {
+  \RequirePackage[scaled=0.85]{noto-sans}
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {sourcesanspro} {
@@ -1122,6 +1133,10 @@
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {beramono} {
   \RequirePackage[scaled=0.85]{beramono}
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {noto} {
+  \RequirePackage[scaled=0.75]{noto-mono}
 }
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {

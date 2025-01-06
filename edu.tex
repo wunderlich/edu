@@ -1758,6 +1758,7 @@ Options for fonts:
   rmfont .choices:nn = {
     computermodern,
     libertine,
+    noto,
     palatino
   }
   {
@@ -1781,9 +1782,10 @@ Options for fonts:
 \keys_define:nn {edu} {
   sffont .choices:nn = {  % option for choosing the sans serif font
     computermodern,
-    sourcesanspro,
+    lato,
+    noto,
     roboto,
-    lato
+    sourcesanspro
   }{
     \tl_gset:NV \g_edu_sffont_tl \l_keys_choice_tl
   },
@@ -1806,6 +1808,7 @@ Options for fonts:
 \keys_define:nn {edu} {
   ttfont .choices:nn = {  % option for choosing the monospace font
     beramono,
+    noto,
     sourcecodepro
   }{
     \tl_gset:NV \g_edu_ttfont_tl \l_keys_choice_tl
@@ -1945,7 +1948,7 @@ Options for fonts:
   transparencybottom .initial:n = 10mm,
   transparencyleft .dim_gset:N = \g_edu_transparencyleft_dim,      % Left margin at transparency
   transparencyleft .initial:n = 22.5mm,
-}  
+}
 
 \end{MacroCode}
 \end{option}
@@ -2427,7 +2430,7 @@ Gender-neutral language options:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
   gendersymbol .tl_gset:N = \g_edu_gendersymbol_tl,
-  gendersymbol .initial:n = \textasteriskcentered,  
+  gendersymbol .initial:n = \textasteriskcentered,
   genderraise .dim_gset:N = \g_edu_genderraise_dim,
 }
 
@@ -3018,7 +3021,7 @@ Options for typesetting results:
   resultboxwidth .dim_gset:N = \g_edu_resultboxwidth_dim,
   resultboxwidth .initial:n = 2cm,
   resultboxheight .dim_gset:N = \g_edu_resultboxheight_dim,
-  resultboxheight .initial:n = 0.65cm,  
+  resultboxheight .initial:n = 0.65cm,
   resultgridheight .dim_gset:N = \g_edu_resultgridheight_dim,
   resultgridheight .initial:n = 3cm,
   resultgridfg .tl_gset:N = \g_edu_resultgridfg_tl,
@@ -3651,8 +3654,8 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \subsubsection{Grundlegende Packages}
 
 \begin{MacroCode}{class}
-\RequirePackage[T1]{fontenc} 
-\RequirePackage[utf8]{inputenc} 
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
 
 \RequirePackage{calc}
@@ -3763,13 +3766,13 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{listings}
 \RequirePackage{xsim}
 
-% Hack, because xsim also defines a solution environment. Can be removed, 
+% Hack, because xsim also defines a solution environment. Can be removed,
 % when xsimverb can be used standalone again.
 \let\solution\relax
 \let\endsolution\relax
 
 
-% menukeys needs to be loaded at the end. Otherwise there occurs an 
+% menukeys needs to be loaded at the end. Otherwise there occurs an
 % option clash with newtxmath/amsmath, which could not be fixed.
 \AtEndPreamble{
   \RequirePackage[os=win]{menukeys}
@@ -3833,7 +3836,7 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 
 \subsubsection{Schriftarten}
 
-Über die Optionen \opt{palatino}, \opt{lato} und \opt{beramono} können diese als Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
+Über die Optionen \opt{rmfont}, \opt{sffont} und \opt{ttfont} kann jeweils die Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
 
 \begin{MacroCode}{class}
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
@@ -3841,7 +3844,11 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
     \RequirePackage[rm]{libertine}
     \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=libertine}
   }
-  
+  \tl_if_eq:VnT \g_edu_rmfont_tl {noto} {
+    \RequirePackage[scaled=0.85]{noto-serif}
+    \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=noto}
+  }
+
   \tl_if_eq:VnT \g_edu_rmfont_tl {palatino} {
     \RequirePackage{palatino}
     \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=palatino}
@@ -3850,6 +3857,10 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 
 \tl_if_eq:VnT \g_edu_sffont_tl {lato} {
   \RequirePackage[defaultsans]{lato}
+}
+
+\tl_if_eq:VnT \g_edu_sffont_tl {noto} {
+  \RequirePackage[scaled=0.85]{noto-sans}
 }
 
 \tl_if_eq:VnT \g_edu_sffont_tl {sourcesanspro} {
@@ -3862,6 +3873,10 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {beramono} {
   \RequirePackage[scaled=0.85]{beramono}
+}
+
+\tl_if_eq:VnT \g_edu_ttfont_tl {noto} {
+  \RequirePackage[scaled=0.75]{noto-mono}
 }
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {
@@ -4468,7 +4483,7 @@ Configure list-settings:
   }
   
   \setlist[2, 3, 4, 5]{
-    topsep=0.5\baselineskip - \parskip, 
+    topsep=0.5\baselineskip - \parskip,
     leftmargin=1em,
   }
   
