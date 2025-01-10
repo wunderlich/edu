@@ -22,11 +22,12 @@
 %%  * edu-de.pdf
 \RequirePackage{scrlfile}
 \ReplacePackage{scrpage2}{scrlayer-scrpage}
-\documentclass{include/skdoc}
+\documentclass{skdoc}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage{adjustbox}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{array}
@@ -571,7 +572,8 @@ Die \thepackage-Klasse benötigt neben Standard-\LaTeX-Packages die Dokumentenkl
 
 \begin{multicols}{5}\raggedcolumns
 {\sffamily 
-\noindent beramono*\\
+\noindent adjustbox\\
+beramono*\\
 bibgerm\\
 booktabs\\
 calc\\
@@ -3661,12 +3663,7 @@ Informationen der einzelnen Packages sind der jeweiligen Dokumentation zu entneh
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 
-\end{MacroCode}
-
-
-\subsubsection{Layout/Typographie}
-
-\begin{MacroCode}{class}
+\RequirePackage{adjustbox}
 \RequirePackage{booktabs}
 \RequirePackage{ccicons}
 \RequirePackage{datetime}
@@ -4875,7 +4872,7 @@ Umgebung für Zitate, bei der optional ein Author, eine Quelle und dann ebenfall
       }
       \__edu_moveright:n \l__edu_citetext_tl
     }
-    \end{em}      
+    \end{em}
   \end{addmargin}
   \par
   \vspace{0.5\baselineskip}
@@ -4905,7 +4902,7 @@ Makro zum aktualisieren der Seitenränder, falls eine der Optionen \opt{top} etc
       left=\g_edu_left_dim, right=\g_edu_right_dim%
     }
   }
-  
+
   \bool_if:NTF \g_edu_footer_bool {
     \bool_if:NTF \g_edu_twoup_bool {
       \setlength{\footskip}{\g_edu_twoupfootskip_dim}
@@ -4916,11 +4913,11 @@ Makro zum aktualisieren der Seitenränder, falls eine der Optionen \opt{top} etc
   }{
     \setlength{\footskip}{0pt}
   }
-  
+
   \bool_if:nT {\g_edu_transparency_bool && !\g_edu_transparencyfooter_bool} {
     \keys_set:nn {edu}{footer=false}
   }
-  
+
   \bool_if:NT \g_edu_transparency_bool {
     \geometry{a4paper,%
       top=\g_edu_transparencytop_dim, bottom=\g_edu_transparencybottom_dim,%
@@ -4991,7 +4988,7 @@ Now, changing \cs{part} using titlesec:
   {0.5em}                            % Sep
   {}                                 % Before
   {}                                 % After
-  
+
 \titlespacing*{\part}
   {0pt}                              % Left
   {\g__edu_partbefore_dim - \parskip}  % Beforesep
@@ -5038,7 +5035,7 @@ Now, changing \cs{section} using titlesec:
   {0.5em}                            % Sep
   {}                                 % Before
   {}                                 % After
-  
+
 \titlespacing*{\section}
   {0pt}                                       % Left
   {\g__edu_sectionbefore_dim - \parskip}        % Beforesep
@@ -5085,7 +5082,7 @@ Now, changing \cs{subsection} using titlesec:
   {0.5em}                             % Sep
   {}                                  % Before
   {}                                  % After
-  
+
 \titlespacing*{\subsection}
   {0pt}                                        % Left
   {\g__edu_subsectionbefore_dim - \parskip}      % Beforesep
@@ -5132,7 +5129,7 @@ Now, changing \cs{subsubsection} using titlesec:
   {0.5em}                             % Sep
   {}                                  % Before
   {}                                  % After
-  
+
 \titlespacing*{\subsubsection}
   {0pt}                                        % Left
   {\g__edu_subsubsectionbefore_dim - \parskip}      % Beforesep
@@ -5227,9 +5224,9 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
 \tl_new:N \g__edu_titletext_tl
 
 \DeclareDocumentCommand \maketitle {s} {
-  
+
   \IfBooleanTF{#1} {
-      
+
     \setlength{\parfillskip}{0em}
     \par
     \vspace{0.75ex}
@@ -5279,7 +5276,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
     \mbox{}
     \par
     \setlength{\parfillskip}{1em plus 1fil}
-    
+
     \tl_if_empty:NF \g_edu_subtitle_tl {
       \parskipreduce
       \group_begin:
@@ -5292,7 +5289,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \g_edu_subtitle_tl\par
       \group_end:
     }
-    
+
     \bool_if:NT \g_edu_transparency_bool {
       \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
       \RaggedRight
@@ -5313,7 +5310,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_subtitle_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \vspace{1ex}
@@ -5323,13 +5320,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl || !\tl_if_empty_p:N \g_edu_class_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \vspace{4ex}
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_subject_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5337,13 +5334,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \group_end:
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \g_edu_subjectstyle_tl :~
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_field_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5351,13 +5348,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \group_end:
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl || !\tl_if_empty_p:N \g_edu_field_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \par\parskipreduce
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_class_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5366,13 +5363,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_author_tl || !\tl_if_empty_p:N \g_edu_email_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \vspace{3ex}
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_author_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5381,7 +5378,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_email_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5390,13 +5387,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl || \bool_if_p:N \g_edu_timestamptitle_bool || !\tl_if_empty_p:N \g_edu_license_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \vspace{4ex}
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_date_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5404,13 +5401,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \group_end:
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl && !\tl_if_empty_p:N \g_edu_version_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         ,~
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_version_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5418,13 +5415,13 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \group_end:
       }
     }
-    
+
     \bool_if:nT {!\tl_if_empty_p:N \g_edu_date_tl || !\tl_if_empty_p:N \g_edu_version_tl} {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \par\parskipreduce
       }
     }
-    
+
     \bool_if:NT \g_edu_timestamptitle_bool {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5433,7 +5430,7 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_license_tl {
       \tl_put_right:Nn \g__edu_titletext_tl {
         \group_begin:
@@ -5442,14 +5439,14 @@ Bei der Option \opt{parts} wird der Titel in der Schriftgröße \texttt{huge} ge
         \par\parskipreduce
       }
     }
-    
+
     \vspace*{1cm}
     \begin{center}
       \g__edu_titletext_tl
     \end{center}
-    
+
     \skip_vertical:N \g_edu_titleskip_skip
-  
+
     \bool_if:NT \g_edu_transparency_bool {
       \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
       \RaggedRight
@@ -5539,53 +5536,53 @@ Abhängig von den getroffenen oder nicht getroffenen Angaben von \cs{author}, \c
 \begin{macro*}{\l__edu_footertextl_tl}
 \begin{MacroCode}{class}
   \tl_new:N \l__edu_footertextl_tl
-  
+
   \tl_put_right:Nn \l__edu_footertextl_tl {
     \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
   }
-  
+
   \tl_if_empty:NF \g_edu_licenseshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_licenseshort_tl\hspace{0.6em}
     }
   }
-  
+
   \tl_if_empty:NF \g_edu_authorshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \textsc{\g_edu_authorshort_tl}\hspace{0.4em}
     }
   }
-  
+
   \bool_if:nT {
-    !\tl_if_empty_p:N \g_edu_fieldshort_tl || 
+    !\tl_if_empty_p:N \g_edu_fieldshort_tl ||
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \textbar\hspace{0.4em}
     }
-  }  
-  
+  }
+
   \tl_if_empty:NF \g_edu_fieldshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_fieldshort_tl
     }
   }
-  
+
   \bool_if:nT {
-    !\tl_if_empty_p:N \g_edu_fieldshort_tl && 
+    !\tl_if_empty_p:N \g_edu_fieldshort_tl &&
     !\tl_if_empty_p:N \g_edu_titleshort_tl
   }{
     \tl_put_right:Nn \l__edu_footertextl_tl {
       :\
     }
   }
-  
+
   \tl_if_empty:NF \g_edu_titleshort_tl {
     \tl_put_right:Nn \l__edu_footertextl_tl {
       \g_edu_titleshort_tl
     }
   }
-  
+
   \refoot[]{\l__edu_footertextl_tl}  % gerade rechts
   \lofoot[]{\l__edu_footertextl_tl}  % ungerade links
 
@@ -5597,11 +5594,11 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
 \begin{MacroCode}{class}
   
   \tl_new:N \l__edu_footertextr_tl
-  
+
   \tl_put_right:Nn \l__edu_footertextr_tl {
     \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont
   }
-  
+
   \bool_if:nT {
     !\tl_if_empty_p:N \g_edu_versionshort_tl ||
     \bool_if_p:N \g_edu_timestampfooter_bool
@@ -5642,9 +5639,9 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
       \quad
     }
   }
-  
+
   \tl_put_right:Nn \l__edu_footertextr_tl {
-    
+
     \tl_if_empty:NF \g_edu_short_tl {
       \g_edu_shortstyle_tl
       \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont%
@@ -5653,7 +5650,7 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
         \textcolor{\g_edu_shortfg_tl}{\g_edu_shortshort_tl}%
       }%
     }
-    
+
     \tl_if_empty:NF \g_edu_group_tl {
       \hspace{0.25em}
       \g_edu_groupstyle_tl
@@ -5663,7 +5660,7 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
         \textcolor{\g_edu_groupfg_tl}{\g_edu_groupshort_tl}%
       }%
     }
-    
+
     \bool_if:nT {
       \bool_if_p:N \g_edu_showresults_bool &&
       \bool_if_p:N \g_edu_resulttitlelabel_bool
@@ -5674,14 +5671,14 @@ Die andere Seite der Fußzeile wird mit der Seitenanzahl (\cs{pagemark}) und -- 
     }
     \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{2}}}{\g_edu_fontsize_dim}\selectfont\quad
   }
-  
+
   \bool_if:NT \g_edu_pagecount_bool {
     \rofoot[]{\l__edu_footertextr_tl
       \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
       \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % gerade rechts
     \lefoot[]{\l__edu_footertextr_tl
-      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont      
+      \fontsize{\dim_eval:n{\g_edu_fontsize_dim - \fp_to_dim:n{1}}}{\g_edu_fontsize_dim}\selectfont
       \normalfont\sffamily%
       \pagemark/\pageref*{LastPage}}         % ungerade links
   }{
@@ -6638,7 +6635,7 @@ Counters for creating the grid.
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
-  
+
   \pdfximage{\g_edu_graphicspath_tl#2}
 
   \prg_replicate:nn {\the\pdflastximagepages} {
@@ -6666,7 +6663,7 @@ Counters for creating the grid.
   \vspace{0.25\baselineskip}
   \int_set:Nn \l_edu_loop_count_int {1}
   \int_set:Nn \l_edu_break_count_int {1}
-  
+
   \pdfximage{\g_edu_graphicspath_tl#2}
 
   \prg_replicate:nn {\the\pdflastximagepages} {
@@ -6718,7 +6715,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioRed1]    (8, 27)    rectangle ++(1, 1);
   \filldraw[marioRed1]    (9, 27)    rectangle ++(1, 1);
   \filldraw[marioRed1]    (10, 27)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (1, 26)    rectangle ++(1, 1);
   \filldraw[black]        (2, 26)    rectangle ++(1, 1);
   \filldraw[black]        (4, 26)    rectangle ++(1, 1);
@@ -6730,7 +6727,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioRed3]    (10, 26)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (11, 26)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (12, 26)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (1, 25)    rectangle ++(1, 1);
   \filldraw[white]        (2, 25)    rectangle ++(1, 1);
   \filldraw[black]        (3, 25)    rectangle ++(1, 1);
@@ -6744,7 +6741,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioRed3]    (11, 25)  rectangle ++(1, 1);
   \filldraw[marioRed2]    (12, 25)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (13, 25)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (2, 24)    rectangle ++(1, 1);
   \filldraw[white]        (3, 24)    rectangle ++(1, 1);
   \filldraw[white]        (4, 24)    rectangle ++(1, 1);
@@ -6758,7 +6755,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioRed3]    (12, 24)  rectangle ++(1, 1);
   \filldraw[marioRed2]    (13, 24)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (14, 24)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (1, 23)    rectangle ++(1, 1);
   \filldraw[black]        (2, 23)    rectangle ++(1, 1);
   \filldraw[black]        (3, 23)    rectangle ++(1, 1);
@@ -6773,7 +6770,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]        (12, 23)  rectangle ++(1, 1);
   \filldraw[marioRed2]    (13, 23)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (14, 23)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (0, 22)    rectangle ++(1, 1);
   \filldraw[white]        (1, 22)    rectangle ++(1, 1);
   \filldraw[white]        (2, 22)    rectangle ++(1, 1);
@@ -6789,7 +6786,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]        (12, 22)  rectangle ++(1, 1);
   \filldraw[black]        (13, 22)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (14, 22)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (0, 21)    rectangle ++(1, 1);
   \filldraw[white]        (1, 21)    rectangle ++(1, 1);
   \filldraw[black]        (2, 21)    rectangle ++(1, 1);
@@ -6805,7 +6802,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]        (12, 21)  rectangle ++(1, 1);
   \filldraw[black]        (13, 21)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (14, 21)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (0, 20)    rectangle ++(1, 1);
   \filldraw[black]        (1, 20)    rectangle ++(1, 1);
   \filldraw[black]        (2, 20)    rectangle ++(1, 1);
@@ -6822,7 +6819,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioSkin]    (13, 20)  rectangle ++(1, 1);
   \filldraw[black]        (14, 20)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (15, 20)  rectangle ++(1, 1);
-  
+
   \filldraw[black]        (0, 19)    rectangle ++(1, 1);
   \filldraw[white]        (1, 19)    rectangle ++(1, 1);
   \filldraw[white]        (2, 19)    rectangle ++(1, 1);
@@ -6839,7 +6836,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioSkin]    (13, 19)  rectangle ++(1, 1);
   \filldraw[black]        (14, 19)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (15, 19)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (1, 18)    rectangle ++(1, 1);
   \filldraw[marioRed1]    (2, 18)    rectangle ++(1, 1);
   \filldraw[marioRed1]    (3, 18)    rectangle ++(1, 1);
@@ -6855,7 +6852,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioSkin]    (13, 18)  rectangle ++(1, 1);
   \filldraw[black]        (14, 18)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (15, 18)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (1, 17)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (2, 17)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (3, 17)    rectangle ++(1, 1);
@@ -6871,7 +6868,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioSkin]    (13, 17)  rectangle ++(1, 1);
   \filldraw[black]        (14, 17)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (15, 17)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (1, 16)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (2, 16)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (3, 16)    rectangle ++(1, 1);
@@ -6886,7 +6883,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]        (12, 16)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (13, 16)  rectangle ++(1, 1);
   \filldraw[marioBrown]    (14, 16)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (1, 15)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (2, 15)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (3, 15)    rectangle ++(1, 1);
@@ -6900,7 +6897,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]        (11, 15)  rectangle ++(1, 1);
   \filldraw[marioSkin]    (12, 15)  rectangle ++(1, 1);
   \filldraw[marioBrown]    (13, 15)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (1, 14)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (2, 14)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (3, 14)    rectangle ++(1, 1);
@@ -6913,7 +6910,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioSkin]    (10, 14)  rectangle ++(1, 1);
   \filldraw[marioBrown]    (11, 14)  rectangle ++(1, 1);
   \filldraw[marioBrown]    (12, 14)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (2, 13)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (3, 13)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (4, 13)    rectangle ++(1, 1);
@@ -6925,7 +6922,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBrown]    (10, 13)  rectangle ++(1, 1);
   \filldraw[marioRed3]    (11, 13)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (12, 13)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (2, 12)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (3, 12)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (4, 12)    rectangle ++(1, 1);
@@ -6938,7 +6935,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue2]    (11, 12)  rectangle ++(1, 1);
   \filldraw[marioRed3]    (12, 12)  rectangle ++(1, 1);
   \filldraw[marioRed1]    (13, 12)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed1]    (2, 11)    rectangle ++(1, 1);
   \filldraw[marioRed2]    (3, 11)    rectangle ++(1, 1);
   \filldraw[marioRed3]    (4, 11)    rectangle ++(1, 1);
@@ -6952,7 +6949,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioRed2]    (12, 11)  rectangle ++(1, 1);
   \filldraw[black]        (13, 11)  rectangle ++(1, 1);
   \filldraw[black]        (14, 11)  rectangle ++(1, 1);
-  
+
   \filldraw[marioRed2]    (3, 10)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (4, 10)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (5, 10)    rectangle ++(1, 1);
@@ -6966,7 +6963,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[white]        (13, 10)  rectangle ++(1, 1);
   \filldraw[white]        (14, 10)  rectangle ++(1, 1);
   \filldraw[black]        (15, 10)  rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (3, 9)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (4, 9)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (5, 9)    rectangle ++(1, 1);
@@ -6980,7 +6977,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue1]    (13, 9)    rectangle ++(1, 1);
   \filldraw[white]        (14, 9)    rectangle ++(1, 1);
   \filldraw[black]        (15, 9)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (3, 8)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (4, 8)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (5, 8)    rectangle ++(1, 1);
@@ -6994,7 +6991,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue1]    (13, 8)    rectangle ++(1, 1);
   \filldraw[white]        (14, 8)    rectangle ++(1, 1);
   \filldraw[black]        (15, 8)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (3, 7)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (4, 7)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (5, 7)    rectangle ++(1, 1);
@@ -7007,7 +7004,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue2]    (12, 7)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (13, 7)    rectangle ++(1, 1);
   \filldraw[black]        (14, 7)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (2, 6)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (3, 6)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (4, 6)    rectangle ++(1, 1);
@@ -7021,7 +7018,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue3]    (12, 6)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (13, 6)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (14, 6)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (2, 5)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (3, 5)    rectangle ++(1, 1);
   \filldraw[marioBlue3]    (4, 5)    rectangle ++(1, 1);
@@ -7035,7 +7032,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue3]    (12, 5)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (13, 5)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (14, 5)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (2, 4)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (3, 4)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (4, 4)    rectangle ++(1, 1);
@@ -7046,7 +7043,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue2]    (12, 4)    rectangle ++(1, 1);
   \filldraw[marioBlue2]    (13, 4)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (14, 4)    rectangle ++(1, 1);
-  
+
   \filldraw[marioBlue1]    (2, 3)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (3, 3)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (4, 3)    rectangle ++(1, 1);
@@ -7056,7 +7053,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBlue1]    (12, 3)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (13, 3)    rectangle ++(1, 1);
   \filldraw[marioBlue1]    (14, 3)    rectangle ++(1, 1);
-  
+
   \filldraw[black]         (1, 2)    rectangle ++(1, 1);
   \filldraw[marioBrown]   (2, 2)    rectangle ++(1, 1);
   \filldraw[marioBrown]   (3, 2)    rectangle ++(1, 1);
@@ -7067,7 +7064,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBrown]   (12, 2)    rectangle ++(1, 1);
   \filldraw[marioBrown]   (13, 2)    rectangle ++(1, 1);
   \filldraw[black]         (14, 2)    rectangle ++(1, 1);
-  
+
   \filldraw[black]         (0, 1)    rectangle ++(1, 1);
   \filldraw[marioBrown]    (1, 1)    rectangle ++(1, 1);
   \filldraw[marioBrown]    (2, 1)    rectangle ++(1, 1);
@@ -7080,7 +7077,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[marioBrown]   (13, 1)    rectangle ++(1, 1);
   \filldraw[marioBrown]   (14, 1)    rectangle ++(1, 1);
   \filldraw[black]         (15, 1)    rectangle ++(1, 1);
-  
+
   \filldraw[black]      (0, 0)    rectangle ++(1, 1);
   \filldraw[black]      (1, 0)    rectangle ++(1, 1);
   \filldraw[black]      (2, 0)    rectangle ++(1, 1);
@@ -7092,7 +7089,7 @@ Pixels of Mario graphic in \pkg{tikz}.
   \filldraw[black]      (12, 0)    rectangle ++(1, 1);
   \filldraw[black]      (13, 0)    rectangle ++(1, 1);
   \filldraw[black]      (14, 0)    rectangle ++(1, 1);
-  \filldraw[black]      (15, 0)    rectangle ++(1, 1);                          
+  \filldraw[black]      (15, 0)    rectangle ++(1, 1);
 }
 
 \end{MacroCode}
@@ -7103,11 +7100,11 @@ Prints the Mario victory graphic. The optional \texttt{<text>} is typeset to Mar
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \mariovictory { O{} O{\fp_use:N \g_edu_examtitlegraphicsscale_fp} } {
   \tikz[scale=#2] {
-  
+
     \setlength{\baselineskip}{2.5ex}
-    
+
     \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
-    
+
     \edu_mariovictory_pixel:
   }
 }
@@ -7210,9 +7207,9 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \exe { s o m o }{
   \refstepcounter{exercisecounter}
-  
+
   \tl_clear:N \l__edu_exelabeltext_tl
-  
+
   \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
@@ -7252,7 +7249,7 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
       }
     }
   }
-  
+
   \setlength{\parfillskip}{0em} % Damit Punktzahl bei parskip wirklich rechtsbündig ist. Sonst rechts Abstand in letzter (einziger) Zeile.
   \vspace{\g_edu_exebeforeskip_dim}%
   \parskipreduce%
@@ -7334,11 +7331,11 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
   \parskipreduce%
   \par % Wichtig, damit \setlength{\parfillskip}{0em} wirkt (s. o.).
   \setlength{\parfillskip}{1em plus 1fil}
-  
+
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{section}{\theexercisecounter\g_edu_exenumberseparator_tl~\l__edu_exelabeltext_tl #3}
   }
-  
+
   \setcounter{subexercisecounter}{0}
   \setcounter{multiexecounter}{0}
   \setcounter{question}{0}
@@ -7353,9 +7350,9 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \subexe { s o m }{
   \refstepcounter{subexercisecounter}
-  
+
   \tl_clear:N \l__edu_subexelabeltext_tl
-  
+
   \IfNoValueTF {#2} {
     \tl_clear:N \l__edu_exepoints_tl
   }{
@@ -7395,7 +7392,7 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
       }
     }
   }
-  
+
   \setlength{\parfillskip}{0em}
   \vspace{\g_edu_subexebeforeskip_dim}%
   \parskipreduce%
@@ -7435,11 +7432,11 @@ Die Sternvarianten der Befehle sind für Zusatzaufgaben ("`Sternchenaufgaben"') 
   \parskipreduce%
   \par
   \setlength{\parfillskip}{1em plus 1fil}
-  
+
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{subsection}{\thesubexercisecounter\g_edu_subexenumberseparator_tl~\l__edu_subexelabeltext_tl #3}
   }
-  
+
   \setcounter{multiexecounter}{0}
   \setcounter{question}{0}
 }
@@ -7454,7 +7451,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \sol { m }{
   \refstepcounter{solutioncounter}
-  
+
   \tl_clear:N \l__edu_sollabeltext_tl
 
   \tl_if_empty:nTF {#1} {
@@ -7476,7 +7473,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
       }
     }
   }
-  
+
   \setlength{\parfillskip}{0em}
   \vspace{\g_edu_solbeforeskip_dim}%
   \parskipreduce%
@@ -7504,12 +7501,12 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
   \parskipreduce%
   \par
   \setlength{\parfillskip}{1em plus 1fil}
-  
+
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{section}{\thesolutioncounter\g_edu_solnumberseparator_tl~\l__edu_sollabeltext_tl #1}
   }
-    
-  \setcounter{subsolutioncounter}{0} 
+
+  \setcounter{subsolutioncounter}{0}
   \setcounter{multiexecounter}{0}
 }
 
@@ -7520,7 +7517,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \subsol { m }{
   \refstepcounter{subsolutioncounter}
-  
+
   \tl_clear:N \l__edu_subsollabeltext_tl
 
   \tl_if_empty:nTF {#1} {
@@ -7542,7 +7539,7 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
       }
     }
   }
-  
+
   \setlength{\parfillskip}{0em}
   \vspace{\g_edu_subsolbeforeskip_dim}%
   \parskipreduce%
@@ -7571,11 +7568,11 @@ Die Implementierung der Überschriften für Lösungen erfolgt analog:
   \parskipreduce%
   \par
   \setlength{\parfillskip}{1em plus 1fil}
-  
+
   \bool_if:NT \g_edu_exetoc_bool {
   \addcontentsline{toc}{subsection}{\thesolutioncounter.\thesubsolutioncounter\g_edu_subsolnumberseparator_tl~\l__edu_subsollabeltext_tl #1}
   }
-  
+
   \setcounter{multiexecounter}{0}
 }
 
@@ -7665,7 +7662,7 @@ Setzt die Punktzahl der aktuellen Teilaufgabe zusammen. Die Sternvariante setzt 
   \IfBooleanT{#1} {
      \hspace*{0pt}\hfill\hspace{0.5em}%
   }
-  \nolinebreak%  
+  \nolinebreak%
   \ensuremath{\;
     \text{%
       \g_edu_multiexepointsstyle_tl%
@@ -7734,16 +7731,16 @@ Durch die optionalen Argumente können auch mehrere horizontale Linien erzeugt u
     \group_end:
   }{%
     \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
-    
+
     \prg_replicate:nn {#1 - 1} {
-    
+
       \bool_if:nT { \int_compare_p:n { #1 > 1 } } {
         \par
         \vspace{-\baselineskip}
         \parskipreduce
         \vspace{#2}
       }
-    
+
       \leavevmode\leaders\hbox{\rule[-\g_edu_resultrule_dim+#4]{1pt}{\g_edu_resultrule_dim}}\hfill\kern0pt\hspace*{-\parfillskip}
     }
   }%
@@ -7785,9 +7782,9 @@ Zeigt Ergebnisse in Abhängigkeit der Option \opt{showresults} an. Ansonsten wir
     \group_begin:%
       \color{\g_edu_resultfg_tl}#3
     \group_end:%
-  }{%  
+  }{%
     \tikz \draw[step=0.5, color=\g_edu_resultgridfg_tl] (0,0) grid +(
-      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #2 } { 0.5cm }) * 0.5 }, 
+      \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #2 } { 0.5cm }) * 0.5 },
       \fp_eval:n { floor(\dim_to_decimal_in_unit:nn { #1 } { 0.5cm }) * 0.5 }
     );
   }%
@@ -8050,7 +8047,7 @@ Erzeugt eine neue Frage unter Berücksichtigung der relevanten Optionen.
   \tl_set:Nn \l__edu_questpoints_tl {#1}
   
   \setcounter{@questmccounter}{0}
-  
+
   \vspace{\g_edu_questbeforeskip_dim}
   {\g_edu_questlabelstyle_tl%
     \textcolor{\g_edu_questlabelfg_tl}{%
@@ -8294,13 +8291,14 @@ Die Sternvariante wird explizit deklariert, da der verwendete Hack hier nicht fu
   \dim_gset:Nn \g__edu_colone_dim {#1 - 0.5\columnsep}
   \dim_gset:Nn \g__edu_coltwo_dim {\linewidth - \g__edu_colone_dim - \columnsep}
 %
-  \parskipreduce  
-  \vspace{0.475\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \parskipreduce
+  \vspace{0.625\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\dim_use:N\g__edu_colone_dim}%
   \setpar
-  \parskipreduce
 }{%
   \end{minipage}%
+  \end{adjustbox}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \vspace{1.5\multicolsep}
@@ -8311,8 +8309,8 @@ Die Sternvariante wird explizit deklariert, da der verwendete Hack hier nicht fu
 % Declared explicit, because hack doesn't work here. Because of the number?
 \DeclareDocumentEnvironment {cols2*} { O{0.5\linewidth} } {%
   \tl_gset:Nn \g__edu_colalign_tl {c}
-  \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
-  \vspace{-0.04\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+%  \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+  \vspace{0.03\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \begin{cols2}[#1]
 }{%
   \end{cols2}%
@@ -8339,18 +8337,17 @@ Abkürzendes Makro für mehrspaltiges Layout. Die Sternvariante zentriert die be
   \dim_gset_eq:NN \g__edu_coltwo_dim \g__edu_colone_dim
 %
   \parskipreduce
-  \vspace{-0.15\baselineskip}
-  \vspace{0.6\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \vspace{0.625\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {c}
-    \vspace{1.2\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
-    \vspace{0.145\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+    \vspace{0.03\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\g__edu_colone_dim}%
   \setpar
-  \parskipreduce
 }{%
   \end{minipage}%
+  \end{adjustbox}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \parskipreduce
@@ -8374,10 +8371,11 @@ Abkürzendes Makro für mehrspaltiges Layout. Die Sternvariante zentriert die be
 Durch \cs{colbreak} wird die erste \env*{minipage} beendet und in die zweite \env*{minipage} gewechselt.
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \colbreak { } {%
-  \end{minipage}\hfill%
+  \end{minipage}
+  \end{adjustbox}\hfill%
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \begin{minipage}[\g__edu_colalign_tl]{\g__edu_coltwo_dim}%
   \setpar
-  \parskipreduce
 }
 
 \end{MacroCode}
@@ -8410,7 +8408,7 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
 \tl_new:N \g__edu_aligntemp_tl
 
 \DeclareDocumentEnvironment {graphicscol} { s O{0.5\linewidth} m O{width=\linewidth} o O{t} } {%
-  
+
   \IfValueTF {#5} {
     \tl_gset:Nn \g__edu_aligntemp_tl {#5}
   }{
@@ -8425,7 +8423,7 @@ Die Breite der rechten Spalte und Optionen für das verwendete \cs*{includegraph
   }{
     \begin{cols2}[#2]
   }
-  
+
   \IfBooleanT {#1} {
     \tl_if_in:NnT \g__edu_aligntemp_tl {r} {
       \hfill
@@ -8498,7 +8496,7 @@ zentriert darstellt. Diese Grafik muss in einer PGF-Datei im vorgegebene \opt{ti
       \tl_gset:Nn \g__edu_aligntemp_tl {r}
     }
   }
-    
+
   \str_if_eq:nnTF {#5} {c} {
     \begin{cols2*}[#2]
   }{
@@ -8684,7 +8682,7 @@ Dieser Befehl inizialisiert die Zeit-Variablen. Als Argumente müssen die aktuel
   \int_gset:Nn \g__edu_ttminutesum_int {0}
   \int_gset:Nn \g__edu_tthour_int {#1}
   \int_gset:Nn \g__edu_ttminute_int {#2}
-  
+
   \tl_clear:N \g__edu_ttable_tl
 }
 
@@ -8712,19 +8710,19 @@ Die Sternvariante setzt die Tabelle im Querformat. Die Breiten der Spalten werde
 \begin{MacroCode}{class}
 \DeclareDocumentCommand \ttable { s o } {%
   \group_begin:
-  
+
   \setlist[itemize]{%
     topsep=-0.25\baselineskip,
     itemsep=-0.25\baselineskip,
     parsep=0.25\baselineskip,
   }
-  
+
   \setlist[enumerate]{%
     topsep=-0.25\baselineskip,
     itemsep=-0.25\baselineskip,
     parsep=0.25\baselineskip,
   }
-  
+
   \bool_if:NT \g_edu_ttdisablehyphenation_bool {
     \hyphenpenalty 10000
     \exhyphenpenalty 10000
@@ -8755,20 +8753,20 @@ Die Sternvariante setzt die Tabelle im Querformat. Die Breiten der Spalten werde
   }{
     \midrule
   }
-  \small\textsfbf{\g_edu_tttimelabel_tl} & 
-  \small\textsfbf{\g_edu_ttstagelabel_tl} & 
-  \small\textsfbf{\g_edu_ttactivitylabel_tl} &  
-  \small\textsfbf{\g_edu_ttmethodlabel_tl} & 
-  \small\textsfbf{\g_edu_ttmedialabel_tl} \\ 
-  
+  \small\textsfbf{\g_edu_tttimelabel_tl} &
+  \small\textsfbf{\g_edu_ttstagelabel_tl} &
+  \small\textsfbf{\g_edu_ttactivitylabel_tl} &
+  \small\textsfbf{\g_edu_ttmethodlabel_tl} &
+  \small\textsfbf{\g_edu_ttmedialabel_tl} \\
+
   \bool_if:NTF \g_edu_ttendtime_bool {
     \headrule
   }{
     \midrule
   }
-  
+
   \tl_use:N \g__edu_ttable_tl
-  
+
   \bool_if:NT \g_edu_ttendtime_bool {
     \edu_ttentrytime: \\ \bottomrule
   }
@@ -8795,13 +8793,13 @@ Die Sternvariante setzt die Zelle direkt in eine Aufzählung vom Typ \env*{itemi
   \bool_if:nT {!\tl_if_empty_p:n {#2} && \bool_if_p:N \g_edu_ttshowtime_bool} {
     \tl_gput_right:Nx \g__edu_ttable_tl {\edu_ttentrytime:}
     \tl_gput_right:Nn \g__edu_ttable_tl {\newline}
-    
+
     \edu_ttaddminutes:n {#2}
     \int_gadd:Nn \g__edu_ttminutesum_int {#2}
-    
+
     \tl_gput_right:Nn \g__edu_ttable_tl {#2\,\textbar\,}
     \tl_gput_right:NV \g__edu_ttable_tl {\g__edu_ttminutesum_int}
-    
+
     \tl_if_empty:nF {#3} {
       \tl_gput_right:NV \g__edu_ttable_tl {\newline \textcolor{gray}{(#3)}}
     }
@@ -8832,7 +8830,7 @@ Die Sternvariante setzt die Zelle direkt in eine Aufzählung vom Typ \env*{itemi
 \DeclareDocumentCommand \ttbreak { s O{} +O{} +O{} +O{}} {%
   \bool_if:nT {!\tl_if_empty_p:n {#2} && \bool_if_p:N \g_edu_ttshowtime_bool} {
     \tl_gput_right:Nx \g__edu_ttable_tl {\edu_ttentrytime:}
-    
+
     \edu_ttaddminutes:n {#2}
   }
   \tl_gput_right:Nn \g__edu_ttable_tl { & \textsfbf{Pause} & }
@@ -9138,9 +9136,9 @@ This function creates a graphic overlay of the Mario victory graphic. The \textt
 \cs_new:Npn \edu_mariovictory_shifted:nn #1 #2 {
   \tikz[scale=#2] {
     \node[inner~sep=0pt,outer~sep=0pt,anchor=north~east] (n) at (0, 0){\strut};
-    
+
     \setlength{\baselineskip}{2.5ex}
-    
+
     \begin{pgfinterruptboundingbox}
       \begin{scope}[xshift=-35cm, yshift=-27cm]
       \draw (19, 13) node[anchor=west, align=left, font=\bfseries\ttfamily, scale=1.2, inner~sep=0pt] {#1};
@@ -9192,7 +9190,7 @@ This function typesets the exam title. It is derived from \cs{maketitle*}. By de
   }
   \par
   \setlength{\parfillskip}{1em plus 1fil}
-  
+
   \tl_if_empty:NTF \g_edu_subtitle_tl {
     \addvspace{0.5\baselineskip}
   }{
@@ -9205,43 +9203,43 @@ This function typesets the exam title. It is derived from \cs{maketitle*}. By de
   \group_begin:
     \tl_set:Nn \l__edu_tempi_tl {}
     \tl_set:Nn \l__edu_tempii_tl {}
-    
+
     \tl_if_empty:NF \g_edu_examtitlefieldilabel_tl {
-    
+
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiwidth_dim}{0.4pt}
         \hspace*{\g_edu_examtitlefieldsep_dim} \=
       }
-      
+
       \tl_put_right:Nn \l__edu_tempii_tl {
-        \g_edu_examtitlefieldilabel_tl \> 
+        \g_edu_examtitlefieldilabel_tl \>
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_examtitlefieldiilabel_tl {
-    
+
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiiwidth_dim}{0.4pt}
         \hspace*{\g_edu_examtitlefieldsep_dim} \=
       }
-      
+
       \tl_put_right:Nn \l__edu_tempii_tl {
-        \g_edu_examtitlefieldiilabel_tl \> 
+        \g_edu_examtitlefieldiilabel_tl \>
       }
     }
-    
+
     \tl_if_empty:NF \g_edu_examtitlefieldiiilabel_tl {
-    
+
       \tl_put_right:Nn \l__edu_tempi_tl {
         \rule{\g_edu_examtitlefieldiiiwidth_dim}{0.4pt}
         \hspace*{\g_edu_examtitlefieldsep_dim} \=
       }
-      
+
       \tl_put_right:Nn \l__edu_tempii_tl {
-        \g_edu_examtitlefieldiiilabel_tl \> 
+        \g_edu_examtitlefieldiiilabel_tl \>
       }
     }
-    
+
     \setlength{\topsep}{-\parskip}
     \setlength{\partopsep}{0pt}
     \vspace{0.5cm}
@@ -9251,9 +9249,9 @@ This function typesets the exam title. It is derived from \cs{maketitle*}. By de
       \l__edu_tempii_tl
     \end{tabbing}
   \group_end:
-  
+
   \addvspace{0.25\baselineskip}
-  
+
   \bool_if:NT \g_edu_transparency_bool {
     \KOMAoption{fontsize}{\dim_use:N \g_edu_transparencyfontsize_dim}%
     \RaggedRight
@@ -9277,15 +9275,15 @@ The columntype of the exercises is \texttt{>{\centering}X} or \texttt{C{1em}}, d
 \cs_new:Npn \edu_exampointstable:nnn #1 #2 #3 {
   \tl_set:Nn \l_tmpi_tl {}
   \tl_set:Nn \l_tmpii_tl {}
-  
+
   \clist_map_inline:nn {#1} {
     \tl_put_right:Nn \l_tmpi_tl {##1 & }
   }
-  
+
   \clist_map_inline:nn {#2} {
     \tl_put_right:Nn \l_tmpii_tl {##1 & }
   }
-  
+
   \renewcommand{\arraystretch}{1.2}
   \group_begin:
     \sffamily
@@ -9298,7 +9296,7 @@ The columntype of the exercises is \texttt{>{\centering}X} or \texttt{C{1em}}, d
         \g_edu_exampointstableachlabel_tl & \prg_replicate:nn {\clist_count:n {#1}}{&}  \\ \hline
       \end{tabularx}
     }
-    
+
     \tl_if_eq:VnT \g_edu_exampointstabletype_tl {C} {
       \begin{tabular}{|l|*{\clist_count:n {#1}}{C{1em}|}c|}
         \hline
@@ -9348,16 +9346,16 @@ The numbers of exercises and the associated maximum points are defined as a comm
       \begin{minipage}{\linewidth-\g_edu_exampointstablewidth_tl}
         \Large\sffamily\bfseries \g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.25,0.65);
         \hspace{0.35cm} \large \g_edu_exampointsaveragelabel_tl
-        
+
         \bool_if:NT \g_edu_exampointssecondmark_bool {
           \par
           \normalsize
           \medskip
           \g_edu_exampointssecondmarklabel_tl :~ \tikz[baseline=0.75ex] \draw (0,0) rectangle (1,0.5);
         }
-            
-        
-        \bool_if:NT \g_edu_exampointssignature_bool {    
+
+
+        \bool_if:NT \g_edu_exampointssignature_bool {
           \par
           \mdseries\footnotesize
           \vspace{0.75cm}
@@ -9382,15 +9380,15 @@ Typesets a reduced box for entering the results of an exam (acchieved points, ma
     \parbox{\linewidth-2\fboxsep-2\fboxrule}{
       \sffamily\Large
       \begin{minipage}{0.55\linewidth-\fboxsep}
-        \textbf{Punkte:} 
+        \textbf{Punkte:}
         \hspace{1.75cm} \g_edu_exampointsoflabel_tl\ #2
-        
+
         \par
         \vspace{0.5\baselineskip}
-        \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);} 
+        \textbf{\LARGE\g_edu_exampointsmarklabel_tl :~\tikz[baseline=0.75ex] \draw (0,0) rectangle (1.5,0.75);}
         \hspace{0.75cm} \textbf{\g_edu_exampointsaveragelabel_tl}
-        
-        \bool_if:nT {\g_edu_exampointssecondmark_bool 
+
+        \bool_if:nT {\g_edu_exampointssecondmark_bool
           && \g_edu_exampointssignature_bool
         }{
           \par
@@ -9400,13 +9398,13 @@ Typesets a reduced box for entering the results of an exam (acchieved points, ma
         }
       \end{minipage}
       \begin{minipage}{0.45\linewidth-\fboxsep}
-        \bool_if:NTF \g_edu_exampointssignature_bool {  
+        \bool_if:NTF \g_edu_exampointssignature_bool {
           \vspace{1cm}
           \mdseries\footnotesize
           \rule{7cm}{0.4pt}\\
           \g_edu_exampointssignaturelabel_tl
         }{
-          \bool_if:NT \g_edu_exampointssecondmark_bool {  
+          \bool_if:NT \g_edu_exampointssecondmark_bool {
             \par
             \large\bfseries
             \medskip
@@ -9416,7 +9414,7 @@ Typesets a reduced box for entering the results of an exam (acchieved points, ma
       \end{minipage}
     }
   }
-  \setlength{\fboxsep}{3pt}  
+  \setlength{\fboxsep}{3pt}
 }
 
 \end{MacroCode}

@@ -997,6 +997,7 @@
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
 
+\RequirePackage{adjustbox}
 \RequirePackage{booktabs}
 \RequirePackage{ccicons}
 \RequirePackage{datetime}
@@ -4232,12 +4233,13 @@
   \dim_gset:Nn \g__edu_coltwo_dim {\linewidth - \g__edu_colone_dim - \columnsep}
 %
   \parskipreduce
-  \vspace{0.475\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \vspace{0.625\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\dim_use:N\g__edu_colone_dim}%
   \setpar
-  \parskipreduce
 }{%
   \end{minipage}%
+  \end{adjustbox}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \vspace{1.5\multicolsep}
@@ -4248,8 +4250,8 @@
 % Declared explicit, because hack doesn't work here. Because of the number?
 \DeclareDocumentEnvironment {cols2*} { O{0.5\linewidth} } {%
   \tl_gset:Nn \g__edu_colalign_tl {c}
-  \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
-  \vspace{-0.04\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+%  \vspace{1.5\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
+  \vspace{0.03\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \begin{cols2}[#1]
 }{%
   \end{cols2}%
@@ -4267,18 +4269,17 @@
   \dim_gset_eq:NN \g__edu_coltwo_dim \g__edu_colone_dim
 %
   \parskipreduce
-  \vspace{-0.15\baselineskip}
-  \vspace{0.6\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+  \vspace{0.625\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   \IfBooleanT {#1} {
     \tl_gset:Nn \g__edu_colalign_tl {c}
-    \vspace{1.2\multicolsep} % Erhöht, da bei [t] minipage vorher keinen normalen baselineskip hat.
-    \vspace{0.145\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
+    \vspace{0.03\baselineskip} % Quick and dirty fix of missing space with TeXLive 2024
   }
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \noindent\begin{minipage}[\g__edu_colalign_tl]{\g__edu_colone_dim}%
   \setpar
-  \parskipreduce
 }{%
   \end{minipage}%
+  \end{adjustbox}
   \par
   \setlength{\parfillskip}{1em plus 1fil}
   \parskipreduce
@@ -4294,10 +4295,11 @@
 \cs_new:cpn {endcols*} {\endcols}
 
 \DeclareDocumentCommand \colbreak { } {%
-  \end{minipage}\hfill%
+  \end{minipage}
+  \end{adjustbox}\hfill%
+  \begin{adjustbox}{valign=\g__edu_colalign_tl}
   \begin{minipage}[\g__edu_colalign_tl]{\g__edu_coltwo_dim}%
   \setpar
-  \parskipreduce
 }
 
 \DeclareDocumentCommand \mathreduce { } {%
