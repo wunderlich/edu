@@ -1845,6 +1845,19 @@ Options for fonts:
   sfdefault .initial:n = false,
 }
 
+\end{MacroCode}
+\end{option}
+
+\begin{option}{sfdefaultnotoall}
+
+Shorthand for setting the whole document in sans serif Noto font (also math)
+
+\begin{MacroCode}{class}
+
+\keys_define:nn {edu} {
+  sfdefaultnotoall .bool_gset:N = \g_edu_sfdefaultnotoall_bool, % alles (auch Mathematik) in serifenlosem Noto
+  sfdefaultnotoall .initial:n = false,
+}
 
 \end{MacroCode}
 \end{option}
@@ -3831,6 +3844,20 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 
 \end{MacroCode}
 
+Möchte man das komplette Dokument (inkl. Formelsatz durch \pkg{edumath}) in serifenlosem Noto-Font setzen, kann man diese Option wählen. Auch als Serifen- und Monospace-Schrift wird Noto geladen.
+
+\begin{MacroCode}{class}
+\bool_if:NT \g_edu_sfdefaultnotoall_bool {
+  \keys_set:nn {edu} {
+    sfdefault = true,
+    rmfont = noto, sffont = noto, ttfont = noto,
+    edumath = true
+  }
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=noto, sfmath}
+}
+
+\end{MacroCode}
+
 \subsubsection{Schriftarten}
 
 Über die Optionen \opt{rmfont}, \opt{sffont} und \opt{ttfont} kann jeweils die Standardschrift für Serifenschrift, serifenlose Schrift bzw. nichtproportionale Schrift gewählt werden:
@@ -3877,7 +3904,7 @@ Soll eine Overhead-Folie gesetzt werden (\opt{sfdefault}), wird serifenlose Schr
 }
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {
-  \RequirePackage[scale=0.875]{sourcecodepro}
+  \RequirePackage[scale=0.85]{sourcecodepro}
 }
 
 \end{MacroCode}
@@ -4360,31 +4387,31 @@ First, document title and subject are created.
 \tl_new:N \g__edu_pdfsubjecttemp_tl
 
 \AtEndPreamble{
-  
+
   \tl_if_empty:NF \g_edu_subtitle_tl {
     \tl_gput_right:Nn \g__edu_pdftitletemp_tl {
       \ --~\g_edu_subtitle_tl
     }
   }
-  
+
   \tl_if_empty:NF \g_edu_subject_tl {
     \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
       \g_edu_subject_tl
     }
   }
-  
+
   \bool_if:nT {!\tl_if_empty_p:N \g_edu_subject_tl && !\tl_if_empty_p:N \g_edu_field_tl} {
     \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
       :~
     }
   }
-  
+
   \tl_if_empty:NF \g_edu_field_tl {
     \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
       \g_edu_field_tl
     }
   }
-  
+
   \tl_if_empty:NF \g_edu_class_tl {
     \tl_gput_right:Nn \g__edu_pdfsubjecttemp_tl {
       \ (\g_edu_class_tl)
@@ -4413,7 +4440,7 @@ Then, \pkg{hyperref} is configured:
     pdfsubject={\g__edu_pdfsubjecttemp_tl},
     linktocpage=true,
   }%
-  
+
   \bool_if:NTF \g_edu_colorlinks_bool {
     \hypersetup{colorlinks=true}
   }{
@@ -4478,20 +4505,20 @@ Configure list-settings:
     labelsep=\g__edu_listsep_dim,
     leftmargin=\g__edu_listlabelwidth_dim + \g__edu_listsep_dim + \g__edu_listmargin_dim
   }
-  
+
   \setlist[2, 3, 4, 5]{
     topsep=0.5\baselineskip - \parskip,
     leftmargin=1em,
   }
-  
+
   \setlist[itemize, 1]{label=\color{\g_edu_itemizefg_tl}\rule[0.3ex]{0.8ex}{0.8ex}}
   \setlist[itemize, 2]{label=\color{\g_edu_itemizefg_tl}\rule[0.5ex]{0.8ex}{0.4ex}}
   \setlist[itemize, 3]{label=\color{\g_edu_itemizefg_tl}\rule[0.55ex]{0.8ex}{0.2ex}}
-  
+
   \setlist[enumerate, 1]{label=\color{\g_edu_enumeratefg_tl}\textsf{\arabic*.}}
   \setlist[enumerate, 2]{label=\color{\g_edu_enumeratefg_tl}\textsf{\alph*.)}}
   \setlist[enumerate, 3]{label=\color{\g_edu_enumeratefg_tl}\textsf{\roman*.}}
-  
+
   \setlist[description]{labelsep=0.25em, font=\color{\g_edu_descriptionfg_tl}}
 
 \end{MacroCode}
@@ -4503,7 +4530,7 @@ Liste, welche in Teilaufgaben, Lösungen, Fragen und Antworten verwendet wird.
 \newenvironment{edulist}[2][0.5\baselineskip]{
   \dim_gset:Nn \g__edu_listarraysep_dim {\g_edu_listarraysep_dim}
   \dim_gset:Nn \g__edu_listarraymargin_dim {\g_edu_listarraymargin_dim}
-%  
+%
   \vspace{0.5\baselineskip}
   \begin{list}{\sffamily #2}{%
     \setlength{\partopsep}{0ex}%
@@ -4732,23 +4759,23 @@ Setup der wichtigsten Parameter und Erzeugung des Abstands vor Tabellen bei \env
 \DeclareDocumentCommand \arraysetup { O{0ex} m } {%
   \par
   \parskipreduce
-  
+
   \dim_gset:Nn \g__edu_listarraysep_dim {\g_edu_listarraysep_dim}
   \dim_gset:Nn \g__edu_listarraymargin_dim {\g_edu_listarraymargin_dim}
-  
+
   \setlength{\extrarowheight}{#1}
 %  \renewcommand{\arraystretch}{1.25} % War aktiviert. Warum?!
   \setlength{\tabcolsep}{\g__edu_listarraymargin_dim}
   \dim_gset:Nn \g__edu_hangindention_dim {
     \g__edu_listlabelwidth_dim+\g__edu_listarraysep_dim
   }
-%  
+%
   \str_if_eq:nnTF {#2} {m} {%
       \renewcommand{\tabularxcolumn}[1]{m{##1}}
   }{
       \renewcommand{\tabularxcolumn}[1]{p{##1}}
   }%
-%  
+%
   \vspace{\g_edu_arraybeforeskip_dim}
   \vspace{-#1}
 }
@@ -5717,6 +5744,70 @@ Die Formatierung von \cs{pagemark} und der Fußzeile wird durch \pkg{scrheadings
 
 
 \subsubsection{Typographie}
+
+
+\begin{macro}{\tseries}
+\begin{macro}{\elseries}
+\begin{macro}{\lseries}
+\begin{macro}{\mseries}
+\begin{macro}{\sbseries}
+\begin{macro}{\bseries}
+\begin{macro}{\ebseries}
+\begin{macro}{\blseries}
+
+Commands for setting the font weight to thin (\cs{tseries}), extra light (\cs{elseries}), light (\cs{lseries}), medium (\cs{mseries}), semi bold (\cs{sbseries}), bold (\cs{bseries}), extra bold (\cs{ebseries}) or black (\cs{blseries}) (if avaiable).
+
+\begin{MacroCode}{class}
+\DeclareRobustCommand{\tseries}{\fontseries{ul}\selectfont}
+\DeclareRobustCommand{\elseries}{\fontseries{el}\selectfont}
+\DeclareRobustCommand{\lseries}{\fontseries{l}\selectfont}
+\DeclareRobustCommand{\mseries}{\fontseries{m}\selectfont}
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareRobustCommand{\bseries}{\fontseries{b}\selectfont}
+\DeclareRobustCommand{\ebseries}{\fontseries{eb}\selectfont}
+\DeclareRobustCommand{\blseries}{\fontseries{ub}\selectfont}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+
+
+\begin{macro}{\textt}[1]{<text>}
+\begin{macro}{\textel}[1]{<text>}
+\begin{macro}{\textl}[1]{<text>}
+\begin{macro}{\textm}[1]{<text>}
+\begin{macro}{\textsb}[1]{<text>}
+\begin{macro}{\textb}[1]{<text>}
+\begin{macro}{\texteb}[1]{<text>}
+\begin{macro}{\textbl}[1]{<text>}
+
+Commands for setting the text in the font weight thin (\cs{textt}), extra light (\cs{textel}), light (\cs{textl}), medium (\cs{textm}), semi bold (\cs{textsb}), bold (\cs{textb}), extra bold (\cs{texteb}) or black (\cs{textbl}) (if avaiable).
+
+\begin{MacroCode}{class}
+\DeclareTextFontCommand{\textt}{\tseries}
+\DeclareTextFontCommand{\textel}{\elseries}
+\DeclareTextFontCommand{\textl}{\lseries}
+\DeclareTextFontCommand{\textm}{\mseries}
+\DeclareTextFontCommand{\textsb}{\sbseries}
+\DeclareTextFontCommand{\textb}{\bseries}
+\DeclareTextFontCommand{\texteb}{\ebseries}
+\DeclareTextFontCommand{\textbl}{\blseries}
+
+\end{MacroCode}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
+\end{macro}
 
 
 \begin{macro}{\textsfbf}[1]{<text>}
@@ -9438,7 +9529,7 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
   aboveskip=0.75\baselineskip,
   belowskip=\g_edu_lstbelowskip,
   language=Java,
-  basicstyle=\ttfamily\footnotesize,
+  basicstyle=\ttfamily,
   keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries,
   stringstyle=\emph,
   numberstyle=\color{\g_edu_lstnumberfg_tl}\ttfamily\scriptsize,
@@ -9474,7 +9565,7 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
 \lstdefinestyle{lstresstyle}{%
   aboveskip=0.75\baselineskip,
   belowskip=\g_edu_lstbelowskip,
-  basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+  basicstyle=\ttfamily\color{\g_edu_resultfg_tl},
   keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
   numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
   rulecolor=\color{\g_edu_resultfg_tl}
@@ -9484,7 +9575,7 @@ Zuerst werden Styles für abgesetzte Listings und Inline-Listings definiert:
   \lstdefinestyle{lstresstyle}{%
     aboveskip=0.25\baselineskip,
     belowskip=\g_edu_lstbelowskip,
-    basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+    basicstyle=\ttfamily\color{\g_edu_resultfg_tl},
     keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
   numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
     rulecolor=\color{\g_edu_resultfg_tl},

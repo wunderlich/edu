@@ -156,6 +156,11 @@
 
 
 \keys_define:nn {edu} {
+  sfdefaultnotoall .bool_gset:N = \g_edu_sfdefaultnotoall_bool, % alles (auch Mathematik) in serifenlosem Noto
+  sfdefaultnotoall .initial:n = false,
+}
+
+\keys_define:nn {edu} {
   fontsize .dim_gset:N = \g_edu_fontsize_dim,  % Fontsize
   fontsize .initial:n = 11pt,
   twoupfontsize .dim_gset:N = \g_edu_twoupfontsize_dim, % Fontsize for twoup
@@ -1100,6 +1105,15 @@
   \tl_gput_right:Nn \g_edu_edumathoptions_tl {, sfmath}
 }
 
+\bool_if:NT \g_edu_sfdefaultnotoall_bool {
+  \keys_set:nn {edu} {
+    sfdefault = true,
+    rmfont = noto, sffont = noto, ttfont = noto,
+    edumath = true
+  }
+  \tl_gput_right:Nn \g_edu_edumathoptions_tl {, rmmathfont=noto, sfmath}
+}
+
 \bool_if:NF \g_edu_sfdefault_bool {            % Serif fonts only if not sfdefault
   \tl_if_eq:VnT \g_edu_rmfont_tl {libertine} {
     \RequirePackage[rm]{libertine}
@@ -1141,7 +1155,7 @@
 }
 
 \tl_if_eq:VnT \g_edu_ttfont_tl {sourcecodepro} {
-  \RequirePackage[scale=0.875]{sourcecodepro}
+  \RequirePackage[scale=0.85]{sourcecodepro}
 }
 
 \bool_if:NT \g_edu_sfdefault_bool {
@@ -2444,6 +2458,24 @@
     \pagestyle{empty}
   }
 } % \AtBeginDocument
+
+\DeclareRobustCommand{\tseries}{\fontseries{ul}\selectfont}
+\DeclareRobustCommand{\elseries}{\fontseries{el}\selectfont}
+\DeclareRobustCommand{\lseries}{\fontseries{l}\selectfont}
+\DeclareRobustCommand{\mseries}{\fontseries{m}\selectfont}
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareRobustCommand{\bseries}{\fontseries{b}\selectfont}
+\DeclareRobustCommand{\ebseries}{\fontseries{eb}\selectfont}
+\DeclareRobustCommand{\blseries}{\fontseries{ub}\selectfont}
+
+\DeclareTextFontCommand{\textt}{\tseries}
+\DeclareTextFontCommand{\textel}{\elseries}
+\DeclareTextFontCommand{\textl}{\lseries}
+\DeclareTextFontCommand{\textm}{\mseries}
+\DeclareTextFontCommand{\textsb}{\sbseries}
+\DeclareTextFontCommand{\textb}{\bseries}
+\DeclareTextFontCommand{\texteb}{\ebseries}
+\DeclareTextFontCommand{\textbl}{\blseries}
 
 \DeclareDocumentCommand \textsfbf { m } {
   \text{\sffamily\bfseries #1}
@@ -5045,7 +5077,7 @@
   aboveskip=0.75\baselineskip,
   belowskip=\g_edu_lstbelowskip,
   language=Java,
-  basicstyle=\ttfamily\footnotesize,
+  basicstyle=\ttfamily,
   keywordstyle=\color{\g_edu_lstnumberfg_tl}\bfseries,
   stringstyle=\emph,
   numberstyle=\color{\g_edu_lstnumberfg_tl}\ttfamily\scriptsize,
@@ -5081,7 +5113,7 @@
 \lstdefinestyle{lstresstyle}{%
   aboveskip=0.75\baselineskip,
   belowskip=\g_edu_lstbelowskip,
-  basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+  basicstyle=\ttfamily\color{\g_edu_resultfg_tl},
   keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
   numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
   rulecolor=\color{\g_edu_resultfg_tl}
@@ -5091,7 +5123,7 @@
   \lstdefinestyle{lstresstyle}{%
     aboveskip=0.25\baselineskip,
     belowskip=\g_edu_lstbelowskip,
-    basicstyle=\ttfamily\footnotesize\color{\g_edu_resultfg_tl},
+    basicstyle=\ttfamily\color{\g_edu_resultfg_tl},
     keywordstyle=\bfseries\color{\g_edu_resultfg_tl},
   numberstyle=\color{\g_edu_resultfg_tl}\ttfamily\scriptsize,
     rulecolor=\color{\g_edu_resultfg_tl},
