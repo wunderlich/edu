@@ -1238,8 +1238,8 @@ Mithilfe dieser Optionen können die Farben von Unteraufgaben bestimmt werden: N
 \medskip
 
 \localeDE{
-\Option{multiexenumberleft}\WithValues{\meta{Abstand}}\AndDefault{}
-\Option{multiexenumberright}\WithValues{\meta{Abstand}}\AndDefault{)}
+\Option{multiexenumberleft}\WithValues{\meta{Begrenzer}}\AndDefault{}
+\Option{multiexenumberright}\WithValues{\meta{Begrenzer}}\AndDefault{)}
 Bestimmt Begrenzer der Teilaufgabennummerierung.
 }
 \medskip
@@ -2438,9 +2438,25 @@ Formatting options:
 
 
 
+\subsubsection{Euro-Symbol}
+
+\begin{option}{eurosymbol}
+Replace character € with official Euro symbol of package \pkg{eurosym}:
+\begin{MacroCode}{class}
+\keys_define:nn {edu} {  
+  eurosymbol .bool_gset:N = \g_edu_eurosymbol_bool,
+  eurosymbol .initial:n = false,
+}
+
+\end{MacroCode}
+\end{option}
+
+
+
 \subsubsection{Geschlechtergerechte Sprache}
 
-\begin{option}{cemphfg}
+\begin{option}{gendersymbol}
+\begin{option}{genderraise}
 Gender-neutral language options:
 \begin{MacroCode}{class}
 \keys_define:nn {edu} {
@@ -2452,6 +2468,7 @@ Gender-neutral language options:
 \__edu_keys_initial:n {genderraise = 0ex}
 
 \end{MacroCode}
+\end{option}
 \end{option}
 
 
@@ -4329,7 +4346,7 @@ Defining the default date format D(D).M(M).YYYY.
 }
 
 \AtBeginDocument{
-  \ddmmyydateformat
+  \setdefaultdate{\ddmmyyyydate}
 }
 
 \end{MacroCode}
@@ -4366,7 +4383,8 @@ This command typesets a timestamp. The default format is YYYY-MM-DD-HH-MM-SS.
     \g_edu_timestampdatetimeseparator_tl
     \currenttime
   }
-  \ddmmyydate
+  \ddmmyyyydate
+  \setdefaultdate{\ddmmyyyydate}
 }
 
 \end{MacroCode}
@@ -5848,9 +5866,14 @@ Formatierungskommandos:
 \end{macro}
 \end{macro}
 
-Das Eurozeichen der Tastatur als \cs{euro}-Makro auffassen, dass mithilfe des Packages \textsf{eurosym} das Eurosymbols setzt:
+
+\subsubsection{Euro-Symbol}
+
+Falls durch die Option \opt{eurosymbol} gewünscht, wird das Eurozeichen der Tastatur als \cs{euro}-Makro auffassen, das mithilfe des Packages \textsf{eurosym} das offizielle Eurosymbol setzt:
 \begin{MacroCode}{class}
-\DeclareUnicodeCharacter{20AC}{\euro}
+\bool_if:NT \g_edu_eurosymbol_bool {
+  \DeclareUnicodeCharacter{20AC}{\euro}
+}
 
 \end{MacroCode}
 
@@ -5865,6 +5888,8 @@ Geschlechtergerechte Sprache kann mithilfe dieses Makros und dem zugehörigen Sy
 
 \end{MacroCode}
 
+
+\subsubsection{Tabellen-Linien}
 
 \begin{macro}{\headrule}
 Das folgende Makro erzeugt eine \cs{midrule} des \pkg{booktabs}-Packages in der Stärke \cs{heavyrulethick} zum optisch auffallenderen Trennen des Kopfes einer Tabelle und deren Inhalt:

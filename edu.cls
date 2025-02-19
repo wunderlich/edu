@@ -423,6 +423,11 @@
 }
 
 \keys_define:nn {edu} {
+  eurosymbol .bool_gset:N = \g_edu_eurosymbol_bool,
+  eurosymbol .initial:n = false,
+}
+
+\keys_define:nn {edu} {
   gendersymbol .tl_gset:N = \g_edu_gendersymbol_tl,
   gendersymbol .initial:n = \textasteriskcentered,
   genderraise .dim_gset:N = \g_edu_genderraise_dim,
@@ -1417,7 +1422,7 @@
 }
 
 \AtBeginDocument{
-  \ddmmyydateformat
+  \setdefaultdate{\ddmmyyyydate}
 }
 
 \newdateformat{timestampdateformat}{
@@ -1440,7 +1445,8 @@
     \g_edu_timestampdatetimeseparator_tl
     \currenttime
   }
-  \ddmmyydate
+  \ddmmyyyydate
+  \setdefaultdate{\ddmmyyyydate}
 }
 
 \tl_new:N \g__edu_pdftitletemp_tl
@@ -2495,7 +2501,9 @@
 \DeclareDocumentCommand \textrightarrow { } {$\rightarrow$\xspace}
 \DeclareDocumentCommand \textRightarrow { } {$\Rightarrow$\xspace}
 
-\DeclareUnicodeCharacter{20AC}{\euro}
+\bool_if:NT \g_edu_eurosymbol_bool {
+  \DeclareUnicodeCharacter{20AC}{\euro}
+}
 
 \DeclareDocumentCommand \gend { O{\g_edu_genderraise_dim} } {
   \raisebox{#1}{\g_edu_gendersymbol_tl}
