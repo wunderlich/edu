@@ -34,7 +34,8 @@ rm -f *.gl? *.glsdefs *.id? *.aux
 rm -f *.bbl *.bcf *.bib *.blg *.xdy
 rm -f *.fls *.log *.out *.run.xml *.toc
 rm -f *.cod *.gnuplot *.table
-rm -f *.log *.synctex *.tmp *.vrb *.xsim
+rm -f *.log *.synctex *.synctex.gz *.tmp *.vrb *.xsim
+
 
 xdg-open $filenamepdforig
 xdg-open "${filenamepdforig%.*}"-R.pdf
